@@ -6,7 +6,6 @@
 
 <script>
     export default {
-        name : 'Fn',
         props:[],
         data : function(){
             return {

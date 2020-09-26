@@ -1,47 +1,19 @@
-# VUE前端模板库
-请基于此模板创建项目  
-***$repo***代表当前项目名称,同时也是实际的路由名称  
+# Rank
 
-## 初始化说明
-#### 项目创建
-1. 🌈 修改 ***package.json*** 中的name字段为`$repo`
-2. 🌈 修改 ***.github/workflows/deploy.yml*** 中的bucket位置,如非独立仓库,应为`oss://jx3box-www/$repo/`
-3. 🌈 指定 ***.env*** 中的 [**`STATIC_PATH`**](#静态资源路径)
+views | router | desc | developer
+---|---|---|---|---
+- | / | 根据活动进程显示info或race | 浮烟
+Join | /join | 选择路由,自动判定 | 浮烟
+JoinRace | /join/race | 团队报名 | 浮烟
+JoinTeam | /join/team | 个人报名 | 浮烟
+JoinInfo | /join/info | 团员管理/队友信息查看 | 浮烟
+RankInfo | /info | 活动规则（报名按钮、众筹按钮、比赛规则、奖项设置、赞助商奖品展示） | 浮烟
+RankList | /race | 竞速排行榜榜单 | 枫瑞
+RankVote | /vote | 人气排行榜（产生人气团队 + 幸运用户 + 幸运团队） | 枫瑞
+RankVideo | /video | 视频直播（直播+录像） | 枫瑞
+RankLucky | /lucky | 奖池众筹榜（募捐二维码+收发名单excel公示） | 浮烟
+RankStat | /stat | 统计分析（微博长图） | 枫瑞
 
-#### 项目启动
-1. 🌈 `npm install` 安装依赖
-2. ✨ `npm run serve` 启动本地服务
-
-#### 项目修改
-1. 🌈 修改***setting.json***文件,优化seo
-
-#### 依赖说明
-1. 🌈 默认基于vue + element ui,lib库请直接在public/$template中引用mirror地址
-2. css变量默认包含 ***./assets/css/var.less*** 自定义变量
-3. css mixin默认包含[csslab](https://github.com/iRuxu/csslab)
-
-#### 部署上线
-+ 🌈 添加项目secrets=>`AccessKey_ID`+`Access_Key_Secret`
-+ 🌈 如需要绑定独立域,需在github setting中指定并修改DNS指向.
-+ 🆘 ecs|cdn在改版过程中,需对404作合理处理(跳转至搜索||rewrite至新地址) 
-+ ✨ ecs需自行部署,同步gh-pages分支.
-
-## 其它说明
-#### 静态资源路径  
-默认通过 ***.env*** 文件中 **`STATIC_PATH`** 来指定加载路径,可选值:  
-1. 🌍 jsdelivr - 自动回源到github pages 【当前默认】 
-2. 🌸 root - 使用相对路径,且项目为独立域时
-3. 🌷 repo - 使用相对路径,且项目没有独立域时
-4. 💟 mirror - 使用OSS=>CDN镜像 
-
-#### 部署集
-github pages与oss由actions自动部署,ecs自行部署
-1. 🌍 github pages - 国外访问endpoint
-2. 💖 ecs - 国内访问endpoint 【当前默认】
-3. 💟 oss - 国内备用方案,当DNS解析为整站CDN时生效  
-
-#### DNS解析
-目前为境外解析至github,境内解析为ecs
-1. 🌍 github pages - 国外直接解析到github
-2. 💖 ecs - 国内A记录至指定ECS 【当前默认】
-3. 💟 oss - 国内备用方案,整站CDN,自动回源至oss
+## other
+签到领票
+公众号二维码
