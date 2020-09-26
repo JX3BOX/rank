@@ -1,7 +1,7 @@
 # Rank
 
 views | router | desc | developer
----|---|---|---|---
+---|---|---|---
 ~ | / | 根据活动进程显示info或race | 浮烟
 Join | /join | 选择路由,自动判定 | 浮烟
 JoinRace | /join/race | 团队报名 | 浮烟
