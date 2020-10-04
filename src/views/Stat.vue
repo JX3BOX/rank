@@ -1,5 +1,5 @@
 <template>
-    <div class="v-fn">
+    <div class="m-rank-stat">
 
     </div>
 </template>

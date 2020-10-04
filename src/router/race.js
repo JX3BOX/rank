@@ -1,25 +1,24 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-const RankInfo = () => import("../views/RankInfo.vue");
-const RankList = () => import("../views/RankList.vue");
-const RankVote = () => import("../views/RankVote.vue");
-const RankVideo = () => import("../views/RankVideo.vue");
-const RankLucky = () => import("../views/RankLucky.vue");
-const RankStat = () => import("../views/RankStat.vue");
+const Info = () => import("../views/Info.vue");
+const Rank = () => import("../views/Rank.vue");
+const Vote = () => import("../views/Vote.vue");
+const Video = () => import("../views/Video.vue");
+const Lucky = () => import("../views/Lucky.vue");
+const Stat = () => import("../views/Stat.vue");
 
 Vue.use(VueRouter);
 
 const routes = [
-    // 当前活动进程，开赛后修改为RankList
-    { name: "index", path: "/", component: RankInfo },
-
-    { name: "RankInfo", path: "/info", component: RankInfo },
-    { name: "RankList", path: "/race", component: RankList },
-    { name: "RankVote", path: "/vote", component: RankVote },
-    { name: "RankVideo", path: "/video", component: RankVideo },
-    { name: "RankLucky", path: "/lucky", component: RankLucky },
-    { name: "RankStat", path: "/stat", component: RankStat },
+    // 当前活动进程，开赛后修改为Rank
+    { name: "index", path: "/:id/", component: Info },
+    { name: "info", path: "/:id/info", component: Info },
+    { name: "lucky", path: "/:id/lucky", component: Lucky },
+    { name: "rank", path: "/:id/rank", component: Rank },
+    { name: "vote", path: "/:id/vote", component: Vote },
+    { name: "video", path: "/:id/video", component: Video },
+    { name: "stat", path: "/:id/stat", component: Stat },
 ];
 
 const router = new VueRouter({

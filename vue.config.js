@@ -25,6 +25,12 @@ module.exports = {
             template : 'public/index.html',
             filename:'race.html',
         },
+        event : {
+            title : '活动设置 - JX3BOX',
+            entry:'src/pages/event.js',
+            template : 'public/index.html',
+            filename:'event.html',
+        },
     },
 
     //❤️ Porxy ~
