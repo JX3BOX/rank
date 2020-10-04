@@ -1,6 +1,7 @@
 <template>
     <div class="m-rank-lucky">
-
+        <!-- gifts -->
+        <div class="m-rank-txt" v-html="data"></div>
     </div>
 </template>
 
@@ -9,7 +10,7 @@
         props:[],
         data : function(){
             return {
-                
+                data : ''
             }
         },
         computed:{},
@@ -22,5 +23,5 @@
 </script>
 
 <style lang="less">
-    // @import '../assets/css/fn.less';
+    @import '../assets/css/info.less';
 </style>

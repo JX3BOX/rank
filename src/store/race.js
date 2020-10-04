@@ -6,6 +6,7 @@ Vue.use(Vuex);
 let store = {
     state: {
         id : '',
+        race : "",
     },
     mutations: {
     },
