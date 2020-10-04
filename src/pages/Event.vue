@@ -82,7 +82,30 @@
                                 >
                             </el-checkbox-group>
                         </el-form-item>
-
+                        <el-form-item label="活动介绍">
+                            <el-input
+                                v-model="form.desc"
+                                placeholder="请输入内容"
+                                type="textarea"
+                                rows="8"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item label="活动奖励">
+                            <el-input
+                                v-model="form.gifts"
+                                placeholder="请输入内容"
+                                type="textarea"
+                                rows="8"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item label="其它说明">
+                            <el-input
+                                v-model="form.note"
+                                placeholder="请输入内容"
+                                type="textarea"
+                                rows="8"
+                            ></el-input>
+                        </el-form-item>
                         <div class="u-btns">
                             <el-button
                                 class="u-btn"
@@ -118,6 +141,9 @@ export default {
                     },
                 ],
                 blocks: [],
+                desc:"",
+                gifts : "",
+                note:""
             },
             blocks,
         };

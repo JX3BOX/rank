@@ -1,6 +1,6 @@
 <template>
     <div class="m-rank-info">
-
+        <!-- 报名按钮 -->
     </div>
 </template>
 
