@@ -1,12 +1,20 @@
 # Rank
+本系列页面不要适配
+
+pages | router | name | desc
+---|---|---|---
+index.html | - | 首页 | 资料片导航
+join.html | 3 | 报名 | 报名系列页面
+
+views | router | desc | developer
+Join | / | 选择路由,自动判定 | 浮烟
+JoinRace | /team | 团队报名 | 浮烟
+JoinTeam | /team | 个人报名 | 浮烟
+JoinInfo | /info | 团员管理/队友信息查看 | 浮烟
 
 views | router | desc | developer
 ---|---|---|---
 ~ | / | 根据活动进程显示info或race | 浮烟
-Join | /join | 选择路由,自动判定 | 浮烟
-JoinRace | /join/race | 团队报名 | 浮烟
-JoinTeam | /join/team | 个人报名 | 浮烟
-JoinInfo | /join/info | 团员管理/队友信息查看 | 浮烟
 RankInfo | /info | 活动规则（报名按钮、众筹按钮、比赛规则、奖项设置、赞助商奖品展示） | 浮烟
 RankList | /race | 竞速排行榜榜单 | 枫瑞
 RankVote | /vote | 人气排行榜（产生人气团队 + 幸运用户 + 幸运团队） | 枫瑞
