@@ -32,3 +32,4 @@ jobs:
           access-key-secret: ${{secrets.Access_Key_Secret}}
       - run: ossutil cp -rf dist oss://jx3box-www/rank
       - run: ossutil cp -rf dist oss://jx3box/static/rank
+      - run: ossutil cp -rf src/assets/img oss://jx3box/image/rank

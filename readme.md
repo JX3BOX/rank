@@ -8,7 +8,7 @@ join.html | - | 报名 | 报名页面
 race.html | 6 | 赛事 | 赛事页面
 event.html | - | 活动 | 活动编辑页
 
-views | router | desc | developer
+race-views | router | desc | developer
 ---|---|---|---
 ~ | / | 根据活动进程显示info或rank | 浮烟
 Info | /info | 活动规则（报名按钮、众筹按钮、比赛规则、奖项设置、赞助商奖品展示） | 浮烟

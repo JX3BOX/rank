@@ -1,10 +1,15 @@
 <template>
     <div class="m-race-header">
 
-        <!-- boss图 -->
-        <img class="u-boss" :src="boss_img_url" alt="" />
+        <!-- TODO:boss图 -->
+        <!-- <img class="u-boss" :src="boss_img_url" alt="" /> -->
+        <img class="u-boss" src="../assets/img/boss/1.png"/>
 
         <!-- TODO:logo -->
+        <img class="u-logo" src="../assets/img/common/logo.png">
+
+        <!-- TODO:version -->
+        <img class="u-version" src="../assets/img/version/1.png"/>
 
         <!-- 赞助商 -->
         <div class="u-sponsors">
@@ -27,6 +32,7 @@
 // TODO:赞助商调用远程部分
 import sponsors from "@/assets/data/sponsors.js";
 import tabs from './race_tab.vue'
+import {__imgPath,__ossMirror} from '@jx3box/jx3box-common/js/jx3box.json'
 export default {
     props: [],
     data: function() {
@@ -39,7 +45,8 @@ export default {
             return this.$store.state.id;
         },
         boss_img_url: function() {
-            return "/boss/" + this.id + ".png";
+            return '/img/boss' + this.id + ".png";
+            // return __ossMirror + 'image/rank/boss' + this.id + ".png";
         },
         sponsors : function (){
             return sponsors[this.id] || []
