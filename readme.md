@@ -1,6 +1,9 @@
 # Rank
 本系列页面不要适配
 
+## Todo
+- [ ] 图片改为cdn地址
+
 pages | router | name | desc
 ---|---|---|---
 index.html | - | 首页 | 资料片导航

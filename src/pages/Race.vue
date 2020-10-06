@@ -1,6 +1,9 @@
 <template>
     <div id="app" class="m-rank-container">
         <Header></Header>
+
+        <!-- 背景图:根据不同资料片可能设置不同背景 -->
+
         <div class="m-rank-race" v-if="id">
             <div class="m-rank-header">
                 <race-header></race-header>

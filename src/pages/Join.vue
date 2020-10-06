@@ -2,7 +2,9 @@
     <div id="app" class="m-rank-container">
         <Header></Header>
         <div class="m-rank-join">
-            <div class="m-rank-header"></div>
+            <div class="m-rank-header">
+                <img class="u-logo" src="../assets/img/common/logo.png">
+            </div>
             <div class="m-rank-content">
                 <div class="m-join m-join-team">
         <h1 class="m-join-title">报名入口</h1>
@@ -88,6 +90,8 @@ export default {
     },
     beforeCreate: function() {
         // TODO:设置活动默认项：events[0]['ID']、teams[0]['ID']
+
+        // TODO:查询是否已报名
     },
     components: {
     },

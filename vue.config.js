@@ -14,7 +14,7 @@ module.exports = {
             filename:'index.html',
         },
         join : {
-            title : '报名剑三秘境百强榜 - JX3BOX',
+            title : '报名入口 - 剑三秘境百强榜 - JX3BOX',
             entry:'src/pages/join.js',
             template : 'public/index.html',
             filename:'join.html',

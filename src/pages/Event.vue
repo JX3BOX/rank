@@ -2,7 +2,9 @@
     <div id="app" class="m-rank-container">
         <Header></Header>
         <div class="m-rank-join m-rank-event">
-            <div class="m-rank-header"></div>
+            <div class="m-rank-header">
+                <img class="u-logo" src="../assets/img/common/logo.png">
+            </div>
             <div class="m-rank-content">
                 <div class="m-join m-join-team">
                     <h1 class="m-join-title">活动设置</h1>
