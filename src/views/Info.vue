@@ -57,7 +57,7 @@
             <tbody>
                 <tr>
                     <th>1号</th>
-                    <td>初阵红包雨</td>
+                    <td>初阵红包雨<br><small>(1000元,由山居数码提供)</small></td>
                     <td>剑三周边小礼包一份*3 <br><small>(价值78元/份,由醒魂香提供)</small></td>
                     <td rowspan=5>
                         剑三周边大礼包一份*5 <br><small>(价值148元/份,由醒魂香提供)</small>
@@ -68,7 +68,7 @@
                 </tr>
                 <tr>
                     <th>2号</th>
-                    <td>第二波红包雨</td>
+                    <td>第二波红包雨<br><small>(5000元,由樽前团队提供)</small></td>
                     <td>剑三周边小礼包一份*3 <br><small>(价值78元/份,由醒魂香提供)</small></td>
                 </tr>
                 <tr>
@@ -83,7 +83,7 @@
                 </tr>
                 <tr>
                     <th>5号</th>
-                    <td>大型红包雨</td>
+                    <td>第五波红包雨</td>
                     <td>剑三周边小礼包一份*3 <br><small>(价值78元/份,由醒魂香提供)</small></td>
                 </tr>
             </tbody>
