@@ -41,7 +41,7 @@
             <el-form-item label="联系QQ">
                 <el-input v-model="form.qq" placeholder="请输入正确的QQ号码"></el-input>
             </el-form-item>
-            <div class="u-warning"><i class="el-icon-info"></i> <a href="/tool/?pid=18044#/" target="_blank"><b>点击查看活动规则详情</b></a>，团长请加入<a href="https://jq.qq.com/?_wv=1027&k=q8D2PQAC" target="_blank">QQ群785597424</a>，以咨询或其它反馈。</div>
+            <div class="u-warning"><i class="el-icon-info"></i> <a href="/tool/?pid=18044#/" target="_blank"><b>点击查看活动规则详情</b></a></div>
             <div class="u-btns">
                 <el-button class="u-btn" type="primary" @click="submit">报名</el-button>
             </div>
