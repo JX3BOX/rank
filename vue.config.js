@@ -22,7 +22,7 @@ module.exports = {
         race : {
             title : '剑三秘境百强榜 - JX3BOX',
             entry:'src/pages/race.js',
-            template : 'public/race.html',
+            template : 'public/index.html',
             filename:'race.html',
         },
         event : {

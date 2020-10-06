@@ -3,15 +3,12 @@
 
         <!-- 视觉图 -->
         <div class="u-vision">
-            <!-- boss图 -->
-            <!-- <img class="u-boss" :src="boss_img_url" alt="" /> -->
+            <img class="u-boss" :src="boss_img_url" alt="" />
             <img class="u-boss" src="../assets/img/boss/1.png" />
 
-            <!-- logo -->
             <img class="u-logo" src="../assets/img/common/logo.png" />
 
-            <!-- version -->
-            <!-- <img class="u-version" :src="version_img_url" alt="" /> -->
+            <img class="u-version" :src="version_img_url" alt="" />
             <img class="u-version" src="../assets/img/version/1.png" />
         </div>
 

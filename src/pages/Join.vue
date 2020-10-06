@@ -1,6 +1,7 @@
 <template>
     <div id="app" class="m-rank-container">
         <Header></Header>
+        <div id="m-rank-star"></div>
         <div class="m-rank-join">
             <div class="m-rank-header">
                 <img class="u-logo" src="../assets/img/common/logo.png">
@@ -41,7 +42,7 @@
             <el-form-item label="联系QQ">
                 <el-input v-model="form.qq" placeholder="请输入正确的QQ号码"></el-input>
             </el-form-item>
-            <div class="u-warning"><i class="el-icon-info"></i> <a href="/tool/?pid=18044#/" target="_blank"><b>点击查看活动规则详情</b></a></div>
+            <div class="u-warning"><a href="/tool/?pid=18044#/" target="_blank"><i class="el-icon-info"></i> <b>点击查看活动规则详情</b></a></div>
             <div class="u-btns">
                 <el-button class="u-btn" type="primary" @click="submit">报名</el-button>
             </div>

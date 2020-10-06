@@ -2,9 +2,12 @@
     <div id="app" class="m-rank-container">
         <Header></Header>
 
+        <!-- <div class="m-rank-bg">
+            <img src="../assets/img/cover/1.png">
+        </div> -->
+
         <div id="m-rank-star"></div>
 
-        <!-- 背景图:根据不同资料片可能设置不同背景 -->
         <div class="m-rank-race" v-if="id">
             <div class="m-rank-header">
                 <race-header></race-header>
@@ -32,8 +35,7 @@ export default {
     },
     methods: {},
     created : function (){
-        particlesJS.load('m-rank-star', './js/particlesjs-config.json', function() {
-        });  
+        
     },
     mounted: function() {
         this.$store.state.id = this.$route.params.id;

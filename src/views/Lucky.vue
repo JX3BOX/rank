@@ -1,7 +1,9 @@
 <template>
     <div class="m-rank-lucky">
         <!-- gifts -->
-        <div class="m-rank-txt" v-html="data"></div>
+        <div class="m-rank-txt" v-html="data">
+            
+        </div>
     </div>
 </template>
 
