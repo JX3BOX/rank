@@ -32,7 +32,7 @@ export default {
     },
     methods: {},
     created : function (){
-        particlesJS.load('m-rank-star', '/js/particlesjs-config.json', function() {
+        particlesJS.load('m-rank-star', './js/particlesjs-config.json', function() {
         });  
     },
     mounted: function() {
