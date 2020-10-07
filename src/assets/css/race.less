@@ -1,4 +1,4 @@
-@import './app.less';
+@import "./app.less";
 
 // .m-rank-container{
 //     background-color:#000;
@@ -12,17 +12,44 @@
 //     }
 // }
 
-.m-rank-header{
-    min-height:600px;
-    padding-top:60px;
+.m-rank-header {
+    min-height: 600px;
+    padding-top: 60px;
     // padding-top:650px;
 }
 
-.m-rank-race{
-    max-width:1080px;
+.m-rank-race {
+    max-width: 1080px;
     .auto(x);
 }
 
-.m-rank-content{
-    min-height:800px ;
+.m-rank-content {
+    min-height: 800px;
+}
+
+.m-rank-btns {
+    .x;
+    .u-btn {
+        .dbi;
+        .size(480px, 150px);
+        background: url("@{img}common/btn_v1_default.png") no-repeat center
+            center;
+        background-size: 100% auto;
+        .fz(2rem, 170px);
+        .x;
+        color: #fff;
+        &:first-child {
+            .mr(10px);
+        }
+        box-shadow: none;
+        transition: 0.2s ease-in-out;
+        &:hover {
+            box-shadow: none;
+            background-image: url("@{img}common/btn_v1_hover.png");
+        }
+        &:active,
+        &:focus {
+            background-image: url("@{img}common/btn_v1_active.png");
+        }
+    }
 }

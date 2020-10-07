@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="m-rank-container">
+    <div id="app" class="m-rank-container" :class="'m-rank-event-' + id">
         <Header></Header>
 
         <div class="m-rank-race" v-if="id">
@@ -34,6 +34,7 @@ export default {
         init: function(val) {
             getEvent(val || this.id).then((res) => {
                 this.data = res.data.data;
+                this.$store.state.race = res.data.data
             });
         },
     },

@@ -21,6 +21,9 @@
 
         <!-- 启用的模块 -->
         <race-tab :data="data"/>
+
+        <!-- 二维码 -->
+        <img class="u-qrcode" src="../assets/img/common/boxqrcode.png">
     </div>
 </template>
 
