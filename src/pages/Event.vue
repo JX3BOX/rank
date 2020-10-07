@@ -3,7 +3,7 @@
         <Header></Header>
         <div class="m-rank-join m-rank-event">
             <div class="m-rank-header">
-                <img class="u-logo" src="../assets/img/common/logo.png" />
+                <img class="u-logo" :src="LOGO" />
             </div>
             <div class="m-rank-content">
                 <div class="m-join m-join-team">
@@ -14,6 +14,12 @@
                         :model="form"
                         label-width="80px"
                     >
+                        <el-form-item label="是否可见">
+                            <el-radio-group v-model="form.visible">
+                                <el-radio :label="1">可见</el-radio>
+                                <el-radio :label="0">隐藏</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
                         <el-form-item label="活动状态">
                             <el-radio-group v-model="form.status">
                                 <el-radio :label="1">开启</el-radio>
@@ -125,6 +131,7 @@
 </template>
 
 <script>
+import PICS from "@/assets/js/pics.js";
 import blocks from "@/assets/data/blocks.json";
 import { setEvent,getEvent } from "@/service/event.js";
 export default {
@@ -133,6 +140,7 @@ export default {
     data: function() {
         return {
             form: {
+                visible : 0,
                 status: 0,
                 achieve_ids: "",
                 name: "",
@@ -148,7 +156,8 @@ export default {
                 note: "",
             },
             blocks,
-            id : ''
+            id : '',
+            LOGO: PICS.LOGO,
         };
     },
     computed: {},

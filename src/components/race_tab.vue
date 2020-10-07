@@ -3,7 +3,7 @@
         <router-link
             class="u-item"
             :to="link(key)"
-            v-for="(label, key) in views"
+            v-for="(label, key) in visible_blocks"
             :key="key"
             >{{ label }}</router-link
         >
@@ -11,24 +11,22 @@
 </template>
 
 <script>
-import views from "@/assets/data/blocks.json";
-// TODO:开启部分调用远程数据
-import enablemap from "@/assets/data/enablemap.js";
+import blocks from "@/assets/data/blocks.json";
 export default {
-    props: [],
+    props: ['data'],
     data: function() {
-        return {};
+        return {
+        };
     },
     computed: {
-        id: function() {
-            return this.$store.state.id;
+        id : function (){
+            return this.$store.state.id  
         },
-        // 当前活动启用的模块
-        views: function() {
-            let blocks = enablemap[this.id];
+        visible_blocks: function() {
+            let enabled_blocks = this.data && this.data.blocks || [];
             let tabs = {};
-            blocks.forEach((item) => {
-                tabs[item] = views[item];
+            enabled_blocks.forEach((item) => {
+                tabs[item] = blocks[item];
             });
             return tabs;
         },

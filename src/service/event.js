@@ -8,4 +8,10 @@ function getEvent(id) {
     return $next.get("team/rank/events/" + id);
 }
 
-export { setEvent, getEvent };
+function getEvents(params) {
+    return $next.get("team/rank/events", {
+        params: params,
+    });
+}
+
+export { setEvent, getEvent, getEvents };

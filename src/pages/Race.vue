@@ -2,13 +2,9 @@
     <div id="app" class="m-rank-container">
         <Header></Header>
 
-        <!-- <div class="m-rank-bg">
-            <img src="../assets/img/cover/1.png">
-        </div> -->
-
         <div class="m-rank-race" v-if="id">
             <div class="m-rank-header">
-                <race-header></race-header>
+                <race-header :data="data"></race-header>
             </div>
             <div class="m-rank-content">
                 <router-view></router-view>
@@ -20,25 +16,35 @@
 
 <script>
 import race_header from "@/components/race_header.vue";
+import { getEvent } from "@/service/event.js";
 export default {
     name: "App",
     props: [],
     data: function() {
-        return {};
+        return {
+            data: "",
+        };
     },
     computed: {
         id: function() {
             return this.$store.state.id;
         },
     },
-    methods: {},
+    methods: {
+        init: function(val) {
+            getEvent(val || this.id).then((res) => {
+                this.data = res.data.data;
+            });
+        },
+    },
     created: function() {},
     mounted: function() {
         this.$store.state.id = this.$route.params.id;
     },
     watch: {
-        "$route.params.id": function(newval) {
-            this.$store.state.id = newval;
+        "$route.params.id": function(id) {
+            this.$store.state.id = id;
+            this.init(id);
         },
     },
     components: {

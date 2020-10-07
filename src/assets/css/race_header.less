@@ -1,3 +1,27 @@
+.twinkle-border(@time:0.6s,@border:2px,@color:#fff,@child){
+    @keyframes twinkle-borderdraw-borderLR {
+        from {}
+        to {height:100%;}
+    }
+    @keyframes twinkle-borderdraw-borderTB {
+        from {}
+        to {width:100%;}
+    }
+    position:relative;
+    .@{child}{display:block;width:100%;height:100%;}
+    &:before,&:after,.@{child}:before,.@{child}:after{content:'';display:block;background-color:@color;position: absolute;}
+    &:before,&:after{width:@border;height:0;}
+    .@{child}:before,.@{child}:after{width:0;height:@border;}
+    &:before{left:0;bottom:0;}
+    &:after{right:0;top:0;}
+    .@{child}:before{top:0;left:0;}
+    .@{child}:after{right:0;bottom:0;}
+    &:hover{
+        &:before,&:after{animation:twinkle-borderdraw-borderLR @time forwards;}
+        .@{child}:before,.@{child}:after{animation:twinkle-borderdraw-borderTB @time forwards;}
+    }
+}
+
 .m-race-header{
     .pr;
     .u-vision{
@@ -22,6 +46,8 @@
         .x;
         color:#eee;
         .fz(12px);
+        .pr;
+        .z(10);
 
         ul{
             list-style: none;
@@ -35,11 +61,13 @@
             .db;
             .fl;
             .mr(20px);
+            .twinkle-border(0.6s,2px,#0cf,logo);
         }
         a{
             .db;
             img{
                 .h(40px);
+                // border:1px solid #75869c;
             }
         }
     }

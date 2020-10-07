@@ -9,7 +9,7 @@ module.exports = {
     pages:{
         index : {
             title : '剑三秘境百强榜 - JX3BOX',
-            entry:'src/main.js',
+            entry:'src/pages/index.js',
             template : 'public/index.html',
             filename:'index.html',
         },
