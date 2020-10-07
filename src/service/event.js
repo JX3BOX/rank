@@ -14,4 +14,8 @@ function getEvents(params) {
     });
 }
 
-export { setEvent, getEvent, getEvents };
+function joinEvent(data) {
+    return $next.post("team/rank/join", data);
+}
+
+export { setEvent, getEvent, getEvents, joinEvent };

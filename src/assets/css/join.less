@@ -15,13 +15,23 @@
     max-width:1020px;
     .auto(x);
     .pr;.z(2);
-}
 
-.m-join{
     background-color:#fff;
     padding:20px 20px 60px 20px;
     border: 5px solid #073141;
     border-radius: 10px;
+
+    a{.underline(@color-link);}
+
+    .u-tip{
+        .x;
+        .fz(14px);
+        .mt(20px);
+    }
+}
+
+.m-join{
+    
 }
 
 .m-join-title{
@@ -29,16 +39,21 @@
     font-weight:300;
 }
 
+.m-join-team{
+    .u-warning{
+        .mb(10px);
+        .el-icon-warning{
+            .pr;
+            top:2px;
+        }
+    }
+}
 .m-join-form{
     .el-select{
         .db;
     }
     .el-input{
         .w(100%);
-    }
-    .u-warning{
-        .x;
-        .fz(14px);
     }
     .u-btns{
         .x;
@@ -47,7 +62,6 @@
             .w(280px);
         }
     }
-    a{.underline(@color-link);}
 }
 
 .c-footer{
