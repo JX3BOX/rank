@@ -1,9 +1,6 @@
 # Rank
 本系列页面不要适配
 
-## Todo
-- [ ] 图片改为cdn地址
-
 pages | router | name | desc
 ---|---|---|---
 index.html | - | 首页 | 资料片导航
@@ -20,7 +17,3 @@ Rank | /race | 竞速排行榜榜单 | 枫瑞
 Vote | /vote | 人气排行榜（产生人气团队 + 幸运用户 + 幸运团队） | 枫瑞
 Video | /video | 视频直播（直播+录像） | 枫瑞
 Stat | /stat | 统计分析（微博长图） | 枫瑞
-
-## other
-签到领票
-公众号二维码

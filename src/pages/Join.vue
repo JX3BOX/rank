@@ -3,10 +3,11 @@
         <Header></Header>
         <div class="m-rank-join">
             <div class="m-rank-header">
-                <img class="u-logo" src="../assets/img/common/logo.png" />
+                <img class="u-logo" :src="LOGO" />
             </div>
             <div class="m-rank-content">
-                <div class="m-join m-join-team">
+                <template v-if="events && events.length">
+                <div class="m-join m-join-team" v-if="!status">
                     <h1 class="m-join-title">报名入口</h1>
                     <el-form
                         class="m-join-form"
@@ -52,7 +53,7 @@
                         <el-form-item label="联系电话">
                             <el-input
                                 v-model="form.phone"
-                                placeholder="请输入正确的紧急联系电话"
+                                placeholder="请输入正确的快递联系电话"
                             ></el-input>
                         </el-form-item>
                         <el-form-item label="邮寄地址">
@@ -83,6 +84,17 @@
                         </div>
                     </el-form>
                 </div>
+                <div class="m-join m-join-done" v-else>
+                    <h1 class="u-title">已报名</h1>
+                    <div>
+                        <p>活动：<b>{{event_name}}</b></p>
+                        <p>团队：<strong>{{team_name}}</strong></p>
+                    </div>
+                </div>
+                </template>
+                <div class="m-join m-join-null" v-else>
+                    <h1>当前没有开启的活动</h1>
+                </div>
             </div>
         </div>
         <Footer></Footer>
@@ -90,11 +102,16 @@
 </template>
 
 <script>
+import PICS from "@/assets/js/pics.js";
+import { getEvents } from "@/service/event.js";
+import { getMyTeams } from "@/service/team.js";
+import _ from 'lodash'
 export default {
     name: "App",
     props: [],
     data: function() {
         return {
+            LOGO: PICS.LOGO,
             form: {
                 event_id: "",
                 team_id: "",
@@ -103,11 +120,11 @@ export default {
                 qq: "",
             },
             events: [
-                {
-                    ID: 1,
-                    name: "奉天证道",
-                    status: 1,
-                },
+                // {
+                //     ID: 1,
+                //     name: "奉天证道",
+                //     status: 1,
+                // },
             ],
             teams: [
                 // {
@@ -115,17 +132,46 @@ export default {
                 //     name : "诗画印象"
                 // }
             ],
+            status : true  //未报名
         };
     },
-    computed: {},
+    computed: {
+        event_name : function (){
+            return _.get(this.events[0],"name")
+        },
+        team_name : function (){
+            return _.get(this.teams[0],"name")
+        }
+    },
     methods: {
         submit: function() {},
+        init: function() {
+            console.log(11)
+            return Promise.all([this.loadEvents(), this.loadTeams()])
+        },
+        loadEvents : function (){
+            // 获取开放的活动事件
+            return getEvents({
+                status: 1,
+            }).then((res) => {
+                this.events = res.data.data.list;
+                this.form.event_id = _.get(this.events[0],"ID");
+            });
+        },
+        loadTeams : function (){
+            // 获取当前用户拥有的团队
+            return getMyTeams().then((res) => {
+                this.teams = res.data.data.list
+                this.form.team_id = _.get(this.teams[0],'ID')
+            });
+        }
     },
-    beforeCreate: function() {
-        // TODO:设置活动默认项：events[0]['ID']、teams[0]['ID']
-        // TODO:查询是否已报名
+    mounted: function() {
+        this.init().then(() => {
+            // TODO:判断用户当前是否已报名
+            // this.status = 1
+        })
     },
-    mounted: function() {},
     components: {},
 };
 </script>
