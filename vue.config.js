@@ -41,8 +41,9 @@ module.exports = {
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");
                 }
-            }
-        }
+            },
+        },
+        disableHostCheck: true
     },
 
     //❤️ define path for static files ~

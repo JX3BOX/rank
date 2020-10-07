@@ -3,7 +3,7 @@
         <Header></Header>
         <div class="m-rank-join m-rank-event">
             <div class="m-rank-header">
-                <img class="u-logo" src="../assets/img/common/logo.png">
+                <img class="u-logo" src="../assets/img/common/logo.png" />
             </div>
             <div class="m-rank-content">
                 <div class="m-join m-join-team">
@@ -126,13 +126,13 @@
 
 <script>
 import blocks from "@/assets/data/blocks.json";
+import { setEvent,getEvent } from "@/service/event.js";
 export default {
     name: "App",
     props: [],
     data: function() {
         return {
             form: {
-                ID: "",
                 status: 0,
                 achieve_ids: "",
                 name: "",
@@ -143,16 +143,26 @@ export default {
                     },
                 ],
                 blocks: [],
-                desc:"",
-                gifts : "",
-                note:""
+                desc: "",
+                gifts: "",
+                note: "",
             },
             blocks,
+            id : ''
         };
     },
     computed: {},
     methods: {
-        submit: function() {},
+        submit: function() {
+            setEvent(this.form).then((res) => {
+                this.$message({
+                    message: "设置成功",
+                    type: "success",
+                });
+                // this.form = res.data.data
+                // location.reload()
+            });
+        },
         add: function() {
             this.form.sponsors.push({
                 logo: "",
@@ -163,7 +173,15 @@ export default {
             this.form.sponsors.splice(i, 1);
         },
     },
-    beforeCreate: function() {},
+    beforeCreate: function() {
+        let params = new URLSearchParams(location.search);
+        this.id = params.get('id')
+        if(this.id){
+            getEvent(this.id).then((res) => {
+                this.form = res.data.data
+            })
+        }
+    },
     components: {},
 };
 </script>
