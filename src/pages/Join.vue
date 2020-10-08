@@ -114,11 +114,11 @@
 
 <script>
 import PICS from "@/assets/js/pics.js";
-import { getEvents, joinEvent } from "@/service/event.js";
+import { getEvents, joinEvent, hasJoined } from "@/service/event.js";
 import { getMyTeams } from "@/service/team.js";
 import _ from "lodash";
 
-const ACTIVE_EVENT_ID = 1       //当前开启的活动
+const ACTIVE_EVENT_ID = 1; //当前开启的活动
 
 export default {
     name: "App",
@@ -146,7 +146,7 @@ export default {
                 //     name : "诗画印象"
                 // }
             ],
-            status: false, //未报名
+            status: true, //未报名
         };
     },
     computed: {
@@ -191,7 +191,11 @@ export default {
             );
         },
         init: function() {
-            return Promise.all([this.loadEvents(), this.loadTeams()]);
+            return Promise.all([
+                this.loadEvents(),
+                this.loadTeams(),
+                this.checkJoin(),
+            ]);
         },
         loadEvents: function() {
             // 获取开放的活动事件
@@ -209,13 +213,16 @@ export default {
                 this.form.team_id = this.team_id;
             });
         },
-        check: function() {},
+        checkJoin: function() {
+            return hasJoined(ACTIVE_EVENT_ID).then((res) => {
+                if (res.data.data.hasJoined) {
+                    this.status = 1;
+                }
+            });
+        },
     },
     mounted: function() {
-        this.init().then(() => {
-            // TODO:判断用户当前是否已报名
-            // this.status = 1
-        });
+        this.init();
     },
     components: {},
 };
