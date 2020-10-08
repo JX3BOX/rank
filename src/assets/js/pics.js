@@ -10,6 +10,9 @@ const PICS = {
     },
     version : function (id){
         return __imgPath + "image/rank/version/" + id + '.png'
+    },
+    logos : function (val){
+        return __imgPath + "image/rank/logos/" + val + '.png'
     }
 };
 

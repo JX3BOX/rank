@@ -12,31 +12,33 @@
             <span>联合举办：</span>
             <ul>
                 <li>
-                    <a class="logo" href="https://www.jx3box.com" target="_blank">
-                        <img
-                            class="u-media-jx3box"
-                            src="https://oss.jx3box.com/upload/post/2020/10/8/4787512.png"
-                        />
+                    <a
+                        class="logo"
+                        href="https://www.jx3box.com"
+                        target="_blank"
+                    >
+                        <img class="u-media-jx3box" :src="logos('jx3box')" />
                     </a>
                 </li>
                 <li>
-                    <a class="logo" href="https://www.weibo.com/u/6754472163" target="_blank">
-                        <img
-                            class="u-media-tuilan"
-                            src="https://console.cnyixun.com/upload/post/2020/10/9/5547991.jpg"
-                        />
+                    <a
+                        class="logo"
+                        href="https://www.weibo.com/u/6754472163"
+                        target="_blank"
+                    >
+                        <img class="u-media-tuilan" :src="logos('tuilan')" />
                     </a>
                 </li>
             </ul>
             <span>独家直播合作：</span>
             <ul>
                 <li>
-                    <a class="logo" href="https://www.douyu.com/" target="_blank">
-                        <img
-                            src="https://console.cnyixun.com/upload/post/2020/10/9/2625036.png"
-                            alt
-                            class="u-media-douyu"
-                        />
+                    <a
+                        class="logo"
+                        href="https://www.douyu.com/"
+                        target="_blank"
+                    >
+                        <img class="u-media-douyu" :src="logos('douyu')" />
                     </a>
                 </li>
             </ul>
@@ -88,7 +90,12 @@ export default {
             return (this.data && this.data.sponsors) || [];
         },
     },
-    methods: {},
+    filters: {},
+    methods: {
+        logos: function(val) {
+            return PICS.logos(val);
+        },
+    },
     mounted: function() {},
     components: {
         "race-tab": tabs,
