@@ -3,7 +3,7 @@
         <!-- 报名按钮 -->
         <div class="m-rank-btns">
             <a class="u-btn u-btn-join" href="./join.html" target="_blank">立即参与报名</a>
-            <router-link class="u-btn u-btn-lucky" :to="lucky_url">参与奖池众筹</router-link>
+            <router-link class="u-btn u-btn-lucky" :to="lucky_url"><b>参与众筹奖池</b><span>前无古人！玩家众筹举办赛事</span></router-link>
         </div>
         <!-- 具体内容 -->
         <div class="m-rank-txt" v-html="desc"></div>

@@ -10,6 +10,13 @@
                 <router-view></router-view>
             </div>
         </div>
+
+        <div class="m-rank-misc">
+            <!-- 往届赛事 -->
+            <a href="/rank" class="u-history"
+                ><img :src="back_img_url"
+            /></a>
+        </div>
         <Footer></Footer>
     </div>
 </template>
@@ -17,12 +24,14 @@
 <script>
 import race_header from "@/components/race_header.vue";
 import { getEvent } from "@/service/event.js";
+import {__imgPath} from '@jx3box/jx3box-common/js/jx3box.json'
 export default {
     name: "App",
     props: [],
     data: function() {
         return {
             data: "",
+            back_img_url : __imgPath + 'image/rank/common/history.png'
         };
     },
     computed: {
@@ -34,7 +43,7 @@ export default {
         init: function(val) {
             getEvent(val || this.id).then((res) => {
                 this.data = res.data.data;
-                this.$store.state.race = res.data.data
+                this.$store.state.race = res.data.data;
             });
         },
     },

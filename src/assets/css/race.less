@@ -1,8 +1,13 @@
 @import "./app.less";
 
-// .m-rank-container{
-//     background-color:#000;
-// }
+.m-rank-container{
+    .u-history{
+        .w(156px);
+        .db;
+        img{.w(100%);}
+        .pa;.lt(20px,@header-height + 20px);
+    }
+}
 
 // .m-rank-bg{
 //     .w(100%);
@@ -30,12 +35,13 @@
 .m-rank-btns {
     .x;
     .u-btn {
-        .dbi;
-        .size(480px, 150px);
-        background: url("@{img}common/btn_v1_default.png") no-repeat center
-            center;
+        .dbi;.y(top);
+        padding-top: 43px;
+        padding-bottom: 20px;
+        .size(480px, 95px);
+        background-repeat: no-repeat;
+        background-position: center center;
         background-size: 100% auto;
-        .fz(2rem, 170px);
         .x;
         color: #fff;
         &:first-child {
@@ -45,11 +51,42 @@
         transition: 0.2s ease-in-out;
         &:hover {
             box-shadow: none;
+        }
+    }
+    .u-btn-join{
+        .fz(2rem, 90px);
+        background-image: url("@{img}common/btn_v1_default.png");
+        &:hover {
+            box-shadow: none;
             background-image: url("@{img}common/btn_v1_hover.png");
         }
         &:active,
         &:focus {
             background-image: url("@{img}common/btn_v1_active.png");
+        }
+    }
+    .u-btn-lucky{
+        background-image: url("@{img}common/btn_v2_default.png");
+        &:hover {
+            box-shadow: none;
+            background-image: url("@{img}common/btn_v2_hover.png");
+        }
+        &:active,
+        &:focus {
+            background-image: url("@{img}common/btn_v2_active.png");
+        }
+        line-height:2;
+        b{
+            .db;
+            .fz(28px,32px);
+            color:#fff;
+            margin-top:20px;
+        }
+        span{
+            .fz(16px,18px);
+            .db;
+            .mt(5px);
+            color:#ff0;
         }
     }
 }
