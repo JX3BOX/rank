@@ -59,8 +59,8 @@
         <!-- 启用的模块 -->
         <race-tab :data="data" />
 
-        <!-- 二维码 -->
-        <img class="u-qrcode" :src="qrcode_img_url" />
+        <!-- 公众号二维码 -->
+        <img class="u-wechat-qrcode" :src="qrcode_img_url" />
     </div>
 </template>
 
