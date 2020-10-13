@@ -64,6 +64,7 @@
         &:focus {
             background-image: url("@{img}common/btn_v1_active.png");
         }
+        color:#fff !important;
     }
     .u-btn-lucky{
         background-image: url("@{img}common/btn_v2_default.png");
@@ -83,10 +84,55 @@
             margin-top:20px;
         }
         span{
-            .fz(16px,18px);
+            .fz(14px,20px);
             .db;
             .mt(5px);
-            color:#ff0;
+            color:#ffbf0c;
         }
+    }
+}
+
+.m-rank-misc{
+    .u-mobile-qrcode{
+        .pa;.rt(20px,@header-height + 20px);
+        .u-qrcode{
+            color:#fff;
+        }
+        .u-icon{
+            fill:#fff;
+        }
+        .u-pic{
+            .r(2px);
+        }
+        .tm(0.5);
+        transition:0.1s ease-in-out;
+        &:hover{
+            .tm(1);
+        }
+    }
+}
+
+.m-rank-union{
+    .mt(20px);
+    background-color:#333;
+    color:#eee;
+    padding:40px 20px;
+
+    .pr;
+    .u-title{
+        background: #fba524;
+        width: 160px;
+        .fz(16px,2);
+        position: absolute;
+        top: 0;
+        margin:0;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        .x;
+    }
+
+    a{
+        .mr(20px);
+        .mb(20px);
     }
 }

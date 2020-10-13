@@ -9,14 +9,20 @@
             <div class="m-rank-content">
                 <router-view></router-view>
             </div>
+            <div class="m-rank-union">
+                <h5 class="u-title">媒体宣传</h5>
+                <div v-html="note"></div>
+            </div>
         </div>
 
         <div class="m-rank-misc">
             <!-- 往届赛事 -->
-            <a href="/rank" class="u-history"
-                ><img :src="back_img_url"
-            /></a>
+            <a href="/rank" class="u-history"><img :src="back_img_url"/></a>
+
+            <!-- 网页二维码 -->
+            <QRcode class="u-mobile-qrcode" v="static" />
         </div>
+
         <Footer></Footer>
     </div>
 </template>
@@ -24,19 +30,22 @@
 <script>
 import race_header from "@/components/race_header.vue";
 import { getEvent } from "@/service/event.js";
-import {__imgPath} from '@jx3box/jx3box-common/js/jx3box.json'
+import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
 export default {
     name: "App",
     props: [],
     data: function() {
         return {
             data: "",
-            back_img_url : __imgPath + 'image/rank/common/history.png'
+            back_img_url: __imgPath + "image/rank/common/history.png",
         };
     },
     computed: {
         id: function() {
             return this.$store.state.id;
+        },
+        note: function() {
+            return this.$store.state.race.note;
         },
     },
     methods: {
