@@ -36,7 +36,7 @@ module.exports = {
     //❤️ Porxy ~
     devServer: {
         proxy: {
-            "/api": {
+            "/team": {
                 "target": "https://next.jx3box.com",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");

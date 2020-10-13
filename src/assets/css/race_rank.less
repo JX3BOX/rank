@@ -1,0 +1,379 @@
+@media screen and (min-width: 1680px) {
+    .m-rank-race {
+        max-width: 1670px;
+    }
+    .m-rank-header {
+        max-width: 1080px;
+        min-height: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .m-rank-content {
+        width: 86.7%;
+        min-width: 1665px;
+        max-width: 95% !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.m-rank-rank {
+    .mt(130px);
+}
+
+.m-rank-rank-header {
+    .el-radio-group {
+        display: flex;
+        justify-content: space-between;
+    }
+    .el-radio-button .el-radio-button__inner {
+        border-radius: 4px !important;
+    }
+}
+
+.m-rank-rank-content {
+    .content-upper-wrapper {
+        .mt(85px);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        .upper-card-wrapper:first-child {
+            .upper-card-medal {
+                .w(150px);
+                .h(150px);
+                background: url("../img/common/rank_2.png") center no-repeat;
+                background-size: contain;
+            }
+            .upper-card-info .upper-card-info-main {
+                .mt(0);
+            }
+        }
+        .upper-card-wrapper:last-child {
+            .upper-card-medal {
+                .w(150px);
+                .h(150px);
+                background: url("../img/common/rank_3.png") center no-repeat;
+                background-size: contain;
+            }
+            .upper-card-info .upper-card-info-main {
+                .mt(0);
+            }
+        }
+        .upper-card-wrapper {
+            .pr;
+            .w(32%);
+            border: 1px solid #999999;
+            background: #3c4044;
+            box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23);
+            opacity: 1;
+            border-radius: 10px;
+            .upper-card-medal {
+                .pa;
+                .w(200px);
+                .h(200px);
+                top: 0;
+                left: 50%;
+                transform: translate(-50%, -45%);
+                background: url("../img/common/rank_1.png") center no-repeat;
+                background-size: contain;
+            }
+
+            .upper-card-info {
+                padding: 26px 0;
+                background: linear-gradient(180deg, #404448 0%, #292c30 100%);
+                border: 1px solid #999999;
+                border-radius: 10px;
+                .upper-card-info-main {
+                    .w(77%);
+                    .auto(x);
+                    .mt(21px);
+                    .pt(1px);
+                    background: url("../img/common/logo_bg.png") center
+                        no-repeat;
+                    background-size: contain;
+                    .el-image {
+                        .db;
+                        .mt(33px);
+                        .auto(x);
+                        width: 138px;
+                        height: 138px;
+                        border: 9px solid white;
+                    }
+                    .team-name {
+                        text-align: center;
+                        .pr;
+                        .mt(32px);
+                        .team-name-text {
+                            .fz(30px);
+                            color: white;
+                        }
+                        .is-verified-icon {
+                            width: 20px;
+                            height: 20px;
+                            background: url("../img/common/jx3box_small.png")
+                                center no-repeat #7ecb83;
+                            background-size: contain;
+                            border-radius: 50%;
+                            border: 4px solid #7ecb83;
+                            .dbi;
+                            vertical-align: text-bottom;
+                            .ml(10px);
+                        }
+                        .el-link {
+                            .pa;
+                            bottom: 2px;
+                            .ml(10px);
+                        }
+                        .el-link::after {
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            right: 0;
+                            height: 0;
+                            bottom: 0;
+                            border-bottom: 1px solid #909399;
+                        }
+                        .el-link:hover::after {
+                            border-color: #a6a9ad;
+                        }
+                    }
+                    .team-server {
+                        font-size: 20px;
+                        font-family: Source Han Sans CN;
+                        font-weight: 400;
+                        color: #7a7a7a;
+                        text-align: center;
+                        .mt(14px);
+                    }
+                    .el-divider {
+                        background-color: white;
+                        .mt(26px);
+                        .mb(18px);
+                    }
+                    .team-time {
+                        font-size: 34px;
+                        font-family: Source Han Sans CN;
+                        font-weight: bold;
+                        color: #66afff;
+                        text-align: center;
+                        .mt(18px);
+                    }
+                }
+                .upper-card-info-extra {
+                    font-size: 20px;
+                    font-family: Source Han Sans CN;
+                    font-weight: 400;
+                    color: #7a7a7a;
+                    text-align: center;
+                    .mt(5px);
+                }
+            }
+
+            .upper-card-detail {
+                padding: 20px;
+                .detail-title {
+                    text-align: center;
+                    span {
+                        font-size: 20px;
+                        font-family: Source Han Sans CN;
+                        font-weight: bold;
+                        color: white;
+                        border: 1px solid #707070;
+                        padding: 4px 8px;
+                    }
+                }
+                .detail-subtitle {
+                    .mt(16px);
+                    text-align: center;
+                    .fz(13px);
+                    font-family: Segoe UI;
+                    font-weight: normal;
+                    color: #d6d6d6;
+                    .detail-subtitle-icon {
+                        .w(16px);
+                        .h(16px);
+                        vertical-align: bottom;
+                    }
+                }
+                .detail-member-wrapper {
+                    display: flex;
+                    flex-flow: wrap;
+                    justify-content: space-between;
+                    .detail-member-each {
+                        .mt(10px);
+                        font-size: 14px;
+                        font-family: Segoe UI;
+                        font-weight: 400;
+                        color: #d6d6d6;
+                        .w(calc(7em + 10px));
+                        .detail-member-icon {
+                            .w(19px);
+                            .h(19px);
+                            vertical-align: middle;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .content-middle-wrapper {
+        .mt(6px);
+        border-top: 1px solid transparent;
+        .middle-card-wrapper {
+            background: #3c4044;
+            border: 1px solid #707070;
+            box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.51);
+            opacity: 1;
+            border-radius: 10px;
+            font-family: Source Han Sans CN;
+            .pr;
+            .mt(20px);
+            .w(1670px);
+            .card-rank {
+                float: left;
+                font-size: 46px;
+                font-weight: 400;
+                color: #66afff;
+                .w(150px);
+                text-align: center;
+                line-height: 326px;
+            }
+            .card-avatar {
+                float: left;
+                .w(138px);
+                .h(138px);
+                border: 9px solid white;
+                .mt(85px);
+                .mb(85px);
+                .mr(48px);
+            }
+            .card-name {
+                .pr;
+                .mt(45px);
+                .team-name-text {
+                    .fz(30px);
+                    color: white;
+                }
+                .is-verified-icon {
+                    width: 20px;
+                    height: 20px;
+                    background: url("../img/common/jx3box_small.png") center
+                        no-repeat #7ecb83;
+                    background-size: contain;
+                    border-radius: 50%;
+                    border: 4px solid #7ecb83;
+                    .dbi;
+                    vertical-align: text-bottom;
+                    .ml(10px);
+                }
+                .el-link {
+                    .pa;
+                    bottom: 8px;
+                    .ml(10px);
+                }
+                .el-link::after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    height: 0;
+                    bottom: 0;
+                    border-bottom: 1px solid #909399;
+                }
+                .el-link:hover::after {
+                    border-color: #a6a9ad;
+                }
+            }
+            .card-member {
+                .member-props {
+                    font-size: 20px;
+                    .w(1056px);
+                    .el-divider {
+                        .ml(354px);
+                        .w(702px);
+                        .mt(10px);
+                        .mb(20px);
+                    }
+                    .props-title {
+                        font-weight: bold;
+                        color: #ffffff;
+                        border: 1px solid #707070;
+                        padding: 4px 8px;
+                    }
+                    .props-server {
+                        font-weight: 400;
+                        color: #7a7a7a;
+                        float: right;
+                    }
+                }
+                .member-detail {
+                    .member-leader {
+                        .mt(10px);
+                        .fz(14px);
+                        font-family: Segoe UI;
+                        font-weight: normal;
+                        color: #d6d6d6;
+                        .detail-subtitle-icon {
+                            .w(19px);
+                            .h(19px);
+                            vertical-align: bottom;
+                        }
+                    }
+                    .detail-member-wrapper {
+                        display: flex;
+                        flex-flow: wrap;
+                        justify-content: space-between;
+                        .mr(96px);
+                        .mb(26px);
+                        .detail-member-each {
+                            .mt(10px);
+                            font-size: 14px;
+                            font-family: Segoe UI;
+                            font-weight: 400;
+                            color: #d6d6d6;
+                            .w(calc(12em + 10px));
+                            .detail-member-icon {
+                                .w(19px);
+                                .h(19px);
+                                vertical-align: middle;
+                            }
+                        }
+                    }
+                }
+            }
+            .card-time {
+                .pa;
+                top: 45px;
+                right: 100px;
+                .card-time-main {
+                    font-size: 30px;
+                    font-weight: bold;
+                    color: #66afff;
+                }
+                .card-time-sub {
+                    font-size: 25px;
+                    font-weight: 400;
+                    color: #7a7a7a;
+                    text-align: right;
+                }
+            }
+            .card-logo {
+                background: url("../img/common/logo_bg.png") center no-repeat;
+                background-size: contain;
+                .w(262px);
+                .h(242px);
+                .pa;
+                top: 24px;
+                right: 96px;
+            }
+        }
+        .middle-card-wrapper:after,
+        .middle-card-wrapper:before {
+            content: "";
+            display: table;
+        }
+        .middle-card-wrapper:after {
+            clear: both;
+        }
+    }
+}
