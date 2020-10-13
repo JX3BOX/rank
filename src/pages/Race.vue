@@ -9,6 +9,10 @@
             <div class="m-rank-content">
                 <router-view></router-view>
             </div>
+            <div class="m-rank-union">
+                <h5 class="u-title">媒体宣传</h5>
+                <div v-html="note"></div>
+            </div>
         </div>
 
         <div class="m-rank-misc">
@@ -39,6 +43,9 @@ export default {
     computed: {
         id: function() {
             return this.$store.state.id;
+        },
+        note: function() {
+            return this.$store.state.race.note;
         },
     },
     methods: {

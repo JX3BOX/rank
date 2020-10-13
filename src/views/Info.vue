@@ -23,9 +23,6 @@ export default {
         desc: function() {
             return this.$store.state.race.desc;
         },
-        note: function() {
-            return this.$store.state.race.note;
-        },
         lucky_url : function (){
             return '/' + this.id + '/lucky'
         }
