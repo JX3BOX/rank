@@ -1,37 +1,80 @@
-@media screen and (min-width: 1680px) {
-    .m-rank-race {
-        max-width: 1670px;
-    }
-    .m-rank-header {
-        max-width: 1080px;
-        min-height: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .m-rank-content {
-        width: 86.7%;
-        min-width: 1665px;
-        max-width: 95% !important;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
 .m-rank-rank {
-    .mt(130px);
+    .mt(40px);
+    width: 86.7% !important;
+    min-width: 1080px;
+    max-width: 95% !important;
+    .auto(x);
 }
 
-.m-rank-rank-header {
-    .el-radio-group {
-        display: flex;
-        justify-content: space-between;
+.m-rank-boss {
+    padding:0;
+    margin:0;
+    list-style:none;
+    
+    .x;
+    .u-boss{
+        background-color:rgb(63,68,72);
+        .h(60px);
+        .mr(40px);
+        .mb(20px);
+        .r(6px);
+        .dbi;
+        padding:0 20px;
+        color:#eee;
+        .fz(16px,60px);
+        .pointer;
+        transition:0.1s ease-in-out;
+        .bold;
+
+        &:last-child{
+            .mr(0);
+        }
     }
-    .el-radio-button .el-radio-button__inner {
-        border-radius: 4px !important;
+    .on{
+        background-color:#171717;
+        color:#0cf;
+        outline:1px solid #0cf;
     }
 }
 
-.m-rank-rank-content {
+.m-rank-top100 {
+
+    .u-logo{
+        .size(128px);
+        .auto(x);
+        border:5px solid #fff;
+        .auto(x);
+        .db;
+        .mt(40px);
+    }
+
+    .u-name{
+        .nobreak;
+        .mr(5px);
+    }
+
+
+    .u-verified,.u-not-verified{
+        .fz(16px,40px);
+        .ml(5px);
+        .mr(3px);
+    }
+    .u-verified{
+        color:#7ecb83;
+    }
+    .u-not-verified{
+        color:#d04949;
+    }
+
+    .u-link{
+        color:#aaa;
+        box-shadow:0 1px 0 #aaa;
+        &:hover{
+            color:#0cf;
+            box-shadow:0 1px 0 #0cf;
+        }
+    }
+
     .content-upper-wrapper {
         .mt(85px);
         display: flex;
@@ -170,7 +213,7 @@
             }
 
             .upper-card-detail {
-                padding: 20px;
+                padding: 20px 20px 30px 20px;
                 .detail-title {
                     text-align: center;
                     span {
@@ -181,6 +224,7 @@
                         border: 1px solid #707070;
                         padding: 4px 8px;
                     }
+                    .mb(10px);
                 }
                 .detail-subtitle {
                     .mt(16px);

@@ -22,5 +22,5 @@ export default {
 </script>
 
 <style lang="less">
-// @import '../assets/css/fn.less';
+@import '../assets/css/race_stat.less';
 </style>
