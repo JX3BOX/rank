@@ -30,7 +30,7 @@ installInterceptors($);
 
 const $next = axios.create({
     withCredentials: true,
-    baseURL: __next,
+    baseURL: process.env.NODE_ENV === 'production' ?  __next : '/',
 });
 function installNextInterceptors(target) {
     target["interceptors"]["response"].use(

@@ -1,0 +1,104 @@
+.d-banner {
+    .w(724.5px);
+    .h(60px);
+    margin: 126px auto auto auto;
+    background: url("../img/common/vote_banner.png") center no-repeat;
+    background-size: contain;
+}
+.el-table--border::after, .el-table--group::after, .el-table::before {
+    content: none;
+}
+.d-table {
+    table {
+        border-spacing: 0 23px;
+    }
+    background: transparent;
+    font-family: Source Han Sans CN;
+    .mt(60px);
+    .el-table__header {
+        .mb(-15px);
+    }
+    thead tr th:first-child {
+        border: 1px solid #707070;
+        border-radius: 10px 0 0 10px;
+        border-right: none;
+    }
+    thead tr th:last-child {
+        border: 1px solid #707070;
+        border-radius: 0 10px 10px 0;
+        border-left: none;
+    }
+    tbody tr td:first-child {
+        border: 1px solid #707070;
+        border-radius: 10px 0 0 10px;
+        border-right: none;
+    }
+    tbody tr td:last-child {
+        border: 1px solid #707070;
+        border-radius: 0 10px 10px 0;
+        border-left: none;
+    }
+    tbody tr td:nth-child(2) .cell {
+        line-height: 0;
+    }
+    .el-table__body-wrapper {
+        background: transparent;
+    }
+    .t-rank {
+        .pr;
+        .w(55px);
+        .h(57px);
+        background: url("../img/common/vote_rank_bg.png") center no-repeat;
+        background-size: contain;
+        .t-rank-text {
+            .pa;
+            top: 27px;
+            left: 0;
+            font-size: 19px;
+            font-weight: 400;
+            color: #ffffff;
+            .w(55px);
+            text-align: center;
+        }
+    }
+    .t-pic {
+        border: 4px solid white;
+        border-radius: 50%;
+        .w(68px);
+        .h(68px);
+    }
+    .t-team {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+    .t-server {
+        font-size: 17px;
+        font-weight: 400;
+        color: #d6d6d6;
+    }
+    .t-leader {
+        font-size: 17px;
+        font-weight: 400;
+        color: #d6d6d6;
+    }
+    .t-count {
+        font-size: 28px;
+        font-weight: bold;
+        color: #ff4848;
+    }
+    .t-btn {
+        .w(108px);
+        .h(45px);
+        background: url("../img/common/vote_btn-normal.png") center no-repeat;
+        background-size: contain;
+    }
+    .t-btn:hover {
+        background: url("../img/common/vote_btn-hover.png") center no-repeat;
+        background-size: contain;
+        cursor: pointer;
+    }
+    .t-btn:active {
+        opacity: 0.5;
+    }
+}
