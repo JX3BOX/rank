@@ -17,7 +17,6 @@
                 <strong>现金红包</strong>：红包封面标注赞助人/组织<br>
                 <strong>实物礼品</strong>：可自行指定派奖对象/范围<br>
                 <strong>虚拟礼品</strong>：可提供激活码或礼券等<br>
-                超过1000元赞助单位，可提供logo展示（尺寸90*40）<br>
                 商家形式赞助店铺需在活动期内为提供jx3box备注的买家提供额外小礼物赠送。<br>
                 赞助联系人：<a href="http://wpa.qq.com/msgrd?v=3&uin=17229398&site=qq&menu=yes" target="_blank">QQ：17229398</a>。<br />
                 所有赞助记录及红包发放记录将全数在此页面列出。
