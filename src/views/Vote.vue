@@ -56,6 +56,7 @@
                 </template>
             </el-table-column>
         </el-table>
+        <!-- 有奖竞猜 -->
     </div>
 </template>
 
