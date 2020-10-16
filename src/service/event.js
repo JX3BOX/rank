@@ -18,10 +18,11 @@ function joinEvent(data) {
     return $next.post("team/rank/join", data);
 }
 
-function hasJoined(event_id) {
+function hasJoined(event_id,uid) {
     return $next.get("team/rank/my-records", {
         params: {
             event_id: event_id,
+            // uid : uid
         },
     });
 }

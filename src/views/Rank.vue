@@ -1,153 +1,112 @@
 <template>
     <div class="m-rank-rank">
-        <ul class="m-rank-boss">
-            <li
-                class="u-boss"
+        <el-row class="m-rank-boss" :gutter="20">
+            <el-col
+                :span="4"
                 v-for="(label, achieve_id) of bossList"
                 :key="achieve_id"
-                :label="achieve_id"
-                :class="{ on: achieve_id == current_boss }"
-                @click="changeBoss(achieve_id)"
             >
-                {{ label }}
-            </li>
-        </ul>
-
-        <!-- TODO:成绩数不够时 -->
-        <div class="m-rank-top100">
-            <div class="content-upper-wrapper">
+                <!-- TODO:添加boss百分比 -->
                 <div
-                    class="upper-card-wrapper"
+                    class="u-boss"
+                    :class="{ on: achieve_id == current_boss }"
+                    @click="changeBoss(achieve_id)"
+                >
+                    <span class="u-boss-name">{{ label }}</span>
+                    <span class="u-boss-per"></span>
+                </div>
+            </el-col>
+        </el-row>
+
+        <div class="m-rank-top100">
+            <!-- A.列表不为空 -->
+            <div class="m-rank-top100-list" v-if="data && data.length">
+                <div
+                    class="m-rank-top100-item"
                     v-for="(item, i) in data"
                     :key="i"
-                    :class="{isRow : i >= 3}"
+                    :class="'is-No' + (i + 1)"
                 >
-                    <div class="upper-card-medal" v-if="i < 3"></div>
-                    <div class="upper-card-info">
-                        <div class="upper-card-info-main">
-                            <el-image
-                                class="u-logo"
-                                v-if="item.team_logo"
-                                :src="item.team_logo | teamLogo"
-                                fit="fill"
-                            ></el-image>
-                            <img
-                                class="u-logo"
-                                src="../assets/img/misc/null.png"
-                                v-else
-                            />
-                            <div class="team-name">
-                                <span class="u-name team-name-text">{{
-                                    item.team_name && item.team_name.slice(0, 6)
-                                }}</span>
-                                <span
-                                    class="u-verified el-icon-success"
-                                    v-if="item.verified"
-                                ></span>
-                                <span
-                                    class="u-not-verified el-icon-warning"
-                                    v-else
-                                ></span>
-                                <a
-                                    class="u-link"
-                                    :href="item.team_id | teamLink"
-                                    >查看详情</a
-                                >
-                            </div>
-                            <div class="team-server">
-                                服务器 : {{ item.server }}
-                            </div>
-                            <el-divider></el-divider>
-                            <div class="team-time">
-                                {{ item.finish_time | showTime }}
-                            </div>
-                        </div>
-                        <div class="upper-card-info-extra">
-                            用时 : {{ item.fight_time | showTC }}
-                        </div>
+                    <!-- 排名 -->
+                    <div class="u-ranking" :class="'is-Top' + (i + 1)">
+                        <i class="u-pic"
+                            ><img :src="getRankImg(i + 1)" v-if="i < 3"
+                        /></i>
+                        <span>{{ i + 1 }}</span>
                     </div>
-                    <div class="upper-card-detail">
-                        <div class="detail-title">
-                            <span>团队成员</span>
-                        </div>
-                        <!-- <div class="detail-subtitle">
-                            团长：
-                            <el-image
-                                class="detail-subtitle-icon"
-                                :src="tmpXfIconPath"
-                                fill="fit"
-                            ></el-image>
-                            六个字团长名
-                        </div> -->
-                        <div class="detail-member-wrapper">
-                            <div
-                                class="detail-member-each"
-                                v-for="(member, i) in item.members"
-                                :key="i"
-                            >
-                                <el-image
-                                    class="detail-member-icon"
+                    <!-- 队徽 -->
+                    <a class="u-logo" :href="item.team_id | teamLink">
+                        <el-image
+                            v-if="item.team_logo"
+                            :src="item.team_logo | teamLogo"
+                            fit="fill"
+                        ></el-image>
+                        <img src="../assets/img/misc/null.png" v-else />
+                    </a>
+                    <!-- 名称 -->
+                    <div class="u-title">
+                        <a class="u-teamname" :href="item.team_id | teamLink"
+                            ><i class="el-icon-link"></i
+                            >{{
+                                item.team_name && item.team_name.slice(0, 6)
+                            }}</a
+                        >
+                        <span class="u-server">
+                            {{ item.server }}
+                        </span>
+                        <span
+                            class="u-verified el-icon-success"
+                            v-if="item.verified"
+                        ></span>
+                        <span class="u-not-verified el-icon-warning" v-else>
+                            公示期</span
+                        >
+                    </div>
+                    <!-- 时间 -->
+                    <div class="u-time">
+                        <span class="u-time-finish">
+                            {{ item.finish_time | showTime }}
+                        </span>
+                        <span class="u-time-fight">
+                            用时 : <b>{{ item.fight_time | showTC }}</b>
+                        </span>
+                    </div>
+                    <!-- 队长 -->
+                    <div class="u-leader" v-if="item.leaders">
+                        <span class="u-leader-label">团长 : </span>
+                        <img
+                            class="u-mount"
+                            :src="item.leaders[1] | showLeaderMount"
+                        />
+                        <span class="u-username">{{
+                            item.leaders[0] | showLeaderName
+                        }}</span>
+                    </div>
+                    <!-- 队员 -->
+                    <el-row class="u-teammates" :gutter="10">
+                        <el-col
+                            class="u-member"
+                            :span="i < 3 ? 8 : 4"
+                            v-for="(member, j) in item.members"
+                            :key="j"
+                            ><div>
+                                <img
+                                    class="u-mount"
                                     :src="member | showMemberMount"
-                                    fill="fit"
-                                ></el-image>
-                                {{member | showMemberName}}
-                            </div>
-                        </div>
-                    </div>
+                                />
+                                <span class="u-username">{{
+                                    member | showMemberName
+                                }}</span>
+                            </div></el-col
+                        >
+                    </el-row>
                 </div>
             </div>
-            <!-- <div class="content-middle-wrapper">
-                <div class="middle-card-wrapper">
-                    <div class="card-rank">1</div>
-                    <el-image
-                        src="https://iph.href.lu/138x138?text=团长头像"
-                        fit="fill"
-                        class="card-avatar"
-                    ></el-image>
-                    <div class="card-name">
-                        <span class="team-name-text">队伍名</span>
-                        <div class="is-verified-icon"></div>
-                        <el-link type="info">查看详情</el-link>
-                    </div>
-                    <div class="card-member">
-                        <div class="member-props">
-                            <el-divider></el-divider>
-                            <span class="props-title">团队成员</span>
-                            <span class="props-server">服务器：围魏救赵</span>
-                        </div>
-                        <div class="member-detail">
-                            <div class="member-leader">
-                                团长：
-                                <el-image
-                                    class="detail-subtitle-icon"
-                                    :src="tmpXfIconPath"
-                                    fill="fit"
-                                ></el-image>
-                                六个字团长名
-                            </div>
-                            <div class="detail-member-wrapper">
-                                <div
-                                    class="detail-member-each"
-                                    v-for="count in 24"
-                                    :key="count"
-                                >
-                                    <el-image
-                                        class="detail-member-icon"
-                                        :src="tmpXfIconPath"
-                                        fill="fit"
-                                    ></el-image>
-                                    一一一一一一@龙争虎斗
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-time">
-                        <div class="card-time-main">2020-05-27 13:21:49</div>
-                        <div class="card-time-sub">用时：13分41秒</div>
-                    </div>
-                    <div class="card-logo"></div>
-                </div>
-            </div> -->
+
+            <!-- B.列表为空 -->
+            <div class="m-rank-top100-null" v-else>
+                <i class="el-icon-warning-outline"></i> 暂时还没有任何记录
+            </div>
         </div>
     </div>
 </template>
@@ -159,120 +118,14 @@ import _ from "lodash";
 import { showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
+import { getTop100 } from "@/service/race.js";
 export default {
     components: {},
     props: [],
     data: function() {
         return {
             current_boss: "",
-            test_data: [
-                {
-                    ID: 1479,
-                    guid: "18014398509483875",
-                    server: "山雨欲来",
-                    role: "南宫伯",
-                    leader: "南宫伯假如名字很长啊啊啊啊啊",
-                    teammate:
-                        "南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572,南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572,南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572,南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572,南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572,南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572,南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572",
-                    achieve_id: 293,
-                    client_id: "40C17383C08EC0D0",
-                    finish_time: 1602578255,
-                    fight_time: 6044,
-                    is_leader: true,
-                    uid: 2,
-                    team_id: 142,
-                    remark: "",
-                    created: 1602578256,
-                    date_str: "2020-10-13 16:37:36",
-                    re_uid: 0,
-                    re_guid: 0,
-                    re_clientid: 0,
-                    re_ip: 0,
-                    team_logo:
-                        "https://console.cnyixun.com/upload/avatar/2020/10/13/9120143.jpg",
-                    team_name: "南宫伯假如名字很长啊啊啊啊啊",
-                    verified: 1,
-                },
-                {
-                    ID: 1479,
-                    guid: "18014398509483875",
-                    server: "山雨欲来",
-                    role: "南宫伯",
-                    leader: "南宫伯",
-                    teammate:
-                        "南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572",
-                    achieve_id: 293,
-                    client_id: "40C17383C08EC0D0",
-                    finish_time: 1602578255,
-                    fight_time: 6044,
-                    is_leader: true,
-                    uid: 2,
-                    team_id: 142,
-                    remark: "",
-                    created: 1602578256,
-                    date_str: "2020-10-13 16:37:36",
-                    re_uid: 0,
-                    re_guid: 0,
-                    re_clientid: 0,
-                    re_ip: 0,
-                    team_logo: "",
-                    team_name: "南宫伯",
-                    verified: 0,
-                },
-                {
-                    ID: 1479,
-                    guid: "18014398509483875",
-                    server: "山雨欲来",
-                    role: "南宫伯",
-                    leader: "南宫伯",
-                    teammate:
-                        "南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572",
-                    achieve_id: 293,
-                    client_id: "40C17383C08EC0D0",
-                    finish_time: 1602578255,
-                    fight_time: 6044,
-                    is_leader: true,
-                    uid: 2,
-                    team_id: 142,
-                    remark: "",
-                    created: 1602578256,
-                    date_str: "2020-10-13 16:37:36",
-                    re_uid: 0,
-                    re_guid: 0,
-                    re_clientid: 0,
-                    re_ip: 0,
-                    team_logo: "",
-                    team_name: "南宫伯",
-                    verified: 0,
-                },
-                {
-                    ID: 1479,
-                    guid: "18014398509483875",
-                    server: "山雨欲来",
-                    role: "南宫伯",
-                    leader: "南宫伯",
-                    teammate:
-                        "南宫伯,10014,18014398509483875;吴冷旭,10464,18014398509504572",
-                    achieve_id: 293,
-                    client_id: "40C17383C08EC0D0",
-                    finish_time: 1602578255,
-                    fight_time: 6044,
-                    is_leader: true,
-                    uid: 2,
-                    team_id: 142,
-                    remark: "",
-                    created: 1602578256,
-                    date_str: "2020-10-13 16:37:36",
-                    re_uid: 0,
-                    re_guid: 0,
-                    re_clientid: 0,
-                    re_ip: 0,
-                    team_logo: "",
-                    team_name: "南宫伯",
-                    verified: 0,
-                },
-            ],
-            tmpXfIconPath: __imgPath + "image/xf/10081.png",
+            origin_data: [],
         };
     },
     computed: {
@@ -283,32 +136,40 @@ export default {
             return achieves[this.id] || [];
         },
         data: function() {
-            // return this.$store.state.race || [];
-            let data = this.test_data || [];
-            // console.log(data);
-            data.forEach((team, i) => {
-                let members = team.teammate.split(";");
-                members.forEach((member, j) => {
-                    members[j] = member.split(",");
+            let data = this.origin_data || [];
+            data &&
+                data.forEach((team, i) => {
+                    let leader_name = team.leader;
+                    let members = team.teammate.split(";");
+                    let arr = [];
+                    let leader = "";
+                    members.forEach((member, j) => {
+                        let result = member.split(",");
+                        if (result[0] != leader_name) {
+                            arr.push(result);
+                        } else {
+                            leader = result;
+                        }
+                    });
+                    data[i]["members"] = arr;
+                    data[i]["leaders"] = leader;
                 });
-                data[i]["members"] = members;
-            });
             return data;
         },
-        top_3: function() {
-            return this.data && this.data.slice(0, 3);
-        },
-        top_100: function() {
-            return this.data && this.data.slice(3, 100);
-        },
-    },
-    created: function() {
-        this.current_boss = _.first(Object.keys(this.bossList));
     },
     methods: {
         changeBoss: function(val) {
             this.current_boss = val;
         },
+        getRankImg: function(num) {
+            return __imgPath + "image/rank/common/rank_" + num + ".png";
+        },
+        loadData : function (){
+            if(!this.id) return
+            getTop100(this.current_boss).then((res) => {
+                this.origin_data = res.data.data
+            })
+        }
     },
     filters: {
         teamLink: function(val) {
@@ -324,18 +185,33 @@ export default {
             let s = val / 1000;
             return ~~(s / 60) + "分" + ~~(s % 60) + "秒";
         },
-        showMemberMount : function (member){
-            let mount = member && member[1] || 0
-            let mountIcon = __imgPath + 'image/xf/' + mount + '.png'
-            return mountIcon
+        showMemberMount: function(member) {
+            let mount = (member && member[1]) || 0;
+            let mountIcon = __imgPath + "image/xf/" + mount + ".png";
+            return mountIcon;
         },
-        showMemberName : function (member){
-            return member && member[0].slice(0,6) || '未知'
-        }
+        showMemberName: function(member) {
+            return (member && member[0].slice(0, 6)) || "未知";
+        },
+        showLeaderMount: function(mount) {
+            let mountIcon = __imgPath + "image/xf/" + mount + ".png";
+            return mountIcon;
+        },
+        showLeaderName: function(name) {
+            return (name && name.slice(0, 6)) || "未知";
+        },
+    },
+    created: function() {
+        this.current_boss = _.first(Object.keys(this.bossList));
     },
     mounted() {
-        console.log(this.data);
+        this.loadData()
     },
+    watch : {
+        id : function (){
+            this.loadData()
+        }
+    }
 };
 </script>
 <style scoped lang="less">

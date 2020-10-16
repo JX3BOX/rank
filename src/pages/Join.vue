@@ -117,7 +117,7 @@ import PICS from "@/assets/js/pics.js";
 import { getEvents, joinEvent, hasJoined } from "@/service/event.js";
 import { getMyTeams } from "@/service/team.js";
 import _ from "lodash";
-
+import User from '@jx3box/jx3box-common/js/user.js'
 const ACTIVE_EVENT_ID = 1; //当前开启的活动
 
 export default {
@@ -146,7 +146,7 @@ export default {
                 //     name : "诗画印象"
                 // }
             ],
-            status: true, //未报名
+            status: false,
         };
     },
     computed: {

@@ -1,423 +1,281 @@
 .m-rank-rank {
     .mt(40px);
-    width: 86.7% !important;
-    min-width: 1080px;
-    max-width: 95% !important;
-    .auto(x);
+    // width: 86.7% !important;
+    // min-width: 1080px;
+    // max-width: 95% !important;
+    // .auto(x);
 }
 
 .m-rank-boss {
-    padding:0;
-    margin:0;
-    list-style:none;
-    
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
     .x;
-    .u-boss{
-        background-color:rgb(63,68,72);
-        .h(60px);
-        .mr(40px);
+    .u-boss {
+        background-color: #222;
         .mb(20px);
-        .r(6px);
-        .dbi;
-        padding:0 20px;
-        color:#eee;
-        .fz(16px,60px);
+        .r(4px);
+        padding: 0 10px;
+        color: #eee;
+        .fz(16px, 50px);
         .pointer;
-        transition:0.1s ease-in-out;
+        transition: 0.1s ease-in-out;
         .bold;
 
-        &:last-child{
+        &:last-child {
             .mr(0);
         }
     }
-    .on{
-        background-color:#171717;
-        color:#0cf;
-        outline:1px solid #0cf;
+    .on {
+        background-color: #171717;
+        color: #0cf;
+        outline: 1px solid #0cf;
     }
 }
 
-.m-rank-top100 {
+.m-rank-top100-null {
+    .x;
+    .mt(15vh);
+    color: #0cf;
+}
 
-    .u-logo{
-        .size(128px);
-        .auto(x);
-        border:5px solid #fff;
-        .auto(x);
-        .db;
-        .mt(40px);
+.m-rank-top100-item {
+    border: 1px solid #777;
+    background: #313131;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23);
+    .mb(20px);
+    .r(10px);
+    .pr;
+
+    @padding: 40px;
+    @logosize: 88px;
+    @leftspace: 40px + @logosize + 20px;
+    @logopadding: 5px;
+
+    padding: @padding;
+    padding-bottom : @padding - 10px;
+
+    .u-ranking {
+        .fz(32px, @logosize);
+        color: #66afff;
+        .pa;
+        .lt(@padding);
+        .x;
+        .w(60px);
     }
 
-    .u-name{
+    .u-logo {
+        .db;
+
+        img,
+        .el-image {
+            .db;
+            .full;
+            .size(@logosize);
+            border: @logopadding solid #fff;
+        }
+
+        .pa;
+        .lt(@logosize + 32px, 40px);
+    }
+
+    .pl(@leftspace + @logosize + @logopadding*2);
+
+    .u-title {
+        .db;
+        i {
+            color: #eee;
+            .mr(5px);
+        }
+        &:hover{
+            .u-teamname{
+                color:#00f3ff;
+                // box-shadow:0 1px 0 darken(#0cf,10%);
+                i{
+                    color:#ff0;
+                }
+            }
+        }
+        .mb(6px);
+    }
+
+    .u-teamname {
         .nobreak;
         .mr(5px);
+        color: #0cf;
+        .fz(24px, 24px);
+        .bold;
     }
 
+    .u-server {
+        &:before {
+            content: "@";
+        }
+        color: #787878;
+        .fz(12px);
+    }
 
-    .u-verified,.u-not-verified{
-        .fz(16px,40px);
+    .u-verified,
+    .u-not-verified {
+        .fz(16px, 40px);
         .ml(5px);
         .mr(3px);
+        .fz(14px);
     }
-    .u-verified{
-        color:#7ecb83;
+    .u-verified {
+        color: #7ecb83;
     }
-    .u-not-verified{
-        color:#d04949;
+    .u-not-verified {
+        color: #d04949;
     }
 
-    .u-link{
+    .u-time {
+        .pa;
+        .rt(40px);
+        font-size: 12px;
+        color: #787878;
+    }
+
+
+    .u-time-fight {
+        .x(right);
+        b {
+            color: #ceaa4c;
+            .fz(20px);
+        }
+    }
+
+    .u-teammates {
+        .clearfix;
+        .mt(10px);
+    }
+
+    .u-leader {
+        .bold;
+        .fz(14px,24px);
         color:#aaa;
-        box-shadow:0 1px 0 #aaa;
-        &:hover{
-            color:#0cf;
-            box-shadow:0 1px 0 #0cf;
+        .u-username{
+            .y(top);
         }
     }
-
-    .content-upper-wrapper {
-        .mt(85px);
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        .upper-card-wrapper:first-child {
-            .upper-card-medal {
-                .w(150px);
-                .h(150px);
-                background: url("../img/common/rank_2.png") center no-repeat;
-                background-size: contain;
-            }
-            .upper-card-info .upper-card-info-main {
-                .mt(0);
-            }
-        }
-        .upper-card-wrapper:last-child {
-            .upper-card-medal {
-                .w(150px);
-                .h(150px);
-                background: url("../img/common/rank_3.png") center no-repeat;
-                background-size: contain;
-            }
-            .upper-card-info .upper-card-info-main {
-                .mt(0);
-            }
-        }
-        .upper-card-wrapper {
-            .pr;
-            .w(32%);
-            border: 1px solid #999999;
-            background: #3c4044;
-            box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23);
-            opacity: 1;
-            border-radius: 10px;
-            .upper-card-medal {
-                .pa;
-                .w(200px);
-                .h(200px);
-                top: 0;
-                left: 50%;
-                transform: translate(-50%, -45%);
-                background: url("../img/common/rank_1.png") center no-repeat;
-                background-size: contain;
-            }
-
-            .upper-card-info {
-                padding: 26px 0;
-                background: linear-gradient(180deg, #404448 0%, #292c30 100%);
-                border: 1px solid #999999;
-                border-radius: 10px;
-                .upper-card-info-main {
-                    .w(77%);
-                    .auto(x);
-                    .mt(21px);
-                    .pt(1px);
-                    background: url("../img/common/logo_bg.png") center
-                        no-repeat;
-                    background-size: contain;
-                    .el-image {
-                        .db;
-                        .mt(33px);
-                        .auto(x);
-                        width: 138px;
-                        height: 138px;
-                        border: 9px solid white;
-                    }
-                    .team-name {
-                        text-align: center;
-                        .pr;
-                        .mt(32px);
-                        .team-name-text {
-                            .fz(30px);
-                            color: white;
-                        }
-                        .is-verified-icon {
-                            width: 20px;
-                            height: 20px;
-                            background: url("../img/common/jx3box_small.png")
-                                center no-repeat #7ecb83;
-                            background-size: contain;
-                            border-radius: 50%;
-                            border: 4px solid #7ecb83;
-                            .dbi;
-                            vertical-align: text-bottom;
-                            .ml(10px);
-                        }
-                        .el-link {
-                            .pa;
-                            bottom: 2px;
-                            .ml(10px);
-                        }
-                        .el-link::after {
-                            content: "";
-                            position: absolute;
-                            left: 0;
-                            right: 0;
-                            height: 0;
-                            bottom: 0;
-                            border-bottom: 1px solid #909399;
-                        }
-                        .el-link:hover::after {
-                            border-color: #a6a9ad;
-                        }
-                    }
-                    .team-server {
-                        font-size: 20px;
-                        font-family: Source Han Sans CN;
-                        font-weight: 400;
-                        color: #7a7a7a;
-                        text-align: center;
-                        .mt(14px);
-                    }
-                    .el-divider {
-                        background-color: white;
-                        .mt(26px);
-                        .mb(18px);
-                    }
-                    .team-time {
-                        font-size: 34px;
-                        font-family: Source Han Sans CN;
-                        font-weight: bold;
-                        color: #66afff;
-                        text-align: center;
-                        .mt(18px);
-                    }
-                }
-                .upper-card-info-extra {
-                    font-size: 20px;
-                    font-family: Source Han Sans CN;
-                    font-weight: 400;
-                    color: #7a7a7a;
-                    text-align: center;
-                    .mt(5px);
-                }
-            }
-
-            .upper-card-detail {
-                padding: 20px 20px 30px 20px;
-                .detail-title {
-                    text-align: center;
-                    span {
-                        font-size: 20px;
-                        font-family: Source Han Sans CN;
-                        font-weight: bold;
-                        color: white;
-                        border: 1px solid #707070;
-                        padding: 4px 8px;
-                    }
-                    .mb(10px);
-                }
-                .detail-subtitle {
-                    .mt(16px);
-                    text-align: center;
-                    .fz(13px);
-                    font-family: Segoe UI;
-                    font-weight: normal;
-                    color: #d6d6d6;
-                    .detail-subtitle-icon {
-                        .w(16px);
-                        .h(16px);
-                        vertical-align: bottom;
-                    }
-                }
-                .detail-member-wrapper {
-                    display: flex;
-                    flex-flow: wrap;
-                    justify-content: space-between;
-                    .detail-member-each {
-                        .mt(10px);
-                        font-size: 14px;
-                        font-family: Segoe UI;
-                        font-weight: 400;
-                        color: #d6d6d6;
-                        .w(calc(7em + 10px));
-                        .detail-member-icon {
-                            .w(19px);
-                            .h(19px);
-                            vertical-align: middle;
-                        }
-                    }
-                }
-            }
-        }
+    .u-mount {
+        .size(24px);
+        .y(top);
+        .mr(2px);
     }
-    .content-middle-wrapper {
-        .mt(6px);
-        border-top: 1px solid transparent;
-        .middle-card-wrapper {
-            background: #3c4044;
-            border: 1px solid #707070;
-            box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.51);
-            opacity: 1;
-            border-radius: 10px;
-            font-family: Source Han Sans CN;
-            .pr;
+
+
+    .u-member {
+        .fz(12px);
+        .mb(5px);
+    }
+
+    .u-username {
+        .nobreak;
+        color: #aaa;
+        width: 97px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+.m-rank-top100{
+    .pr;
+    .mt(80px);
+}
+
+.m-rank-top100-list {
+    .is-No1,.is-No2,.is-No3{
+
+        .w(340px);
+        box-sizing: border-box;
+        .pr;
+        padding:0;
+        background-color:#222;
+
+        .u-ranking{
+            .pa;
+            .lt(50%,-80px);
+            transform: translateX(-50%);
+            .w(140px);
+            span{
+                .none;
+            }
+        }
+
+        .u-logo{
+            img,.el-image{
+                .size(120px);
+                .auto(x);
+            }
+            .ps;
+            .auto(x);
+            .db;
+        }
+
+        .u-title{
+            .x;
             .mt(20px);
-            .w(1670px);
-            .card-rank {
-                float: left;
-                font-size: 46px;
-                font-weight: 400;
-                color: #66afff;
-                .w(150px);
-                text-align: center;
-                line-height: 326px;
+        }
+        .u-time{
+            .ps;
+            span{
+                .db;
+                .x;
             }
-            .card-avatar {
-                float: left;
-                .w(138px);
-                .h(138px);
-                border: 9px solid white;
-                .mt(85px);
-                .mb(85px);
-                .mr(48px);
-            }
-            .card-name {
-                .pr;
-                .mt(45px);
-                .team-name-text {
-                    .fz(30px);
-                    color: white;
-                }
-                .is-verified-icon {
-                    width: 20px;
-                    height: 20px;
-                    background: url("../img/common/jx3box_small.png") center
-                        no-repeat #7ecb83;
-                    background-size: contain;
-                    border-radius: 50%;
-                    border: 4px solid #7ecb83;
-                    .dbi;
-                    vertical-align: text-bottom;
-                    .ml(10px);
-                }
-                .el-link {
-                    .pa;
-                    bottom: 8px;
-                    .ml(10px);
-                }
-                .el-link::after {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    height: 0;
-                    bottom: 0;
-                    border-bottom: 1px solid #909399;
-                }
-                .el-link:hover::after {
-                    border-color: #a6a9ad;
-                }
-            }
-            .card-member {
-                .member-props {
-                    font-size: 20px;
-                    .w(1056px);
-                    .el-divider {
-                        .ml(354px);
-                        .w(702px);
-                        .mt(10px);
-                        .mb(20px);
-                    }
-                    .props-title {
-                        font-weight: bold;
-                        color: #ffffff;
-                        border: 1px solid #707070;
-                        padding: 4px 8px;
-                    }
-                    .props-server {
-                        font-weight: 400;
-                        color: #7a7a7a;
-                        float: right;
-                    }
-                }
-                .member-detail {
-                    .member-leader {
-                        .mt(10px);
-                        .fz(14px);
-                        font-family: Segoe UI;
-                        font-weight: normal;
-                        color: #d6d6d6;
-                        .detail-subtitle-icon {
-                            .w(19px);
-                            .h(19px);
-                            vertical-align: bottom;
-                        }
-                    }
-                    .detail-member-wrapper {
-                        display: flex;
-                        flex-flow: wrap;
-                        justify-content: space-between;
-                        .mr(96px);
-                        .mb(26px);
-                        .detail-member-each {
-                            .mt(10px);
-                            font-size: 14px;
-                            font-family: Segoe UI;
-                            font-weight: 400;
-                            color: #d6d6d6;
-                            .w(calc(12em + 10px));
-                            .detail-member-icon {
-                                .w(19px);
-                                .h(19px);
-                                vertical-align: middle;
-                            }
-                        }
-                    }
-                }
-            }
-            .card-time {
-                .pa;
-                top: 45px;
-                right: 100px;
-                .card-time-main {
-                    font-size: 30px;
-                    font-weight: bold;
-                    color: #66afff;
-                }
-                .card-time-sub {
-                    font-size: 25px;
-                    font-weight: 400;
-                    color: #7a7a7a;
-                    text-align: right;
-                }
-            }
-            .card-logo {
-                background: url("../img/common/logo_bg.png") center no-repeat;
-                background-size: contain;
-                .w(262px);
-                .h(242px);
-                .pa;
-                top: 24px;
-                right: 96px;
+            border-bottom:1px solid #787878;
+            padding-bottom:20px;
+            margin-bottom:20px;
+        }
+        .u-teamname{
+            .db;
+        }
+
+        .u-leader{
+            .x;
+            .u-username{
+                width:auto;
+                max-width:80%;
             }
         }
-        .middle-card-wrapper:after,
-        .middle-card-wrapper:before {
-            content: "";
-            display: table;
+        .u-teammates{
+            padding:0 10px;
+            .u-username{
+                .w(70px);
+            }
         }
-        .middle-card-wrapper:after {
-            clear: both;
+    }
+    .is-No2,.is-No3{
+        .pa;
+    }
+
+    @basic : 100px;
+    @no2add : 20px;
+    @no3add : 40px;
+
+    .is-No1{
+        .ml(370px);
+        .u-logo{
+            .pt(@basic);
         }
+        .u-ranking{
+            .w(180px);
+        }
+    }
+    .is-No2{
+        .lt(0,@no2add);
+        .u-logo{
+            .pt(@basic - @no2add);
+        }
+    }
+    .is-No3{
+        .rt(0,@no3add);
+        .u-logo{
+            .pt(@basic - @no3add);
+        }
+    }
+    .is-No4{
+        .clear(left);
     }
 }
