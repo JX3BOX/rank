@@ -205,10 +205,13 @@ export default {
         this.current_boss = _.first(Object.keys(this.bossList));
     },
     mounted() {
+        if(this.$route.query.aid){
+            this.current_boss = this.$route.query.aid
+        }
         this.loadData()
     },
     watch : {
-        id : function (){
+        current_boss : function (){
             this.loadData()
         }
     }
