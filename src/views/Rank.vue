@@ -35,17 +35,17 @@
                         <span>{{ i + 1 }}</span>
                     </div>
                     <!-- 队徽 -->
-                    <a class="u-logo" :href="item.team_id | teamLink">
+                    <a class="u-logo" :href="item.team_id | teamLink" target="_blank">
                         <el-image
                             v-if="item.team_logo"
-                            :src="item.team_logo | teamLogo"
+                            :src="i < 3 ? teamLogo(item.team_logo,true) : teamLogo(item.team_logo,false)"
                             fit="fill"
                         ></el-image>
                         <img src="../assets/img/misc/null.png" v-else />
                     </a>
                     <!-- 名称 -->
                     <div class="u-title">
-                        <a class="u-teamname" :href="item.team_id | teamLink"
+                        <a class="u-teamname" :href="item.team_id | teamLink" target="_blank"
                             ><i class="el-icon-link"></i
                             >{{
                                 item.team_name && item.team_name.slice(0, 6)
@@ -115,7 +115,7 @@
 import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import achieves from "@/assets/data/achieve.json";
 import _ from "lodash";
-import { showAvatar } from "@jx3box/jx3box-common/js/utils";
+import { showAvatar,getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getTop100 } from "@/service/race.js";
@@ -169,14 +169,15 @@ export default {
             getTop100(this.current_boss).then((res) => {
                 this.origin_data = res.data.data
             })
-        }
+        },
+        teamLogo: function(val,mode) {
+            if(!val) return ''
+            return mode ? getThumbnail(val,120,true) : getThumbnail(val,88,true)
+        },
     },
     filters: {
         teamLink: function(val) {
             return "/team/#/org/view/" + val;
-        },
-        teamLogo: function(val) {
-            return val ? showAvatar(val, "l") : default_avatar;
         },
         showTime: function(val) {
             return showTime(new Date(val * 1000));

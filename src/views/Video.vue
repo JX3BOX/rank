@@ -1,65 +1,178 @@
 <template>
     <div class="m-rank-video">
-        <div class="video-wrapper d-live">
-            <div class="d-pic pic-lives"></div>
-            <div class="d-content">
-                <div class="d-wrapper" v-for="count in 24" :key="count">
-                    <el-image
-                        class="i-pic"
-                        fit="fill"
-                        src="https://console.cnyixun.com/upload/post/2020/10/7/1493211.png"
-                    ></el-image>
-                    <div class="i-content">
-                        <span class="i-content-title">这里是团名</span>
-                        <span class="i-content-tag">正在直播</span>
-                        <p class="i-content-server">服务器：风起稻香村</p>
-                        <p class="i-content-progress">
-                            攻略进度：
-                            <el-rate
-                                v-model="progressValue"
-                                disabled
-                                :max="6"
-                                :icon-classes="[
-                                    'el-icon-success',
-                                    'el-icon-success',
-                                    'el-icon-success',
-                                ]"
-                                disabled-void-icon-class="el-icon-remove"
-                                :colors="['#66AFFF', '#66AFFF', '#66AFFF']"
-                                disabled-void-color="#888888"
-                            >
-                            </el-rate>
-                        </p>
-                    </div>
-                    <el-image
-                        src="http://placehold.it/64x64"
-                        fit="fill"
-                        class="i-avatar"
-                    ></el-image>
-                </div>
-            </div>
+        <div class="m-rank-video-title">
+            <img :src="video_title_img" />
         </div>
-        <div class="video-wrapper d-video">
-            <div class="d-pic pic-videos"></div>
-            <div class="d-content">
-                <div class="d-wrapper"></div>
-            </div>
+        <div class="m-rank-video-content">
+            <template v-if="data && data.length">
+                <el-row class="m-rank-video-list" :gutter="20">
+                    <el-col :span="8" v-for="(item, i) in data" :key="i">
+                        <div class="m-rank-video-item">
+                            <a
+                                class="u-video"
+                                :href="
+                                    getTVlink(item.team.tv_type, item.team.tv)
+                                "
+                                target="_blank"
+                            >
+                                <template v-if="item.team.tv_type == 'douyu'">
+                                    <img
+                                        v-if="item.douyu.room_src"
+                                        :src="item.douyu.room_src"
+                                        class="u-live-cover"
+                                    />
+                                    <img
+                                        v-else
+                                        :src="item.team.logo | teamLogo"
+                                        class="u-live-null"
+                                    />
+                                    <i
+                                        class="u-status"
+                                        :class="{
+                                            on: ~~item.douyu.show_status == 1,
+                                        }"
+                                        ><i class="el-icon-video-camera"></i>
+                                        {{
+                                            liveStatusMap[
+                                                ~~item.douyu.show_status
+                                            ]
+                                        }}</i
+                                    >
+                                </template>
+                                <template v-else>
+                                    <img
+                                        :src="item.team.logo | teamLogo"
+                                        class="u-live-null"
+                                    />
+                                    <i class="u-status"
+                                        ><i class="el-icon-warning-outline"></i>
+                                        未知</i
+                                    >
+                                </template>
+                            </a>
+                            <div class="u-info">
+                                <img
+                                    :src="item.team.logo | liveAvatar"
+                                    class="u-team-logo"
+                                />
+                                <div class="u-team">
+                                    <span class="u-label">团队 : </span>
+                                    <a
+                                        class="u-team-name"
+                                        :href="item.team.ID | teamLink"
+                                        target="_blank"
+                                        >{{ item.team.name }}</a
+                                    >
+                                </div>
+                                <div class="u-room">
+                                    <span class="u-label">房间 : </span>
+                                    <a
+                                        class="u-room-name"
+                                        :href="
+                                            getTVlink(
+                                                item.team.tv_type,
+                                                item.team.tv
+                                            )
+                                        "
+                                        target="_blank"
+                                    >
+                                        {{
+                                            (item.team.tv_type == "douyu" &&
+                                                item.douyu.room_name) ||
+                                                item.team.name + "的直播间"
+                                        }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-pagination
+                    class="m-archive-pages"
+                    background
+                    layout="total, prev, pager, next,jumper"
+                    :hide-on-single-page="true"
+                    :page-size="per"
+                    :total="total"
+                    :current-page.sync="page"
+                >
+                </el-pagination>
+            </template>
+            <el-alert
+                v-else
+                class="m-archive-null"
+                title="没有找到相关条目"
+                type="info"
+                center
+                show-icon
+            >
+            </el-alert>
         </div>
     </div>
 </template>
 
 <script>
+import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { getLives } from "@/service/race.js";
+import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
+import getTVlink from "@/assets/js/tv.js";
+const liveStatusMap = ["等待开播", "直播中", "直播结束"];
 export default {
     props: [],
-    data: function () {
+    data: function() {
         return {
-            progressValue: 1,
+            video_title_img: __imgPath + "image/rank/common/lives.png",
+            data: [],
+            per: 20,
+            page: 1,
+            total: 1,
+            liveStatusMap,
         };
     },
-    computed: {},
-    methods: {},
-    filters: {},
-    created: function () {},
+    computed: {
+        id: function() {
+            return this.$store.state.id;
+        },
+        params: function() {
+            return {
+                pageSize: this.per,
+                pageIndex: this.page,
+            };
+        },
+    },
+    methods: {
+        getTVlink,
+        loadData: function() {
+            getLives(this.id, this.params).then((res) => {
+                this.data = res.data.data.list;
+                this.page = res.data.data.page.index;
+                this.total = res.data.data.page.total;
+            });
+        },
+    },
+    watch: {
+        params: {
+            deep: true,
+            handler: function() {
+                this.loadData();
+            },
+        },
+    },
+    filters: {
+        teamLogo: function(val) {
+            return val ? getThumbnail(val, 120, true) : default_avatar;
+        },
+        liveAvatar : function (val){
+            return val ? getThumbnail(val, 68, true) : default_avatar
+        },
+        teamLink: function(val) {
+            return "/team/#/org/view/" + val;
+        },
+    },
+    created: function() {
+        this.loadData();
+    },
     components: {},
 };
 </script>

@@ -3,28 +3,92 @@
 //     .auto(x);
 // }
 
+.m-rank-video{
+    .mt(40px);
+}
 
-// @media screen and (min-width: 1680px) {
-//     .m-rank-race {
-//         max-width: 1440px;
-//     }
-//     .m-rank-header {
-//         max-width: 1080px;
-//         min-height: 600px;
-//         margin-left: auto;
-//         margin-right: auto;
-//     }
-//     .m-rank-content {
-//         width: 86.7%;
-//         min-width: 1440px;
-//         max-width: 95% !important;
-//         margin-left: auto;
-//         margin-right: auto;
-//     }
-// }
+.m-rank-video-content{
+    .mt(20px);
+}
+
+.m-rank-video-item{
+    .mb(20px);
+
+    .u-video{
+        .db;
+        background-color:#222;
+        .h(200px);
+        .clip;
+
+        .u-live-cover{.size(100%);}
+
+        .u-live-null{
+            .size(120px);
+            .db;
+            margin:40px auto;
+        }
+
+        transition:0.1s ease-in-out;
+        &:hover{
+            background-color:#111;
+        }
+
+        .pr;
+        .u-status{
+            .pa;.rb(10px);
+            background-color:#0cf;
+            color:#fff;
+            .r(2px);
+            font-style:normal;
+            .fz(12px,2);
+            padding:0 10px;
+
+            &.on{
+                background-color:#49c10f;
+            }
+        }
+    }
+
+    .u-info{
+        .mt(15px);
+        background-color:#111;
+        .clearfix;
+        .clip;
+        a{
+            color:#0cf;
+        }
+        a:hover{
+            box-shadow: 0 1px 0 #0cf;
+        }
+    }
+
+    .u-team-logo{
+        .fl;.size(68px);
+        .mr(10px);
+    }
+
+    .u-team,.u-room{
+        .fz(14px,2);
+        .nobreak;
+    }
+    .u-team{
+        .mt(5px);
+    }
+    .u-label{
+        color:#999;
+    }
+    // .u-team-name{
+    //     color:#0cf;
+    // }
+    // .u-room-name{
+    //     color:#0cf;
+    // }
+}
+
+
 
 .video-wrapper {
-    .mt(114px);
+    .mt(40px);
     .d-pic {
         .h(60px);
         .w(724.5px);
