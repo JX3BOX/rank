@@ -2,7 +2,6 @@
     <div class="m-rank-vote">
         <div class="m-rank-vote-title">
             <img :src="vote_title_img" />
-            <!-- TODO:有奖竞猜 -->
         </div>
         <div class="m-rank-vote-header">
             <div class="u-tip">
@@ -32,6 +31,7 @@
                     </td>
                     <td>
                         <img
+                            loading="lazy"
                             class="u-logo"
                             :src="item.team.logo | teamLogo"
                             :alt="item.team.name"
@@ -70,6 +70,7 @@ import { getAllTeams } from "@/service/team.js";
 import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import { doVote } from "@/service/race.js";
 import User from "@jx3box/jx3box-common/js/user.js";
+import getWechatIframe from '@/assets/js/wxpop.js'
 export default {
     props: [],
     data: function() {
@@ -77,6 +78,7 @@ export default {
             vote_title_img: __imgPath + "image/rank/common/vote.png",
             data: [],
             isLogin: User.isLogin(),
+            dialog_visible : false
         };
     },
     computed: {
@@ -86,19 +88,30 @@ export default {
     },
     methods: {
         vote: function(team_id) {
+
+            // 检查登录
             if (!this.isLogin) {
                 User.toLogin();
+                return;
+            }
+
+            // 检查微信
+            if (!User.hasBindwx()) {
+                this.$alert(getWechatIframe(), "提示", {
+                    confirmButtonText: "确定",
+                    dangerouslyUseHTMLString: true,
+                });
                 return
             }
-            // TODO:微信判断
 
             doVote(this.id, team_id).then((res) => {
                 this.$message({
                     message: "投票成功",
                     type: "success",
-                    duration : 1000
+                    duration: 1000,
                 });
             });
+            
         },
     },
     filters: {
@@ -115,6 +128,12 @@ export default {
         }).then((res) => {
             this.data = res.data.data.list;
         });
+    },
+    mounted : function (){
+        let params = this.$route.query
+        if(params.bind_wx){
+            User.refresh('bind_wx',params.bind_wx)
+        }
     },
     components: {},
 };
