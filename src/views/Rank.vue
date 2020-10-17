@@ -6,14 +6,13 @@
                 v-for="(label, achieve_id) of bossList"
                 :key="achieve_id"
             >
-                <!-- TODO:添加boss百分比 -->
                 <div
                     class="u-boss"
                     :class="{ on: achieve_id == current_boss }"
                     @click="changeBoss(achieve_id)"
                 >
                     <span class="u-boss-name">{{ label }}</span>
-                    <span class="u-boss-per"></span>
+                    <span class="u-boss-per">({{total[achieve_id] > 100 ? 100 : total[achieve_id]}}/100)</span>
                 </div>
             </el-col>
         </el-row>
@@ -35,17 +34,28 @@
                         <span>{{ i + 1 }}</span>
                     </div>
                     <!-- 队徽 -->
-                    <a class="u-logo" :href="item.team_id | teamLink" target="_blank">
+                    <a
+                        class="u-logo"
+                        :href="item.team_id | teamLink"
+                        target="_blank"
+                    >
                         <el-image
                             v-if="item.team_logo"
-                            :src="i < 3 ? teamLogo(item.team_logo,true) : teamLogo(item.team_logo,false)"
+                            :src="
+                                i < 3
+                                    ? teamLogo(item.team_logo, true)
+                                    : teamLogo(item.team_logo, false)
+                            "
                             fit="fill"
                         ></el-image>
                         <img src="../assets/img/misc/null.png" v-else />
                     </a>
                     <!-- 名称 -->
                     <div class="u-title">
-                        <a class="u-teamname" :href="item.team_id | teamLink" target="_blank"
+                        <a
+                            class="u-teamname"
+                            :href="item.team_id | teamLink"
+                            target="_blank"
                             ><i class="el-icon-link"></i
                             >{{
                                 item.team_name && item.team_name.slice(0, 6)
@@ -115,10 +125,10 @@
 import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import achieves from "@/assets/data/achieve.json";
 import _ from "lodash";
-import { showAvatar,getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { showAvatar, getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
-import { getTop100 } from "@/service/race.js";
+import { getTop100, getTopTotal } from "@/service/race.js";
 export default {
     components: {},
     props: [],
@@ -126,6 +136,7 @@ export default {
         return {
             current_boss: "",
             origin_data: [],
+            total : ''
         };
     },
     computed: {
@@ -134,6 +145,9 @@ export default {
         },
         bossList: function() {
             return achieves[this.id] || [];
+        },
+        aids : function (){
+            return Object.keys(this.bossList).join(',')
         },
         data: function() {
             let data = this.origin_data || [];
@@ -164,15 +178,17 @@ export default {
         getRankImg: function(num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";
         },
-        loadData : function (){
-            if(!this.id) return
+        loadData: function() {
+            if (!this.id) return;
             getTop100(this.current_boss).then((res) => {
-                this.origin_data = res.data.data
-            })
+                this.origin_data = res.data.data;
+            });
         },
-        teamLogo: function(val,mode) {
-            if(!val) return ''
-            return mode ? getThumbnail(val,120,true) : getThumbnail(val,88,true)
+        teamLogo: function(val, mode) {
+            if (!val) return "";
+            return mode
+                ? getThumbnail(val, 120, true)
+                : getThumbnail(val, 88, true);
         },
     },
     filters: {
@@ -204,18 +220,22 @@ export default {
     },
     created: function() {
         this.current_boss = _.first(Object.keys(this.bossList));
+
+        getTopTotal(this.aids).then((res) => {
+            this.total = res.data.data
+        })
     },
     mounted() {
-        if(this.$route.query.aid){
-            this.current_boss = this.$route.query.aid
+        if (this.$route.query.aid) {
+            this.current_boss = this.$route.query.aid;
         }
-        this.loadData()
+        this.loadData();
     },
-    watch : {
-        current_boss : function (){
-            this.loadData()
-        }
-    }
+    watch: {
+        current_boss: function() {
+            this.loadData();
+        },
+    },
 };
 </script>
 <style scoped lang="less">
