@@ -10,7 +10,7 @@
                     target="_blank"
                     >登录</a
                 >并有<a href="/dashboard/#/connect" target="_blank">绑定微信</a
-                >的用户方可投票，每天可给3支不同团队投1票。10月29日开启通道，结榜时关闭通道。
+                >的用户方可投票，每天可给3支不同团队各投1票。10月29日开启通道，结榜时关闭通道。
             </div>
         </div>
         <table class="m-rank-vote-table">
@@ -55,7 +55,8 @@
                     <td class="u-vote-wapper">
                         <button
                             class="u-vote"
-                            @click="vote(item.team.ID)"
+                            :class="{disabled:item.clicked}"
+                            @click="vote(item.team.ID,item)"
                         ></button>
                     </td>
                 </tr>
@@ -87,7 +88,7 @@ export default {
         },
     },
     methods: {
-        vote: function(team_id) {
+        vote: function(team_id,item) {
 
             // 检查登录
             if (!this.isLogin) {
@@ -110,6 +111,10 @@ export default {
                     type: "success",
                     duration: 1000,
                 });
+
+                item.clicked = true
+                this.$forceUpdate()
+                
             });
             
         },
