@@ -10,7 +10,7 @@
                     target="_blank"
                     >登录</a
                 >并有<a href="/dashboard/#/connect" target="_blank">绑定微信</a
-                >的用户方可投票，每天可给3支不同团队各投1票。10月29日开启通道，结榜时关闭通道。
+                >的用户方可投票，每天可给3支不同团队各投1票。10月18日开启通道，结榜时关闭通道。
             </div>
         </div>
         <table class="m-rank-vote-table">
