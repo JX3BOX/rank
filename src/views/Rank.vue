@@ -29,7 +29,7 @@
                     <!-- 排名 -->
                     <div class="u-ranking" :class="'is-Top' + (i + 1)">
                         <i class="u-pic"
-                            ><img :src="getRankImg(i + 1)" v-if="i < 3"
+                            ><img loading="lazy" :src="getRankImg(i + 1)" v-if="i < 3"
                         /></i>
                         <span>{{ i + 1 }}</span>
                     </div>
@@ -48,7 +48,7 @@
                             "
                             fit="fill"
                         ></el-image>
-                        <img src="../assets/img/misc/null.png" v-else />
+                        <img loading="lazy" src="../assets/img/misc/null.png" v-else />
                     </a>
                     <!-- 名称 -->
                     <div class="u-title">
@@ -84,7 +84,7 @@
                     <!-- 队长 -->
                     <div class="u-leader" v-if="item.leaders">
                         <span class="u-leader-label">团长 : </span>
-                        <img
+                        <img loading="lazy"
                             class="u-mount"
                             :src="item.leaders[1] | showLeaderMount"
                         />
@@ -100,7 +100,7 @@
                             v-for="(member, j) in item.members"
                             :key="j"
                             ><div>
-                                <img
+                                <img loading="lazy"
                                     class="u-mount"
                                     :src="member | showMemberMount"
                                 />

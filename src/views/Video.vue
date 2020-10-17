@@ -29,11 +29,13 @@
                                         v-if="item.douyu.room_src"
                                         :src="item.douyu.room_src"
                                         class="u-live-cover"
+                                        loading="lazy"
                                     />
                                     <img
                                         v-else
                                         :src="item.team.logo | teamLogo"
                                         class="u-live-null"
+                                        loading="lazy"
                                     />
                                     <i
                                         class="u-status"
@@ -55,6 +57,7 @@
                                     <img
                                         :src="item.team.logo | teamLogo"
                                         class="u-live-null"
+                                        loading="lazy"
                                     />
                                     <i class="u-status"
                                         ><i class="el-icon-warning-outline"></i>
@@ -66,6 +69,7 @@
                                 <img
                                     :src="item.team.logo | liveAvatar"
                                     class="u-team-logo"
+                                    loading="lazy"
                                 />
                                 <div class="u-team">
                                     <span class="u-label">团队 : </span>

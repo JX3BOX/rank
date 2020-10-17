@@ -19,4 +19,8 @@ function getLives(event_id, params) {
     });
 }
 
-export { getTop100, getLives, getTopTotal };
+function doVote(event_id, team_id) {
+    return $next.post(`team/events/${event_id}/vote-team/${team_id}`);
+}
+
+export { getTop100, getLives, getTopTotal, doVote };

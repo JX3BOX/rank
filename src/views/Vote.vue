@@ -1,141 +1,125 @@
 <template>
     <div class="m-rank-vote">
-        <div class="d-banner"></div>
-        <el-table
-            :data="tableData"
-            class="d-table"
-            :border="false"
-            :highlight-current-row="false"
-            :header-row-style="headerRowClass"
-            :header-cell-style="headerCellClass"
-            :row-style="rowClass"
-            :cell-style="cellClass"
-        >
-            <el-table-column label="排名">
-                <template slot-scope="scope">
-                    <div class="t-rank">
-                        <span class="t-rank-text">{{ scope.row.rank }}</span>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column label="" width="78">
-                <template slot-scope="scope">
-                    <el-image
-                        :src="scope.row.pic"
-                        fit="fill"
-                        class="t-pic"
-                    ></el-image>
-                </template>
-            </el-table-column>
-            <el-table-column label="团名" width="320">
-                <template slot-scope="scope">
-                    <span class="t-team">{{ scope.row.name }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="服务器">
-                <template slot-scope="scope">
-                    <span class="t-server">{{ scope.row.server }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="团长">
-                <template slot-scope="scope">
-                    <span class="t-leader">{{ scope.row.leader }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="票数">
-                <template slot-scope="scope">
-                    <span class="t-count">{{ scope.row.count }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="">
-                <template slot-scope="scope">
-                    <div
-                        class="t-btn"
-                        @click="handleEdit(scope.$index, scope.row)"
-                    ></div>
-                </template>
-            </el-table-column>
-        </el-table>
-        <!-- 有奖竞猜 -->
+        <div class="m-rank-vote-title">
+            <img :src="vote_title_img" />
+            <!-- TODO:有奖竞猜 -->
+        </div>
+        <div class="m-rank-vote-header">
+            <div class="u-tip">
+                <i class="el-icon-info"></i> 规则说明：需<a
+                    href="/account/login/"
+                    target="_blank"
+                    >登录</a
+                >并有<a href="/dashboard/#/connect" target="_blank">绑定微信</a
+                >的用户方可投票，每天可给3支不同团队投1票。10月29日开启通道，结榜时关闭通道。
+            </div>
+        </div>
+        <table class="m-rank-vote-table">
+            <thead>
+                <tr>
+                    <th width="120px">排名</th>
+                    <th width="120px"></th>
+                    <th width="120px">团队</th>
+                    <th>服务器</th>
+                    <th>票数</th>
+                    <th>参与投票</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, i) in data" :key="i">
+                    <td>
+                        <i class="u-ranking">{{ i }}</i>
+                    </td>
+                    <td>
+                        <img
+                            class="u-logo"
+                            :src="item.team.logo | teamLogo"
+                            :alt="item.team.name"
+                        />
+                    </td>
+                    <td>
+                        <a
+                            class="u-name"
+                            :href="item.team.ID | teamLink"
+                            target="_blank"
+                        >
+                            {{ item.team.name }}
+                        </a>
+                    </td>
+                    <td>
+                        <span class="u-server">{{ item.team.server }}</span>
+                    </td>
+                    <td>
+                        <span class="u-count">{{ item.record.votes }}</span>
+                    </td>
+                    <td class="u-vote-wapper">
+                        <button
+                            class="u-vote"
+                            @click="vote(item.team.ID)"
+                        ></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
 <script>
+import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { getAllTeams } from "@/service/team.js";
+import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { doVote } from "@/service/race.js";
+import User from "@jx3box/jx3box-common/js/user.js";
 export default {
     props: [],
-    data: function () {
+    data: function() {
         return {
-            tableData: [
-                {
-                    rank: 1,
-                    pic: "http://placehold.it/68x68",
-                    name: "这个是团名总共有十二个字",
-                    server: "唯我独尊",
-                    leader: "团长六字名字",
-                    count: 38324,
-                },
-                {
-                    rank: 12,
-                    pic: "http://placehold.it/68x68",
-                    name: "这是六字团名",
-                    server: "唯我独尊",
-                    leader: "团长六字名字",
-                    count: 14122,
-                },
-            ],
+            vote_title_img: __imgPath + "image/rank/common/vote.png",
+            data: [],
+            isLogin: User.isLogin(),
         };
     },
-    computed: {},
-    methods: {
-        handleEdit(index, row) {
-            console.log(index, row);
-        },
-        headerRowClass({ row, rowIndex }) {
-            return {
-                background: "#3C4044",
-                border: "1px solid #707070",
-                "box-shadow": "0px 10px 20px rgba(0, 0, 0, 0.51)",
-                opacity: 1,
-                "border-radius": "10px",
-            };
-        },
-        headerCellClass({ row, column, rowIndex, columnIndex }) {
-            return {
-                background: "transparent",
-                "border-top": "1px solid #707070",
-                "border-bottom": "1px solid #707070",
-                "font-size": "21px",
-                color: "white",
-                height: "60px",
-            };
-        },
-        rowClass({ row, rowIndex }) {
-            return {
-                background: "#3C4044",
-                border: "1px solid #707070",
-                "box-shadow": "0px 10px 20px rgba(0, 0, 0, 0.51)",
-                opacity: 1,
-                "border-radius": "10px",
-            };
-        },
-        cellClass({ row, column, rowIndex, columnIndex }) {
-            return {
-                background: "transparent",
-                "border-top": "1px solid #707070",
-                "border-bottom": "1px solid #707070",
-                "font-size": "21px",
-                color: "white",
-                height: "50px",
-                padding: 0
-            };
+    computed: {
+        id: function() {
+            return this.$store.state.id;
         },
     },
-    filters: {},
-    created: function () {},
+    methods: {
+        vote: function(team_id) {
+            if (!this.isLogin) {
+                User.toLogin();
+                return
+            }
+            // TODO:微信判断
+
+            doVote(this.id, team_id).then((res) => {
+                this.$message({
+                    message: "投票成功",
+                    type: "success",
+                    duration : 1000
+                });
+            });
+        },
+    },
+    filters: {
+        teamLogo: function(val) {
+            return val ? getThumbnail(val, 48, true) : default_avatar;
+        },
+        teamLink: function(val) {
+            return "/team/#/org/view/" + val;
+        },
+    },
+    created: function() {
+        getAllTeams(this.id, {
+            orderBy: "votes",
+        }).then((res) => {
+            this.data = res.data.data.list;
+        });
+    },
     components: {},
 };
 </script>
 
 <style lang="less">
-@import "../assets/css/rank_vote.less";
+@import "../assets/css/race_vote.less";
 </style>
