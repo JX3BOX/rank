@@ -2,6 +2,15 @@
     <div class="m-rank-video">
         <div class="m-rank-video-title">
             <img :src="video_title_img" />
+            <el-pagination
+                class="u-pages"
+                layout="prev, pager, next"
+                :hide-on-single-page="true"
+                :page-size="per"
+                :total="total"
+                :current-page.sync="page"
+            >
+            </el-pagination>
         </div>
         <div class="m-rank-video-content">
             <template v-if="data && data.length">
@@ -38,6 +47,9 @@
                                             ]
                                         }}</i
                                     >
+                                    <i class="u-player" v-if="~~item.douyu.show_status == 1">
+                                        <img svg-inline src="../assets/img/video/play.svg" />
+                                    </i>
                                 </template>
                                 <template v-else>
                                     <img
@@ -163,8 +175,8 @@ export default {
         teamLogo: function(val) {
             return val ? getThumbnail(val, 120, true) : default_avatar;
         },
-        liveAvatar : function (val){
-            return val ? getThumbnail(val, 68, true) : default_avatar
+        liveAvatar: function(val) {
+            return val ? getThumbnail(val, 68, true) : default_avatar;
         },
         teamLink: function(val) {
             return "/team/#/org/view/" + val;
