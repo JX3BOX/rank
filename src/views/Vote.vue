@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath,default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
 import { getAllTeams } from "@/service/team.js";
 import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import { doVote } from "@/service/race.js";
