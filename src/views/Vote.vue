@@ -10,7 +10,7 @@
                     target="_blank"
                     >登录</a
                 >并有<a href="/dashboard/#/connect" target="_blank">绑定微信</a
-                >的用户方可投票，每天可给3支不同团队各投1票。10月18日开启通道，结榜时关闭通道。
+                >的用户方可投票，每天可给3支不同团队各投1票。10月29日开启通道，结榜后关闭通道。
             </div>
         </div>
         <table class="m-rank-vote-table">
@@ -33,30 +33,30 @@
                         <img
                             loading="lazy"
                             class="u-logo"
-                            :src="item.team.logo | teamLogo"
-                            :alt="item.team.name"
+                            :src="item.logo | teamLogo"
+                            :alt="item.name"
                         />
                     </td>
                     <td>
                         <a
                             class="u-name"
-                            :href="item.team.ID | teamLink"
+                            :href="item.team_id | teamLink"
                             target="_blank"
                         >
-                            {{ item.team.name }}
+                            {{ item.name }}
                         </a>
                     </td>
                     <td>
-                        <span class="u-server">{{ item.team.server }}</span>
+                        <span class="u-server">{{ item.server }}</span>
                     </td>
                     <td>
-                        <span class="u-count">{{ item.record.votes }}</span>
+                        <span class="u-count">{{ item.votes }}</span>
                     </td>
                     <td class="u-vote-wapper">
                         <button
                             class="u-vote"
                             :class="{disabled:item.clicked}"
-                            @click="vote(item.team.ID,item)"
+                            @click="vote(item)"
                         ></button>
                     </td>
                 </tr>
@@ -88,7 +88,7 @@ export default {
         },
     },
     methods: {
-        vote: function(team_id,item) {
+        vote: function(item) {
 
             // 检查登录
             if (!this.isLogin) {
@@ -105,7 +105,7 @@ export default {
                 return
             }
 
-            doVote(this.id, team_id).then((res) => {
+            doVote(this.id, item.team_id).then((res) => {
                 this.$message({
                     message: "投票成功",
                     type: "success",
@@ -113,6 +113,7 @@ export default {
                 });
 
                 item.clicked = true
+                item.votes = ~~item.votes + 1
                 this.$forceUpdate()
                 
             });

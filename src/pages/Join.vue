@@ -162,28 +162,29 @@ export default {
         team_id: function() {
             return _.get(this.teams[0], "ID");
         },
-        join_data: function() {
-            return {
-                event_id: this.event_id,
-                team_id: this.team_id,
-            };
-        },
+        // join_data: function() {
+        //     return {
+        //         event_id: this.event_id,
+        //         team_id: this.team_id,
+        //     };
+        // },
     },
     methods: {
         submit: function() {
             this.$alert(
-                "报名后资料将不可再更改，更多咨询请联系团长群管理",
+                "报名后资料将不可再更改，更多咨询请联系认证团长Q群1048059072",
                 "消息",
                 {
                     confirmButtonText: "确定",
                     callback: (action) => {
                         if (action == "confirm") {
-                            joinEvent(this.join_data).then((res) => {
+                            joinEvent(this.form).then((res) => {
                                 this.$message({
                                     message: "报名成功",
                                     type: "success",
                                 });
                                 this.status = true;
+                                this.$forceUpdate()
                             });
                         }
                     },
