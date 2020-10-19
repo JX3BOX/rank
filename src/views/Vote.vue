@@ -30,12 +30,14 @@
                         <i class="u-ranking">{{ i + 1 }}</i>
                     </td>
                     <td>
+                        <a :href="item.team_id | teamLink" target="_blank">
                         <img
                             loading="lazy"
                             class="u-logo"
                             :src="item.logo | teamLogo"
                             :alt="item.name"
                         />
+                        </a>
                     </td>
                     <td>
                         <a

@@ -104,7 +104,7 @@
                     </el-col>
                 </el-row>
                 <el-pagination
-                    class="m-archive-pages"
+                    class="m-rank-video-pages m-archive-pages"
                     background
                     layout="total, prev, pager, next,jumper"
                     :hide-on-single-page="true"
