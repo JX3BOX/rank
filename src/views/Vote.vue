@@ -27,7 +27,7 @@
             <tbody>
                 <tr v-for="(item, i) in data" :key="i">
                     <td>
-                        <i class="u-ranking">{{ i }}</i>
+                        <i class="u-ranking">{{ i + 1 }}</i>
                     </td>
                     <td>
                         <img
