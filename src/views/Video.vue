@@ -140,7 +140,7 @@ export default {
         return {
             video_title_img: __imgPath + "image/rank/common/lives.png",
             data: [],
-            per: 20,
+            per: 24,
             page: 1,
             total: 1,
             liveStatusMap,
