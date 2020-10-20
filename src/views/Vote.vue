@@ -1,5 +1,11 @@
 <template>
-    <div class="m-rank-vote">
+    <div
+        class="m-rank-vote"
+        v-loading="loading"
+        element-loading-text="加载中..."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
         <div class="m-rank-vote-title">
             <img :src="vote_title_img" />
         </div>
@@ -31,12 +37,12 @@
                     </td>
                     <td>
                         <a :href="item.team_id | teamLink" target="_blank">
-                        <img
-                            loading="lazy"
-                            class="u-logo"
-                            :src="item.logo | teamLogo"
-                            :alt="item.name"
-                        />
+                            <img
+                                loading="lazy"
+                                class="u-logo"
+                                :src="item.logo | teamLogo"
+                                :alt="item.name"
+                            />
                         </a>
                     </td>
                     <td>
@@ -57,7 +63,7 @@
                     <td class="u-vote-wapper">
                         <button
                             class="u-vote"
-                            :class="{disabled:item.clicked}"
+                            :class="{ disabled: item.clicked }"
                             @click="vote(item)"
                         ></button>
                     </td>
@@ -68,12 +74,15 @@
 </template>
 
 <script>
-import { __imgPath,default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
+import {
+    __imgPath,
+    default_avatar,
+} from "@jx3box/jx3box-common/js/jx3box.json";
 import { getAllTeams } from "@/service/team.js";
 import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import { doVote } from "@/service/race.js";
 import User from "@jx3box/jx3box-common/js/user.js";
-import getWechatIframe from '@/assets/js/wxpop.js'
+import getWechatIframe from "@/assets/js/wxpop.js";
 export default {
     props: [],
     data: function() {
@@ -81,7 +90,8 @@ export default {
             vote_title_img: __imgPath + "image/rank/common/vote.png",
             data: [],
             isLogin: User.isLogin(),
-            dialog_visible : false
+            dialog_visible: false,
+            loading: false,
         };
     },
     computed: {
@@ -91,7 +101,6 @@ export default {
     },
     methods: {
         vote: function(item) {
-
             // 检查登录
             if (!this.isLogin) {
                 User.toLogin();
@@ -104,7 +113,7 @@ export default {
                     confirmButtonText: "确定",
                     dangerouslyUseHTMLString: true,
                 });
-                return
+                return;
             }
 
             doVote(this.id, item.team_id).then((res) => {
@@ -114,12 +123,10 @@ export default {
                     duration: 1000,
                 });
 
-                item.clicked = true
-                item.votes = ~~item.votes + 1
-                this.$forceUpdate()
-                
+                item.clicked = true;
+                item.votes = ~~item.votes + 1;
+                this.$forceUpdate();
             });
-            
         },
     },
     filters: {
@@ -131,16 +138,22 @@ export default {
         },
     },
     created: function() {
+        this.loading = true;
         getAllTeams(this.id, {
             orderBy: "votes",
-        }).then((res) => {
-            this.data = res.data.data.list;
-        });
+            return_all: 1,
+        })
+            .then((res) => {
+                this.data = res.data.data.list;
+            })
+            .finally(() => {
+                this.loading = false;
+            });
     },
-    mounted : function (){
-        let params = this.$route.query
-        if(params.bind_wx){
-            User.refresh('bind_wx',params.bind_wx)
+    mounted: function() {
+        let params = this.$route.query;
+        if (params.bind_wx) {
+            User.refresh("bind_wx", params.bind_wx);
         }
     },
     components: {},

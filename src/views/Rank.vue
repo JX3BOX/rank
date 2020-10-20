@@ -1,5 +1,11 @@
 <template>
-    <div class="m-rank-rank">
+    <div
+        class="m-rank-rank"
+        v-loading="loading"
+        element-loading-text="加载中..."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
         <el-row class="m-rank-boss" :gutter="20">
             <el-col
                 :span="4"
@@ -12,7 +18,11 @@
                     @click="changeBoss(achieve_id)"
                 >
                     <span class="u-boss-name">{{ label }}</span>
-                    <span class="u-boss-per">({{total[achieve_id] > 100 ? 100 : total[achieve_id]}}/100)</span>
+                    <span class="u-boss-per"
+                        >({{
+                            total[achieve_id] > 100 ? 100 : total[achieve_id]
+                        }}/100)</span
+                    >
                 </div>
             </el-col>
         </el-row>
@@ -29,7 +39,10 @@
                     <!-- 排名 -->
                     <div class="u-ranking" :class="'is-Top' + (i + 1)">
                         <i class="u-pic"
-                            ><img loading="lazy" :src="getRankImg(i + 1)" v-if="i < 3"
+                            ><img
+                                loading="lazy"
+                                :src="getRankImg(i + 1)"
+                                v-if="i < 3"
                         /></i>
                         <span>{{ i + 1 }}</span>
                     </div>
@@ -48,7 +61,11 @@
                             "
                             fit="fill"
                         ></el-image>
-                        <img loading="lazy" src="../assets/img/misc/null.png" v-else />
+                        <img
+                            loading="lazy"
+                            src="../assets/img/misc/null.png"
+                            v-else
+                        />
                     </a>
                     <!-- 名称 -->
                     <div class="u-title">
@@ -84,7 +101,8 @@
                     <!-- 队长 -->
                     <div class="u-leader" v-if="item.leaders">
                         <span class="u-leader-label">团长 : </span>
-                        <img loading="lazy"
+                        <img
+                            loading="lazy"
                             class="u-mount"
                             :src="item.leaders[1] | showLeaderMount"
                         />
@@ -100,7 +118,8 @@
                             v-for="(member, j) in item.members"
                             :key="j"
                             ><div>
-                                <img loading="lazy"
+                                <img
+                                    loading="lazy"
                                     class="u-mount"
                                     :src="member | showMemberMount"
                                 />
@@ -136,7 +155,8 @@ export default {
         return {
             current_boss: "",
             origin_data: [],
-            total : ''
+            total: "",
+            loading: false,
         };
     },
     computed: {
@@ -146,8 +166,8 @@ export default {
         bossList: function() {
             return achieves[this.id] || [];
         },
-        aids : function (){
-            return Object.keys(this.bossList).join(',')
+        aids: function() {
+            return Object.keys(this.bossList).join(",");
         },
         data: function() {
             let data = this.origin_data || [];
@@ -180,9 +200,15 @@ export default {
         },
         loadData: function() {
             if (!this.id) return;
-            getTop100(this.current_boss).then((res) => {
-                this.origin_data = res.data.data;
-            });
+
+            this.loading = true;
+            getTop100(this.current_boss)
+                .then((res) => {
+                    this.origin_data = res.data.data;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         teamLogo: function(val, mode) {
             if (!val) return "";
@@ -222,8 +248,8 @@ export default {
         this.current_boss = _.first(Object.keys(this.bossList));
 
         getTopTotal(this.aids).then((res) => {
-            this.total = res.data.data
-        })
+            this.total = res.data.data;
+        });
     },
     mounted() {
         if (this.$route.query.aid) {

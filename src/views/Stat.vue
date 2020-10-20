@@ -1,5 +1,5 @@
 <template>
-    <div class="m-rank-stat">
+    <div class="m-rank-stat" v-loading="loading">
         <img :src="null_img_url" class="m-rank-null" />
     </div>
 </template>
@@ -11,6 +11,7 @@ export default {
     data: function() {
         return {
             null_img_url: __imgPath + "image/rank/common/null.png",
+            loading : false
         };
     },
     computed: {},
