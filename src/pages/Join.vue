@@ -5,7 +5,7 @@
             <div class="m-rank-header">
                 <img class="u-logo" :src="LOGO" />
             </div>
-            <div class="m-rank-content">
+            <div class="m-rank-content" v-if="isLogin">
                 <template v-if="events && events.length">
                     <div class="m-join m-join-team" v-if="!status">
                         <h1 class="m-join-title">报名入口</h1>
@@ -107,6 +107,9 @@
                     <h1>当前没有开启的活动</h1>
                 </div>
             </div>
+            <div class="m-rank-content m-rank-null" v-else>
+                请先<a href="/account/login/" target="_blank">登录</a>
+            </div>
         </div>
         <Footer></Footer>
     </div>
@@ -147,6 +150,7 @@ export default {
                 // }
             ],
             status: false,
+            isLogin : User.isLogin()
         };
     },
     computed: {
@@ -192,11 +196,9 @@ export default {
             );
         },
         init: function() {
-            return Promise.all([
-                this.loadEvents(),
-                this.loadTeams(),
-                this.checkJoin(),
-            ]);
+            this.loadEvents()
+            this.loadTeams()
+            this.checkJoin()
         },
         loadEvents: function() {
             // 获取开放的活动事件
