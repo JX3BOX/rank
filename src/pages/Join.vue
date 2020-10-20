@@ -10,7 +10,7 @@
                     <h1 class="m-join-title">报名入口</h1>
                     <el-alert
                         class="u-warning"
-                        title="请务必正确填写所有资料，报名后不可取消，亦不可再更改资料。团长群：785597424"
+                        title="请务必正确填写所有资料，报名后不可取消，亦不可再更改资料。团长Q群：785597424"
                         type="warning"
                         show-icon
                     >
@@ -170,6 +170,15 @@ export default {
     },
     methods: {
         submit: function() {
+
+            if(!this.team_id){
+                this.$message({
+                    message: "无效团队ID",
+                    type: "error",
+                });
+                return
+            }
+
             this.$alert(
                 "报名后资料将不可再更改，更多咨询请联系认证团长Q群1048059072",
                 "消息",
