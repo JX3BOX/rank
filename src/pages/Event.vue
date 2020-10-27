@@ -65,7 +65,7 @@
                                                 type="primary"
                                                 plain
                                                 size="mini"
-                                                @click="add"
+                                                @click="add(i)"
                                                 >+ 添加</el-button
                                             >
                                             <el-button
@@ -172,7 +172,7 @@ export default {
                 // location.reload()
             });
         },
-        add: function() {
+        add: function(i) {
             this.form.sponsors.push({
                 logo: "",
                 link: "",

@@ -151,7 +151,7 @@ export default {
     },
     filters: {
         teamLogo: function (val) {
-            return val ? getThumbnail(val, 48, true) : default_avatar;
+            return val ? getThumbnail(val, 48, true) : getThumbnail(default_avatar, 48, true);
         },
         teamLink: function (val) {
             return "/team/#/org/view/" + val;
