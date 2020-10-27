@@ -26,22 +26,43 @@
                     <th width="120px"></th>
                     <th width="120px">
                         团队
-                        <el-popover
-                            placement="top"
-                            width="220"
-                            trigger="click"
-                        >
-                            <el-input v-model="inputTeamname" placeholder="输入团队名关键字" @input="filterTeamname" clearable></el-input>
-                            <el-button slot="reference" type="text"><i class="el-icon-search"></i></el-button>
+                        <el-popover placement="top" width="220" trigger="click">
+                            <el-input
+                                v-model="inputTeamname"
+                                placeholder="输入团队名关键字"
+                                @input="filterTeamname"
+                                clearable
+                            ></el-input>
+                            <el-button slot="reference" type="text"
+                                ><i class="el-icon-search u-search-team"></i
+                            ></el-button>
                         </el-popover>
                     </th>
-                    <th>服务器</th>
+                    <th>
+                        <el-select
+                            class="u-server u-select"
+                            v-model="server"
+                            placeholder="选择服务器"
+                            size="mini"
+                            @change="filterServer"
+                        >
+                            <el-option key="all" label="全部服务器" value="">
+                            </el-option>
+                            <el-option
+                                v-for="item in servers"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                            >
+                            </el-option>
+                        </el-select>
+                    </th>
                     <th>票数</th>
                     <th>参与投票</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr v-for="(item, i) in filterData" :key="i">
+            <tbody :class="{isFiltered:!!server}">
+                <tr v-for="(item, i) in filterData" :key="i" :class="{isMatched:!!item.matched}">
                     <td>
                         <i class="u-ranking">{{ i + 1 }}</i>
                     </td>
@@ -93,9 +114,10 @@ import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import { doVote } from "@/service/race.js";
 import User from "@jx3box/jx3box-common/js/user.js";
 import getWechatIframe from "@/assets/js/wxpop.js";
+import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 export default {
     props: [],
-    data: function () {
+    data: function() {
         return {
             vote_title_img: __imgPath + "image/rank/common/vote.png",
             data: [],
@@ -104,15 +126,17 @@ export default {
             dialog_visible: false,
             loading: false,
             inputTeamname: "",
+            servers,
+            server:'',
         };
     },
     computed: {
-        id: function () {
+        id: function() {
             return this.$store.state.id;
         },
     },
     methods: {
-        vote: function (item) {
+        vote: function(item) {
             // 检查登录
             if (!this.isLogin) {
                 User.toLogin();
@@ -142,22 +166,37 @@ export default {
         },
         filterTeamname(val) {
             if (val === "") {
-                this.filterData = this.data
+                this.filterData = this.data;
             }
             this.filterData = this.data.filter((item) => {
-                return item.name.includes(val)
-            })
+                return item.name.includes(val);
+            });
+        },
+        filterServer(){
+            if(this.server){
+                this.data.forEach((team) => {
+                    if(this.server == team.server){
+                        team.matched = true
+                    }
+                })
+            }else{
+                this.data.forEach((team) => {
+                    team.matched = false
+                })
+            }
         }
     },
     filters: {
-        teamLogo: function (val) {
-            return val ? getThumbnail(val, 48, true) : getThumbnail(default_avatar, 48, true);
+        teamLogo: function(val) {
+            return val
+                ? getThumbnail(val, 48, true)
+                : getThumbnail(default_avatar, 48, true);
         },
-        teamLink: function (val) {
+        teamLink: function(val) {
             return "/team/#/org/view/" + val;
         },
     },
-    created: function () {
+    created: function() {
         this.loading = true;
         getAllTeams(this.id, {
             orderBy: "votes",
@@ -165,13 +204,13 @@ export default {
         })
             .then((res) => {
                 this.data = res.data.data.list;
-                this.filterData = this.data
+                this.filterData = this.data;
             })
             .finally(() => {
                 this.loading = false;
             });
     },
-    mounted: function () {
+    mounted: function() {
         let params = this.$route.query;
         if (params.bind_wx) {
             User.refresh("bind_wx", params.bind_wx);
