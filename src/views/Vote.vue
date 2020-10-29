@@ -177,6 +177,8 @@ export default {
                 this.data.forEach((team) => {
                     if(this.server == team.server){
                         team.matched = true
+                    }else{
+                        team.matched = false
                     }
                 })
             }else{
