@@ -144,13 +144,13 @@ export default {
             }
 
             // 检查微信
-            if (!User.hasBindwx()) {
-                this.$alert(getWechatIframe(), "提示", {
-                    confirmButtonText: "确定",
-                    dangerouslyUseHTMLString: true,
-                });
-                return;
-            }
+            // if (!User.hasBindwx()) {
+            //     this.$alert(getWechatIframe(), "提示", {
+            //         confirmButtonText: "确定",
+            //         dangerouslyUseHTMLString: true,
+            //     });
+            //     return;
+            // }
 
             doVote(this.id, item.team_id).then((res) => {
                 this.$message({
@@ -213,10 +213,10 @@ export default {
             });
     },
     mounted: function() {
-        let params = this.$route.query;
-        if (params.bind_wx) {
-            User.refresh("bind_wx", params.bind_wx);
-        }
+        // let params = this.$route.query;
+        // if (params.bind_wx) {
+        //     User.refresh("bind_wx", params.bind_wx);
+        // }
     },
     components: {},
 };
