@@ -11,7 +11,9 @@
         </div>
         <div class="m-rank-vote-header">
             <div class="u-tip">
-                <i class="el-icon-info"></i> 规则说明：每天可给3支不同团队各投1票。10月29日开启通道，结榜后关闭通道。
+                <i class="el-icon-info"></i> 规则说明：10月29日开启通道，结榜后关闭通道。<br> 
+                【投票】每天可给3支不同团队各投1票，最终产生人气团队奖。<br>
+                【竞猜】登录推栏，进入<b>「社区→发现→活动」</b>参与竞猜，押你看好夺冠的队伍。最终在竞猜成功的用户里产生幸运用户。
             </div>
         </div>
         <table class="m-rank-vote-table">
@@ -52,6 +54,7 @@
                             </el-option>
                         </el-select>
                     </th>
+                    <th>押冠数</th>
                     <th>票数</th>
                     <th>参与投票</th>
                 </tr>
@@ -84,7 +87,10 @@
                         <span class="u-server">{{ item.server }}</span>
                     </td>
                     <td>
-                        <span class="u-count">{{ item.votes }}</span>
+                        <span class="u-count">{{ item.guess || 0 }}</span>
+                    </td>
+                    <td>
+                        <span class="u-count">{{ item.votes || 0 }}</span>
                     </td>
                     <td class="u-vote-wapper">
                         <button
