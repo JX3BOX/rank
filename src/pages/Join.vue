@@ -48,7 +48,7 @@
                                 >
                                 </el-option>
                             </el-select>
-                            <div class="u-tip" v-if="!teams.length">
+                            <div class="u-tip" v-if="!teams || !teams.length">
                                 还没有团队？<a
                                     href="/team/#/org/setting"
                                     target="_blank"
@@ -79,6 +79,7 @@
                                 class="u-btn"
                                 type="primary"
                                 @click="submit"
+                                :disabled="!canJoin"
                                 >报名</el-button
                             >
                         </div>
@@ -167,6 +168,9 @@ export default {
         //         team_id: this.team_id,
         //     };
         // },
+        canJoin : function (){
+            return this.event_id && this.team_id
+        }
     },
     methods: {
         submit: function() {
@@ -217,7 +221,7 @@ export default {
         loadTeams: function() {
             // 获取当前用户拥有的团队
             return getMyTeams().then((res) => {
-                this.teams = res.data.data.list;
+                this.teams = res.data.data.list || [];
                 this.form.team_id = this.team_id;
                 this.$forceUpdate()
             });
