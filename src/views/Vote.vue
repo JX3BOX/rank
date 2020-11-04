@@ -11,8 +11,8 @@
         </div>
         <div class="m-rank-vote-header">
             <div class="u-tip">
-                <i class="el-icon-info"></i> 规则说明：10月29日开启通道，投票结榜后关闭通道，竞猜11月13日关闭通道。<br> 
-                【投票】每天可给3支不同团队各投1票，最终产生人气团队奖，<b>投票参与用户产生500名现金红包奖</b>（最低金额8.88元，最高金额88.88元）。<br>
+                <i class="el-icon-info"></i> 规则说明：10月29日开启通道，投票结榜后关闭通道，竞猜11月13日关闭通道，根据竞猜押冠数和投票数最终产生人气团队奖。<br> 
+                【投票】每天可给3支不同团队各投1票，<b>投票参与用户产生500名现金红包奖</b>（最低金额8.88元，最高金额88.88元）。<br>
                 【竞猜】登录推栏，进入<b>「社区→发现→活动」</b>参与竞猜，押你看好夺冠的队伍，最终在竞猜成功的用户里产生30名幸运用户。
             </div>
         </div>
@@ -54,8 +54,7 @@
                             </el-option>
                         </el-select>
                     </th>
-                    <th>押冠数</th>
-                    <th>票数</th>
+                    <th>人气</th>
                     <th>参与投票</th>
                 </tr>
             </thead>
@@ -89,9 +88,9 @@
                     <td>
                         <span class="u-count">{{ item.guess || 0 }}</span>
                     </td>
-                    <td>
+                    <!-- <td>
                         <span class="u-count">{{ item.votes || 0 }}</span>
-                    </td>
+                    </td> -->
                     <td class="u-vote-wapper">
                         <button
                             class="u-vote"
