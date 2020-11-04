@@ -160,7 +160,7 @@ export default {
                 });
 
                 item.clicked = true;
-                item.votes = ~~item.votes + 1;
+                item.guess = ~~item.guess + 1;
                 this.$forceUpdate();
             });
         },
