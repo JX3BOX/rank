@@ -201,7 +201,6 @@ export default {
     created: function() {
         this.loading = true;
         getAllTeams(this.id, {
-            orderBy: "votes",
             return_all: 1,
         })
             .then((res) => {
