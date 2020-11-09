@@ -9,12 +9,13 @@
         <div class="m-rank-video-title">
             <img :src="video_title_img" />
             <div class="u-extend">
-                <el-select class="u-server" v-model="server" placeholder="请选择服务器" size="mini">
-                    <el-option
-                        key="all"
-                        label="全部"
-                        value=""
-                    ></el-option>
+                <el-select
+                    class="u-server"
+                    v-model="server"
+                    placeholder="请选择服务器"
+                    size="mini"
+                >
+                    <el-option key="all" label="全部" value=""></el-option>
                     <el-option
                         v-for="item in servers"
                         :key="item"
@@ -31,6 +32,17 @@
                     :current-page.sync="page"
                 >
                 </el-pagination>
+            </div>
+        </div>
+        <div class="m-rank-video-live" v-if="list && list.length">
+            <div class="u-live">
+                <iframe :src="live_url || default_live_url" frameborder="0"></iframe>
+            </div>
+            <div class="u-list">
+                <li v-for="(item,i) in list" :key="i" @click="play(item)" :class="{on:!!item.isActive}">
+                    <img class="u-live-logo" :src="item.team.logo | teamLogo" />
+                    <span class="u-live-name">{{item.team.name}} <em>@{{ item.team.server }}</em> </span>
+                </li>
             </div>
         </div>
         <div class="m-rank-video-content">
@@ -174,7 +186,8 @@ export default {
             liveStatusMap,
             loading: false,
             servers,
-            server : ''
+            server: "",
+            live_url : ''
         };
     },
     computed: {
@@ -185,9 +198,31 @@ export default {
             return {
                 pageSize: this.per,
                 pageIndex: this.page,
-                server : this.server
+                server: this.server,
             };
         },
+        list: function() {
+            let list = [];
+            this.data.forEach((item, i) => {
+                if (
+                    item.team.tv_type == "douyu" &&
+                    item.douyu.show_status == 1
+                ) {
+                    list.push(item);
+                }
+                if(i == 0){
+                    item.isActive = true
+                }
+            });
+            return list;
+        },
+        default_live_url : function (){
+            if(this.list && this.list.length){
+                return 'https://open.douyu.com/tpl/h5/chain2/jdxoubyoux/' + this.list[0]['team']['tv']
+            }else{
+                return ''
+            }
+        }
     },
     methods: {
         getTVlink,
@@ -203,6 +238,16 @@ export default {
                     this.loading = false;
                 });
         },
+        play : function (item){
+            this.live_url = 'https://open.douyu.com/tpl/h5/chain2/jdxoubyoux/' + item.team.tv
+            this.clean()
+            item.isActive = true
+        },
+        clean : function (){
+            this.list.forEach((item) => {
+                item.isActive = false
+            })
+        }
     },
     watch: {
         params: {

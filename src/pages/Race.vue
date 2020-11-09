@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="m-rank-container" :class="'m-rank-event-' + id">
+    <div id="app" class="m-rank-container" :class="[id_cls,win_env]">
         <Header></Header>
 
         <div class="m-rank-race" v-if="id">
@@ -38,6 +38,7 @@ export default {
         return {
             data: "",
             back_img_url: __imgPath + "image/rank/common/history.png",
+            win_env: window.outerWidth < 780 ? 'isMobile' : 'isPC'
         };
     },
     computed: {
@@ -47,6 +48,9 @@ export default {
         note: function() {
             return this.$store.state.race.note;
         },
+        id_cls : function (){
+            return 'm-rank-event-' + this.id
+        }
     },
     methods: {
         init: function(val) {

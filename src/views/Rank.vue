@@ -261,6 +261,10 @@ export default {
         current_boss: function() {
             this.loadData();
         },
+        '$route.query.aid' : function (val){
+            this.current_boss = val
+            this.loadData();
+        }
     },
 };
 </script>
