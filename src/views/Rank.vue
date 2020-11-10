@@ -92,7 +92,7 @@
                     <!-- 时间 -->
                     <div class="u-time">
                         <span class="u-time-finish">
-                            {{ item.finish_time | showTime }}
+                            {{ item.created | showTime }}
                         </span>
                         <span class="u-time-fight">
                             用时 : <b>{{ item.fight_time | showTC }}</b>
