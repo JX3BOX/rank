@@ -1,7 +1,11 @@
 import { $next } from "./axios";
 
-function getTop100(achieve_id) {
-    return $next.get(`team/race/achieve/${achieve_id}/top100`);
+function getTop100(achieve_id,server = '') {
+    return $next.get(`team/race/achieve/${achieve_id}/top100`,{
+        params : {
+            server : server
+        }
+    });
 }
 
 function getTopTotal(achieve_arr) {

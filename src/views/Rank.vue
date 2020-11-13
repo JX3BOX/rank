@@ -27,6 +27,24 @@
             </el-col>
         </el-row>
 
+        <div class="m-rank-server-filter">
+            <el-select
+                class="u-server"
+                v-model="server"
+                placeholder="请选择服务器"
+                size="medium"
+                @change="loadLocalData"
+            >
+                <el-option key="all" label="全区服百强" value=""></el-option>
+                <el-option
+                    v-for="item in servers"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                ></el-option>
+            </el-select>
+        </div>
+
         <div class="m-rank-top100">
             <!-- A.列表不为空 -->
             <div class="m-rank-top100-list" v-if="data && data.length">
@@ -143,6 +161,7 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import achieves from "@/assets/data/achieve.json";
+import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import _ from "lodash";
 import { showAvatar, getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
@@ -157,6 +176,9 @@ export default {
             origin_data: [],
             total: "",
             loading: false,
+            servers,
+            server: "",
+            local_data: [], //指定区服数据
         };
     },
     computed: {
@@ -170,7 +192,7 @@ export default {
             return Object.keys(this.bossList).join(",");
         },
         data: function() {
-            let data = this.origin_data || [];
+            let data = (this.server ? this.local_data : this.origin_data) || [];
             data &&
                 data.forEach((team, i) => {
                     let leader_name = team.leader;
@@ -205,6 +227,18 @@ export default {
             getTop100(this.current_boss)
                 .then((res) => {
                     this.origin_data = res.data.data;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        loadLocalData: function() {
+            if (!this.server) return;
+
+            this.loading = true;
+            getTop100(this.current_boss, this.server)
+                .then((res) => {
+                    this.local_data = res.data.data;
                 })
                 .finally(() => {
                     this.loading = false;
@@ -261,13 +295,13 @@ export default {
         current_boss: function() {
             this.loadData();
         },
-        '$route.query.aid' : function (val){
-            this.current_boss = val
+        "$route.query.aid": function(val) {
+            this.current_boss = val;
             this.loadData();
-        }
+        },
     },
 };
 </script>
-<style scoped lang="less">
+<style lang="less">
 @import "../assets/css/race_rank.less";
 </style>
