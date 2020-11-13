@@ -234,14 +234,14 @@ export default {
             return mountIcon;
         },
         showMemberName: function(member) {
-            return (member && member[0].slice(0, 6)) || "未知";
+            return (member && member[0].slice(0, 12)) || "未知";
         },
         showLeaderMount: function(mount) {
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";
             return mountIcon;
         },
         showLeaderName: function(name) {
-            return (name && name.slice(0, 6)) || "未知";
+            return (name && name.slice(0, 12)) || "未知";
         },
     },
     created: function() {
