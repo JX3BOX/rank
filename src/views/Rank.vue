@@ -28,7 +28,7 @@
         </el-row>
 
         <div class="m-rank-server-filter">
-            <el-select
+            <!-- <el-select
                 class="u-server"
                 v-model="server"
                 placeholder="请选择服务器"
@@ -42,7 +42,16 @@
                     :label="item"
                     :value="item"
                 ></el-option>
-            </el-select>
+            </el-select> -->
+            <ul>
+                <li @click="filterServer('')" :class="{on:!server}">全区全服</li>
+                <li
+                    v-for="item in servers"
+                    :key="item"
+                    @click="filterServer(item)"
+                    :class="{on:server == item}"
+                >{{item}}</li>
+            </ul>
         </div>
 
         <div class="m-rank-top100">
@@ -216,6 +225,7 @@ export default {
     methods: {
         changeBoss: function(val) {
             this.current_boss = val;
+            this.server = "";
         },
         getRankImg: function(num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";
@@ -250,6 +260,14 @@ export default {
                 ? getThumbnail(val, 120, true)
                 : getThumbnail(val, 88, true);
         },
+        filterServer : function (server){
+            this.server = server
+            if(server){
+                this.loadLocalData()
+            }else{
+                this.loadData()
+            }
+        }
     },
     filters: {
         teamLink: function(val) {
