@@ -15,6 +15,23 @@ Vue.use(JX3BOX_UI);
 import router from "../router/race.js";
 import store from "../store/race.js";
 
+import ECharts from 'vue-echarts' // 在 webpack 环境下指向 components/ECharts.vue
+
+// 手动引入 ECharts 各模块来减小打包体积
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/chart/pie'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/markPoint'
+import 'echarts/lib/component/markLine'
+import 'echarts/lib/component/dataZoom'
+import 'echarts/lib/component/legend'
+import 'echarts/lib/component/title'
+
+import jx3DarkTheme from '@/assets/data/echartsTheme.json'
+
+Vue.component('v-chart', ECharts)
+ECharts.registerTheme('jx3box-dark', jx3DarkTheme)
+
 import App from "./Race.vue";
 new Vue({
     router,
