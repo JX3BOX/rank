@@ -14,7 +14,7 @@
                             <i class="u-status" :class="{on : item.status}">{{item.status ? '进行中' : '已结束'}}</i>
                         </a>
                     </li>
-                    <li class="u-item">
+                    <!-- <li class="u-item">
                         <a
                             href="/fb/?fb_zlp=%E4%B8%96%E5%A4%96%E8%93%AC%E8%8E%B1&fb_name=%E8%8C%83%E9%98%B3%E5%A4%9C%E5%8F%98#/rank"
                             target="_blank"
@@ -23,7 +23,7 @@
                             <b>范阳夜变</b>
                             <i class="u-status">已结束</i>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
