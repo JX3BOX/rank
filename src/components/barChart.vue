@@ -20,6 +20,10 @@ export default {
             type: String,
             required: false,
         },
+        title: {
+            type: String,
+            required: true,
+        },
     },
     watch: {
         data(newVal, oldVal) {
@@ -40,7 +44,7 @@ export default {
             barOption: {
                 title: {
                     show: true,
-                    text: "区服入榜团队数量统计图",
+                    text: `${this.title}统计图`,
                 },
                 tooltip: {
                     trigger: "axis",

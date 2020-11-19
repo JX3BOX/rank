@@ -60,7 +60,7 @@ export default {
                     left: "center",
                     top: "bottom",
                     data: this.data.map((item) => item["name"]),
-                    icon: "circle",
+                    icon: "circle"
                 },
                 series: [
                     {
