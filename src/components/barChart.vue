@@ -62,6 +62,7 @@ export default {
                     type: "value",
                     boundaryGap: [0, 0.01],
                     position: "top",
+                    minInterval: 1
                 },
                 yAxis: {
                     type: "category",
