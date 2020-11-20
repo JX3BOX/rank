@@ -1,5 +1,5 @@
 <template>
-    <div class=c-chart>
+    <div class="c-chart" :style="{'--height': isSmall ? '600px' : '700px'}">
         <v-chart :options="pieOption" theme="jx3box-dark" ref="chart" />
         <slot></slot>
     </div>
@@ -26,8 +26,12 @@ export default {
         },
         isCustomColor: {
             type: Boolean,
-            default: true
-        }
+            default: true,
+        },
+        isSmall: {
+            type: Boolean,
+            default: false,
+        },
     },
     watch: {
         data(newVal, oldVal) {
@@ -60,14 +64,20 @@ export default {
                     left: "center",
                     top: "bottom",
                     data: this.data.map((item) => item["name"]),
-                    icon: "circle"
+                    icon: "circle",
                 },
                 series: [
                     {
                         name: this.title,
                         type: "pie",
                         data: this.data,
-                        radius: "75%",
+                        radius: this.isSmall ? "67%" : "75%",
+                        label: this.isSmall
+                            ? {
+                                  fontSize: 12,
+                                  formatter: "{b}\n{d}%"
+                              }
+                            : {},
                         emphasis: {
                             itemStyle: {
                                 shadowBlur: 10,
@@ -238,6 +248,6 @@ export default {
 }
 .echarts {
     width: 100%;
-    height: 700px;
+    height: var(--height);
 }
 </style>
