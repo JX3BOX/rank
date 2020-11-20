@@ -42,6 +42,12 @@ module.exports = {
                     request.setHeader("origin", "");
                 }
             },
+            "/rank-analysis": {
+                "target": "https://www.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
         },
         disableHostCheck: true
     },
