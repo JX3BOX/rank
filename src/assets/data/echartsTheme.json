@@ -68,7 +68,8 @@
             "show": true,
             "position": "right",
             "color": "#ccc"
-        }
+        },
+        "barMaxWidth": 32
     },
     "pie": {
         "itemStyle": {
