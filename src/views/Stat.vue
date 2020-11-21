@@ -14,7 +14,7 @@
             justify="space-between"
         >
             <el-col
-                :span="3"
+                :span="4"
                 v-for="(label, achieve_id) of bossList"
                 :key="achieve_id"
             >
