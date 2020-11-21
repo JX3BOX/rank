@@ -6,7 +6,6 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.8)"
     >
-        <!-- <img :src="null_img_url" class="m-rank-null" /> -->
         <el-row
             class="m-rank-boss"
             :gutter="20"
@@ -28,40 +27,47 @@
             </el-col>
         </el-row>
 
-        <bar-chart
-            v-if="ana[11]"
-            :data="ana[11]['data']"
-            :title="ana[11]['title']"
-            height="450px"
-        >
-            <!-- <div>testtest</div> -->
-        </bar-chart>
+        <img
+            :src="null_img_url"
+            class="m-rank-null"
+            v-if=" stats['bar_server_all'] == undefined || stats['bar_server_all'][current_boss] == undefined"
+        />
+        <template v-else>
+            <bar-chart
+                v-if="ana[11]"
+                :data="ana[11]['data']"
+                :title="ana[11]['title']"
+                height="450px"
+            >
+                <!-- <div>testtest</div> -->
+            </bar-chart>
 
-        <bar-chart
-            v-if="ana[1]"
-            :data="ana[1]['data']"
-            :title="ana[1]['title']"
-        >
-            <!-- <div>testtest</div> -->
-        </bar-chart>
+            <bar-chart
+                v-if="ana[1]"
+                :data="ana[1]['data']"
+                :title="ana[1]['title']"
+            >
+                <!-- <div>testtest</div> -->
+            </bar-chart>
 
-        <template v-for="item of 9">
-            <pie-chart
-                :key="item"
-                v-if="ana[item + 1]"
-                :data="ana[item + 1]['data']"
-                :title="ana[item + 1]['title']"
-                :isCustomColor="
-                    ana[item + 1]['isCustomColor'] === undefined
-                        ? true
-                        : ana[item + 1]['isCustomColor']
-                "
-                :isSmall="ana[item + 1]['position'] !== undefined"
-                :class="{
-                    'chart-left': ana[item + 1]['position'] === 'left',
-                    'chart-right': ana[item + 1]['position'] === 'right',
-                }"
-            ></pie-chart>
+            <template v-for="item of 9">
+                <pie-chart
+                    :key="item"
+                    v-if="ana[item + 1]"
+                    :data="ana[item + 1]['data']"
+                    :title="ana[item + 1]['title']"
+                    :isCustomColor="
+                        ana[item + 1]['isCustomColor'] === undefined
+                            ? true
+                            : ana[item + 1]['isCustomColor']
+                    "
+                    :isSmall="ana[item + 1]['position'] !== undefined"
+                    :class="{
+                        'chart-left': ana[item + 1]['position'] === 'left',
+                        'chart-right': ana[item + 1]['position'] === 'right',
+                    }"
+                ></pie-chart>
+            </template>
         </template>
     </div>
 </template>
@@ -128,6 +134,11 @@ export default {
         changeBoss: function (val) {
             this.current_boss = val;
             this.server = "";
+
+            if (this.stats['bar_server_all'][this.current_boss] == undefined) {
+                return false
+            }
+
             let tmpAna = {};
             this.ana = tmpAna;
             for (let item = 1; item <= 11; ++item) {
