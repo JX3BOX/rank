@@ -31,7 +31,6 @@ export default {
     },
     watch: {
         data(newVal, oldVal) {
-            console.log(newVal);
             this.barOption.series[0].data = newVal;
         },
     },
