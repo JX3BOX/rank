@@ -32,6 +32,7 @@
             v-if="ana[11]"
             :data="ana[11]['data']"
             :title="ana[11]['title']"
+            height="450px"
         >
             <!-- <div>testtest</div> -->
         </bar-chart>
@@ -347,17 +348,18 @@ export default {
             }
             let fullData = this.stats["bar_server_top10"][this.current_boss];
             let data = fullData["data"];
-            let exist_servers = fullData["servers"];
-            let none_servers = servers
-                .reverse()
-                .filter((server) => {
-                    return !exist_servers.includes(server);
-                })
-                .map((server) => {
-                    return [0, server];
-                });
+            // let exist_servers = fullData["servers"];
+            // let none_servers = servers
+            //     .reverse()
+            //     .filter((server) => {
+            //         return !exist_servers.includes(server);
+            //     })
+            //     .map((server) => {
+            //         return [0, server];
+            //     });
             this.ana[11] = {
-                data: none_servers.concat(data),
+                // data: none_servers.concat(data),
+                data: data,
                 title: "前十名区服分布",
             };
         },
