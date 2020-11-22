@@ -192,10 +192,13 @@
 }
 
 .m-rank-top100-list {
+    @w : (@box_width - 40px) / 3;
+    
     .is-No1,
     .is-No2,
     .is-No3 {
-        .w(340px);
+        
+        .w(@w);
         box-sizing: border-box;
         .pr;
         padding: 0;
@@ -264,7 +267,7 @@
     @no3add: 40px;
 
     .is-No1 {
-        .ml(370px);
+        .ml(@w + 20px);
         .u-logo {
             .pt(@basic);
         }

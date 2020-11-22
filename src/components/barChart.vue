@@ -1,6 +1,6 @@
 <template>
-    <div class="c-chart">
-        <v-chart :options="barOption" theme="jx3box-dark" />
+    <div class="c-chart" :style="{'--height': height}">
+        <v-chart :options="barOption" theme="jx3box-dark"/>
         <slot></slot>
     </div>
 </template>
@@ -24,10 +24,13 @@ export default {
             type: String,
             required: true,
         },
+        height: {
+            type: String,
+            default: '800px'
+        }
     },
     watch: {
         data(newVal, oldVal) {
-            console.log(newVal);
             this.barOption.series[0].data = newVal;
         },
     },
@@ -94,6 +97,6 @@ export default {
 }
 .echarts {
     width: 100%;
-    height: 800px;
+    height: var(--height);
 }
 </style>

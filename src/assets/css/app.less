@@ -3,18 +3,31 @@ body{
     background-color:#000;
 }
 
+body,.m-rank-container,#m-rank-star{
+    min-height:calc(100vh - 64px);
+}
+
+#m-rank-star{
+    .pa;.lt(0);
+    .w(100%);
+    z-index: -1;
+}
+
+.c-header,.c-jx3box{
+    background: rgba(0,0,0,.5);
+}
+
 .m-rank-container{
     .mt(@header-height);
     // background-color:#1e2226;
     // min-height:680px;
-    min-width:1080px;
-    max-width:1260px;
+    width:@box_width;
     .auto(x);
 }
 
 .c-footer{
     margin:20px auto 0 auto!important;
-    max-width: 1020px;
+    width:@box_width;
     .auto(x);
     padding:20px 0;
 }

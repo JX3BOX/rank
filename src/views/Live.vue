@@ -34,6 +34,17 @@
                 </el-pagination>
             </div>
         </div>
+        <div class="m-rank-video-live" v-if="list && list.length">
+            <div class="u-live">
+                <iframe :src="live_url || default_live_url" frameborder="0"></iframe>
+            </div>
+            <div class="u-list">
+                <li v-for="(item,i) in list" :key="i" @click="play(item)" :class="{on:!!item.isActive}">
+                    <img class="u-live-logo" :src="item.team.logo | teamLogo" />
+                    <span class="u-live-name">{{item.team.name}} <em>@{{ item.team.server }}</em> </span>
+                </li>
+            </div>
+        </div>
         <div class="m-rank-video-content">
             <template v-if="data && data.length">
                 <el-row class="m-rank-video-list" :gutter="20">
