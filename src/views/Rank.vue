@@ -44,13 +44,17 @@
                 ></el-option>
             </el-select> -->
             <ul>
-                <li @click="filterServer('')" :class="{on:!server}">全区全服</li>
+                <li @click="filterServer('')" :class="{ on: !server }">
+                    全区全服
+                </li>
                 <li
                     v-for="item in servers"
                     :key="item"
                     @click="filterServer(item)"
-                    :class="{on:server == item}"
-                >{{item}}</li>
+                    :class="{ on: server == item }"
+                >
+                    {{ item }}
+                </li>
             </ul>
         </div>
 
@@ -88,11 +92,12 @@
                             "
                             fit="fill"
                         ></el-image>
-                        <img
-                            loading="lazy"
-                            src="../assets/img/misc/null.png"
-                            v-else
-                        />
+                        <div class="el-image" v-else>
+                            <img
+                                loading="lazy"
+                                src="../assets/img/misc/null.png"
+                            />
+                        </div>
                     </a>
                     <!-- 名称 -->
                     <div class="u-title">
@@ -260,14 +265,14 @@ export default {
                 ? getThumbnail(val, 120, true)
                 : getThumbnail(val, 88, true);
         },
-        filterServer : function (server){
-            this.server = server
-            if(server){
-                this.loadLocalData()
-            }else{
-                this.loadData()
+        filterServer: function(server) {
+            this.server = server;
+            if (server) {
+                this.loadLocalData();
+            } else {
+                this.loadData();
             }
-        }
+        },
     },
     filters: {
         teamLink: function(val) {

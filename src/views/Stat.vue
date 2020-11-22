@@ -28,22 +28,9 @@
             </el-col>
         </el-row>
 
-        <bar-chart
-            v-if="ana[11]"
-            :data="ana[11]['data']"
-            :title="ana[11]['title']"
-        >
+        <bar-chart v-if="ana[1]" :data="ana[1]['data']" :title="ana[1]['title']">
             <!-- <div>testtest</div> -->
         </bar-chart>
-
-        <bar-chart
-            v-if="ana[1]"
-            :data="ana[1]['data']"
-            :title="ana[1]['title']"
-        >
-            <!-- <div>testtest</div> -->
-        </bar-chart>
-
         <template v-for="item of 9">
             <pie-chart
                 :key="item"
@@ -55,13 +42,11 @@
                         ? true
                         : ana[item + 1]['isCustomColor']
                 "
-                :isSmall="ana[item + 1]['position'] !== undefined"
-                :class="{
-                    'chart-left': ana[item + 1]['position'] === 'left',
-                    'chart-right': ana[item + 1]['position'] === 'right',
-                }"
             ></pie-chart>
         </template>
+        <bar-chart v-if="ana[11]" :data="ana[11]['data']" :title="ana[11]['title']">
+            <!-- <div>testtest</div> -->
+        </bar-chart>
     </div>
 </template>
 
@@ -120,15 +105,16 @@ export default {
         if (this.$route.query.aid) {
             this.current_boss = this.$route.query.aid;
         }
-        this.loading = true;
+        this.loading = true
         this.getStats();
     },
     methods: {
         changeBoss: function (val) {
+            console.log("called")
             this.current_boss = val;
             this.server = "";
-            let tmpAna = {};
-            this.ana = tmpAna;
+            let tmpAna = {}
+            this.ana = tmpAna
             for (let item = 1; item <= 11; ++item) {
                 eval(`this.doAna${item}()`);
             }
@@ -150,20 +136,16 @@ export default {
             //     });
         },
         getStats() {
-            axios(
-                realUrl(__Root, `rank-analysis/stats/event${this.id}.json`),
-                "GET",
-                false
-            )
+            axios(realUrl(__Root, `rank-analysis/stats/event${this.id}.json`), "GET", false)
                 .then((res) => {
-                    this.stats = res;
+                    this.stats = res
                 })
                 .catch((err) => {
-                    this.$message.error("加载统计文件失败");
+                    this.$message.error("加载统计文件失败")
                 })
                 .then(() => {
-                    this.changeBoss(this.current_boss);
-                    this.loading = false;
+                    this.changeBoss(this.current_boss)
+                    this.loading = false
                 });
         },
         doAna1() {
@@ -172,9 +154,8 @@ export default {
                 this.ana[1] = undefined;
                 return false;
             }
-            let fullData = this.stats["bar_server_all"][this.current_boss];
-            let data = fullData["data"];
-            let exist_servers = fullData["servers"];
+            let data = this.stats["1"][this.current_boss]["data"];
+            let exist_servers = this.stats["1"][this.current_boss]["servers"];
             let none_servers = servers
                 .reverse()
                 .filter((server) => {
@@ -183,10 +164,7 @@ export default {
                 .map((server) => {
                     return [0, server];
                 });
-            this.ana[1] = {
-                data: none_servers.concat(data),
-                title: "区服入榜团队数量",
-            };
+            this.ana[1] = { data: none_servers.concat(data), title: "区服入榜团队数量" };
         },
         doAna2() {
             // 2-Boss职业比例-pie
@@ -194,7 +172,8 @@ export default {
                 this.ana[2] = undefined;
                 return false;
             }
-            let data = this.stats["pie_school_ratio"][this.current_boss];
+            let data = this.stats["2"][this.current_boss];
+            // console.log(data)
             Object.keys(schools["school"])
                 .filter((each) => {
                     return (
@@ -211,7 +190,7 @@ export default {
                         value: 0,
                     });
                 });
-            this.ana[2] = { data: data, title: "全门派出场率" };
+            this.ana[2] = { data: data, title: "门派出场率" };
         },
         doAna3() {
             // 3-Boss心法比例-pie
@@ -219,7 +198,7 @@ export default {
                 this.ana[3] = undefined;
                 return false;
             }
-            let data = this.stats["pie_xf_ratio"][this.current_boss];
+            let data = this.stats["3"][this.current_boss];
             Object.values(xfids)
                 .filter((each) => {
                     return (
@@ -236,7 +215,7 @@ export default {
                         value: 0,
                     });
                 });
-            this.ana[3] = { data: data, title: "全心法出场率" };
+            this.ana[3] = { data: data, title: "心法出场率" };
         },
         doAna4() {
             // 4-Boss奶妈数量-pie
@@ -244,85 +223,78 @@ export default {
                 this.ana[4] = undefined;
                 return false;
             }
-            let data = this.stats["pie_hps_count"][this.current_boss];
+            let data = this.stats["4"][this.current_boss];
 
             this.ana[4] = {
                 data: data,
                 title: "各团出场治疗心法数量",
                 isCustomColor: false,
-                position: "left",
             };
         },
         doAna5() {
             // 5-BossT数量-pie
             if (this.current_boss == "0") {
-                this.ana[6] = undefined;
+                this.ana[5] = undefined;
                 return false;
             }
-            let data = this.stats["pie_tank_count"][this.current_boss];
+            let data = this.stats["5"][this.current_boss];
 
-            this.ana[6] = {
+            this.ana[5] = {
                 data: data,
                 title: "各团出场防御心法数量",
                 isCustomColor: false,
-                position: "left",
             };
         },
         doAna6() {
             // 6-Boss外功内功比例-pie
             if (this.current_boss == "0") {
-                this.ana[9] = undefined;
+                this.ana[6] = undefined;
                 return false;
             }
-            let data = this.stats["pie_neiwaigong_ratio"][this.current_boss];
+            let data = this.stats["6"][this.current_boss];
 
-            this.ana[9] = {
+            this.ana[6] = {
                 data: data,
-                title: "内外功出场比例",
+                title: "外功内功出场人数比例",
                 isCustomColor: false,
             };
         },
         doAna7() {
             // 7-BossDPS各心法比例-pie
             if (this.current_boss == "0") {
-                this.ana[8] = undefined;
+                this.ana[7] = undefined;
                 return false;
             }
-            let data = this.stats["pie_dps_xf_ratio"][this.current_boss];
+            let data = this.stats["7"][this.current_boss];
 
-            this.ana[8] = {
-                data: data,
-                title: "各输出心法出场率",
-            };
+            this.ana[7] = { data: data, title: "输出心法各心法出场人数比例" };
         },
         doAna8() {
             // 8-Boss奶妈各心法比例-pie
             if (this.current_boss == "0") {
-                this.ana[5] = undefined;
+                this.ana[8] = undefined;
                 return false;
             }
-            let data = this.stats["pie_hps_xf_ratio"][this.current_boss];
+            let data = this.stats["8"][this.current_boss];
 
-            this.ana[5] = {
+            this.ana[8] = {
                 data: data,
-                title: "各治疗心法出场率",
+                title: "治疗心法各心法出场人数比例",
                 isCustomColor: false,
-                position: "right",
             };
         },
         doAna9() {
             // 9-BossT各心法比例-pie
             if (this.current_boss == "0") {
-                this.ana[7] = undefined;
+                this.ana[9] = undefined;
                 return false;
             }
-            let data = this.stats["pie_tank_xf_ratio"][this.current_boss];
+            let data = this.stats["9"][this.current_boss];
 
-            this.ana[7] = {
+            this.ana[9] = {
                 data: data,
-                title: "各防御心法出场率",
+                title: "防御心法各心法出场人数比例",
                 isCustomColor: false,
-                position: "right",
             };
         },
         doAna10() {
@@ -331,7 +303,7 @@ export default {
                 this.ana[10] = undefined;
                 return false;
             }
-            let data = this.stats["pie_leader_type_ratio"][this.current_boss];
+            let data = this.stats["10"][this.current_boss];
 
             this.ana[10] = {
                 data: data,
@@ -345,9 +317,8 @@ export default {
                 this.ana[11] = undefined;
                 return false;
             }
-            let fullData = this.stats["bar_server_top10"][this.current_boss];
-            let data = fullData["data"];
-            let exist_servers = fullData["servers"];
+            let data = this.stats["11"][this.current_boss]["data"];
+            let exist_servers = this.stats["11"][this.current_boss]["servers"];
             let none_servers = servers
                 .reverse()
                 .filter((server) => {
@@ -356,11 +327,8 @@ export default {
                 .map((server) => {
                     return [0, server];
                 });
-            this.ana[11] = {
-                data: none_servers.concat(data),
-                title: "前十名区服分布",
-            };
-        },
+            this.ana[11] = { data: none_servers.concat(data), title: "前十名区服分布"};
+        }
     },
     filters: {},
 };
