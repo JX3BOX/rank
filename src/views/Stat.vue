@@ -318,7 +318,6 @@ export default {
             this.ana[5] = {
                 data: data,
                 title: "各治疗心法出场率",
-                isCustomColor: false,
                 position: "right",
             };
         },
@@ -333,7 +332,6 @@ export default {
             this.ana[7] = {
                 data: data,
                 title: "各防御心法出场率",
-                isCustomColor: false,
                 position: "right",
             };
         },
