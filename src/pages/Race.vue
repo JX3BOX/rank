@@ -20,7 +20,7 @@
             <a href="/rank" class="u-history"><img :src="back_img_url"/></a>
 
             <!-- 网页二维码 -->
-            <QRcode class="u-mobile-qrcode" v="static" />
+            <QRcode class="u-mobile-qrcode" v="static" :s="100"/>
         </div>
 
         <Footer></Footer>
