@@ -261,6 +261,7 @@ export default {
             return {
                 pageSize: this.per,
                 pageIndex: this.page,
+                aid : this.current_boss
             };
         },
         bossList: function() {
@@ -279,6 +280,7 @@ export default {
     methods: {
         changeBoss: function(val) {
             this.current_boss = val;
+            this.loadData()
         },
         loadData: function() {
             this.loading = true;
