@@ -280,6 +280,7 @@ export default {
     methods: {
         changeBoss: function(val) {
             this.current_boss = val;
+            this.page = 1;
             this.loadData()
         },
         loadData: function() {
