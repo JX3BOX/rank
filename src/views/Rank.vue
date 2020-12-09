@@ -113,13 +113,13 @@
                         <span class="u-server">
                             {{ item.server }}
                         </span>
-                        <span
+                        <!-- <span
                             class="u-verified el-icon-success"
                             v-if="item.verified"
                         ></span>
                         <span class="u-not-verified el-icon-warning" v-else>
                             公示期</span
-                        >
+                        > -->
                     </div>
                     <!-- 时间 -->
                     <div class="u-time">

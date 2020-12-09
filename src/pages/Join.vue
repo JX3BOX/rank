@@ -56,7 +56,7 @@
                                 >
                             </div>
                         </el-form-item>
-                        <el-form-item label="联系电话">
+                        <!-- <el-form-item label="联系电话">
                             <el-input
                                 v-model="form.phone"
                                 placeholder="请输入正确的快递联系电话"
@@ -73,7 +73,7 @@
                                 v-model="form.qq"
                                 placeholder="请输入正确的QQ号码"
                             ></el-input>
-                        </el-form-item>
+                        </el-form-item> -->
                         <div class="u-btns">
                             <el-button
                                 class="u-btn"
