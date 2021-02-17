@@ -6,7 +6,7 @@
                 <img class="u-logo" :src="LOGO" />
             </div>
             <div class="m-rank-content" v-if="isLogin">
-                <div class="m-join m-join-team" v-if="!status">
+                <div class="m-join m-join-team">
                     <h1 class="m-join-title">报名入口</h1>
                     <el-alert
                         class="u-warning"
@@ -50,7 +50,7 @@
                             </el-select>
                             <div class="u-tip" v-if="!teams || !teams.length">
                                 还没有团队？<a
-                                    href="/team/#/org/setting"
+                                    href="/team"
                                     target="_blank"
                                     >创建团队</a
                                 >
@@ -79,25 +79,25 @@
                                 class="u-btn"
                                 type="primary"
                                 @click="submit"
-                                :disabled="!canJoin"
+                                :disabled="!ready || !status"
                                 >报名</el-button
                             >
                         </div>
                     </el-form>
                 </div>
-                <div class="m-join m-join-done" v-else>
+                <div class="m-join m-join-done" v-if="status">
                     <h1 class="u-title">已报名</h1>
                     <div>
                         <p>
-                            活动：<b>{{ event_name }}</b>
+                            活动：<strong>{{ result.event.name }}</strong>
                         </p>
                         <p>
-                            团队：<strong>{{ team_name }}</strong>
+                            团队：<strong>{{ result.eventRecord.name }}</strong>
                         </p>
                     </div>
                 </div>
-                <div class="u-tip">
-                    <a href="/tool/?pid=18044#/" target="_blank"
+                <div class="u-footer">
+                    <a href="/tool/18044" target="_blank"
                         ><i class="el-icon-info"></i>
                         <b>点击查看活动规则详情</b></a
                     >
@@ -117,7 +117,6 @@ import { getEvents, joinEvent, hasJoined } from "@/service/event.js";
 import { getMyTeams } from "@/service/team.js";
 import _ from "lodash";
 import User from '@jx3box/jx3box-common/js/user.js'
-const ACTIVE_EVENT_ID = 1; //当前开启的活动
 
 export default {
     name: "App",
@@ -128,61 +127,31 @@ export default {
             form: {
                 event_id: "",
                 team_id: "",
-                phone: "",
-                address: "",
-                qq: "",
+                // phone: "",
+                // address: "",
+                // qq: "",
             },
-            events: [
-                // {
-                //     ID: 1,
-                //     name: "奉天证道",
-                //     status: 1,
-                // },
-            ],
-            teams: [
-                // {
-                //     ID : 1,
-                //     name : "诗画印象"
-                // }
-            ],
+            events: [],
+            teams: [],
             status: false,
-            isLogin : User.isLogin()
+            isLogin : User.isLogin(),
+            result : {
+                event : {
+                    name : '活动名称'
+                },
+                eventRecord : {
+                    name : '团队名称'
+                }
+            },
         };
     },
     computed: {
-        event_name: function() {
-            return _.get(this.events[0], "name");
+        ready : function (){
+            return this.form.event_id && this.form.team_id
         },
-        event_id: function() {
-            return _.get(this.events[0], "ID");
-        },
-        team_name: function() {
-            return _.get(this.teams[0], "name");
-        },
-        team_id: function() {
-            return _.get(this.teams[0], "ID");
-        },
-        // join_data: function() {
-        //     return {
-        //         event_id: this.event_id,
-        //         team_id: this.team_id,
-        //     };
-        // },
-        canJoin : function (){
-            return this.event_id && this.team_id
-        }
     },
     methods: {
         submit: function() {
-
-            if(!this.team_id){
-                this.$message({
-                    message: "无效团队ID",
-                    type: "error",
-                });
-                return
-            }
-
             this.$alert(
                 "报名后资料将不可再更改，更多咨询请联系认证团长Q群1048059072",
                 "消息",
@@ -206,14 +175,13 @@ export default {
         init: function() {
             this.loadEvents()
             this.loadTeams()
-            this.checkJoin()
         },
         loadEvents: function() {
             // 获取开放的活动事件
             return getEvents({
                 status: 1,
             }).then((res) => {
-                this.events = res.data.data.list;
+                this.events = res.data.data.list || [];
                 this.form.event_id = this.event_id;
                 this.$forceUpdate()
             });
@@ -227,13 +195,21 @@ export default {
             });
         },
         checkJoin: function() {
-            return hasJoined(ACTIVE_EVENT_ID).then((res) => {
-                if (res.data.data.hasJoined) {
-                    this.status = 1;
-                    this.$forceUpdate()
-                }
-            });
+            if(this.ready){
+                hasJoined(this.form.event_id).then((res) => {
+                    this.result = res.data.data
+                    if (res.data.data.hasJoined) {
+                        this.status = true;
+                        this.$forceUpdate()
+                    }
+                });
+            }
         },
+    },
+    watch : {
+        ready : function (){
+            this.checkJoin()
+        }
     },
     created: function() {
         this.init();

@@ -17,19 +17,19 @@ module.exports = {
             title : '报名入口 - 剑三秘境百强榜 - JX3BOX',
             entry:'src/pages/join.js',
             template : 'public/index.html',
-            filename:'join.html',
+            filename:'join/index.html',
         },
         race : {
             title : '剑三秘境百强榜 - JX3BOX',
             entry:'src/pages/race.js',
             template : 'public/index.html',
-            filename:'race.html',
+            filename:'race/index.html',
         },
         event : {
             title : '活动设置 - JX3BOX',
             entry:'src/pages/event.js',
             template : 'public/index.html',
-            filename:'event.html',
+            filename:'event/index.html',
         },
     },
 
