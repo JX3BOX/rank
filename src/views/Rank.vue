@@ -305,8 +305,10 @@ export default {
         "$route.query.aid": {
             immediate: true,
             handler: function(val) {
-                this.current_boss = val;
-                this.loadData();
+                if(val){
+                    this.current_boss = val;
+                    this.loadData();
+                }
             },
         },
         "$route.params.type": {

@@ -23,6 +23,6 @@ Stat | /stat | 统计分析（微博长图）
 ## TODO
 1.info:活动详细规则及新版流程图嵌入在此模块，FAQ使用自带折叠。
 2.gift:晚会回看+奖项设置
-3.vote:使用新版
+3.vote:使用新版接口+团队宣言
 4.video + live : 合并
 5.stat : 新增dps项

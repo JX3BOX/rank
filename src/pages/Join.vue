@@ -56,6 +56,13 @@
                                 >
                             </div>
                         </el-form-item>
+                        <el-form-item label="参赛宣言">
+                            <el-input
+                                v-model="form.slogan"
+                                placeholder="一经提交，不可修改"
+                                :maxlength="20"
+                            ></el-input>
+                        </el-form-item>
                         <!-- <el-form-item label="联系电话">
                             <el-input
                                 v-model="form.phone"
@@ -127,6 +134,7 @@ export default {
             form: {
                 event_id: "",
                 team_id: "",
+                slogan : '',
                 // phone: "",
                 // address: "",
                 // qq: "",
