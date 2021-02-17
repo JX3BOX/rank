@@ -16,7 +16,7 @@ const routes = [
     { name: "index", path: "/", component: Info },
     { name: "info", path: "/info", component: Info },
     { name: "lucky", path: "/lucky", component: Lucky },
-    { name: "rank", path: "/rank", component: Rank },
+    { name: "rank", path: "/rank/:type?/:subtype?", component: Rank },
     { name: "vote", path: "/vote", component: Vote },
     { name: "live", path: "/live", component: Live },
     { name: "video", path: "/video", component: Video },

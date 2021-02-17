@@ -1,6 +1,7 @@
 import { $next } from "./axios";
 
 function getTop100(achieve_id, server = "") {
+    if(!achieve_id) return
     return $next.get(`team/race/achieve/${achieve_id}/top100`, {
         params: {
             server: server,

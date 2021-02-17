@@ -33,7 +33,8 @@ export default {
     },
     methods: {
         link: function(val) {
-            return "/" + this.id + "/" + val;
+            // return "/" + this.id + "/" + val;
+            return "/" + val;
         },
     },
     filters: {},

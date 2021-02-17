@@ -62,7 +62,7 @@ export default {
     },
     filters: {
         eventLink: function(val) {
-            return "./race.html#/" + val;
+            return "./race/" + val;
         },
         eventCover: PICS.cover,
     },

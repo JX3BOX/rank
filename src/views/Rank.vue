@@ -12,10 +12,11 @@
                 v-for="(label, achieve_id) of bossList"
                 :key="achieve_id"
             >
-                <div
+                <router-link
                     class="u-boss"
-                    :class="{ on: achieve_id == current_boss }"
                     @click="changeBoss(achieve_id)"
+                    :to="'/rank/' + achieve_id"
+                    :class="{on:achieve_id == current_boss}"
                 >
                     <span class="u-boss-name">{{ label }}</span>
                     <span class="u-boss-per"
@@ -23,39 +24,27 @@
                             total[achieve_id] > 100 ? 100 : total[achieve_id]
                         }}/100)</span
                     >
-                </div>
+                </router-link>
             </el-col>
         </el-row>
 
         <div class="m-rank-server-filter">
-            <!-- <el-select
-                class="u-server"
-                v-model="server"
-                placeholder="请选择服务器"
-                size="medium"
-                @change="loadLocalData"
-            >
-                <el-option key="all" label="全区服百强" value=""></el-option>
-                <el-option
-                    v-for="item in servers"
-                    :key="item"
-                    :label="item"
-                    :value="item"
-                ></el-option>
-            </el-select> -->
-            <ul>
-                <li @click="filterServer('')" :class="{ on: !server }">
+            <div>
+                <router-link
+                    :class="{ on: !server }"
+                    :to="'/rank/' + current_boss"
+                >
                     全区全服
-                </li>
-                <li
+                </router-link>
+                <router-link
                     v-for="item in servers"
                     :key="item"
-                    @click="filterServer(item)"
-                    :class="{ on: server == item }"
+                    :to="'/rank/' + current_boss + '/' + item"
+                    :class="{on:server == item}"
                 >
                     {{ item }}
-                </li>
-            </ul>
+                </router-link>
+            </div>
         </div>
 
         <div class="m-rank-top100">
@@ -177,7 +166,7 @@ import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import achieves from "@/assets/data/achieve.json";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import _ from "lodash";
-import { showAvatar, getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { showAvatar, getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getTop100, getTopTotal } from "@/service/race.js";
@@ -198,6 +187,12 @@ export default {
     computed: {
         id: function() {
             return this.$store.state.id;
+        },
+        type: function() {
+            return this.$route.params.type;
+        },
+        subtype: function() {
+            return this.$route.params.subtype;
         },
         bossList: function() {
             return achieves[this.id] || [];
@@ -229,15 +224,20 @@ export default {
     },
     methods: {
         changeBoss: function(val) {
-            this.current_boss = val;
+            // this.current_boss = val;
             this.server = "";
         },
         getRankImg: function(num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";
         },
         loadData: function() {
-            if (!this.id) return;
-
+            if (this.server) {
+                this.loadLocalData();
+            } else {
+                this.loadAllData();
+            }
+        },
+        loadAllData: function() {
             this.loading = true;
             getTop100(this.current_boss)
                 .then((res) => {
@@ -248,8 +248,6 @@ export default {
                 });
         },
         loadLocalData: function() {
-            if (!this.server) return;
-
             this.loading = true;
             getTop100(this.current_boss, this.server)
                 .then((res) => {
@@ -265,18 +263,20 @@ export default {
                 ? getThumbnail(val, 120, true)
                 : getThumbnail(val, 88, true);
         },
-        filterServer: function(server) {
-            this.server = server;
-            if (server) {
-                this.loadLocalData();
-            } else {
-                this.loadData();
-            }
-        },
+        showAll : function (){
+            this.$router.push({
+                name : 'rank',
+                params : {
+                    type : this.type,
+                    subtype : ''
+                }
+            })
+        }
     },
     filters: {
         teamLink: function(val) {
-            return "/team/#/org/view/" + val;
+            // return "/team/#/org/view/" + val;
+            return getLink('org',val);
         },
         showTime: function(val) {
             return showTime(new Date(val * 1000));
@@ -301,27 +301,39 @@ export default {
             return (name && name.slice(0, 12)) || "未知";
         },
     },
+    watch: {
+        "$route.query.aid": {
+            immediate: true,
+            handler: function(val) {
+                this.current_boss = val;
+                this.loadData();
+            },
+        },
+        "$route.params.type": {
+            handler: function(val) {
+                this.current_boss = val;
+                this.loadData();
+            },
+        },
+        "$route.params.subtype": {
+            handler: function(val) {
+                this.server = val;
+                this.loadData();
+            },
+        },
+    },
     created: function() {
-        this.current_boss = _.first(Object.keys(this.bossList));
+        this.current_boss = this.type || _.first(Object.keys(this.bossList));
+        this.server = this.subtype || "";
 
         getTopTotal(this.aids).then((res) => {
             this.total = res.data.data;
         });
     },
-    mounted() {
-        if (this.$route.query.aid) {
-            this.current_boss = this.$route.query.aid;
+    mounted: function() {
+        if (this.id) {
+            this.loadData();
         }
-        this.loadData();
-    },
-    watch: {
-        current_boss: function() {
-            this.loadData();
-        },
-        "$route.query.aid": function(val) {
-            this.current_boss = val;
-            this.loadData();
-        },
     },
 };
 </script>

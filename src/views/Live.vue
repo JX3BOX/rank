@@ -169,7 +169,7 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
 import { getLives } from "@/service/race.js";
-import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
 import getTVlink from "@/assets/js/tv.js";
 const liveStatusMap = ["等待开播", "直播中", "直播结束"];
@@ -265,7 +265,8 @@ export default {
             return val ? getThumbnail(val, 68, true) : default_avatar;
         },
         teamLink: function(val) {
-            return "/team/#/org/view/" + val;
+            // return "/team/#/org/view/" + val;
+            return getLink('org',val);
         },
     },
     created: function() {

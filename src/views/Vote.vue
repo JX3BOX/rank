@@ -110,7 +110,7 @@ import {
     default_avatar,
 } from "@jx3box/jx3box-common/js/jx3box.json";
 import { getAllTeams } from "@/service/team.js";
-import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
 import { doVote } from "@/service/race.js";
 import User from "@jx3box/jx3box-common/js/user.js";
 import getWechatIframe from "@/assets/js/wxpop.js";
@@ -195,7 +195,8 @@ export default {
                 : getThumbnail(default_avatar, 48, true);
         },
         teamLink: function(val) {
-            return "/team/#/org/view/" + val;
+            // return "/team/#/org/view/" + val;
+            return getLink('org',val);
         },
     },
     created: function() {

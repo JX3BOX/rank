@@ -13,6 +13,12 @@ module.exports = {
             template : 'public/index.html',
             filename:'index.html',
         },
+        event : {
+            title : '活动设置 - JX3BOX',
+            entry:'src/pages/event.js',
+            template : 'public/index.html',
+            filename:'event/index.html',
+        },
         join : {
             title : '报名入口 - 剑三秘境百强榜 - JX3BOX',
             entry:'src/pages/join.js',
@@ -25,11 +31,11 @@ module.exports = {
             template : 'public/index.html',
             filename:'race/index.html',
         },
-        event : {
-            title : '活动设置 - JX3BOX',
-            entry:'src/pages/event.js',
-            template : 'public/index.html',
-            filename:'event/index.html',
+        race_1_damodong : {
+            title : '奉天证道·达摩洞百强榜 - 剑三秘境百强榜 - JX3BOX',
+            entry:'src/race/1_damodong.js',
+            template : 'public/html/1_damodong.html',
+            filename:'race/1/index.html',
         },
     },
 

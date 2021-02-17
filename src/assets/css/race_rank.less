@@ -13,6 +13,7 @@
 
     .x;
     .u-boss {
+        .db;
         background-color: #222;
         .mb(20px);
         .r(4px);
@@ -27,7 +28,7 @@
             .mr(0);
         }
     }
-    .on {
+    .on,.router-link-active {
         background-color: #171717;
         color: #0cf;
         outline: 1px solid #0cf;
@@ -305,14 +306,14 @@
     }
 
 
-    ul{
+    ul,div{
         list-style:none;
         .clearfix;
         padding:0;
         margin:0;
         display: flex;
     }
-    li{
+    li,a{
         .fl;.w(80px);
         background-color:#222;
         .mr(5px);
@@ -326,7 +327,7 @@
             color:#ff0;
         }
     }
-    .on{
+    .on,.router-link-exact-active{
         .bold;
         color:#0cf;
         &:hover{

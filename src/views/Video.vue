@@ -224,7 +224,7 @@ import {
     updateVideo,
 } from "@/service/race.js";
 import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
-import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import _ from "lodash";
@@ -356,7 +356,8 @@ export default {
             return val ? getThumbnail(val, 68, true) : default_avatar;
         },
         teamLink: function(val) {
-            return "/team/#/org/view/" + val;
+            // return "/team/#/org/view/" + val;
+            return getLink('org',val);
         },
         videoCover: function(aid) {
             return __imgPath + `image/rank/videos/${aid}.png`;

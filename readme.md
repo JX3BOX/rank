@@ -19,3 +19,10 @@ Rank | /race | 竞速排行榜榜单
 Vote | /vote | 人气排行榜（产生人气团队 + 幸运用户 + 幸运团队）
 Video | /video | 视频直播（直播+录像）
 Stat | /stat | 统计分析（微博长图）
+
+## TODO
+1.info:活动详细规则及新版流程图嵌入在此模块，FAQ使用自带折叠。
+2.gift:晚会回看+奖项设置
+3.vote:使用新版
+4.video + live : 合并
+5.stat : 新增dps项

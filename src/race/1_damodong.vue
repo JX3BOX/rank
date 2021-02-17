@@ -43,7 +43,7 @@ export default {
     },
     computed: {
         id: function() {
-            return 1 //this.$store.state.id;
+            return this.$store.state.id;
         },
         note: function() {
             return this.$store.state.race.note;
@@ -53,17 +53,23 @@ export default {
         }
     },
     methods: {
-        init: function(val) {
-            getEvent(val || this.id).then((res) => {
-                this.data = res.data.data;
-                this.$store.state.race = res.data.data;
+        init: function() {
+            getEvent(this.id).then((res) => {
+                this.$store.state.race = this.data = res.data.data;
             });
         },
     },
-    created: function() {},
+    created: function() {
+        let path = location.pathname
+        let result = path.match(/\/race\/(\d+)/)
+        if(result && result.length){
+            let id = result[1]
+            this.$store.state.id = id
+        }
+    },
     mounted: function() {
+        this.init()
         // this.$store.state.id = this.$route.params.id;
-        this.init();
     },
     watch: {
         // "$route.params.id": function(id) {
