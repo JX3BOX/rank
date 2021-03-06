@@ -61,26 +61,9 @@
                                 v-model="form.slogan"
                                 placeholder="一经提交，不可修改"
                                 :maxlength="20"
+                                show-word-limit
                             ></el-input>
                         </el-form-item>
-                        <!-- <el-form-item label="联系电话">
-                            <el-input
-                                v-model="form.phone"
-                                placeholder="请输入正确的快递联系电话"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item label="邮寄地址">
-                            <el-input
-                                v-model="form.address"
-                                placeholder="请输入正确的奖品邮寄地址"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item label="联系QQ">
-                            <el-input
-                                v-model="form.qq"
-                                placeholder="请输入正确的QQ号码"
-                            ></el-input>
-                        </el-form-item> -->
                         <div class="u-btns">
                             <el-button
                                 class="u-btn"
@@ -135,9 +118,6 @@ export default {
                 event_id: "",
                 team_id: "",
                 slogan : '',
-                // phone: "",
-                // address: "",
-                // qq: "",
             },
             events: [],
             teams: [],

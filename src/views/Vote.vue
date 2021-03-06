@@ -94,7 +94,8 @@
                     <td class="u-vote-wapper">
                         <button
                             class="u-vote"
-                            :class="{ disabled: item.clicked }"
+                            :class="{ disabled: item.clicked || !event_status }"
+                            :disabled="item.clicked || !event_status"
                             @click="vote(item)"
                         ></button>
                     </td>
@@ -134,6 +135,9 @@ export default {
         id: function() {
             return this.$store.state.id;
         },
+        event_status : function (){
+            return this.$store.state.race.status || false
+        }
     },
     methods: {
         vote: function(item) {

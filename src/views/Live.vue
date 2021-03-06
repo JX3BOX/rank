@@ -34,7 +34,7 @@
                 </el-pagination>
             </div>
         </div>
-        <div class="m-rank-video-live" v-if="list && list.length">
+        <div class="m-rank-video-live" v-if="event_status && list && list.length">
             <div class="u-live">
                 <iframe :src="live_url || default_live_url" frameborder="0"></iframe>
             </div>
@@ -222,6 +222,9 @@ export default {
             }else{
                 return ''
             }
+        },
+        event_status : function (){
+            return !!this.$store.state.race.status || false
         }
     },
     methods: {
