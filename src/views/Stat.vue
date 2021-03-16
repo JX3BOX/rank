@@ -74,7 +74,7 @@
 
 <script>
 import achieves from "@/assets/data/achieve.json";
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import _ from "lodash";
 import BarChart from "../components/barChart.vue";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
@@ -82,7 +82,7 @@ import PieChart from "../components/pieChart.vue";
 import schools from "@jx3box/jx3box-data/data/xf/school.json";
 import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
 import { axios, realUrl } from "@/service/api.js";
-import { __Root } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 
 export default {
     props: [],

@@ -216,14 +216,14 @@
 
 <script>
 import achieves from "@/assets/data/achieve.json";
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import {
     getVideos,
     deleteVideo,
     addVideo,
     updateVideo,
 } from "@/service/race.js";
-import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
+import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";

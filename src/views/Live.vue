@@ -167,10 +167,10 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getLives } from "@/service/race.js";
 import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
-import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
+import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import getTVlink from "@/assets/js/tv.js";
 const liveStatusMap = ["等待开播", "直播中", "直播结束"];
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
@@ -234,8 +234,8 @@ export default {
             getLives(this.id, this.params)
                 .then((res) => {
                     this.data = res.data.data.list;
-                    this.page = res.data.data.page.index;
-                    this.total = res.data.data.page.total;
+                    // this.page = res.data.data.page.index;
+                    // this.total = res.data.data.page.total;
                 })
                 .finally(() => {
                     this.loading = false;

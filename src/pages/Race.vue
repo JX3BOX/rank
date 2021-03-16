@@ -30,7 +30,7 @@
 <script>
 import race_header from "@/components/race_header.vue";
 import { getEvent } from "@/service/event.js";
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "App",
     props: [],

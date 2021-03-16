@@ -109,7 +109,7 @@
 import {
     __imgPath,
     default_avatar,
-} from "@jx3box/jx3box-common/js/jx3box.json";
+} from "@jx3box/jx3box-common/data/jx3box.json";
 import { getAllTeams } from "@/service/team.js";
 import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
 import { doVote } from "@/service/race.js";

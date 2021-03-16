@@ -162,12 +162,12 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import achieves from "@/assets/data/achieve.json";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import _ from "lodash";
 import { showAvatar, getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
-import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
+import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getTop100, getTopTotal } from "@/service/race.js";
 export default {
