@@ -60,8 +60,8 @@ module.exports = {
                     request.setHeader("origin", "");
                 }
             },
-            "/team": {
-                "target": "https://next.jx3box.com",
+            "/api/team": {
+                "target": "https://team.api.jx3box.com",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");
                 }
