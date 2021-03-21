@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="u-footer">
-                    <a href="/tool/18044" target="_blank"
+                    <a href="/bbs/18044" target="_blank"
                         ><i class="el-icon-info"></i>
                         <b>点击查看活动规则详情</b></a
                     >
