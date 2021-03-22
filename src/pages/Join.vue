@@ -6,11 +6,11 @@
                 <img class="u-logo" :src="LOGO" />
             </div>
             <div class="m-rank-content" v-if="isLogin">
-                <div class="m-join m-join-team">
+                <div class="m-join m-join-team" v-if="!status">
                     <h1 class="m-join-title">报名入口</h1>
                     <el-alert
                         class="u-warning"
-                        title="请务必正确填写所有资料，报名后不可取消，亦不可再更改资料。团长Q群：785597424"
+                        title="请务必正确填写所有资料，报名后不可取消，亦不可再更改资料，团长Q群【1048059072】（必加）。"
                         type="warning"
                         show-icon
                     >
@@ -59,7 +59,7 @@
                         <el-form-item label="参赛宣言">
                             <el-input
                                 v-model="form.slogan"
-                                placeholder="一经提交，不可修改"
+                                placeholder="为您的团队打CALL"
                                 :maxlength="20"
                                 show-word-limit
                             ></el-input>
@@ -69,13 +69,13 @@
                                 class="u-btn"
                                 type="primary"
                                 @click="submit"
-                                :disabled="!ready || !status"
+                                :disabled="!ready || status"
                                 >报名</el-button
                             >
                         </div>
                     </el-form>
                 </div>
-                <div class="m-join m-join-done" v-if="status">
+                <div class="m-join m-join-done" v-else>
                     <h1 class="u-title">已报名</h1>
                     <div>
                         <p>
@@ -87,14 +87,15 @@
                     </div>
                 </div>
                 <div class="u-footer">
-                    <a href="/bbs/18044" target="_blank"
+                    <a href="/bbs/21805" target="_blank"
                         ><i class="el-icon-info"></i>
                         <b>点击查看活动规则详情</b></a
                     >
                 </div>
             </div>
             <div class="m-rank-content m-rank-null" v-else>
-                请先<a href="/account/login/" target="_blank">登录</a>
+                <p>你尚未登录</p>
+                <el-button type="primary" @click="goLogin">登录</el-button>
             </div>
         </div>
         <Footer></Footer>
@@ -102,12 +103,11 @@
 </template>
 
 <script>
+import _ from "lodash";
 import PICS from "@/assets/js/pics.js";
 import { getEvents, joinEvent, hasJoined } from "@/service/event.js";
 import { getMyTeams } from "@/service/team.js";
-import _ from "lodash";
 import User from '@jx3box/jx3box-common/js/user.js'
-
 export default {
     name: "App",
     props: [],
@@ -135,13 +135,13 @@ export default {
     },
     computed: {
         ready : function (){
-            return this.form.event_id && this.form.team_id
+            return this.form.event_id && this.form.team_id && this.form.slogan
         },
     },
     methods: {
         submit: function() {
             this.$alert(
-                "报名后资料将不可再更改，更多咨询请联系认证团长Q群1048059072",
+                "报名后资料将不可再更改，更多咨询请联系认证团长Q群【1048059072】",
                 "消息",
                 {
                     confirmButtonText: "确定",
@@ -193,6 +193,9 @@ export default {
                 });
             }
         },
+        goLogin : function (){
+            User.toLogin()
+        }
     },
     watch : {
         ready : function (){

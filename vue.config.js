@@ -22,7 +22,7 @@ module.exports = {
         join : {
             title : '报名入口 - 剑三秘境百强榜 - JX3BOX',
             entry:'src/pages/join.js',
-            template : 'public/index.html',
+            template : 'public/subpath.html',
             filename:'join/index.html',
         },
         race : {

@@ -26,3 +26,8 @@ Stat | /stat | 统计分析（微博长图）
 3. vote:使用新版接口+团队宣言
 4. video + live : 合并
 5. stat : 新增dps项
+
+
+## 赛事工作
+1. 新增event，确定成就ID，更新event配置+插件配置
+2. rank项目首页图新增、前端栏目更新

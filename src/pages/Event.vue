@@ -31,11 +31,46 @@
                                 v-model="form.achieve_ids"
                                 placeholder="请输入内容"
                             ></el-input>
+                            <div class="u-note">例如：1,2,3,...</div>
                         </el-form-item>
                         <el-form-item label="活动名称">
                             <el-input
                                 v-model="form.name"
                                 placeholder="请输入内容"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item label="开启模块">
+                            <el-checkbox-group v-model="form.blocks">
+                                <el-checkbox
+                                    :label="key"
+                                    v-for="(label, key) in blocks"
+                                    :key="key"
+                                    >{{ label }}</el-checkbox
+                                >
+                            </el-checkbox-group>
+                        </el-form-item>
+                        <el-form-item label="活动介绍">
+                            <el-input
+                                v-model="form.desc"
+                                placeholder="请输入内容"
+                                type="textarea"
+                                rows="8"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item label="活动奖励">
+                            <el-input
+                                v-model="form.gifts"
+                                placeholder="请输入内容"
+                                type="textarea"
+                                rows="8"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item label="其它说明">
+                            <el-input
+                                v-model="form.note"
+                                placeholder="请输入内容"
+                                type="textarea"
+                                rows="8"
                             ></el-input>
                         </el-form-item>
                         <el-form-item label="赞助名单" class="u-sponsor-label">
@@ -79,40 +114,6 @@
                                     </el-col>
                                 </el-row>
                             </div>
-                        </el-form-item>
-                        <el-form-item label="开启模块">
-                            <el-checkbox-group v-model="form.blocks">
-                                <el-checkbox
-                                    :label="key"
-                                    v-for="(label, key) in blocks"
-                                    :key="key"
-                                    >{{ label }}</el-checkbox
-                                >
-                            </el-checkbox-group>
-                        </el-form-item>
-                        <el-form-item label="活动介绍">
-                            <el-input
-                                v-model="form.desc"
-                                placeholder="请输入内容"
-                                type="textarea"
-                                rows="8"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item label="活动奖励">
-                            <el-input
-                                v-model="form.gifts"
-                                placeholder="请输入内容"
-                                type="textarea"
-                                rows="8"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item label="其它说明">
-                            <el-input
-                                v-model="form.note"
-                                placeholder="请输入内容"
-                                type="textarea"
-                                rows="8"
-                            ></el-input>
                         </el-form-item>
                         <div class="u-btns">
                             <el-button
@@ -197,14 +198,5 @@ export default {
 
 <style lang="less">
 @import "../assets/css/join.less";
-.m-rank-event {
-    .u-sponsor {
-        .mb(10px);
-    }
-    .u-sponsor-label {
-        .el-form-item__label {
-            .mr(-20px);
-        }
-    }
-}
+@import "../assets/css/event.less";
 </style>
