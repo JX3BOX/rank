@@ -42,16 +42,11 @@ function addVideo(data) {
     return $team().post(`/api/team/video`, data);
 }
 
-function doVote(event_id, team_id) {
-    return $team().post(`/api/team/events/${event_id}/vote-team/${team_id}`);
-}
-
 export {
     getTop100,
     getLives,
     getVideos,
     getTopTotal,
-    doVote,
     deleteVideo,
     addVideo,
     updateVideo,
