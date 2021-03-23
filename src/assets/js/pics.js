@@ -3,7 +3,7 @@ import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 const PICS = {
     LOGO: __imgPath + "image/rank/common/logo.png",
     cover : function (id){
-        return __imgPath + `image/rank/race/cover/${id}.png`
+        return __imgPath + `image/rank/cover/${id}.png`
     },
     boss : function (id){
         return __imgPath + `image/rank/race/${id}/boss.png`
