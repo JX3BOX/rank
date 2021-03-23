@@ -30,7 +30,7 @@ function doVote(event_id, team_id) {
             `/api/team/events/${event_id}/vote-team/${team_id}`
         );
     } else {
-        return $team({ popType: "alert" }).post(`/api/team/rank/vote`, {
+        return $team({ popType: "alert" }).post(`/api/team/rank/vote`,'',{
             params: {
                 event_id: ~~event_id,
                 team_id: ~~team_id,
