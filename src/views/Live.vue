@@ -169,7 +169,7 @@
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getLives } from "@/service/race.js";
+import { getLives } from "@/service/video.js";
 import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import getTVlink from "@/assets/js/tv.js";

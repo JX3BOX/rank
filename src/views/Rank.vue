@@ -1,5 +1,5 @@
 <template>
-<!-- 排行榜成绩 -->
+    <!-- 排行榜成绩 -->
     <div
         class="m-rank-rank"
         v-loading="loading"
@@ -7,45 +7,38 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.8)"
     >
-        <el-row class="m-rank-boss" :gutter="20">
-            <el-col
-                :span="4"
-                v-for="(label, achieve_id) of bossList"
-                :key="achieve_id"
-            >
-                <router-link
+        <el-row class="m-rank-boss m-rank-filter" :gutter="20" type="flex">
+            <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
+                <li
                     class="u-boss"
-                    @click="changeBoss(achieve_id)"
-                    :to="'/rank/' + achieve_id"
-                    :class="{on:achieve_id == current_boss}"
+                    @click="changeBoss(aid)"
+                    :class="{ on: aid == achieve_id }"
                 >
                     <span class="u-boss-name">{{ label }}</span>
-                    <span class="u-boss-per"
-                        >({{
-                            total[achieve_id] > 100 ? 100 : total[achieve_id]
-                        }}/100)</span
+                    <span class="u-boss-per" :class='getProcessCls(total[aid])'
+                        >({{ total[aid] > 100 ? 100 : total[aid] }}/100)</span
                     >
-                </router-link>
+                </li>
             </el-col>
         </el-row>
 
-        <div class="m-rank-server-filter">
-            <div>
-                <router-link
+        <div class="m-rank-server m-rank-filter">
+            <ul>
+                <li
                     :class="{ on: !server }"
-                    :to="'/rank/' + current_boss"
+                    @click="changeServer('')"
                 >
                     全区全服
-                </router-link>
-                <router-link
+                </li>
+                <li
                     v-for="item in servers"
                     :key="item"
-                    :to="'/rank/' + current_boss + '/' + item"
-                    :class="{on:server == item}"
+                    @click="changeServer(item)"
+                    :class="{ on: server == item }"
                 >
                     {{ item }}
-                </router-link>
-            </div>
+                </li>
+            </ul>
         </div>
 
         <div class="m-rank-top100">
@@ -167,7 +160,11 @@ import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import achieves from "@/assets/data/achieve.json";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import _ from "lodash";
-import { showAvatar, getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
+import {
+    showAvatar,
+    getThumbnail,
+    getLink,
+} from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getTop100, getTopTotal } from "@/service/race.js";
@@ -176,87 +173,90 @@ export default {
     props: [],
     data: function() {
         return {
-            current_boss: "",
-            origin_data: [],
-            total: "",
             loading: false,
             servers,
-            server: "",
-            local_data: [], //指定区服数据
+
+            achieve_id: "", //boss成就ID
+            server: "", //服务器
+
+            total: "",
+            origin_data: [],
+            // origin_data: [],
+            // local_data: [], //指定区服数据
         };
     },
     computed: {
         id: function() {
             return this.$store.state.id;
         },
-        type: function() {
-            return this.$route.params.type;
-        },
-        subtype: function() {
-            return this.$route.params.subtype;
-        },
         bossList: function() {
             return achieves[this.id] || [];
+        },
+        span : function (){
+            return ~~(24 / Object.keys(this.bossList).length)
         },
         aids: function() {
             return Object.keys(this.bossList).join(",");
         },
         data: function() {
-            let data = (this.server ? this.local_data : this.origin_data) || [];
-            data &&
-                data.forEach((team, i) => {
-                    let leader_name = team.leader;
-                    let members = team.teammate.split(";");
-                    let arr = [];
-                    let leader = "";
-                    members.forEach((member, j) => {
-                        let result = member.split(",");
-                        if (result[0] != leader_name) {
-                            arr.push(result);
-                        } else {
-                            leader = result;
-                        }
-                    });
-                    data[i]["members"] = arr;
-                    data[i]["leaders"] = leader;
+            // let data = (this.server ? this.local_data : this.origin_data) || [];
+            let data = this.origin_data || [];
+            data.forEach((team, i) => {
+                let leader_name = team.leader;
+                let members = team.teammate.split(";");
+                let arr = [];
+                let leader = "";
+                members.forEach((member, j) => {
+                    let result = member.split(",");
+                    if (result[0] != leader_name) {
+                        arr.push(result);
+                    } else {
+                        leader = result;
+                    }
                 });
+                data[i]["members"] = arr;
+                data[i]["leaders"] = leader;
+            });
             return data;
+        },
+        params: function() {
+            return {
+                server: this.server,
+                achieve_id: ~~this.achieve_id,
+            };
         },
     },
     methods: {
         changeBoss: function(val) {
-            // this.current_boss = val;
             this.server = "";
+            this.achieve_id = val;
         },
-        getRankImg: function(num) {
-            return __imgPath + "image/rank/common/rank_" + num + ".png";
+        changeServer : function (val){
+            this.server = val
         },
+        
         loadData: function() {
-            if (this.server) {
-                this.loadLocalData();
-            } else {
-                this.loadAllData();
+            this.loading = true;
+            this.achieve_id &&
+                getTop100(this.params)
+                    .then((res) => {
+                        this.origin_data = res.data.data || [];
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+        },
+        getProcessCls:function (count){
+            count = ~~count
+            if(count < 30){
+                return 'isLess'
+            }else if(count < 70){
+                return 'isMore'
+            }else if(count < 100){
+                return 'isDanger'
+            }else{
+                return 'isFull'
             }
-        },
-        loadAllData: function() {
-            this.loading = true;
-            getTop100(this.current_boss)
-                .then((res) => {
-                    this.origin_data = res.data.data;
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-        },
-        loadLocalData: function() {
-            this.loading = true;
-            getTop100(this.current_boss, this.server)
-                .then((res) => {
-                    this.local_data = res.data.data;
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
         },
         teamLogo: function(val, mode) {
             if (!val) return "";
@@ -264,20 +264,13 @@ export default {
                 ? getThumbnail(val, 120, true)
                 : getThumbnail(val, 88, true);
         },
-        showAll : function (){
-            this.$router.push({
-                name : 'rank',
-                params : {
-                    type : this.type,
-                    subtype : ''
-                }
-            })
-        }
+        getRankImg: function(num) {
+            return __imgPath + "image/rank/common/rank_" + num + ".png";
+        },
     },
     filters: {
         teamLink: function(val) {
-            // return "/team/#/org/view/" + val;
-            return getLink('org',val);
+            return getLink("org", val);
         },
         showTime: function(val) {
             return showTime(new Date(val * 1000));
@@ -303,31 +296,23 @@ export default {
         },
     },
     watch: {
-        "$route.query.aid": {
+        id: {
+            handler: function(val) {
+                val && this.loadData();
+            },
+        },
+        params: {
+            deep: true,
             immediate: true,
             handler: function(val) {
-                if(val){
-                    this.current_boss = val;
-                    this.loadData();
-                }
-            },
-        },
-        "$route.params.type": {
-            handler: function(val) {
-                this.current_boss = val;
-                this.loadData();
-            },
-        },
-        "$route.params.subtype": {
-            handler: function(val) {
-                this.server = val;
                 this.loadData();
             },
         },
     },
     created: function() {
-        this.current_boss = this.type || _.first(Object.keys(this.bossList));
-        this.server = this.subtype || "";
+        this.achieve_id =
+            this.$route.query.aid || _.first(Object.keys(this.bossList));
+        this.server = this.$route.query.server || "";
 
         getTopTotal(this.aids).then((res) => {
             this.total = res.data.data;

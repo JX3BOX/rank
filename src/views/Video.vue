@@ -224,7 +224,7 @@ import {
     deleteVideo,
     addVideo,
     updateVideo,
-} from "@/service/race.js";
+} from "@/service/video.js";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
