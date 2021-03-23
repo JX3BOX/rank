@@ -1,4 +1,5 @@
 <template>
+<!-- 排行榜成绩 -->
     <div
         class="m-rank-rank"
         v-loading="loading"

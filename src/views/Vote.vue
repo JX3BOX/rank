@@ -1,4 +1,5 @@
 <template>
+<!-- 投票竞猜页 -->
     <div
         class="m-rank-vote"
         v-loading="loading"

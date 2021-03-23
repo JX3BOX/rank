@@ -28,14 +28,8 @@ module.exports = {
         race : {
             title : '剑三秘境百强榜 - JX3BOX',
             entry:'src/pages/race.js',
-            template : 'public/index.html',
+            template : 'public/race.html',
             filename:'race/index.html',
-        },
-        race_1_damodong : {
-            title : '奉天证道·达摩洞百强榜 - 剑三秘境百强榜 - JX3BOX',
-            entry:'src/race/1_damodong.js',
-            template : 'public/html/1_damodong.html',
-            filename:'race/1/index.html',
         },
     },
 

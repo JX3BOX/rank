@@ -1,4 +1,5 @@
 <template>
+<!-- 通关视频 -->
     <div
         class="m-rank-video"
         v-loading="loading"

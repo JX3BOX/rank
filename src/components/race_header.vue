@@ -2,9 +2,9 @@
     <div class="m-race-header">
         <!-- 视觉图 -->
         <div class="u-vision">
-            <img class="u-boss" :src="boss_img_url" alt />
+            <img class="u-boss" :src="boss_img_url" v-if="id"/>
             <img class="u-logo" :src="LOGO" />
-            <img class="u-version" :src="version_img_url" alt />
+            <img class="u-version" :src="version_img_url" v-if="id" />
         </div>
 
         <!-- 举办单位 -->
@@ -30,7 +30,7 @@
                     </a>
                 </li>
             </ul>
-            <span>独家直播合作：</span>
+            <!-- <span>独家直播合作：</span>
             <ul>
                 <li>
                     <a
@@ -41,13 +41,13 @@
                         <img class="u-media-douyu" :src="logos('douyu')" />
                     </a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
 
         <!-- 赞助商 -->
-        <div class="u-logos u-sponsors">
+        <div class="u-logos u-sponsors" v-if="hasSponsors">
             <span class="u-sponsors-label">活动赞助商：</span>
-            <ul class="u-sponsors-list" v-if="sponsors.length">
+            <ul class="u-sponsors-list">
                 <li v-for="(sponsor, i) in sponsors" :key="i">
                     <a class="logo" :href="sponsor.link" target="_blank">
                         <img :src="sponsor.logo" />
@@ -89,6 +89,12 @@ export default {
         sponsors: function() {
             return (this.data && this.data.sponsors) || [];
         },
+        hasSponsors : function (){
+            if(this.sponsors && this.sponsors.length && this.sponsors[0].link){
+                return true
+            }
+            return false
+        }
     },
     filters: {},
     methods: {

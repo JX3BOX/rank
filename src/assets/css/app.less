@@ -17,12 +17,20 @@ body,.m-rank-container,#m-rank-star{
     background: rgba(0,0,0,.5);
 }
 
-.m-rank-container{
+.m-rank-bg{
+    .w(100%);
+    .pa;top:0;left:50%;transform: translateX(-50%);
+    .z(1);
+    img{
+        .db;.auto(x);
+    }
+}
+.m-rank-primary{
     .mt(@header-height);
-    // background-color:#1e2226;
-    // min-height:680px;
     width:@box_width;
     .auto(x);
+    .pr;
+    .z(1);
 }
 
 .c-footer{

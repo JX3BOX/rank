@@ -1,4 +1,5 @@
 <template>
+    <!-- 统计分析 -->
     <div
         class="m-rank-stat"
         v-loading="loading"
@@ -30,7 +31,10 @@
         <img
             :src="null_img_url"
             class="m-rank-null"
-            v-if=" stats['bar_server_all'] == undefined || stats['bar_server_all'][current_boss] == undefined"
+            v-if="
+                stats['bar_server_all'] == undefined ||
+                    stats['bar_server_all'][current_boss] == undefined
+            "
         />
         <template v-else>
             <bar-chart
@@ -90,7 +94,7 @@ export default {
         BarChart,
         PieChart,
     },
-    data: function () {
+    data: function() {
         return {
             null_img_url: __imgPath + "image/rank/common/null.png",
             loading: false,
@@ -100,10 +104,10 @@ export default {
         };
     },
     computed: {
-        id: function () {
+        id: function() {
             return this.$store.state.id;
         },
-        bossList: function () {
+        bossList: function() {
             let tmp = achieves[this.id];
             // if (tmp) {
             //     tmp[0] = "综合";
@@ -112,10 +116,10 @@ export default {
         },
     },
     watch: {
-        current_boss: function () {
+        current_boss: function() {
             this.loadData();
         },
-        "$route.query.aid": function (val) {
+        "$route.query.aid": function(val) {
             this.current_boss = val;
             this.loadData();
         },
@@ -131,12 +135,12 @@ export default {
         this.getStats();
     },
     methods: {
-        changeBoss: function (val) {
+        changeBoss: function(val) {
             this.current_boss = val;
             this.server = "";
 
-            if (this.stats['bar_server_all'][this.current_boss] == undefined) {
-                return false
+            if (this.stats["bar_server_all"][this.current_boss] == undefined) {
+                return false;
             }
 
             let tmpAna = {};
@@ -149,7 +153,7 @@ export default {
             // this.doAna3();
             // this.doAna4();
         },
-        loadData: function () {
+        loadData: function() {
             if (!this.id) return;
 
             // this.loading = true;

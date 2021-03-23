@@ -1,6 +1,6 @@
 <template>
+    <!-- 活动规则与奖励设置 -->
     <div class="m-rank-info">
-        <!-- 具体内容 -->
         <div class="m-rank-txt" v-html="desc"></div>
     </div>
 </template>
@@ -21,8 +21,7 @@ export default {
     },
     methods: {},
     filters: {},
-    mounted: function() {
-    },
+    mounted: function() {},
     created: function() {},
     components: {},
 };
