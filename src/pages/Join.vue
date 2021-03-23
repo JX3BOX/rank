@@ -162,7 +162,7 @@ export default {
                         if (action == "confirm") {
                             joinEvent(this.form).then((res) => {
                                 this.$message({
-                                    message: "报名成功",
+                                    message: "报名成功,请等待审核",
                                     type: "success",
                                 });
                                 this.status = true;
