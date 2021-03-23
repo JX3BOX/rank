@@ -39,6 +39,7 @@
                             <el-select
                                 v-model="form.team_id"
                                 placeholder="请选择团队"
+                                @change="updateTeam"
                             >
                                 <el-option
                                     v-for="team in teams"
@@ -49,9 +50,7 @@
                                 </el-option>
                             </el-select>
                             <div class="u-tip" v-if="!teams || !teams.length">
-                                还没有团队？<a
-                                    href="/team"
-                                    target="_blank"
+                                还没有团队？<a href="/team" target="_blank"
                                     >创建团队</a
                                 >
                             </div>
@@ -105,9 +104,10 @@
 <script>
 import _ from "lodash";
 import PICS from "@/assets/js/pics.js";
-import { getEvents, joinEvent, hasJoined } from "@/service/event.js";
+import { getEvents } from "@/service/event.js";
+import { joinEvent, hasJoined } from "@/service/join.js";
 import { getMyTeams } from "@/service/team.js";
-import User from '@jx3box/jx3box-common/js/user.js'
+import User from "@jx3box/jx3box-common/js/user.js";
 export default {
     name: "App",
     props: [],
@@ -117,26 +117,29 @@ export default {
             form: {
                 event_id: "",
                 team_id: "",
-                slogan : '',
+                slogan: "",
             },
             events: [],
             teams: [],
             status: false,
-            isLogin : User.isLogin(),
-            result : {
-                event : {
-                    name : '活动名称'
+            isLogin: User.isLogin(),
+            result: {
+                event: {
+                    name: "活动名称",
                 },
-                eventRecord : {
-                    name : '团队名称'
-                }
+                eventRecord: {
+                    name: "团队名称",
+                },
             },
         };
     },
     computed: {
-        ready : function (){
-            return this.form.event_id && this.form.team_id && this.form.slogan
+        ready: function() {
+            return this.form.event_id && this.form.team_id && this.form.slogan;
         },
+        event_id : function (){
+            return this.form.event_id
+        }
     },
     methods: {
         submit: function() {
@@ -153,16 +156,19 @@ export default {
                                     type: "success",
                                 });
                                 this.status = true;
-                                this.$forceUpdate()
+                                this.$forceUpdate();
                             });
                         }
                     },
                 }
             );
         },
-        init: function() {
-            this.loadEvents()
-            this.loadTeams()
+        updateTeam: function() {
+            this.teams.forEach((item) => {
+                if (item.ID == this.team_id) {
+                    this.result.eventRecord.name = item.name;
+                }
+            });
         },
         loadEvents: function() {
             // 获取开放的活动事件
@@ -171,7 +177,7 @@ export default {
             }).then((res) => {
                 this.events = res.data.data.list || [];
                 this.form.event_id = this.event_id;
-                this.$forceUpdate()
+                this.$forceUpdate();
             });
         },
         loadTeams: function() {
@@ -179,31 +185,33 @@ export default {
             return getMyTeams().then((res) => {
                 this.teams = res.data.data.list || [];
                 this.form.team_id = this.team_id;
-                this.$forceUpdate()
+                this.$forceUpdate();
             });
         },
         checkJoin: function() {
-            if(this.ready){
-                hasJoined(this.form.event_id).then((res) => {
-                    this.result = res.data.data
-                    if (res.data.data.hasJoined) {
-                        this.status = true;
-                        this.$forceUpdate()
-                    }
-                });
-            }
+            this.form.event_id && hasJoined(this.form.event_id).then((res) => {
+                this.result = res.data.data;
+                if (res.data.data.hasJoined) {
+                    this.status = true;
+                    this.$forceUpdate();
+                }
+            });
         },
-        goLogin : function (){
-            User.toLogin()
-        }
+        goLogin: function() {
+            User.toLogin();
+        },
+        init: function() {
+            this.loadEvents();
+            this.loadTeams();
+        },
     },
-    watch : {
-        ready : function (){
-            this.checkJoin()
+    watch: {
+        event_id : function (val){
+            this.checkJoin();
         }
     },
     created: function() {
-        this.init();
+        this.isLogin && this.init();
     },
     components: {},
 };

@@ -115,12 +115,36 @@
                                 </el-row>
                             </div>
                         </el-form-item>
+                        <el-form-item label="投票开启">
+                            <el-input
+                                v-model="form.vote_start"
+                                placeholder="请输入内容"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item label="投票结束">
+                            <el-input
+                                v-model="form.vote_end"
+                                placeholder="请输入内容"
+                            ></el-input>
+                        </el-form-item>
                         <div class="u-btns">
                             <el-button
-                                class="u-btn"
+                                class="u-submit"
                                 type="primary"
                                 @click="submit"
-                                >提交</el-button
+                                >{{ id ? "更新活动" : "创建活动" }}</el-button
+                            >
+                            <el-button
+                                class="u-start"
+                                type="success"
+                                @click="active"
+                                >激活活动</el-button
+                            >
+                            <el-button
+                                class="u-stop"
+                                type="warning"
+                                @click="stop"
+                                >关闭活动</el-button
                             >
                         </div>
                     </el-form>
@@ -132,16 +156,27 @@
 </template>
 
 <script>
+import _ from "lodash";
 import PICS from "@/assets/js/pics.js";
 import blocks from "@/assets/data/blocks.json";
-import { setEvent,getEvent } from "@/service/event.js";
+import {
+    createEvent,
+    updateEvent,
+    activeEvent,
+    stopEvent,
+    getEvent,
+} from "@/service/event.js";
+const sponsor = {
+    logo: "",
+    link: "",
+};
 export default {
     name: "App",
     props: [],
     data: function() {
         return {
             form: {
-                visible : 0,
+                visible: 0,
                 status: 0,
                 achieve_ids: "",
                 name: "",
@@ -155,23 +190,40 @@ export default {
                 desc: "",
                 gifts: "",
                 note: "",
+                vote_start: new Date().toISOString(), // !!! 2021.2.28 New  !!! 格式不能错误
+                vote_end: new Date().toISOString(), // !!! 2021.2.28 New  !!! 格式不能错误
             },
             blocks,
-            id : '',
+            id: "",
             LOGO: PICS.LOGO,
         };
     },
-    computed: {},
+    computed: {
+        data: function() {
+            let _data = this.form;
+            _data.vote_start = new Date(_data.vote_start).toISOString();
+            _data.vote_end = new Date(_data.vote_end).toISOString();
+            return _data;
+        },
+    },
     methods: {
         submit: function() {
-            setEvent(this.form).then((res) => {
-                this.$message({
-                    message: "设置成功",
-                    type: "success",
+            if (this.id) {
+                updateEvent(this.id, this.data).then((res) => {
+                    this.$message({
+                        message: "设置成功",
+                        type: "success",
+                    });
                 });
-                // this.form = res.data.data
-                // location.reload()
-            });
+            } else {
+                createEvent(this.data).then((res) => {
+                    this.$message({
+                        message: "创建成功",
+                        type: "success",
+                    });
+                    location.href += `?id=${res.data.data.ID}`;
+                });
+            }
         },
         add: function(i) {
             this.form.sponsors.push({
@@ -182,14 +234,41 @@ export default {
         del: function(i) {
             this.form.sponsors.splice(i, 1);
         },
+        fixArrSetting: function(prop) {
+            if (!Array.isArray(this.form[prop]) || !this.form[prop].length) {
+                this.form[prop] = [];
+                if (prop == "sponsors") {
+                    this.form[prop].push(_.cloneDeep(sponsor));
+                }
+            }
+        },
+        active: function() {
+            activeEvent(this.id).then(() => {
+                this.$message({
+                    message: "活动开启",
+                    type: "success",
+                });
+            });
+        },
+        stop: function() {
+            stopEvent(this.id).then(() => {
+                this.$message({
+                    message: "活动关闭",
+                    type: "success",
+                });
+            });
+        },
     },
-    beforeCreate: function() {
+    created: function() {
         let params = new URLSearchParams(location.search);
-        this.id = params.get('id')
-        if(this.id){
+        this.id = ~~params.get("id");
+        if (this.id) {
             getEvent(this.id).then((res) => {
-                this.form = res.data.data
-            })
+                this.form = res.data.data;
+
+                this.fixArrSetting("sponsors");
+                this.fixArrSetting("blocks");
+            });
         }
     },
     components: {},
