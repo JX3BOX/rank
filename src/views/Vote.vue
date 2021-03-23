@@ -10,12 +10,7 @@
         <div class="m-rank-vote-title">
             <img :src="vote_title_img" />
         </div>
-        <div class="m-rank-vote-header">
-            <div class="u-tip">
-                <i class="el-icon-info"></i> 规则说明：10月29日开启通道，投票结榜后关闭通道，竞猜11月13日关闭通道，根据竞猜押冠数和投票数最终产生人气团队奖。<br> 
-                【投票】每天可给3支不同团队各投1票，<b>投票参与用户产生500名现金红包奖</b>（最低金额8.88元，最高金额88.88元）。<br>
-                【竞猜】登录推栏，进入<b>「社区→发现→活动」</b>参与竞猜，押你看好夺冠的队伍，最终在竞猜成功的用户里产生30名幸运用户。
-            </div>
+        <div class="m-rank-vote-header" v-html="vote_note">
         </div>
         <table class="m-rank-vote-table">
             <thead>
@@ -111,12 +106,12 @@ import {
     __imgPath,
     default_avatar,
 } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getAllTeams } from "@/service/team.js";
 import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
-import { doVote } from "@/service/race.js";
 import User from "@jx3box/jx3box-common/js/user.js";
 import getWechatIframe from "@/assets/js/wxpop.js";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
+import { getAllTeams } from "@/service/team.js";
+import { doVote } from "@/service/race.js";
 export default {
     props: [],
     data: function() {
@@ -138,6 +133,9 @@ export default {
         },
         event_status : function (){
             return this.$store.state.race.status || false
+        },
+        vote_note : function (){
+            return this.$store.state.race.vote_note || ''
         }
     },
     methods: {

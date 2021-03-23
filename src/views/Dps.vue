@@ -1,7 +1,7 @@
 <template>
     <!-- 天梯榜 -->
     <div class="m-race-dps">
-        DPS天梯榜
+        <!-- DPS天梯榜 -->
     </div>
 </template>
 

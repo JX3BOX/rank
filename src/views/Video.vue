@@ -62,7 +62,7 @@
             <el-col
                 :span="3"
                 v-for="(label, achieve_id) of bossList"
-                :key="achieve_id"
+                :key="label + achieve_id"
             >
                 <div
                     class="u-boss"
@@ -173,6 +173,7 @@
             title="添加/编辑视频"
             :visible.sync="dialogVisible"
             width="30%"
+            :append-to-body="true"
         >
             <div class="m-rank-video-form">
                 <el-form ref="form" label-width="80px">

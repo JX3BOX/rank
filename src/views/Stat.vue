@@ -132,7 +132,9 @@ export default {
             this.current_boss = this.$route.query.aid;
         }
         this.loading = true;
-        this.getStats();
+        this.getStats().finally(() => {
+            this.loading = false;
+        });
     },
     methods: {
         changeBoss: function(val) {
@@ -166,7 +168,7 @@ export default {
             //     });
         },
         getStats() {
-            axios(
+            return axios(
                 realUrl(__Root, `rank-analysis/stats/event${this.id}.json`),
                 "GET",
                 false

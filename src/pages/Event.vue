@@ -58,7 +58,7 @@
                                     rows="8"
                                 ></el-input>
                             </el-form-item>
-                            <el-form-item label="活动奖励">
+                            <el-form-item label="晚会回看">
                                 <el-input
                                     v-model="form.gifts"
                                     placeholder="请输入内容"
@@ -66,7 +66,29 @@
                                     rows="8"
                                 ></el-input>
                             </el-form-item>
-                            <el-form-item label="其它说明">
+                            <hr>
+                            <el-form-item label="投票说明">
+                                <el-input
+                                    v-model="form.vote_note"
+                                    placeholder="请输入内容"
+                                    type="textarea"
+                                    rows="8"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item label="投票开启">
+                                <el-input
+                                    v-model="form.vote_start"
+                                    placeholder="请输入内容"
+                                ></el-input>
+                            </el-form-item>
+                            <el-form-item label="投票结束">
+                                <el-input
+                                    v-model="form.vote_end"
+                                    placeholder="请输入内容"
+                                ></el-input>
+                            </el-form-item>
+                            <hr>
+                            <el-form-item label="媒体宣传">
                                 <el-input
                                     v-model="form.note"
                                     placeholder="请输入内容"
@@ -122,18 +144,6 @@
                                         </el-col>
                                     </el-row>
                                 </div>
-                            </el-form-item>
-                            <el-form-item label="投票开启">
-                                <el-input
-                                    v-model="form.vote_start"
-                                    placeholder="请输入内容"
-                                ></el-input>
-                            </el-form-item>
-                            <el-form-item label="投票结束">
-                                <el-input
-                                    v-model="form.vote_end"
-                                    placeholder="请输入内容"
-                                ></el-input>
                             </el-form-item>
                             <div class="u-btns">
                                 <el-button
@@ -201,6 +211,7 @@ export default {
                 desc: "",
                 gifts: "",
                 note: "",
+                vote_note : "", //投票说明
                 vote_start: new Date().toISOString(), // !!! 2021.2.28 New  !!! 格式不能错误
                 vote_end: new Date().toISOString(), // !!! 2021.2.28 New  !!! 格式不能错误
             },
