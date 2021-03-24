@@ -16,7 +16,7 @@ race-views | router | desc
 Info | /info | 活动规则、奖项设置
 Lucky | /lucky | 晚会回看、中奖结果
 Rank | /race | 竞速排行榜榜单
-Dps | /dps | 天梯榜
+Dps | /dps | 天梯榜、门派天团
 Vote | /vote | 人气排行榜
 Live | /live | 视频直播
 Video | /video | 通关视频
