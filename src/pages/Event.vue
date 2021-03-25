@@ -27,6 +27,12 @@
                                     <el-radio :label="0">关闭</el-radio>
                                 </el-radio-group>
                             </el-form-item>
+                            <el-form-item label="游戏可见">
+                                <el-radio-group v-model="form.visible_game">
+                                    <el-radio :label="1">开启</el-radio>
+                                    <el-radio :label="0">关闭</el-radio>
+                                </el-radio-group>
+                            </el-form-item>
                             <el-form-item label="成就序列">
                                 <el-input
                                     v-model="form.achieve_ids"
@@ -199,6 +205,7 @@ export default {
             form: {
                 visible: 0,
                 status: 0,
+                visible_game:0,
                 achieve_ids: "",
                 name: "",
                 sponsors: [

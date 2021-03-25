@@ -75,7 +75,7 @@
                                     class="u-btn"
                                     type="primary"
                                     @click="submit"
-                                    :disabled="!ready || status"
+                                    :disabled="!ready"
                                     >报名</el-button
                                 >
                             </div>
@@ -131,7 +131,7 @@ export default {
             },
             events: [],
             teams: [],
-            status: false,
+            status: false,      //是否已经报名
             isLogin: User.isLogin(),
             result: {
                 event: {
@@ -141,11 +141,12 @@ export default {
                     name: "团队名称",
                 },
             },
+            processing:false,   //按钮提交锁定
         };
     },
     computed: {
         ready: function() {
-            return this.form.event_id && this.form.team_id && this.form.slogan;
+            return this.form.event_id && this.form.team_id && this.form.slogan && !this.status && !this.processing;
         },
         event_id: function() {
             return this.form.event_id;
@@ -160,6 +161,7 @@ export default {
                     confirmButtonText: "确定",
                     callback: (action) => {
                         if (action == "confirm") {
+                            this.processing = true
                             joinEvent(this.form).then((res) => {
                                 this.$message({
                                     message: "报名成功,请等待审核",
@@ -167,7 +169,9 @@ export default {
                                 });
                                 this.status = true;
                                 this.$forceUpdate();
-                            });
+                            }).finall(() => {
+                                this.processing = false
+                            })
                         }
                     },
                 }
