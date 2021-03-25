@@ -169,7 +169,7 @@ export default {
                                 });
                                 this.status = true;
                                 this.$forceUpdate();
-                            }).finall(() => {
+                            }).finally(() => {
                                 this.processing = false
                             })
                         }
