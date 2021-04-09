@@ -1,40 +1,28 @@
 <template>
     <tbody v-if="list && list.length">
-        <tr
-            v-for="(item, i) in list"
-            :key="i"
-            v-show="!hasCondition || isMatched(item)"
-        >
+        <tr v-for="(item, i) in list" :key="i" v-show="!hasCondition || isMatched(item)">
             <td>
                 <i class="u-ranking">{{ i + 1 }}</i>
             </td>
             <td>
                 <a :href="item.team_id | teamLink" target="_blank">
-                    <img
-                        loading="lazy"
-                        class="u-logo"
-                        :src="item.logo | teamLogo"
-                        :alt="item.name"
-                    />
+                    <img loading="lazy" class="u-logo" :src="item.logo | teamLogo" :alt="item.name" />
                 </a>
             </td>
             <td>
-                <a
-                    class="u-name"
-                    :href="item.team_id | teamLink"
-                    target="_blank"
-                >
-                    {{ item.name }}
-                </a>
+                <a class="u-name" :href="item.team_id | teamLink" target="_blank">{{ item.name }}</a>
             </td>
             <td>
                 <span class="u-server">{{ item.server }}</span>
             </td>
             <td>
-                <span class="u-leader">{{ item.leader }}</span>
+                <div>
+                    <a class="u-leader" :href="item.uid | authorLink">{{ item.leader }}</a>
+                    <span class="u-slogan">{{ item.slogan }}</span>
+                </div>
             </td>
             <td>
-                <span class="u-slogan">{{ item.slogan }}</span>
+                <span class="u-prize" v-html="item.prize"></span>
             </td>
             <td>
                 <span class="u-count">{{ item.count }}</span>
@@ -56,45 +44,52 @@ import {
     __imgPath,
     default_avatar,
 } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
+import { getThumbnail, getLink,authorLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { doVote } from "@/service/vote.js";
 export default {
-    name: "voteItemV1",
+    name: "voteItemV2",
     props: ["data", "team_name", "server"],
-    data: function() {
+    data: function () {
         return {
             isLogin: User.isLogin(),
         };
     },
     computed: {
-        id: function() {
+        id: function () {
             return ~~this.$store.state.id;
         },
-        list: function() {
+        list: function () {
             return this.data;
         },
-        event_status: function() {
+        event_status: function () {
             return this.$store.state.race.status || false;
         },
-        search_team: function() {
+        search_team: function () {
             return this.team_name;
         },
-        search_server: function() {
+        search_server: function () {
             return this.server;
         },
-        hasCondition: function() {
+        hasCondition: function () {
             return this.search_team || this.search_server;
         },
     },
     methods: {
-        isMatched: function(item) {
-            return (
-                item.name.includes(this.search_team) ||
-                item.server == this.search_server
-            );
+        isMatched: function (item) {
+            if (this.search_team && this.search_server) {
+                return (
+                    item.name.includes(this.search_team) &&
+                    item.server == this.search_server
+                );
+            }
+            let matchName =
+                this.search_team && item.name.includes(this.search_team);
+            let matchServer =
+                this.search_server && item.server == this.search_server;
+            return matchName || matchServer;
         },
-        vote: function(item) {
+        vote: function (item) {
             // 检查登录
             if (!this.isLogin) {
                 User.toLogin();
@@ -114,16 +109,25 @@ export default {
         },
     },
     filters: {
-        teamLogo: function(val) {
+        teamLogo: function (val) {
             return val
                 ? getThumbnail(val, 48, true)
                 : getThumbnail(default_avatar, 48, true);
         },
-        teamLink: function(val) {
+        teamLink: function (val) {
             return getLink("org", val);
         },
+        authorLink
     },
-    mounted: function() {},
+    watch: {
+        // search_team: function () {
+        //     this.$forceUpdate();
+        // },
+        // search_server: function () {
+        //     this.$forceUpdate();
+        // },
+    },
+    mounted: function () {},
     components: {},
 };
 </script>

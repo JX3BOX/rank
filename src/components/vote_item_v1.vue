@@ -82,11 +82,18 @@ export default {
         },
     },
     methods: {
-        isMatched: function(item) {
-            return (
-                item.name.includes(this.search_team) ||
-                item.server == this.search_server
-            );
+        isMatched: function (item) {
+            if (this.search_team && this.search_server) {
+                return (
+                    item.name.includes(this.search_team) &&
+                    item.server == this.search_server
+                );
+            }
+            let matchName =
+                this.search_team && item.name.includes(this.search_team);
+            let matchServer =
+                this.search_server && item.server == this.search_server;
+            return matchName || matchServer;
         },
         vote: function(item) {
             // 检查登录

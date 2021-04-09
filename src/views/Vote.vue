@@ -47,8 +47,8 @@
                             </el-option>
                         </el-select>
                     </th>
-                    <th v-if="id != 1">团长</th>
-                    <th v-if="id != 1">宣言</th>
+                    <th v-if="id != 1">团长&amp;宣言</th>
+                    <th v-if="id != 1">团队提供奖品</th>
                     <th>人气</th>
                     <th>参与投票</th>
                 </tr>
@@ -76,7 +76,7 @@ import { getAllJoinedTeams } from "@/service/vote.js";
 import vote_item_v1 from "@/components/vote_item_v1.vue";
 import vote_item_v2 from "@/components/vote_item_v2.vue";
 export default {
-    name: "VoteV1",
+    name: "Vote",
     props: [],
     data: function() {
         return {
