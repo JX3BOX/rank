@@ -1,8 +1,8 @@
 <template>
-    <div id="app" class="m-rank-container" :class="[id_cls, win_env]">
+    <div id="app" class="m-rank-container" :class="[id_cls, win_env,'m-rank-bg-' + id]">
         <Header></Header>
 
-        <race-bg :class="'m-rank-bg-' + id"></race-bg>
+        <!-- <race-bg :class="'m-rank-bg-' + id"></race-bg> -->
         <div class="m-rank-primary">
             <div class="m-rank-race" v-if="id">
                 <div class="m-rank-header">
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import race_bg from "@/components/race_bg.vue";
+// import race_bg from "@/components/race_bg.vue";
 import race_header from "@/components/race_header.vue";
 import { getEvent } from "@/service/event.js";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
@@ -76,7 +76,7 @@ export default {
     },
     components: {
         "race-header": race_header,
-        "race-bg": race_bg,
+        // "race-bg": race_bg,
     },
 };
 </script>

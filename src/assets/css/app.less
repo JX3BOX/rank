@@ -1,3 +1,6 @@
+html{
+    min-width: 1280px;
+}
 body{
     background:url('@{img}common/bg.png') repeat-x center top;
     background-color:#000;
@@ -18,8 +21,9 @@ body,.m-rank-container,#m-rank-star{
 }
 
 .m-rank-bg{
-    .w(100%);
-    .pa;top:0;left:50%;transform: translateX(-50%);
+    .w(100vw);
+    .pa;.lt(0);
+    // .pa;top:0;left:50%;transform: translateX(-50%);
     .z(1);
     min-height: 100vh;
     img{
