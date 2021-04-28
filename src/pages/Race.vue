@@ -46,7 +46,7 @@ export default {
     },
     computed: {
         id: function() {
-            return this.$route.params.id || 1;
+            return this.$route.params.id || 0;
         },
         note: function() {
             return this.$store.state.race.note;
@@ -56,8 +56,8 @@ export default {
         },
     },
     methods: {
-        init: function(val) {
-            getEvent(val || this.id).then((res) => {
+        init: function() {
+            getEvent(this.id).then((res) => {
                 this.data = res.data.data;
                 this.$store.state.race = res.data.data;
             });
@@ -69,8 +69,10 @@ export default {
         "$route.params.id": {
             immediate: true,
             handler: function(id) {
-                this.$store.state.id = id;
-                this.init(id);
+                if(id){
+                    this.$store.state.id = id;
+                    this.init();
+                }
             },
         },
     },
