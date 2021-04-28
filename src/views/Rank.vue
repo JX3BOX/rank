@@ -111,11 +111,7 @@
                         >
                             <div>
                                 <img loading="lazy" class="u-mount" :src="member | showMemberMount" />
-                                <span class="u-username">
-                                    {{
-                                    member | showMemberName
-                                    }}
-                                </span>
+                                <span class="u-username">{{member | showMemberName}}</span>
                             </div>
                         </el-col>
                     </el-row>
@@ -205,15 +201,19 @@ export default {
         changeBoss: function (val) {
             this.server = "";
             this.achieve_id = val;
+            this.$router.push({
+                query: {
+                    aid: val,
+                },
+            });
         },
         changeServer: function (val) {
             this.server = val;
         },
-
         loadData: function () {
             this.loading = true;
             this.achieve_id &&
-                getTop100(this.params,this.id)
+                getTop100(this.params, this.id)
                     .then((res) => {
                         this.origin_data = res.data.data || [];
                     })
@@ -280,6 +280,11 @@ export default {
             deep: true,
             handler: function (val) {
                 this.loadData();
+            },
+        },
+        "$route.query.aid": {
+            handler: function (val) {
+                this.achieve_id = val;
             },
         },
     },
