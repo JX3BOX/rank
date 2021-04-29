@@ -11,7 +11,7 @@
             <img :src="video_title_img" />
             <el-button
                 class="u-addv"
-                v-if="isSuperAdmin"
+                v-if="isAdmin"
                 type="primary"
                 @click="add"
                 icon="el-icon-circle-plus-outline"
@@ -243,7 +243,7 @@ export default {
             servers,
             server: "",
             current_boss: "",
-            isSuperAdmin: User.isSuperAdmin(),
+            isAdmin: User.isAdmin(),
             dialogVisible: false,
             video: {
                 ID: "",
