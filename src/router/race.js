@@ -9,6 +9,7 @@ const Live = () => import("../views/Live.vue");
 const Video = () => import("../views/Video.vue");
 const Lucky = () => import("../views/Lucky.vue");
 const Stat = () => import("../views/Stat.vue");
+const Superstar = () => import("../views/Superstar.vue");
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,7 @@ const routes = [
     { name: "live", path: "/:id/live", component: Live },
     { name: "video", path: "/:id/video", component: Video },
     { name: "stat", path: "/:id/stat", component: Stat },
+    { name: "superstar", path: "/:id/superstar", component: Superstar },
 ];
 
 const router = new VueRouter({
