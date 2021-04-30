@@ -123,7 +123,7 @@ export default {
     props: [],
     data: function () {
         return {
-            superstar_title_img: __imgPath + "image/rank/common/vote.png",
+            superstar_title_img: __imgPath + "image/rank/common/superstar.png",
             loading: false,
             origin_data: [],
         };

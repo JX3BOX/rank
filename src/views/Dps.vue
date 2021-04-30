@@ -30,7 +30,7 @@ export default {
     props: [],
     data: function () {
         return {
-            dps_title_img: __imgPath + "image/rank/common/vote.png",
+            dps_title_img: __imgPath + "image/rank/common/dps.png",
             achieve_id: "", //boss成就ID
             loading : false,
         };
