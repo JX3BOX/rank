@@ -123,7 +123,7 @@
                                         {{ item.title }}
                                     </a>
                                 </div>
-                                <div class="u-op" v-if="isSuperAdmin">
+                                <div class="u-op" v-if="isEditor">
                                     <el-button
                                         class="u-edit"
                                         type="primary"
@@ -244,6 +244,7 @@ export default {
             server: "",
             current_boss: "",
             isAdmin: User.isAdmin(),
+            isEditor: User.isEditor(),
             dialogVisible: false,
             video: {
                 ID: "",
