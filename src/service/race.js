@@ -1,15 +1,15 @@
-import { $next } from "./axios";
-
-function getTop100(achieve_id,server = '') {
-    return $next.get(`team/race/achieve/${achieve_id}/top100`,{
-        params : {
-            server : server
-        }
+import { $team } from "./axios";
+function getTop100(params,event_id = 1) {
+    return $team().get(`/api/team/race/achieve/${params.achieve_id}/top100`, {
+        params: {
+            server: params.server,
+            event_id
+        },
     });
 }
 
 function getTopTotal(achieve_arr) {
-    return $next.get(`team/race/achieve/finish/process`, {
+    return $team().get(`/api/team/race/achieve/finish/process`, {
         params: {
             ids: achieve_arr,
             // _no_cache
@@ -17,14 +17,7 @@ function getTopTotal(achieve_arr) {
     });
 }
 
-function getLives(event_id, params) {
-    return $next.get(`team/rank/events/${event_id}/live-tv-list`, {
-        params: params,
-    });
-}
-
-function doVote(event_id, team_id) {
-    return $next.post(`team/events/${event_id}/vote-team/${team_id}`);
-}
-
-export { getTop100, getLives, getTopTotal, doVote };
+export {
+    getTop100,
+    getTopTotal,
+};

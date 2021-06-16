@@ -11,8 +11,13 @@
     margin: 0;
     list-style: none;
 
+    .el-col{
+        flex-grow: 1;
+    }
+
     .x;
     .u-boss {
+        .db;
         background-color: #222;
         .mb(20px);
         .r(4px);
@@ -27,7 +32,7 @@
             .mr(0);
         }
     }
-    .on {
+    .on,.router-link-active {
         background-color: #171717;
         color: #0cf;
         outline: 1px solid #0cf;
@@ -36,7 +41,64 @@
         .fz(12px);
         color: #aaa;
         .ml(5px);
+
+        &.isLess{
+            color:#49c10f;
+        }
+        &.isMore{
+            color:#fba524;
+        }
+        &.isDanger{
+            color:#fd3c1d;
+        }
+        &.isFull{
+            color:#aaa;
+        }
     }
+}
+
+.m-rank-server{
+    .u-server {
+        .db;
+        .w(100%);
+
+        input{
+            background: #333;
+            border-color: #555;
+            color: #eee;
+        }
+    }
+
+
+    ul,div{
+        list-style:none;
+        .clearfix;
+        padding:0;
+        margin:0;
+        display: flex;
+    }
+    li,a{
+        .fl;.w(80px);
+        background-color:#222;
+        .mr(5px);
+        .mb(5px);
+        .r(2px);
+        .x;
+        .fz(12px,2.5);
+        color:#ccc;
+        .pointer;
+        &:hover{
+            color:#ff0;
+        }
+    }
+    .on,.router-link-exact-active{
+        .bold;
+        color:#0cf;
+        &:hover{
+            color:#0cf;
+        }
+    }
+    
 }
 
 .m-rank-top100-null {
@@ -253,7 +315,7 @@
         .u-teammates {
             padding: 0 10px;
             .u-username {
-                .w(70px);
+                .w(95px);
             }
         }
     }
@@ -292,45 +354,3 @@
     }
 }
 
-.m-rank-server-filter {
-    .u-server {
-        .db;
-        .w(100%);
-
-        input{
-            background: #333;
-            border-color: #555;
-            color: #eee;
-        }
-    }
-
-
-    ul{
-        list-style:none;
-        .clearfix;
-        padding:0;
-        margin:0;
-    }
-    li{
-        .fl;.w(80px);
-        background-color:#222;
-        .mr(5px);
-        .mb(5px);
-        .r(2px);
-        .x;
-        .fz(12px,2.5);
-        color:#ccc;
-        .pointer;
-        &:hover{
-            color:#ff0;
-        }
-    }
-    .on{
-        .bold;
-        color:#0cf;
-        &:hover{
-            color:#0cf;
-        }
-    }
-    
-}

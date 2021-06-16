@@ -1,110 +1,110 @@
 <template>
     <div id="app" class="m-rank-container">
         <Header></Header>
-        <div class="m-rank-join">
-            <div class="m-rank-header">
-                <img class="u-logo" :src="LOGO" />
-            </div>
-            <div class="m-rank-content" v-if="isLogin">
-                <div class="m-join m-join-team" v-if="!status">
-                    <h1 class="m-join-title">报名入口</h1>
-                    <el-alert
-                        class="u-warning"
-                        title="请务必正确填写所有资料，报名后不可取消，亦不可再更改资料。团长Q群：785597424"
-                        type="warning"
-                        show-icon
-                    >
-                    </el-alert>
-                    <el-form
-                        class="m-join-form"
-                        ref="form"
-                        :model="form"
-                        label-width="80px"
-                    >
-                        <el-form-item label="报名活动">
-                            <el-select
-                                v-model="form.event_id"
-                                placeholder="请选择活动"
-                            >
-                                <el-option
-                                    v-for="event in events"
-                                    :key="event.ID"
-                                    :label="event.name"
-                                    :value="event.ID"
+        <div class="m-rank-primary">
+            <div class="m-rank-join">
+                <div class="m-rank-header">
+                    <img class="u-logo" :src="LOGO" />
+                </div>
+                <div class="m-rank-content" v-if="isLogin">
+                    <div class="m-join m-join-team" v-if="!status">
+                        <h1 class="m-join-title">报名入口</h1>
+                        <el-alert
+                            class="u-warning"
+                            type="warning"
+                            show-icon
+                        >
+                        <span slot="title">
+                            仅认证团队可报名，可在「<a href="https://www.jx3box.com/team/" target="_blank">团队应用</a>」-「<a href="https://www.jx3box.com/team/org/manage/"  target="_blank">团队管理</a>」中提交团队认证（已认证过的无需再次认证）。<br>
+                            请务必正确填写所有资料，报名后不可取消，亦不可再更改资料，认证团长Q群<a href="https://jq.qq.com/?_wv=1027&k=rHiKKYEV">【1048059072】</a>（必加）。
+                        </span>
+                        </el-alert>
+                        <el-form
+                            class="m-join-form"
+                            ref="form"
+                            :model="form"
+                            label-width="80px"
+                        >
+                            <el-form-item label="报名活动">
+                                <el-select
+                                    v-model="form.event_id"
+                                    placeholder="请选择活动"
                                 >
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="选择团队">
-                            <el-select
-                                v-model="form.team_id"
-                                placeholder="请选择团队"
-                            >
-                                <el-option
-                                    v-for="team in teams"
-                                    :key="team.ID"
-                                    :label="team.name"
-                                    :value="team.ID"
+                                    <el-option
+                                        v-for="event in events"
+                                        :key="event.ID"
+                                        :label="event.name"
+                                        :value="event.ID"
+                                    >
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="选择团队">
+                                <el-select
+                                    v-model="form.team_id"
+                                    placeholder="请选择团队"
+                                    @change="updateTeam"
                                 >
-                                </el-option>
-                            </el-select>
-                            <div class="u-tip" v-if="!teams || !teams.length">
-                                还没有团队？<a
-                                    href="/team/#/org/setting"
-                                    target="_blank"
-                                    >创建团队</a
+                                    <el-option
+                                        v-for="team in teams"
+                                        :key="team.ID"
+                                        :label="team.name"
+                                        :value="team.ID"
+                                    >
+                                    </el-option>
+                                </el-select>
+                                <div
+                                    class="u-tip"
+                                    v-if="!teams || !teams.length"
+                                >
+                                    还没有团队？<a href="/team" target="_blank"
+                                        >创建团队</a
+                                    >
+                                </div>
+                            </el-form-item>
+                            <el-form-item label="参赛宣言">
+                                <el-input
+                                    v-model="form.slogan"
+                                    placeholder="为您的团队打CALL,将显示在游戏内"
+                                    :maxlength="20"
+                                    show-word-limit
+                                ></el-input>
+                            </el-form-item>
+                            <div class="u-btns">
+                                <el-button
+                                    class="u-btn"
+                                    type="primary"
+                                    @click="submit"
+                                    :disabled="!ready"
+                                    >报名</el-button
                                 >
                             </div>
-                        </el-form-item>
-                        <el-form-item label="联系电话">
-                            <el-input
-                                v-model="form.phone"
-                                placeholder="请输入正确的快递联系电话"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item label="邮寄地址">
-                            <el-input
-                                v-model="form.address"
-                                placeholder="请输入正确的奖品邮寄地址"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item label="联系QQ">
-                            <el-input
-                                v-model="form.qq"
-                                placeholder="请输入正确的QQ号码"
-                            ></el-input>
-                        </el-form-item>
-                        <div class="u-btns">
-                            <el-button
-                                class="u-btn"
-                                type="primary"
-                                @click="submit"
-                                :disabled="!canJoin"
-                                >报名</el-button
-                            >
+                        </el-form>
+                    </div>
+                    <div class="m-join m-join-done" v-else>
+                        <h1 class="u-title">已报名</h1>
+                        <div>
+                            <p>
+                                活动：<strong>{{ result.event.name }}</strong>
+                            </p>
+                            <p>
+                                团队：<strong>{{
+                                    result.eventRecord.name
+                                }}</strong>
+                            </p>
                         </div>
-                    </el-form>
-                </div>
-                <div class="m-join m-join-done" v-else>
-                    <h1 class="u-title">已报名</h1>
-                    <div>
-                        <p>
-                            活动：<b>{{ event_name }}</b>
-                        </p>
-                        <p>
-                            团队：<strong>{{ team_name }}</strong>
-                        </p>
+                    </div>
+                    <div class="u-footer">
+                        <a href="/bbs/21805" target="_blank"
+                            ><i class="el-icon-info"></i>
+                            <b>点击查看活动规则详情</b></a
+                        >
                     </div>
                 </div>
-                <div class="u-tip">
-                    <a href="/tool/?pid=18044#/" target="_blank"
-                        ><i class="el-icon-info"></i>
-                        <b>点击查看活动规则详情</b></a
-                    >
+                <div class="m-rank-content m-rank-null" v-else>
+                    <p>你尚未登录</p>
+                    <el-button type="primary" @click="goLogin">登录</el-button>
                 </div>
-            </div>
-            <div class="m-rank-content m-rank-null" v-else>
-                请先<a href="/account/login/" target="_blank">登录</a>
             </div>
         </div>
         <Footer></Footer>
@@ -112,13 +112,12 @@
 </template>
 
 <script>
-import PICS from "@/assets/js/pics.js";
-import { getEvents, joinEvent, hasJoined } from "@/service/event.js";
-import { getMyTeams } from "@/service/team.js";
 import _ from "lodash";
-import User from '@jx3box/jx3box-common/js/user.js'
-const ACTIVE_EVENT_ID = 1; //当前开启的活动
-
+import PICS from "@/assets/js/pics.js";
+import { getEvents } from "@/service/event.js";
+import { joinEvent, hasJoined } from "@/service/join.js";
+import { getMyTeams } from "@/service/team.js";
+import User from "@jx3box/jx3box-common/js/user.js";
 export default {
     name: "App",
     props: [],
@@ -128,94 +127,71 @@ export default {
             form: {
                 event_id: "",
                 team_id: "",
-                phone: "",
-                address: "",
-                qq: "",
+                slogan: "",
             },
-            events: [
-                // {
-                //     ID: 1,
-                //     name: "奉天证道",
-                //     status: 1,
-                // },
-            ],
-            teams: [
-                // {
-                //     ID : 1,
-                //     name : "诗画印象"
-                // }
-            ],
-            status: false,
-            isLogin : User.isLogin()
+            events: [],
+            teams: [],
+            status: false,      //是否已经报名
+            isLogin: User.isLogin(),
+            result: {
+                event: {
+                    name: "活动名称",
+                },
+                eventRecord: {
+                    name: "团队名称",
+                },
+            },
+            processing:false,   //按钮提交锁定
         };
     },
     computed: {
-        event_name: function() {
-            return _.get(this.events[0], "name");
+        ready: function() {
+            return this.form.event_id && this.form.team_id && this.form.slogan && !this.status && !this.processing;
         },
         event_id: function() {
-            return _.get(this.events[0], "ID");
+            return this.form.event_id;
         },
-        team_name: function() {
-            return _.get(this.teams[0], "name");
-        },
-        team_id: function() {
-            return _.get(this.teams[0], "ID");
-        },
-        // join_data: function() {
-        //     return {
-        //         event_id: this.event_id,
-        //         team_id: this.team_id,
-        //     };
-        // },
-        canJoin : function (){
-            return this.event_id && this.team_id
-        }
     },
     methods: {
         submit: function() {
-
-            if(!this.team_id){
-                this.$message({
-                    message: "无效团队ID",
-                    type: "error",
-                });
-                return
-            }
-
             this.$alert(
-                "报名后资料将不可再更改，更多咨询请联系认证团长Q群1048059072",
+                "报名后资料将不可再更改，更多咨询请联系认证团长Q群【1048059072】",
                 "消息",
                 {
                     confirmButtonText: "确定",
                     callback: (action) => {
                         if (action == "confirm") {
+                            this.processing = true
                             joinEvent(this.form).then((res) => {
                                 this.$message({
-                                    message: "报名成功",
+                                    message: "报名成功,请等待审核",
                                     type: "success",
                                 });
                                 this.status = true;
-                                this.$forceUpdate()
-                            });
+                                this.$forceUpdate();
+                            }).finally(() => {
+                                this.processing = false
+                            })
                         }
                     },
                 }
             );
         },
-        init: function() {
-            this.loadEvents()
-            this.loadTeams()
-            this.checkJoin()
+        updateTeam: function() {
+            this.teams.forEach((item) => {
+                if (item.ID == this.form.team_id) {
+                    this.result.eventRecord.name = item.name;
+                }
+            });
         },
         loadEvents: function() {
             // 获取开放的活动事件
             return getEvents({
                 status: 1,
             }).then((res) => {
-                this.events = res.data.data.list;
+                this.events = res.data.data.list || [];
                 this.form.event_id = this.event_id;
-                this.$forceUpdate()
+                this.$forceUpdate();
             });
         },
         loadTeams: function() {
@@ -223,20 +199,34 @@ export default {
             return getMyTeams().then((res) => {
                 this.teams = res.data.data.list || [];
                 this.form.team_id = this.team_id;
-                this.$forceUpdate()
+                this.$forceUpdate();
             });
         },
         checkJoin: function() {
-            return hasJoined(ACTIVE_EVENT_ID).then((res) => {
-                if (res.data.data.hasJoined) {
-                    this.status = 1;
-                    this.$forceUpdate()
-                }
-            });
+            this.form.event_id &&
+                hasJoined(this.form.event_id).then((res) => {
+                    this.result = res.data.data;
+                    if (res.data.data.hasJoined) {
+                        this.status = true;
+                        this.$forceUpdate();
+                    }
+                });
+        },
+        goLogin: function() {
+            User.toLogin();
+        },
+        init: function() {
+            this.loadEvents();
+            this.loadTeams();
+        },
+    },
+    watch: {
+        event_id: function(val) {
+            this.checkJoin();
         },
     },
     created: function() {
-        this.init();
+        this.isLogin && this.init();
     },
     components: {},
 };

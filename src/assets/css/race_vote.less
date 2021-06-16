@@ -1,8 +1,3 @@
-// .m-rank-vote{
-//     max-width:1080px;
-//     .auto(x);
-// }
-
 .m-rank-vote-title {
     .x;
     .mt(40px);
@@ -10,7 +5,7 @@
 
 .m-rank-vote-header{
     .mt(20px);
-    .u-tip{
+    // .u-tip{
         .fz(16px,2);
         background-color:#f2f4f7;
         .r(4px);
@@ -22,7 +17,7 @@
         b{
             color:#f00;
         }
-    }
+    // }
 }
 
 .m-rank-vote-table {
@@ -102,6 +97,7 @@
 
         &.disabled{
             filter: saturate(0%);
+            cursor: default;
         }
     }
 
@@ -119,6 +115,22 @@
         .isMatched{
             display: table-row;
         }
+    }
+
+    .u-leader{
+        .fz(14px,24px);
+        .db;
+        color:#ccc;
+    }
+    .u-slogan{
+        .db;
+        .x;
+        .auto(x);
+        .nobreak;
+        overflow: hidden;
+        .fz(12px,20px);
+        font-weight:normal;
+        color:#999;
     }
 }
 

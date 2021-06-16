@@ -1,30 +1,36 @@
-import { $next } from "./axios";
+import { $team } from "./axios";
 
-function setEvent(data) {
-    return $next.post("team/rank/events", data);
+function createEvent(data) {
+    return $team().post(`/api/team/rank/events`);
+}
+
+function updateEvent(id, data) {
+    return $team().put(`/api/team/rank/events/${id}`, data);
+}
+
+function activeEvent(id) {
+    return $team().put(`/api/team/rank/events/${id}/active`);
+}
+
+function stopEvent(id) {
+    return $team().put(`/api/team/rank/events/${id}/stop`);
 }
 
 function getEvent(id) {
-    return $next.get("team/rank/events/" + id);
+    return $team().get(`/api/team/rank/events/` + id);
 }
 
 function getEvents(params) {
-    return $next.get("team/rank/events", {
+    return $team().get(`/api/team/rank/events`, {
         params: params,
     });
 }
 
-function joinEvent(data) {
-    return $next.post("team/rank/join", data);
-}
-
-function hasJoined(event_id,uid) {
-    return $next.get("team/rank/my-records", {
-        params: {
-            event_id: event_id,
-            // uid : uid
-        },
-    });
-}
-
-export { setEvent, getEvent, getEvents, joinEvent, hasJoined };
+export {
+    createEvent,
+    updateEvent,
+    activeEvent,
+    stopEvent,
+    getEvent,
+    getEvents,
+};

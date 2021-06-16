@@ -1,4 +1,5 @@
 <template>
+<!-- 视频直播 -->
     <div
         class="m-rank-video"
         v-loading="loading"
@@ -34,7 +35,7 @@
                 </el-pagination>
             </div>
         </div>
-        <div class="m-rank-video-live" v-if="list && list.length">
+        <div class="m-rank-video-live" v-if="event_status && list && list.length">
             <div class="u-live">
                 <iframe :src="live_url || default_live_url" frameborder="0"></iframe>
             </div>
@@ -167,10 +168,10 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
-import { getLives } from "@/service/race.js";
-import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
-import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { getLives } from "@/service/video.js";
+import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
+import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import getTVlink from "@/assets/js/tv.js";
 const liveStatusMap = ["等待开播", "直播中", "直播结束"];
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
@@ -222,6 +223,9 @@ export default {
             }else{
                 return ''
             }
+        },
+        event_status : function (){
+            return !!this.$store.state.race.status || false
         }
     },
     methods: {
@@ -231,8 +235,8 @@ export default {
             getLives(this.id, this.params)
                 .then((res) => {
                     this.data = res.data.data.list;
-                    this.page = res.data.data.page.index;
-                    this.total = res.data.data.page.total;
+                    // this.page = res.data.data.page.index;
+                    // this.total = res.data.data.page.total;
                 })
                 .finally(() => {
                     this.loading = false;
@@ -265,7 +269,8 @@ export default {
             return val ? getThumbnail(val, 68, true) : default_avatar;
         },
         teamLink: function(val) {
-            return "/team/#/org/view/" + val;
+            // return "/team/#/org/view/" + val;
+            return getLink('org',val);
         },
     },
     created: function() {

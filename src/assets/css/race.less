@@ -1,23 +1,5 @@
 @import "./app.less";
-
-
-
-.m-rank-container{
-    .u-history{
-        .w(156px);
-        .db;
-        img{.w(100%);}
-        .pa;.lt(20px,@header-height + 20px);
-    }
-}
-
-// .m-rank-bg{
-//     .w(100%);
-//     .pa;top:0;left:50%;transform: translateX(-50%);
-//     img{
-//         .db;.auto(x);
-//     }
-// }
+@import "./bg.less";
 
 .m-rank-header {
     min-height: 600px;
@@ -25,6 +7,15 @@
     // padding-top:650px;
     // max-width:1080px;
     .auto(x);
+}
+
+.m-rank-misc{
+    .u-history{
+        .w(156px);
+        .db;
+        img{.w(100%);}
+        .pa;.lt(20px,@header-height + 20px);
+    }
 }
 
 .m-rank-race {
@@ -149,3 +140,4 @@
         .mb(20px);
     }
 }
+

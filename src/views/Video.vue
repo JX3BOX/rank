@@ -1,4 +1,5 @@
 <template>
+<!-- 通关视频 -->
     <div
         class="m-rank-video"
         v-loading="loading"
@@ -8,13 +9,15 @@
     >
         <div class="m-rank-video-title">
             <img :src="video_title_img" />
-            <div class="u-extend">
-                <el-button
-                    type="primary"
-                    icon="el-icon-plus"
-                    circle
-                    @click="showEditVideo({ id: -1 })"
-                ></el-button>
+            <el-button
+                class="u-addv"
+                v-if="isAdmin"
+                type="primary"
+                @click="add"
+                icon="el-icon-circle-plus-outline"
+                >添加视频</el-button
+            >
+            <!-- <div class="u-extend">
                 <el-select
                     class="u-server"
                     v-model="server"
@@ -38,148 +41,107 @@
                     :current-page.sync="page"
                 >
                 </el-pagination>
-            </div>
+            </div> -->
+            <!-- <el-button plain>朴素按钮</el-button> -->
         </div>
-        <el-dialog :title="dialogVideoTitle" :visible.sync="dialogVideoVisible">
-            <el-form :model="videoForm" label-width="80px">
-                <el-form-item label="队伍id">
-                    <el-input
-                        v-model="videoForm.team_id"
-                        autocomplete="off"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="Boss名称">
-                    <el-select v-model="videoForm.aid" placeholder="请选择Boss">
-                        <el-option
-                            v-for="(id, name) of bossidDict"
-                            :key="id"
-                            :label="id"
-                            :value="name"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="视频标题">
-                    <el-input
-                        v-model="videoForm.title"
-                        autocomplete="off"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="视频链接">
-                    <el-input
-                        v-model="videoForm.url"
-                        autocomplete="off"
-                    ></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogVideoVisible = false">取 消</el-button>
-                <el-button type="primary" @click="submitVideo">确 定</el-button>
-            </div>
-        </el-dialog>
+        <el-row
+            class="m-rank-boss"
+            :gutter="20"
+            type="flex"
+            justify="space-between"
+        >
+            <el-col :span="3">
+                <div
+                    class="u-boss"
+                    :class="{ on: current_boss == '' }"
+                    @click="changeBoss(0)"
+                >
+                    <span class="u-boss-name">全部</span>
+                </div>
+            </el-col>
+            <el-col
+                :span="3"
+                v-for="(label, achieve_id) of bossList"
+                :key="label + achieve_id"
+            >
+                <div
+                    class="u-boss"
+                    :class="{ on: achieve_id == current_boss }"
+                    @click="changeBoss(achieve_id)"
+                >
+                    <span class="u-boss-name">{{ label }}</span>
+                </div>
+            </el-col>
+        </el-row>
         <div class="m-rank-video-content">
             <template v-if="data && data.length">
                 <el-row class="m-rank-video-list" :gutter="20">
-                    <el-col :span="8" v-for="(item, i) in data" :key="i">
-                        <div
-                            class="m-rank-video-item"
-                            @mouseenter="currentHover = i"
-                            @mouseleave="currentHover = -1"
-                        >
-                            <el-button
-                                type="primary"
-                                icon="el-icon-edit"
-                                circle
-                                v-if="i === currentHover"
-                                class="button-edit"
-                                @click="showEditVideo(item)"
-                            ></el-button>
-                            <a
-                                class="u-video"
-                                :href="
-                                    getTVlink(item.team.tv_type, item.team.tv)
-                                "
-                                target="_blank"
-                            >
-                                <template v-if="item.team.tv_type == 'douyu'">
-                                    <img
-                                        v-if="item.douyu.room_src"
-                                        :src="item.douyu.room_src"
-                                        class="u-live-cover"
-                                        loading="lazy"
-                                    />
-                                    <img
-                                        v-else
-                                        :src="item.team.logo | teamLogo"
-                                        class="u-live-null"
-                                        loading="lazy"
-                                    />
-                                    <i
-                                        class="u-status"
-                                        :class="{
-                                            on: ~~item.douyu.show_status == 1,
-                                        }"
-                                        ><i class="el-icon-video-camera"></i>
-                                        {{
-                                            liveStatusMap[
-                                                ~~item.douyu.show_status
-                                            ]
-                                        }}</i
-                                    >
-                                    <i
-                                        class="u-player"
-                                        v-if="~~item.douyu.show_status == 1"
-                                    >
-                                        <img
-                                            svg-inline
-                                            src="../assets/img/video/play.svg"
-                                        />
-                                    </i>
-                                </template>
-                                <template v-else>
-                                    <img
-                                        :src="item.team.logo | teamLogo"
-                                        class="u-live-null"
-                                        loading="lazy"
-                                    />
-                                    <i class="u-status"
-                                        ><i class="el-icon-warning-outline"></i>
-                                        未知</i
-                                    >
-                                </template>
-                            </a>
-                            <div class="u-info">
+                    <el-col
+                        :span="8"
+                        v-for="(item, i) in data"
+                        :key="i"
+                        v-show="!current_boss || item.aid == current_boss"
+                    >
+                        <div class="m-rank-video-item">
+                            <a class="u-video" :href="item.url" target="_blank">
                                 <img
-                                    :src="item.team.logo | liveAvatar"
-                                    class="u-team-logo"
+                                    :src="item.aid | videoCover"
+                                    class="u-live-cover"
                                     loading="lazy"
                                 />
+                                <i class="u-player">
+                                    <img
+                                        svg-inline
+                                        src="../assets/img/video/play.svg"
+                                    />
+                                </i>
+                            </a>
+                            <div class="u-info">
+                                <a
+                                    :href="item.team_id | teamLink"
+                                    target="_blank"
+                                    ><img
+                                        :src="item.logo | liveAvatar"
+                                        class="u-team-logo"
+                                        loading="lazy"
+                                /></a>
                                 <div class="u-team">
                                     <span class="u-label">团队 : </span>
                                     <a
                                         class="u-team-name"
-                                        :href="item.team.ID | teamLink"
+                                        :href="item.team_id | teamLink"
                                         target="_blank"
-                                        >{{ item.team.name }}</a
+                                        >{{ item.name }}</a
                                     >
                                 </div>
                                 <div class="u-room">
-                                    <span class="u-label">房间 : </span>
                                     <a
                                         class="u-room-name"
-                                        :href="
-                                            getTVlink(
-                                                item.team.tv_type,
-                                                item.team.tv
-                                            )
-                                        "
+                                        :href="item.url"
                                         target="_blank"
                                     >
-                                        {{
-                                            (item.team.tv_type == "douyu" &&
-                                                item.douyu.room_name) ||
-                                            item.team.name + "的直播间"
-                                        }}
+                                        {{ item.title }}
                                     </a>
+                                </div>
+                                <div class="u-op" v-if="isEditor">
+                                    <el-button
+                                        class="u-edit"
+                                        type="primary"
+                                        plain
+                                        @click="edit(item)"
+                                        icon="el-icon-edit-outline"
+                                        size="mini"
+                                        >编辑</el-button
+                                    >
+                                    <el-button
+                                        class="u-delete"
+                                        type="danger"
+                                        plain
+                                        @click="del(item.ID)"
+                                        icon="el-icon-delete"
+                                        size="mini"
+                                        >删除</el-button
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -206,19 +168,68 @@
             >
             </el-alert>
         </div>
+        <el-dialog
+            class="m-rank-video-dialog"
+            title="添加/编辑视频"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :append-to-body="true"
+        >
+            <div class="m-rank-video-form">
+                <el-form ref="form" label-width="80px">
+                    <el-form-item label="团队ID">
+                        <el-input
+                            v-model.number="video.team_id"
+                            placeholder="请输入正确的团队数字编号"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="成就ID">
+                        <el-select v-model.number="video.aid" placeholder="请选择">
+                            <el-option
+                                v-for="(label, achieve_id) of bossList"
+                                :key="achieve_id"
+                                :label="label"
+                                :value="achieve_id"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="视频链接">
+                        <el-input
+                            v-model="video.url"
+                            placeholder="请输入视频网址"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="视频标题">
+                        <el-input
+                            v-model="video.title"
+                            placeholder="请注明XX视角"
+                        ></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submit">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/js/jx3box.json";
-import { getLives } from "@/service/race.js";
-import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
-import { default_avatar } from "@jx3box/jx3box-common/js/jx3box.json";
-import getTVlink from "@/assets/js/tv.js";
-const liveStatusMap = ["等待开播", "直播中", "直播结束"];
-import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import achieves from "@/assets/data/achieve.json";
-
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import {
+    getVideos,
+    deleteVideo,
+    addVideo,
+    updateVideo,
+} from "@/service/video.js";
+import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
+import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
+import User from "@jx3box/jx3box-common/js/user";
+import servers from "@jx3box/jx3box-data/data/server/server_list.json";
+import _ from "lodash";
 export default {
     props: [],
     data: function () {
@@ -228,20 +239,21 @@ export default {
             per: 24,
             page: 1,
             total: 1,
-            liveStatusMap,
             loading: false,
             servers,
             server: "",
-            live_url: "",
-            dialogVideoVisible: false,
-            videoForm: {
+            current_boss: "",
+            isAdmin: User.isAdmin(),
+            isEditor: User.isEditor(),
+            dialogVisible: false,
+            video: {
+                ID: "",
                 team_id: "",
+                event_id: "",
                 aid: "",
                 title: "",
                 url: "",
             },
-            currentHover: -1,
-            dialogVideoTitle: "添加视频",
         };
     },
     computed: {
@@ -255,40 +267,31 @@ export default {
             return {
                 pageSize: this.per,
                 pageIndex: this.page,
-                server: this.server,
+                aid : this.current_boss
             };
         },
-        list: function () {
-            let list = [];
-            this.data.forEach((item, i) => {
-                if (
-                    item.team.tv_type == "douyu" &&
-                    item.douyu.show_status == 1
-                ) {
-                    list.push(item);
-                }
-                if (i == 0) {
-                    item.isActive = true;
-                }
-            });
-            return list;
+        bossList: function() {
+            return achieves[this.id] || [];
         },
-        default_live_url: function () {
-            if (this.list && this.list.length) {
-                return (
-                    "https://open.douyu.com/tpl/h5/chain2/jdxoubyoux/" +
-                    this.list[0]["team"]["tv"]
-                );
-            } else {
-                return "";
-            }
+        demo_video: function() {
+            return {
+                team_id: "",
+                event_id: ~~this.id,
+                aid: "",
+                title: "",
+                url: "",
+            };
         },
     },
     methods: {
-        getTVlink,
-        loadData: function () {
+        changeBoss: function(val) {
+            this.current_boss = val;
+            this.page = 1;
+            this.loadData()
+        },
+        loadData: function() {
             this.loading = true;
-            getLives(this.id, this.params)
+            getVideos(this.id, this.params)
                 .then((res) => {
                     this.data = res.data.data.list;
                     this.page = res.data.data.page.index;
@@ -298,45 +301,49 @@ export default {
                     this.loading = false;
                 });
         },
-        play: function (item) {
-            this.live_url =
-                "https://open.douyu.com/tpl/h5/chain2/jdxoubyoux/" +
-                item.team.tv;
-            this.clean();
-            item.isActive = true;
-        },
-        clean: function () {
-            this.list.forEach((item) => {
-                item.isActive = false;
+        del: function(id) {
+            this.$alert("确认删除吗", "消息", {
+                confirmButtonText: "确定",
+                callback: (action) => {
+                    if (action == "confirm") {
+                        deleteVideo(id).then((res) => {
+                            this.$message({
+                                type: "success",
+                                message: `删除成功`,
+                            });
+
+                            location.reload();
+                        });
+                    }
+                },
             });
         },
-        showEditVideo: function (video) {
-            // 上传视频信息
-            this.videoForm = {};
-            this.dialogVideoVisible = true;
-            console.log(video); // 因为现在没有接口数据，取到的video的id都是undefined
-            if (video.id === -1) {
-                this.dialogVideoTitle = "添加视频";
-                // 创建视频
-            } else {
-                this.dialogVideoTitle = "编辑视频";
-                this.videoForm = video;
-                // 编辑视频
-            }
+        edit: function(item) {
+            this.dialogVisible = true;
+            this.video = item;
         },
-        submitVideo: function () {
-            if (
-                this.videoForm["team_id"] == undefined ||
-                this.videoForm["aid"] == undefined ||
-                this.videoForm.url == undefined ||
-                this.videoForm.title == undefined
-            ) {
-                this.$message.error("没有填写完整");
+        add: function() {
+            this.dialogVisible = true;
+            this.video = _.cloneDeep(this.demo_video);
+        },
+        submit: function() {
+            if (this.video.ID) {
+                updateVideo(this.video.ID,this.video).then((res) => {
+                    this.$message({
+                        type: "success",
+                        message: `更新成功`,
+                    });
+                    this.dialogVisible = false;
+                });
             } else {
-                // 提交
-                this.dialogVideoVisible = false;
+                addVideo(this.video).then((res) => {
+                    this.$message({
+                        type: "success",
+                        message: `发布成功`,
+                    });
+                    this.dialogVisible = false;
+                });
             }
-            
         },
     },
     watch: {
@@ -354,8 +361,12 @@ export default {
         liveAvatar: function (val) {
             return val ? getThumbnail(val, 68, true) : default_avatar;
         },
-        teamLink: function (val) {
-            return "/team/#/org/view/" + val;
+        teamLink: function(val) {
+            // return "/team/#/org/view/" + val;
+            return getLink('org',val);
+        },
+        videoCover: function(aid) {
+            return __imgPath + `image/rank/videos/${aid}.png`;
         },
     },
     created: function () {

@@ -12,8 +12,8 @@ import "@jx3box/jx3box-common/css/normalize.css";
 Vue.use(JX3BOX_UI);
 
 // 数据与路由
-import router from "../router/race.js";
-import store from "../store/race.js";
+import router from "@/router/race.js";
+import store from "@/store/race.js";
 
 import ECharts from 'vue-echarts' // 在 webpack 环境下指向 components/ECharts.vue
 

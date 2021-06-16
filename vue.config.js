@@ -13,30 +13,54 @@ module.exports = {
             template : 'public/index.html',
             filename:'index.html',
         },
-        join : {
-            title : '报名入口 - 剑三秘境百强榜 - JX3BOX',
-            entry:'src/pages/join.js',
-            template : 'public/index.html',
-            filename:'join.html',
-        },
-        race : {
-            title : '剑三秘境百强榜 - JX3BOX',
-            entry:'src/pages/race.js',
-            template : 'public/index.html',
-            filename:'race.html',
-        },
         event : {
             title : '活动设置 - JX3BOX',
             entry:'src/pages/event.js',
             template : 'public/index.html',
-            filename:'event.html',
+            filename:'event/index.html',
+        },
+        join : {
+            title : '报名入口 - 剑三秘境百强榜 - JX3BOX',
+            entry:'src/pages/join.js',
+            template : 'public/subpath.html',
+            filename:'join/index.html',
+        },
+        race : {
+            title : '剑三秘境百强榜 - JX3BOX',
+            entry:'src/pages/race.js',
+            template : 'public/race.html',
+            filename:'race/index.html',
         },
     },
 
     //❤️ Porxy ~
     devServer: {
         proxy: {
-            "/team": {
+            "/api/vip": {
+                "target": "https://pay.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
+            "/api/summary": {
+                "target": "https://next.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
+            "/api/comment": {
+                "target": "https://next.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
+            "/api/team": {
+                "target": "https://team.api.jx3box.com",
+                "onProxyReq": function (request) {
+                    request.setHeader("origin", "");
+                }
+            },
+            "/api": {
                 "target": "https://next.jx3box.com",
                 "onProxyReq": function (request) {
                     request.setHeader("origin", "");
