@@ -26,6 +26,17 @@
                     <span class="u-boss-name">{{ label }}</span>
                 </div>
             </el-col>
+            <el-col
+                :span="4"
+            >
+                <div
+                    class="u-boss"
+                    :class="{ on: current_boss == 'all' }"
+                    @click="changeBoss('all')"
+                >
+                    <span class="u-boss-name">全部</span>
+                </div>
+            </el-col>
         </el-row>
 
         <img
