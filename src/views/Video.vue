@@ -232,7 +232,7 @@ import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import _ from "lodash";
 export default {
     props: [],
-    data: function() {
+    data: function () {
         return {
             video_title_img: __imgPath + "image/rank/common/videos.png",
             data: [],
@@ -257,10 +257,13 @@ export default {
         };
     },
     computed: {
-        id: function() {
+        id: function () {
             return this.$store.state.id;
         },
-        params: function() {
+        bossidDict: function () {
+            return achieves[this.$store.state.id];
+        },
+        params: function () {
             return {
                 pageSize: this.per,
                 pageIndex: this.page,
@@ -346,16 +349,16 @@ export default {
     watch: {
         params: {
             deep: true,
-            handler: function() {
+            handler: function () {
                 this.loadData();
             },
         },
     },
     filters: {
-        teamLogo: function(val) {
+        teamLogo: function (val) {
             return val ? getThumbnail(val, 120, true) : default_avatar;
         },
-        liveAvatar: function(val) {
+        liveAvatar: function (val) {
             return val ? getThumbnail(val, 68, true) : default_avatar;
         },
         teamLink: function(val) {
@@ -366,7 +369,7 @@ export default {
             return __imgPath + `image/rank/videos/${aid}.png`;
         },
     },
-    created: function() {
+    created: function () {
         this.loadData();
     },
     components: {},
