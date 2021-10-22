@@ -26,3 +26,9 @@ Stat | /stat | 统计分析
 ## 赛事工作
 1. 新增event，确定成就ID，更新event配置+插件配置
 2. rank项目首页图新增、前端栏目更新
+
+## 数据更新
+1. event后台设置
+2. event CDN
+3. 本地data/achieve.json
+4. team项目achieve.json

@@ -204,7 +204,7 @@ export default {
         },
         list: function() {
             let list = [];
-            this.data.forEach((item, i) => {
+            this.data?.forEach((item, i) => {
                 if (
                     item.team.tv_type == "douyu" &&
                     item.douyu.show_status == 1
@@ -248,7 +248,7 @@ export default {
             item.isActive = true
         },
         clean : function (){
-            this.list.forEach((item) => {
+            this.list?.forEach((item) => {
                 item.isActive = false
             })
         }
