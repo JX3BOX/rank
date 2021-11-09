@@ -50,7 +50,7 @@
                                         :key="team.ID"
                                         :label="team.name"
                                         :value="team.ID"
-                                    >
+                                    ><span class="m-join-team-item"><b class="u-team-name">{{team.name}}</b><span class="u-team-server">{{team.server}}</span></span>
                                     </el-option>
                                 </el-select>
                                 <div

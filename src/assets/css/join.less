@@ -71,6 +71,22 @@
         }
     }
 }
+.m-join-team-item{
+    .u-team-name{
+        color:@color-link;
+    }
+    .u-team-server{
+        .ml(5px);
+        color:#999;
+        .fz(12px);
+        &::before{
+            content:'<';
+        }
+        &::after{
+            content:'>';
+        }
+    }
+}
 
 .c-footer{
     .mt(40px) !important;
