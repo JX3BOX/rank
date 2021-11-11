@@ -92,7 +92,7 @@ import achieves from "@/assets/data/achieve.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import _ from "lodash";
 import BarChart from "../components/barChart.vue";
-import servers from "@jx3box/jx3box-data/data/server/server_list.json";
+import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import PieChart from "../components/pieChart.vue";
 import schools from "@jx3box/jx3box-data/data/xf/school.json";
 import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
