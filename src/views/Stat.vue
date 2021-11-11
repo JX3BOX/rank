@@ -224,7 +224,7 @@ export default {
                 return false;
             }
             let data = this.stats["pie_school_ratio"][this.current_boss];
-            Object.keys(schools["school"])
+            Object.keys(schools)
                 .filter((each) => {
                     return (
                         !data

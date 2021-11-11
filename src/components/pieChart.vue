@@ -218,8 +218,14 @@ export default {
                                           case "太玄经":
                                               return "#b9c1ff";
                                               break;
+                                          case "无方":
+                                              return "#16708a";
+                                              break;
+                                          case "灵素":
+                                              return "#39bf9b";
+                                              break;
                                           default:
-                                              console.log(param);
+                                              console.log(param)
                                               return undefined;
                                               break;
                                       }
