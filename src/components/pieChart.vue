@@ -137,6 +137,9 @@ export default {
                                           case "衍天":
                                               return "#b9c1ff";
                                               break;
+                                          case "药宗":
+                                              return "#16708a";
+                                              break;
                                           case "冰心诀":
                                               return "#FF7DAD";
                                               break;
