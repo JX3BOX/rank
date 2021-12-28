@@ -1,3 +1,126 @@
-.m-race-dps .m-rank-vote-header{
-    .mb(20px);
+.m-rank-dps-filter {
+    .mt(20px) !important; 
+}
+
+.m-rank-dps-xf {
+    // .mt(10px);
+    ul {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    li {
+        list-style: none;
+        .mr(10px);
+        .mb(10px);
+        border: 1px solid transparent;
+
+        &.on {
+            border-color: #0cf;
+        }
+    }
+    .u-mount {
+        padding: 5px 10px;
+        background-color: #222;
+        img {
+            .size(24px);
+            .y;
+            // .mr(5px);
+        }
+        color: #eee;
+        .fz(14px);
+        .pointer;
+        .r(2px);
+    }
+}
+
+.m-rank-dps-list {
+    .mt(20px);
+    padding: 0 10px;
+
+    .u-item {
+        .x;
+        .fz(13px, 40px);
+
+        .mb(10px);
+        .h(40px);
+        .r(2px);
+
+        background-color: #181818;
+        &:nth-child(2n) {
+            background: #111;
+        }
+
+        color: #eee;
+        a {
+            color: #eee;
+        }
+        a:hover {
+            color: #0cf;
+        }
+    }
+
+    .u-ranking {
+        .lh(40px);
+        .x;
+    }
+
+    .u-mount {
+        img {
+            .size(24px);
+            .mr(2px);
+            .y;
+        }
+    }
+
+    .u-team {
+        img {
+            .size(24px);
+            .y;
+            .mr(5px);
+        }
+    }
+
+    .u-role {
+        img {
+            .size(24px);
+            .y;
+            .mr(5px);
+        }
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    .u-total {
+        .fz(12px);
+        b {
+            color: #0cf;
+            margin: 0 5px;
+        }
+    }
+    .u-dps {
+        color: #0cf;
+        .bold;
+    }
+
+    .u-head {
+        * {
+            color: #aaa !important;
+            font-weight: normal;
+            .fz(12px);
+        }
+        color: #aaa !important;
+        font-weight: normal;
+        .fz(12px);
+        .x;
+    }
+
+    .u-more{
+        .pointer;
+        &:hover{
+            color:#0cf;
+        }
+    }
 }
