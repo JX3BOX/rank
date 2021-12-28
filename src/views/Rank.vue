@@ -1,20 +1,11 @@
 <template>
     <!-- 排行榜成绩 -->
-    <div
-        class="m-rank-rank"
-        v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-    >
+    <div class="m-rank-rank" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-row class="m-rank-boss m-rank-filter" :gutter="20" type="flex">
             <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
                 <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id }">
                     <span class="u-boss-name">{{ label }}</span>
-                    <span
-                        class="u-boss-per"
-                        :class="getProcessCls(total[aid])"
-                    >({{ total[aid] > 100 ? 100 : total[aid] }}/100)</span>
+                    <span class="u-boss-per" :class="getProcessCls(total[aid])">({{ total[aid] > 100 ? 100 : total[aid] }}/100)</span>
                 </li>
             </el-col>
         </el-row>
@@ -22,24 +13,14 @@
         <div class="m-rank-server m-rank-filter">
             <ul>
                 <li :class="{ on: !server }" @click="changeServer('')">全区全服</li>
-                <li
-                    v-for="item in servers"
-                    :key="item"
-                    @click="changeServer(item)"
-                    :class="{ on: server == item }"
-                >{{ item }}</li>
+                <li v-for="item in servers" :key="item" @click="changeServer(item)" :class="{ on: server == item }">{{ item }}</li>
             </ul>
         </div>
 
         <div class="m-rank-top100">
             <!-- A.列表不为空 -->
             <div class="m-rank-top100-list" v-if="data && data.length">
-                <div
-                    class="m-rank-top100-item"
-                    v-for="(item, i) in data"
-                    :key="i"
-                    :class="'is-No' + (i + 1)"
-                >
+                <div class="m-rank-top100-item" v-for="(item, i) in data" :key="i" :class="'is-No' + (i + 1)">
                     <!-- 排名 -->
                     <div class="u-ranking" :class="'is-Top' + (i + 1)">
                         <i class="u-pic">
@@ -49,15 +30,7 @@
                     </div>
                     <!-- 队徽 -->
                     <a class="u-logo" :href="item.team_id | teamLink" target="_blank">
-                        <el-image
-                            v-if="item.team_logo"
-                            :src="
-                                i < 3
-                                    ? teamLogo(item.team_logo, true)
-                                    : teamLogo(item.team_logo, false)
-                            "
-                            fit="fill"
-                        ></el-image>
+                        <el-image v-if="item.team_logo" :src="i < 3 ? teamLogo(item.team_logo, true) : teamLogo(item.team_logo, false)" fit="fill"></el-image>
                         <div class="el-image" v-else>
                             <img loading="lazy" src="../assets/img/misc/null.png" />
                         </div>
@@ -66,9 +39,7 @@
                     <div class="u-title">
                         <a class="u-teamname" :href="item.team_id | teamLink" target="_blank">
                             <i class="el-icon-link"></i>
-                            {{
-                            item.team_name && item.team_name.slice(0, 6)
-                            }}
+                            {{ item.team_name && item.team_name.slice(0, 6) }}
                         </a>
                         <span class="u-server">{{ item.server }}</span>
                         <!-- <span
@@ -90,28 +61,17 @@
                     <!-- 队长 -->
                     <div class="u-leader" v-if="item.leaders">
                         <span class="u-leader-label">团长 :</span>
-                        <img
-                            loading="lazy"
-                            class="u-mount"
-                            :src="item.leaders[1] | showLeaderMount"
-                        />
+                        <img loading="lazy" class="u-mount" :src="item.leaders[1] | showLeaderMount" />
                         <span class="u-username">
-                            {{
-                            item.leaders[0] | showLeaderName
-                            }}
+                            {{ item.leaders[0] | showLeaderName }}
                         </span>
                     </div>
                     <!-- 队员 -->
                     <el-row class="u-teammates" :gutter="10">
-                        <el-col
-                            class="u-member"
-                            :span="i < 3 ? 8 : 4"
-                            v-for="(member, j) in item.members"
-                            :key="j"
-                        >
+                        <el-col class="u-member" :span="i < 3 ? 8 : 4" v-for="(member, j) in item.members" :key="j">
                             <div>
                                 <img loading="lazy" class="u-mount" :src="member | showMemberMount" />
-                                <span class="u-username">{{member | showMemberName}}</span>
+                                <span class="u-username">{{ member | showMemberName }}</span>
                             </div>
                         </el-col>
                     </el-row>
@@ -119,9 +79,7 @@
             </div>
 
             <!-- B.列表为空 -->
-            <div class="m-rank-top100-null" v-else>
-                <i class="el-icon-warning-outline"></i> 暂时还没有任何记录
-            </div>
+            <div class="m-rank-top100-null" v-else><i class="el-icon-warning-outline"></i> 暂时还没有任何记录</div>
         </div>
     </div>
 </template>
@@ -131,18 +89,14 @@ import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import achieves from "@/assets/data/achieve.json";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import _ from "lodash";
-import {
-    showAvatar,
-    getThumbnail,
-    getLink,
-} from "@jx3box/jx3box-common/js/utils";
+import { showAvatar, getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getTop100, getTopTotal } from "@/service/race.js";
 export default {
     components: {},
     props: [],
-    data: function () {
+    data: function() {
         return {
             loading: false,
             servers,
@@ -157,19 +111,19 @@ export default {
         };
     },
     computed: {
-        id: function () {
+        id: function() {
             return this.$store.state.id;
         },
-        bossList: function () {
+        bossList: function() {
             return achieves[this.id] || [];
         },
-        span: function () {
+        span: function() {
             return ~~(24 / Object.keys(this.bossList).length);
         },
-        aids: function () {
+        aids: function() {
             return Object.keys(this.bossList).join(",");
         },
-        data: function () {
+        data: function() {
             // let data = (this.server ? this.local_data : this.origin_data) || [];
             let data = this.origin_data || [];
             data.forEach((team, i) => {
@@ -190,7 +144,7 @@ export default {
             });
             return data;
         },
-        params: function () {
+        params: function() {
             return {
                 server: this.server,
                 achieve_id: ~~this.achieve_id,
@@ -198,7 +152,7 @@ export default {
         },
     },
     methods: {
-        changeBoss: function (val) {
+        changeBoss: function(val) {
             this.server = "";
             this.achieve_id = val;
             this.$router.push({
@@ -207,10 +161,10 @@ export default {
                 },
             });
         },
-        changeServer: function (val) {
+        changeServer: function(val) {
             this.server = val;
         },
-        loadData: function () {
+        loadData: function() {
             this.loading = true;
             this.achieve_id &&
                 getTop100(this.params, this.id)
@@ -221,7 +175,7 @@ export default {
                         this.loading = false;
                     });
         },
-        getProcessCls: function (count) {
+        getProcessCls: function(count) {
             count = ~~count;
             if (count < 30) {
                 return "isLess";
@@ -233,71 +187,68 @@ export default {
                 return "isFull";
             }
         },
-        teamLogo: function (val, mode) {
+        teamLogo: function(val, mode) {
             if (!val) return "";
-            return mode
-                ? getThumbnail(val, 120, true)
-                : getThumbnail(val, 88, true);
+            return mode ? getThumbnail(val, 120, true) : getThumbnail(val, 88, true);
         },
-        getRankImg: function (num) {
+        getRankImg: function(num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";
         },
     },
     filters: {
-        teamLink: function (val) {
+        teamLink: function(val) {
             return getLink("org", val);
         },
-        showTime: function (val) {
+        showTime: function(val) {
             return showTime(new Date(val * 1000));
         },
-        showTC: function (val) {
+        showTC: function(val) {
             let s = val / 1000;
             return ~~(s / 60) + "分" + ~~(s % 60) + "秒";
         },
-        showMemberMount: function (member) {
+        showMemberMount: function(member) {
             let mount = (member && member[1]) || 0;
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";
             return mountIcon;
         },
-        showMemberName: function (member) {
+        showMemberName: function(member) {
             return (member && member[0].slice(0, 12)) || "未知";
         },
-        showLeaderMount: function (mount) {
+        showLeaderMount: function(mount) {
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";
             return mountIcon;
         },
-        showLeaderName: function (name) {
+        showLeaderName: function(name) {
             return (name && name.slice(0, 12)) || "未知";
         },
     },
     watch: {
         id: {
-            handler: function (val) {
+            handler: function(val) {
                 val && this.loadData();
             },
         },
         params: {
             deep: true,
-            handler: function (val) {
+            handler: function(val) {
                 this.loadData();
             },
         },
         "$route.query.aid": {
-            handler: function (val) {
+            handler: function(val) {
                 this.achieve_id = val;
             },
         },
     },
-    created: function () {
-        this.achieve_id =
-            this.$route.query.aid || _.first(Object.keys(this.bossList));
+    created: function() {
+        this.achieve_id = this.$route.query.aid || _.first(Object.keys(this.bossList));
         this.server = this.$route.query.server || "";
 
         getTopTotal(this.aids).then((res) => {
             this.total = res.data.data;
         });
     },
-    mounted: function () {},
+    mounted: function() {},
 };
 </script>
 <style lang="less">

@@ -1,16 +1,12 @@
 <template>
     <!-- 天梯榜 -->
-    <div
-        class="m-race-dps"
-        v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-    >
+    <div class="m-race-dps" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="m-rank-vote-title">
             <img :src="dps_title_img" />
         </div>
-        <div class="m-rank-vote-header">天梯榜将一直持续到赛季末结榜，取玩家每个BOSS的最高秒伤/奶之和，取全BOSS总成绩，每个心法的第一名获得对应奖励。</div>
+        <div class="m-rank-vote-header">
+            <!-- TODO: -->
+        </div>
         <el-row class="m-rank-boss m-rank-filter" :gutter="20" type="flex">
             <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
                 <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id }">
@@ -28,25 +24,24 @@ import achieves from "@/assets/data/achieve.json";
 export default {
     name: "Dps",
     props: [],
-    data: function () {
+    data: function() {
         return {
             dps_title_img: __imgPath + "image/rank/common/dps.png",
             achieve_id: "", //boss成就ID
-            loading : false,
+            loading: false,
         };
     },
     computed: {
-        id: function () {
+        id: function() {
             return this.$store.state.id;
         },
-        bossList: function () {
+        bossList: function() {
             return achieves[this.id] || [];
         },
     },
     methods: {},
-    created: function () {
-        this.achieve_id =
-            this.$route.query.aid || _.first(Object.keys(this.bossList));
+    created: function() {
+        this.achieve_id = this.$route.query.aid || _.first(Object.keys(this.bossList));
     },
     components: {},
 };

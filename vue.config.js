@@ -16,7 +16,7 @@ module.exports = {
         event : {
             title : '活动设置 - JX3BOX',
             entry:'src/pages/event.js',
-            template : 'public/index.html',
+            template : 'public/subpath.html',
             filename:'event/index.html',
         },
         join : {

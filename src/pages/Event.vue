@@ -9,12 +9,7 @@
                 <div class="m-rank-content">
                     <div class="m-join m-join-team">
                         <h1 class="m-join-title">活动设置</h1>
-                        <el-form
-                            class="m-join-form"
-                            ref="form"
-                            :model="form"
-                            label-width="80px"
-                        >
+                        <el-form class="m-join-form" ref="form" :model="form" label-width="80px">
                             <el-form-item label="是否可见">
                                 <el-radio-group v-model="form.visible">
                                     <el-radio :label="1">可见</el-radio>
@@ -34,144 +29,67 @@
                                 </el-radio-group>
                             </el-form-item>
                             <el-form-item label="成就序列">
-                                <el-input
-                                    v-model="form.achieve_ids"
-                                    placeholder="请输入内容"
-                                ></el-input>
+                                <el-input v-model="form.achieve_ids" placeholder="请输入内容"></el-input>
                                 <div class="u-note">例如：1,2,3,...</div>
                             </el-form-item>
                             <el-form-item label="活动名称">
-                                <el-input
-                                    v-model="form.name"
-                                    placeholder="请输入内容"
-                                ></el-input>
+                                <el-input v-model="form.name" placeholder="请输入内容"></el-input>
                             </el-form-item>
                             <el-form-item label="开启模块">
                                 <el-checkbox-group v-model="form.blocks">
-                                    <el-checkbox
-                                        :label="key"
-                                        v-for="(label, key) in blocks"
-                                        :key="key"
-                                        >{{ label }}</el-checkbox
-                                    >
+                                    <el-checkbox :label="key" v-for="(label, key) in blocks" :key="key">{{ label }}</el-checkbox>
                                 </el-checkbox-group>
                             </el-form-item>
                             <el-form-item label="活动介绍">
-                                <el-input
-                                    v-model="form.desc"
-                                    placeholder="请输入内容"
-                                    type="textarea"
-                                    rows="8"
-                                ></el-input>
+                                <el-input v-model="form.desc" placeholder="请输入内容" type="textarea" rows="8"></el-input>
                             </el-form-item>
                             <el-form-item label="晚会回看">
-                                <el-input
-                                    v-model="form.gifts"
-                                    placeholder="请输入内容"
-                                    type="textarea"
-                                    rows="8"
-                                ></el-input>
+                                <el-input v-model="form.gifts" placeholder="请输入内容" type="textarea" rows="8"></el-input>
                             </el-form-item>
-                            <hr>
+                            <hr />
                             <el-form-item label="投票说明">
-                                <el-input
-                                    v-model="form.vote_note"
-                                    placeholder="请输入内容"
-                                    type="textarea"
-                                    rows="8"
-                                ></el-input>
+                                <el-input v-model="form.vote_note" placeholder="请输入内容" type="textarea" rows="8"></el-input>
                             </el-form-item>
                             <el-form-item label="投票开启">
-                                <el-input
-                                    v-model="form.vote_start"
-                                    placeholder="请输入内容"
-                                ></el-input>
+                                <el-input v-model="form.vote_start" placeholder="请输入内容"></el-input>
                             </el-form-item>
                             <el-form-item label="投票结束">
-                                <el-input
-                                    v-model="form.vote_end"
-                                    placeholder="请输入内容"
-                                ></el-input>
+                                <el-input v-model="form.vote_end" placeholder="请输入内容"></el-input>
                             </el-form-item>
-                            <hr>
+                            <hr />
                             <el-form-item label="媒体宣传">
-                                <el-input
-                                    v-model="form.note"
-                                    placeholder="请输入内容"
-                                    type="textarea"
-                                    rows="8"
-                                ></el-input>
+                                <el-input v-model="form.note" placeholder="请输入内容" type="textarea" rows="8"></el-input>
                             </el-form-item>
-                            <el-form-item
-                                label="赞助名单"
-                                class="u-sponsor-label"
-                            >
-                                <div
-                                    class="u-sponsor"
-                                    v-for="(item, i) in form.sponsors"
-                                    :key="i"
-                                >
+                            <el-form-item label="赞助名单" class="u-sponsor-label">
+                                <div class="u-sponsor" v-for="(item, i) in form.sponsors" :key="i">
                                     <el-row :gutter="20">
                                         <el-col :span="8">
                                             <div>
                                                 <el-input v-model="item.logo">
-                                                    <span slot="prepend"
-                                                        >图标</span
-                                                    >
+                                                    <span slot="prepend">图标</span>
                                                 </el-input>
                                             </div>
                                         </el-col>
                                         <el-col :span="8">
                                             <div>
                                                 <el-input v-model="item.link">
-                                                    <span slot="prepend"
-                                                        >链接</span
-                                                    >
+                                                    <span slot="prepend">链接</span>
                                                 </el-input>
                                             </div>
                                         </el-col>
                                         <el-col :span="6">
                                             <div>
-                                                <el-button
-                                                    type="primary"
-                                                    plain
-                                                    size="mini"
-                                                    @click="add(i)"
-                                                    >+ 添加</el-button
-                                                >
-                                                <el-button
-                                                    type="danger"
-                                                    plain
-                                                    size="mini"
-                                                    @click="del(i)"
-                                                    >- 删除</el-button
-                                                >
+                                                <el-button type="primary" plain size="mini" @click="add(i)">+ 添加</el-button>
+                                                <el-button type="danger" plain size="mini" @click="del(i)">- 删除</el-button>
                                             </div>
                                         </el-col>
                                     </el-row>
                                 </div>
                             </el-form-item>
                             <div class="u-btns">
-                                <el-button
-                                    class="u-submit"
-                                    type="primary"
-                                    @click="submit"
-                                    >{{
-                                        id ? "更新活动" : "创建活动"
-                                    }}</el-button
-                                >
-                                <el-button
-                                    class="u-start"
-                                    type="success"
-                                    @click="active"
-                                    >激活活动</el-button
-                                >
-                                <el-button
-                                    class="u-stop"
-                                    type="warning"
-                                    @click="stop"
-                                    >关闭活动</el-button
-                                >
+                                <el-button class="u-submit" type="primary" @click="submit">{{ id ? "更新活动" : "创建活动" }}</el-button>
+                                <el-button class="u-start" type="success" @click="active">激活活动</el-button>
+                                <el-button class="u-stop" type="warning" @click="stop">关闭活动</el-button>
                             </div>
                         </el-form>
                     </div>
@@ -186,13 +104,7 @@
 import _ from "lodash";
 import PICS from "@/assets/js/pics.js";
 import blocks from "@/assets/data/blocks.json";
-import {
-    createEvent,
-    updateEvent,
-    activeEvent,
-    stopEvent,
-    getEvent,
-} from "@/service/event.js";
+import { createEvent, updateEvent, activeEvent, stopEvent, getEvent } from "@/service/event.js";
 const sponsor = {
     logo: "",
     link: "",
@@ -205,7 +117,7 @@ export default {
             form: {
                 visible: 0,
                 status: 0,
-                visible_game:0,
+                visible_game: 0,
                 achieve_ids: "",
                 name: "",
                 sponsors: [
@@ -218,7 +130,7 @@ export default {
                 desc: "",
                 gifts: "",
                 note: "",
-                vote_note : "", //投票说明
+                vote_note: "", //投票说明
                 vote_start: new Date().toISOString(), // !!! 2021.2.28 New  !!! 格式不能错误
                 vote_end: new Date().toISOString(), // !!! 2021.2.28 New  !!! 格式不能错误
             },

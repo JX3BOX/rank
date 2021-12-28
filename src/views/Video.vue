@@ -1,22 +1,9 @@
 <template>
-<!-- 通关视频 -->
-    <div
-        class="m-rank-video"
-        v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-    >
+    <!-- 通关视频 -->
+    <div class="m-rank-video" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="m-rank-video-title">
             <img :src="video_title_img" />
-            <el-button
-                class="u-addv"
-                v-if="isAdmin"
-                type="primary"
-                @click="add"
-                icon="el-icon-circle-plus-outline"
-                >添加视频</el-button
-            >
+            <el-button class="u-addv" v-if="isAdmin" type="primary" @click="add" icon="el-icon-circle-plus-outline">添加视频</el-button>
             <!-- <div class="u-extend">
                 <el-select
                     class="u-server"
@@ -44,31 +31,14 @@
             </div> -->
             <!-- <el-button plain>朴素按钮</el-button> -->
         </div>
-        <el-row
-            class="m-rank-boss"
-            :gutter="20"
-            type="flex"
-            justify="space-between"
-        >
+        <el-row class="m-rank-boss" :gutter="20" type="flex" justify="space-between">
             <el-col :span="3">
-                <div
-                    class="u-boss"
-                    :class="{ on: current_boss == '' }"
-                    @click="changeBoss(0)"
-                >
+                <div class="u-boss" :class="{ on: current_boss == '' }" @click="changeBoss(0)">
                     <span class="u-boss-name">全部</span>
                 </div>
             </el-col>
-            <el-col
-                :span="3"
-                v-for="(label, achieve_id) of bossList"
-                :key="label + achieve_id"
-            >
-                <div
-                    class="u-boss"
-                    :class="{ on: achieve_id == current_boss }"
-                    @click="changeBoss(achieve_id)"
-                >
+            <el-col :span="3" v-for="(label, achieve_id) of bossList" :key="label + achieve_id">
+                <div class="u-boss" :class="{ on: achieve_id == current_boss }" @click="changeBoss(achieve_id)">
                     <span class="u-boss-name">{{ label }}</span>
                 </div>
             </el-col>
@@ -76,72 +46,28 @@
         <div class="m-rank-video-content">
             <template v-if="data && data.length">
                 <el-row class="m-rank-video-list" :gutter="20">
-                    <el-col
-                        :span="8"
-                        v-for="(item, i) in data"
-                        :key="i"
-                        v-show="!current_boss || item.aid == current_boss"
-                    >
+                    <el-col :span="8" v-for="(item, i) in data" :key="i" v-show="!current_boss || item.aid == current_boss">
                         <div class="m-rank-video-item">
                             <a class="u-video" :href="item.url" target="_blank">
-                                <img
-                                    :src="item.aid | videoCover"
-                                    class="u-live-cover"
-                                    loading="lazy"
-                                />
+                                <img :src="item.aid | videoCover" class="u-live-cover" loading="lazy" />
                                 <i class="u-player">
-                                    <img
-                                        svg-inline
-                                        src="../assets/img/video/play.svg"
-                                    />
+                                    <img svg-inline src="../assets/img/video/play.svg" />
                                 </i>
                             </a>
                             <div class="u-info">
-                                <a
-                                    :href="item.team_id | teamLink"
-                                    target="_blank"
-                                    ><img
-                                        :src="item.logo | liveAvatar"
-                                        class="u-team-logo"
-                                        loading="lazy"
-                                /></a>
+                                <a :href="item.team_id | teamLink" target="_blank"><img :src="item.logo | liveAvatar" class="u-team-logo" loading="lazy"/></a>
                                 <div class="u-team">
                                     <span class="u-label">团队 : </span>
-                                    <a
-                                        class="u-team-name"
-                                        :href="item.team_id | teamLink"
-                                        target="_blank"
-                                        >{{ item.name }}</a
-                                    >
+                                    <a class="u-team-name" :href="item.team_id | teamLink" target="_blank">{{ item.name }}</a>
                                 </div>
                                 <div class="u-room">
-                                    <a
-                                        class="u-room-name"
-                                        :href="item.url"
-                                        target="_blank"
-                                    >
+                                    <a class="u-room-name" :href="item.url" target="_blank">
                                         {{ item.title }}
                                     </a>
                                 </div>
                                 <div class="u-op" v-if="isEditor">
-                                    <el-button
-                                        class="u-edit"
-                                        type="primary"
-                                        plain
-                                        @click="edit(item)"
-                                        icon="el-icon-edit-outline"
-                                        size="mini"
-                                        >编辑</el-button
-                                    >
-                                    <el-button
-                                        class="u-delete"
-                                        type="danger"
-                                        plain
-                                        @click="del(item.ID)"
-                                        icon="el-icon-delete"
-                                        size="mini"
-                                        >删除</el-button
-                                    >
+                                    <el-button class="u-edit" type="primary" plain @click="edit(item)" icon="el-icon-edit-outline" size="mini">编辑</el-button>
+                                    <el-button class="u-delete" type="danger" plain @click="del(item.ID)" icon="el-icon-delete" size="mini">删除</el-button>
                                 </div>
                             </div>
                         </div>
@@ -158,53 +84,24 @@
                 >
                 </el-pagination>
             </template>
-            <el-alert
-                v-else
-                class="m-archive-null"
-                title="没有找到相关条目"
-                type="info"
-                center
-                show-icon
-            >
-            </el-alert>
+            <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
         </div>
-        <el-dialog
-            class="m-rank-video-dialog"
-            title="添加/编辑视频"
-            :visible.sync="dialogVisible"
-            width="30%"
-            :append-to-body="true"
-        >
+        <el-dialog class="m-rank-video-dialog" title="添加/编辑视频" :visible.sync="dialogVisible" width="30%" :append-to-body="true">
             <div class="m-rank-video-form">
                 <el-form ref="form" label-width="80px">
                     <el-form-item label="团队ID">
-                        <el-input
-                            v-model.number="video.team_id"
-                            placeholder="请输入正确的团队数字编号"
-                        ></el-input>
+                        <el-input v-model.number="video.team_id" placeholder="请输入正确的团队数字编号"></el-input>
                     </el-form-item>
                     <el-form-item label="成就ID">
                         <el-select v-model.number="video.aid" placeholder="请选择">
-                            <el-option
-                                v-for="(label, achieve_id) of bossList"
-                                :key="achieve_id"
-                                :label="label"
-                                :value="achieve_id"
-                            >
-                            </el-option>
+                            <el-option v-for="(label, achieve_id) of bossList" :key="achieve_id" :label="label" :value="achieve_id"> </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="视频链接">
-                        <el-input
-                            v-model="video.url"
-                            placeholder="请输入视频网址"
-                        ></el-input>
+                        <el-input v-model="video.url" placeholder="请输入视频网址"></el-input>
                     </el-form-item>
                     <el-form-item label="视频标题">
-                        <el-input
-                            v-model="video.title"
-                            placeholder="请注明XX视角"
-                        ></el-input>
+                        <el-input v-model="video.title" placeholder="请注明XX视角"></el-input>
                     </el-form-item>
                 </el-form>
             </div>
@@ -219,20 +116,15 @@
 <script>
 import achieves from "@/assets/data/achieve.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import {
-    getVideos,
-    deleteVideo,
-    addVideo,
-    updateVideo,
-} from "@/service/video.js";
+import { getVideos, deleteVideo, addVideo, updateVideo } from "@/service/video.js";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
+import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import _ from "lodash";
 export default {
     props: [],
-    data: function () {
+    data: function() {
         return {
             video_title_img: __imgPath + "image/rank/common/videos.png",
             data: [],
@@ -257,17 +149,17 @@ export default {
         };
     },
     computed: {
-        id: function () {
+        id: function() {
             return this.$store.state.id;
         },
-        bossidDict: function () {
+        bossidDict: function() {
             return achieves[this.$store.state.id];
         },
-        params: function () {
+        params: function() {
             return {
                 pageSize: this.per,
                 pageIndex: this.page,
-                aid : this.current_boss
+                aid: this.current_boss,
             };
         },
         bossList: function() {
@@ -287,7 +179,7 @@ export default {
         changeBoss: function(val) {
             this.current_boss = val;
             this.page = 1;
-            this.loadData()
+            this.loadData();
         },
         loadData: function() {
             this.loading = true;
@@ -328,7 +220,7 @@ export default {
         },
         submit: function() {
             if (this.video.ID) {
-                updateVideo(this.video.ID,this.video).then((res) => {
+                updateVideo(this.video.ID, this.video).then((res) => {
                     this.$message({
                         type: "success",
                         message: `更新成功`,
@@ -349,27 +241,27 @@ export default {
     watch: {
         params: {
             deep: true,
-            handler: function () {
+            handler: function() {
                 this.loadData();
             },
         },
     },
     filters: {
-        teamLogo: function (val) {
+        teamLogo: function(val) {
             return val ? getThumbnail(val, 120, true) : default_avatar;
         },
-        liveAvatar: function (val) {
+        liveAvatar: function(val) {
             return val ? getThumbnail(val, 68, true) : default_avatar;
         },
         teamLink: function(val) {
             // return "/team/#/org/view/" + val;
-            return getLink('org',val);
+            return getLink("org", val);
         },
         videoCover: function(aid) {
             return __imgPath + `image/rank/videos/${aid}.png`;
         },
     },
-    created: function () {
+    created: function() {
         this.loadData();
     },
     components: {},

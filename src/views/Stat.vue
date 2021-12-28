@@ -1,67 +1,26 @@
 <template>
     <!-- 统计分析 -->
-    <div
-        class="m-rank-stat"
-        v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-    >
-        <el-row
-            class="m-rank-boss"
-            :gutter="20"
-            type="flex"
-            justify="space-between"
-        >
-            <el-col
-                :span="4"
-                v-for="(label, achieve_id) of bossList"
-                :key="achieve_id"
-            >
-                <div
-                    class="u-boss"
-                    :class="{ on: achieve_id == current_boss }"
-                    @click="changeBoss(achieve_id)"
-                >
+    <div class="m-rank-stat" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+        <el-row class="m-rank-boss" :gutter="20" type="flex" justify="space-between">
+            <el-col :span="4" v-for="(label, achieve_id) of bossList" :key="achieve_id">
+                <div class="u-boss" :class="{ on: achieve_id == current_boss }" @click="changeBoss(achieve_id)">
                     <span class="u-boss-name">{{ label }}</span>
                 </div>
             </el-col>
-            <el-col
-                :span="4"
-            >
-                <div
-                    class="u-boss"
-                    :class="{ on: current_boss == 'all' }"
-                    @click="changeBoss('all')"
-                >
+            <el-col :span="4">
+                <div class="u-boss" :class="{ on: current_boss == 'all' }" @click="changeBoss('all')">
                     <span class="u-boss-name">全部</span>
                 </div>
             </el-col>
         </el-row>
 
-        <img
-            :src="null_img_url"
-            class="m-rank-null"
-            v-if="
-                stats['bar_server_all'] == undefined ||
-                    stats['bar_server_all'][current_boss] == undefined
-            "
-        />
+        <img :src="null_img_url" class="m-rank-null" v-if="stats['bar_server_all'] == undefined || stats['bar_server_all'][current_boss] == undefined" />
         <template v-else>
-            <bar-chart
-                v-if="ana[11]"
-                :data="ana[11]['data']"
-                :title="ana[11]['title']"
-                height="450px"
-            >
+            <bar-chart v-if="ana[11]" :data="ana[11]['data']" :title="ana[11]['title']" height="450px">
                 <!-- <div>testtest</div> -->
             </bar-chart>
 
-            <bar-chart
-                v-if="ana[1]"
-                :data="ana[1]['data']"
-                :title="ana[1]['title']"
-            >
+            <bar-chart v-if="ana[1]" :data="ana[1]['data']" :title="ana[1]['title']">
                 <!-- <div>testtest</div> -->
             </bar-chart>
 
@@ -71,11 +30,7 @@
                     v-if="ana[item + 1]"
                     :data="ana[item + 1]['data']"
                     :title="ana[item + 1]['title']"
-                    :isCustomColor="
-                        ana[item + 1]['isCustomColor'] === undefined
-                            ? true
-                            : ana[item + 1]['isCustomColor']
-                    "
+                    :isCustomColor="ana[item + 1]['isCustomColor'] === undefined ? true : ana[item + 1]['isCustomColor']"
                     :isSmall="ana[item + 1]['position'] !== undefined"
                     :class="{
                         'chart-left': ana[item + 1]['position'] === 'left',
@@ -179,11 +134,7 @@ export default {
             //     });
         },
         getStats() {
-            return axios(
-                realUrl(__Root, `rank-analysis/stats/event${this.id}.json`),
-                "GET",
-                false
-            )
+            return axios(realUrl(__Root, `rank-analysis/stats/event${this.id}.json`), "GET", false)
                 .then((res) => {
                     this.stats = res;
                 })

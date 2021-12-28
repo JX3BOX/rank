@@ -1,38 +1,14 @@
 <template>
-<!-- 视频直播 -->
-    <div
-        class="m-rank-video"
-        v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-    >
+    <!-- 视频直播 -->
+    <div class="m-rank-video" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="m-rank-video-title">
             <img :src="video_title_img" />
             <div class="u-extend">
-                <el-select
-                    class="u-server"
-                    v-model="server"
-                    placeholder="请选择服务器"
-                    size="mini"
-                >
+                <el-select class="u-server" v-model="server" placeholder="请选择服务器" size="mini">
                     <el-option key="all" label="全部" value=""></el-option>
-                    <el-option
-                        v-for="item in servers"
-                        :key="item"
-                        :label="item"
-                        :value="item"
-                    ></el-option>
+                    <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
                 </el-select>
-                <el-pagination
-                    class="u-pages"
-                    layout="prev, pager, next"
-                    :hide-on-single-page="true"
-                    :page-size="per"
-                    :total="total"
-                    :current-page.sync="page"
-                >
-                </el-pagination>
+                <el-pagination class="u-pages" layout="prev, pager, next" :hide-on-single-page="true" :page-size="per" :total="total" :current-page.sync="page"> </el-pagination>
             </div>
         </div>
         <div class="m-rank-video-live" v-if="event_status && list && list.length">
@@ -40,9 +16,11 @@
                 <iframe :src="live_url || default_live_url" frameborder="0"></iframe>
             </div>
             <div class="u-list">
-                <li v-for="(item,i) in list" :key="i" @click="play(item)" :class="{on:!!item.isActive}">
+                <li v-for="(item, i) in list" :key="i" @click="play(item)" :class="{ on: !!item.isActive }">
                     <img class="u-live-logo" :src="item.team.logo | teamLogo" />
-                    <span class="u-live-name">{{item.team.name}} <em>@{{ item.team.server }}</em> </span>
+                    <span class="u-live-name"
+                        >{{ item.team.name }} <em>@{{ item.team.server }}</em>
+                    </span>
                 </li>
             </div>
         </div>
@@ -51,92 +29,36 @@
                 <el-row class="m-rank-video-list" :gutter="20">
                     <el-col :span="8" v-for="(item, i) in data" :key="i">
                         <div class="m-rank-video-item">
-                            <a
-                                class="u-video"
-                                :href="
-                                    getTVlink(item.team.tv_type, item.team.tv)
-                                "
-                                target="_blank"
-                            >
+                            <a class="u-video" :href="getTVlink(item.team.tv_type, item.team.tv)" target="_blank">
                                 <template v-if="item.team.tv_type == 'douyu'">
-                                    <img
-                                        v-if="item.douyu.room_src"
-                                        :src="item.douyu.room_src"
-                                        class="u-live-cover"
-                                        loading="lazy"
-                                    />
-                                    <img
-                                        v-else
-                                        :src="item.team.logo | teamLogo"
-                                        class="u-live-null"
-                                        loading="lazy"
-                                    />
+                                    <img v-if="item.douyu.room_src" :src="item.douyu.room_src" class="u-live-cover" loading="lazy" />
+                                    <img v-else :src="item.team.logo | teamLogo" class="u-live-null" loading="lazy" />
                                     <i
                                         class="u-status"
                                         :class="{
                                             on: ~~item.douyu.show_status == 1,
                                         }"
-                                        ><i class="el-icon-video-camera"></i>
-                                        {{
-                                            liveStatusMap[
-                                                ~~item.douyu.show_status
-                                            ]
-                                        }}</i
+                                        ><i class="el-icon-video-camera"></i> {{ liveStatusMap[~~item.douyu.show_status] }}</i
                                     >
-                                    <i
-                                        class="u-player"
-                                        v-if="~~item.douyu.show_status == 1"
-                                    >
-                                        <img
-                                            svg-inline
-                                            src="../assets/img/video/play.svg"
-                                        />
+                                    <i class="u-player" v-if="~~item.douyu.show_status == 1">
+                                        <img svg-inline src="../assets/img/video/play.svg" />
                                     </i>
                                 </template>
                                 <template v-else>
-                                    <img
-                                        :src="item.team.logo | teamLogo"
-                                        class="u-live-null"
-                                        loading="lazy"
-                                    />
-                                    <i class="u-status"
-                                        ><i class="el-icon-warning-outline"></i>
-                                        未知</i
-                                    >
+                                    <img :src="item.team.logo | teamLogo" class="u-live-null" loading="lazy" />
+                                    <i class="u-status"><i class="el-icon-warning-outline"></i> 未知</i>
                                 </template>
                             </a>
                             <div class="u-info">
-                                <img
-                                    :src="item.team.logo | liveAvatar"
-                                    class="u-team-logo"
-                                    loading="lazy"
-                                />
+                                <img :src="item.team.logo | liveAvatar" class="u-team-logo" loading="lazy" />
                                 <div class="u-team">
                                     <span class="u-label">团队 : </span>
-                                    <a
-                                        class="u-team-name"
-                                        :href="item.team.ID | teamLink"
-                                        target="_blank"
-                                        >{{ item.team.name }}</a
-                                    >
+                                    <a class="u-team-name" :href="item.team.ID | teamLink" target="_blank">{{ item.team.name }}</a>
                                 </div>
                                 <div class="u-room">
                                     <span class="u-label">房间 : </span>
-                                    <a
-                                        class="u-room-name"
-                                        :href="
-                                            getTVlink(
-                                                item.team.tv_type,
-                                                item.team.tv
-                                            )
-                                        "
-                                        target="_blank"
-                                    >
-                                        {{
-                                            (item.team.tv_type == "douyu" &&
-                                                item.douyu.room_name) ||
-                                                item.team.name + "的直播间"
-                                        }}
+                                    <a class="u-room-name" :href="getTVlink(item.team.tv_type, item.team.tv)" target="_blank">
+                                        {{ (item.team.tv_type == "douyu" && item.douyu.room_name) || item.team.name + "的直播间" }}
                                     </a>
                                 </div>
                             </div>
@@ -154,15 +76,7 @@
                 >
                 </el-pagination>
             </template>
-            <el-alert
-                v-else
-                class="m-archive-null"
-                title="没有找到相关条目"
-                type="info"
-                center
-                show-icon
-            >
-            </el-alert>
+            <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
         </div>
     </div>
 </template>
@@ -170,7 +84,7 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getLives } from "@/service/video.js";
-import { getThumbnail,getLink } from "@jx3box/jx3box-common/js/utils";
+import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import getTVlink from "@/assets/js/tv.js";
 const liveStatusMap = ["等待开播", "直播中", "直播结束"];
@@ -188,7 +102,7 @@ export default {
             loading: false,
             servers,
             server: "",
-            live_url : ''
+            live_url: "",
         };
     },
     computed: {
@@ -205,28 +119,25 @@ export default {
         list: function() {
             let list = [];
             this.data?.forEach((item, i) => {
-                if (
-                    item.team.tv_type == "douyu" &&
-                    item.douyu.show_status == 1
-                ) {
+                if (item.team.tv_type == "douyu" && item.douyu.show_status == 1) {
                     list.push(item);
                 }
-                if(i == 0){
-                    item.isActive = true
+                if (i == 0) {
+                    item.isActive = true;
                 }
             });
             return list;
         },
-        default_live_url : function (){
-            if(this.list && this.list.length){
-                return 'https://open.douyu.com/tpl/h5/chain2/jdxoubyoux/' + this.list[0]['team']['tv']
-            }else{
-                return ''
+        default_live_url: function() {
+            if (this.list && this.list.length) {
+                return "https://open.douyu.com/tpl/h5/chain2/jdxoubyoux/" + this.list[0]["team"]["tv"];
+            } else {
+                return "";
             }
         },
-        event_status : function (){
-            return !!this.$store.state.race.status || false
-        }
+        event_status: function() {
+            return !!this.$store.state.race.status || false;
+        },
     },
     methods: {
         getTVlink,
@@ -242,16 +153,16 @@ export default {
                     this.loading = false;
                 });
         },
-        play : function (item){
-            this.live_url = 'https://open.douyu.com/tpl/h5/chain2/jdxoubyoux/' + item.team.tv
-            this.clean()
-            item.isActive = true
+        play: function(item) {
+            this.live_url = "https://open.douyu.com/tpl/h5/chain2/jdxoubyoux/" + item.team.tv;
+            this.clean();
+            item.isActive = true;
         },
-        clean : function (){
+        clean: function() {
             this.list?.forEach((item) => {
-                item.isActive = false
-            })
-        }
+                item.isActive = false;
+            });
+        },
     },
     watch: {
         params: {
@@ -270,7 +181,7 @@ export default {
         },
         teamLink: function(val) {
             // return "/team/#/org/view/" + val;
-            return getLink('org',val);
+            return getLink("org", val);
         },
     },
     created: function() {
