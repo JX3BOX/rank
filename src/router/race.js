@@ -1,6 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+// 解决重复点击路由报错的BUG
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch((err) => err);
+};
+
 const Info = () => import("../views/Info.vue");
 const Rank = () => import("../views/Rank.vue");
 const Dps = () => import("../views/Dps.vue");

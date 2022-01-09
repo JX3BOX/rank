@@ -17,7 +17,14 @@ function getTopTotal(achieve_arr) {
     });
 }
 
+function getMountDpsRace(achieveId, query) {
+    return $team().get(`/api/team/achieve/${achieveId}/mount/top`, {
+        params: query
+    })
+}
+
 export {
     getTop100,
     getTopTotal,
+    getMountDpsRace
 };

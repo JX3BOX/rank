@@ -59,6 +59,29 @@
         a:hover {
             color: #0cf;
         }
+
+        display: flex;
+        align-items: center;
+
+        .u-dps-0 {
+            .u-bar {
+                width: 180px;
+            }
+        }
+
+        each(range(10), {
+            .u-dps-@{value} {
+                .u-bar {
+                    width: (((1000 - @value * 35) / 1000) * 180px)
+                }
+            }
+        });
+    }
+
+    .u-server {
+        .el-dropdown-link {
+            cursor: pointer;
+        }
     }
 
     .u-ranking {
@@ -95,13 +118,14 @@
 
     .u-total {
         .fz(12px);
+        line-height: 1.5;
         b {
             color: #0cf;
             margin: 0 5px;
         }
     }
     .u-dps {
-        color: #0cf;
+        color: #fff;
         .bold;
     }
 
@@ -122,5 +146,12 @@
         &:hover{
             color:#0cf;
         }
+    }
+}
+
+.u-server-pop {
+    .active {
+        background-color: #e6f0fb;
+        color: #3585de;
     }
 }
