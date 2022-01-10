@@ -183,7 +183,12 @@
                             {{ item._dhps }}
                         </div></el-col
                     >
-                    <el-col :span="2"><div class="u-more">查看</div></el-col>
+                    <el-col :span="2">
+                        <el-popover with="1260" popper-class="u-dps-rank-pop">
+                            <rank-item :show-index="false" :item="formatItem(item)" :i="4"></rank-item>
+                            <div class="u-more" slot="reference">查看</div>
+                        </el-popover>
+                    </el-col>
                 </el-row>
             </template>
         </div>
@@ -208,9 +213,15 @@ import achieves from "@/assets/data/achieve.json";
 import { getMountDpsRace } from "@/service/race";
 
 import { first, cloneDeep } from "lodash";
+
+import rank_item from '@/components/rank_item.vue';
+
 export default {
     name: "Dps",
     props: [],
+    components: {
+        'rank-item': rank_item,
+    },
     data: function () {
         return {
             xfmap,
@@ -261,7 +272,7 @@ export default {
             const _xfmap = cloneDeep(xfmap)
             delete _xfmap['0']
             return _xfmap
-        }
+        },
     },
     watch: {
         params: {
@@ -319,6 +330,26 @@ export default {
         isTherapy: function (mount) {
             return mount_group.治疗.includes(~~mount);
         },
+        formatItem(data) {
+            let leader_name = data.leader;
+            let members = data.teammate.split(";");
+            let arr = [];
+            let leader = "";
+            members.forEach((member, j) => {
+                let result = member.split(",");
+                if (result[0] != leader_name) {
+                    arr.push(result);
+                } else {
+                    leader = result;
+                }
+            });
+            data["members"] = arr;
+            data["leaders"] = leader;
+            data['team_logo'] = data?.team_info?.logo
+            data['team_name'] = data?.team_info?.name
+
+            return data
+        }
     },
     filters: {
         showMountIcon: function (val) {
