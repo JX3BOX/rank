@@ -97,7 +97,7 @@
                     >
                     <el-col :span="2" class="u-misc">
                         <el-popover with="1260" popper-class="u-dps-rank-pop">
-                            <rank-item :show-index="false" :item="formatItem(item)" :i="4"></rank-item>
+                            <rank-item class="u-dps-rank-item" :show-index="false" :item="formatItem(item)" :i="4" :span="8"></rank-item>
                             <span class="u-more" slot="reference">查看</span>
                         </el-popover>
                         <span class="u-misc-div">|</span>

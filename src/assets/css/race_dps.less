@@ -119,6 +119,10 @@
         }
         a {
             text-decoration: underline;
+            color:#0cf;
+            &:hover{
+                color:lighten(#0cf,10%);
+            }
         }
         .nobreak;
     }
@@ -187,11 +191,13 @@
 .u-dps-rank-pop {
     .m-rank-top100-item {
         margin-bottom: 0;
-        border-radius: 0;
+        padding-left:40px;
+        .u-logo{.none;}
+        .r(4px);
     }
 
     &.el-popover {
         padding: 0;
-        max-width: 1260px;
+        max-width: 660px;
     }
 }

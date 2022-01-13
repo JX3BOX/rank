@@ -162,14 +162,6 @@
             color: #eee;
             .mr(5px);
         }
-        &:hover {
-            .u-teamname {
-                color: #f39;
-                i {
-                    color: #f39;
-                }
-            }
-        }
         .mb(6px);
     }
 
@@ -179,6 +171,20 @@
         color: #0cf;
         .fz(24px, 24px);
         .bold;
+
+        &:hover {
+            color: #f39;
+            i {
+                color: #f39;
+            }
+        }
+
+        &.u-teamname-null{
+            color:#aaa;
+            &:hover{
+                color:#aaa;
+            }
+        }
     }
 
     .u-server {
