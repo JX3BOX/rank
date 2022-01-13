@@ -80,7 +80,7 @@
                     >
                     <el-col :span="4" :class="i > 10 ? `u-dps-10` : `u-dps-${i}`"
                         ><div class="u-dps u-bar" :style="{ background: showMountColor(item.mount), width: getBarWidth(item._dhps) }">
-                            {{ item._dhps }}
+                            {{ showDHPS(item) }}
                         </div></el-col
                     >
                     <el-col :span="6"
@@ -268,6 +268,13 @@ export default {
         getBarWidth(dps) {
             return (dps / this.max_dps).toFixed(4) * 100 + "%";
         },
+        showDHPS(item){
+            if(item.mount == 10448){
+                return item.dps + ' / ' + item.hps
+            }else{
+                return item._dhps
+            }
+        }
     },
     filters: {
         showMountIcon: function(val) {
