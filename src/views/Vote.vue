@@ -24,7 +24,7 @@
                         </el-select>
                     </th>
                     <th v-if="id != 1">团长&amp;宣言</th>
-                    <th v-if="id != 1">团队提供奖品</th>
+                    <!-- <th v-if="id != 1">团队提供奖品</th> -->
                     <th>人气</th>
                     <th>参与投票</th>
                 </tr>
@@ -37,7 +37,7 @@
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import servers from "@jx3box/jx3box-data/data/server/server_list.json";
+import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import { getAllJoinedTeams } from "@/service/vote.js";
 import vote_item_v1 from "@/components/vote_item_v1.vue";
 import vote_item_v2 from "@/components/vote_item_v2.vue";

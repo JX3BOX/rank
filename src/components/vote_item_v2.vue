@@ -21,9 +21,9 @@
                     <span class="u-slogan">{{ item.slogan }}</span>
                 </div>
             </td>
-            <td>
+            <!-- <td>
                 <span class="u-prize" v-html="item.prize"></span>
-            </td>
+            </td> -->
             <td>
                 <span class="u-count">{{ item.count }}</span>
             </td>

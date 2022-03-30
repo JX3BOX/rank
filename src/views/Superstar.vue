@@ -4,7 +4,7 @@
         <div class="m-rank-vote-title">
             <img :src="superstar_title_img" />
         </div>
-        <div class="m-rank-vote-header">队伍中所有队员除坦克与治疗外全部为相同门派时，符合门派天团要求，只记录普通关底BOSS成绩。</div>
+        <div class="m-rank-vote-header">队伍中所有队员除坦克与治疗外全部为相同门派时，即符合门派天团要求。</div>
         <div class="m-race-superstar-rank">
             <div class="m-rank-top100">
                 <!-- A.列表不为空 -->
