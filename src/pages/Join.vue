@@ -11,7 +11,7 @@
                         <h1 class="m-join-title">报名入口</h1>
                         <el-alert class="u-warning" type="warning" show-icon>
                             <span slot="title">
-                                仅认证团队可报名，可在「<a href="https://www.jx3box.com/team/" target="_blank">团队应用</a>」-「<a href="https://www.jx3box.com/team/org/manage/" target="_blank"
+                                仅认证团队可报名，可在「<a href="/team/" target="_blank">团队应用</a>」-「<a href="/team/org/manage/" target="_blank"
                                     >团队管理</a
                                 >」中提交团队认证（已认证过的无需再次认证）。<br />
                                 请务必正确填写所有资料，报名后不可取消，亦不可再更改资料，认证团长Q群<a href="https://jq.qq.com/?_wv=1027&k=rHiKKYEV">【1048059072】</a>（必加）。

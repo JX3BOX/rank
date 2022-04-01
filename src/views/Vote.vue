@@ -4,7 +4,7 @@
         <div class="m-rank-vote-title">
             <img :src="vote_title_img" />
         </div>
-        <div class="m-rank-vote-header" v-html="vote_note"></div>
+        <div class="m-rank-vote-header" v-html="vote_note" v-if="vote_note"></div>
         <table class="m-rank-vote-table">
             <thead>
                 <tr>
