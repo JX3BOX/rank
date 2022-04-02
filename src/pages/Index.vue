@@ -11,7 +11,10 @@
                         <a :href="item.ID | eventLink" target="_blank">
                             <img :src="item.ID | eventCover" :alt="item.name" />
                             <b>{{ item.name }}</b>
-                            <i class="u-status" :class="{on : item.status}">{{item.status ? '进行中' : '已结束'}}</i>
+                            <div class="u-status">
+                                <span v-if="item.client" :class="item.client">{{ item. client == 'std' ? '正式服' : '怀旧服' }}</span>
+                                <i :class="{on : item.status}">{{ item.status ? '进行中' : '已结束' }}</i>
+                            </div>
                         </a>
                     </li>
                     <!-- <li class="u-item">
@@ -37,7 +40,7 @@ import { getEvents } from "@/service/event.js";
 export default {
     name: "App",
     props: [],
-    data: function() {
+    data: function () {
         return {
             LOGO: PICS.LOGO,
             page: 1,
@@ -46,7 +49,7 @@ export default {
         };
     },
     computed: {
-        params: function() {
+        params: function () {
             return {
                 pageIndex: this.page,
                 pageSize: this.per,
@@ -54,24 +57,24 @@ export default {
         },
     },
     methods: {
-        loadData: function() {
+        loadData: function () {
             getEvents(this.params).then((res) => {
                 this.data = res.data.data.list;
             });
         },
     },
     filters: {
-        eventLink: function(val) {
+        eventLink: function (val) {
             return "./race/#/" + val;
         },
         eventCover: PICS.cover,
     },
     watch: {
-        params: function() {
+        params: function () {
             this.loadData();
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.loadData();
     },
     components: {},
@@ -79,5 +82,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/index.less";
+    @import "../assets/css/index.less";
 </style>
