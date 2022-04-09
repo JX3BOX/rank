@@ -9,7 +9,7 @@
 
         <!-- 举办单位 -->
         <div class="u-logos u-media">
-            <span>联合举办：</span>
+            <span>主办单位：</span>
             <ul>
                 <li>
                     <a
@@ -20,7 +20,7 @@
                         <img class="u-media-jx3box" :src="logos('jx3box')" />
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a
                         class="logo"
                         href="https://www.weibo.com/u/6754472163"
@@ -28,7 +28,7 @@
                     >
                         <img class="u-media-tuilan" :src="logos('tuilan')" />
                     </a>
-                </li>
+                </li> -->
             </ul>
             <!-- <span>独家直播合作：</span>
             <ul>
