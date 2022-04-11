@@ -138,7 +138,8 @@ export default {
                     this.changeBoss(this.current_boss);
                 })
                 .catch((err) => {
-                    this.$message.error("加载统计文件失败");
+                    console.log(err)
+                    // this.$message.error("加载统计文件失败");
                 })
                 .finally(() => {
                     this.loading = false;
