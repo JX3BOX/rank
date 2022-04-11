@@ -1,6 +1,12 @@
 <template>
     <!-- 天梯榜 -->
-    <div class="m-rank-dps" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <div
+        class="m-rank-dps"
+        v-loading="loading"
+        element-loading-text="加载中..."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
         <div class="m-rank-vote-title">
             <img :src="dps_title_img" />
         </div>
@@ -8,6 +14,11 @@
         <!-- <div class="m-rank-vote-header"></div> -->
         <!-- Boss导航 -->
         <el-row class="m-rank-boss m-rank-filter m-rank-dps-filter" :gutter="20" type="flex">
+            <el-col :span="span">
+                <div class="u-boss" :class="{ on: aid == 'all' }" @click="changeBoss('all')">
+                    <span class="u-boss-name">全部</span>
+                </div>
+            </el-col>
             <el-col :span="span" v-for="(label, id) of bossList" :key="'aid-' + id">
                 <li class="u-boss" @click="changeBoss(id)" :class="{ on: id == aid }">
                     <span class="u-boss-name">{{ label }}</span>
@@ -17,7 +28,13 @@
         <!-- 心法导航 -->
         <div class="m-rank-dps-xf">
             <ul>
-                <li class="u-mount" :class="{ on: xfid == mount }" v-for="(label, xfid) in xfmap" :key="'xf-' + xfid" @click="changeMount(xfid)">
+                <li
+                    class="u-mount"
+                    :class="{ on: xfid == mount }"
+                    v-for="(label, xfid) in xfmap"
+                    :key="'xf-' + xfid"
+                    @click="changeMount(xfid)"
+                >
                     <img :src="xfid | showMountIcon" :title="label" />
                 </li>
             </ul>
@@ -30,10 +47,23 @@
                     <div class="u-mount">
                         <span v-if="~~mount">心法</span>
                         <el-dropdown trigger="click" v-else>
-                            <span class="el-dropdown-link"> {{ ~~filterMount ? xfmap[filterMount] : "全部心法" }}<i class="el-icon-arrow-down el-icon--right"></i> </span>
+                            <span class="el-dropdown-link">
+                                {{ ~~filterMount ? xfmap[filterMount] : "全部心法"
+                                }}<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
                             <el-dropdown-menu slot="dropdown" append-to-body class="u-server-pop">
-                                <el-dropdown-item @click.native="filterMount = '0'" :class="{ active: filterMount === '0' }">全部心法</el-dropdown-item>
-                                <el-dropdown-item v-for="(value, key) in filterXf" :key="key" @click.native="filterMount = key" :class="{ active: filterMount === key }">{{ value }}</el-dropdown-item>
+                                <el-dropdown-item
+                                    @click.native="filterMount = '0'"
+                                    :class="{ active: filterMount === '0' }"
+                                    >全部心法</el-dropdown-item
+                                >
+                                <el-dropdown-item
+                                    v-for="(value, key) in filterXf"
+                                    :key="key"
+                                    @click.native="filterMount = key"
+                                    :class="{ active: filterMount === key }"
+                                    >{{ value }}</el-dropdown-item
+                                >
                             </el-dropdown-menu>
                         </el-dropdown>
                     </div>
@@ -41,10 +71,22 @@
                 <el-col :span="2">
                     <div class="u-server">
                         <el-dropdown trigger="click">
-                            <span class="el-dropdown-link"> {{ server }}<i class="el-icon-arrow-down el-icon--right"></i> </span>
+                            <span class="el-dropdown-link">
+                                {{ server }}<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
                             <el-dropdown-menu slot="dropdown" append-to-body class="u-server-pop">
-                                <el-dropdown-item @click.native="server = '全部服务器'" :class="{ active: server === '全部服务器' }">全部服务器</el-dropdown-item>
-                                <el-dropdown-item v-for="_server in server_std" :key="_server" @click.native="server = _server" :class="{ active: server === _server }">{{ _server }}</el-dropdown-item>
+                                <el-dropdown-item
+                                    @click.native="server = '全部服务器'"
+                                    :class="{ active: server === '全部服务器' }"
+                                    >全部服务器</el-dropdown-item
+                                >
+                                <el-dropdown-item
+                                    v-for="_server in server_std"
+                                    :key="_server"
+                                    @click.native="server = _server"
+                                    :class="{ active: server === _server }"
+                                    >{{ _server }}</el-dropdown-item
+                                >
                             </el-dropdown-menu>
                         </el-dropdown>
                     </div>
@@ -55,12 +97,22 @@
                 <el-col :span="8"><div class="u-more">击杀详情</div></el-col>
             </el-row>
             <template v-for="(item, i) in list">
-                <el-row class="u-item" :gutter="20" :key="'dps' + i" v-show="(server === '全部服务器' ? true : item.server == server) && (filterMount === '0' ? true : item.mount == filterMount)">
+                <el-row
+                    class="u-item"
+                    :gutter="20"
+                    :key="'dps' + i"
+                    v-show="
+                        (server === '全部服务器' ? true : item.server == server) &&
+                            (filterMount === '0' ? true : item.mount == filterMount)
+                    "
+                >
                     <el-col :span="1"
                         ><div class="u-ranking">{{ i + 1 }}</div></el-col
                     >
                     <el-col :span="2"
-                        ><div class="u-mount" :style="{ color: showMountColor(item.mount) }"><img :src="item.mount | showMountIcon" />{{ item.mount | showMountLabel }}</div></el-col
+                        ><div class="u-mount" :style="{ color: showMountColor(item.mount) }">
+                            <img :src="item.mount | showMountIcon" />{{ item.mount | showMountLabel }}
+                        </div></el-col
                     >
                     <el-col :span="2"
                         ><div class="u-server">{{ item.server }}</div></el-col
@@ -74,19 +126,25 @@
                     >
                     <el-col :span="4"
                         ><div class="u-role">
-                            <a :href="item.uid | authorLink" target="_blank" v-if="item.uid"><img :src="item | showUserAvatar" />{{ item.role }}</a>
+                            <a :href="item.uid | authorLink" target="_blank" v-if="item.uid"
+                                ><img :src="item | showUserAvatar" />{{ item.role }}</a
+                            >
                             <span v-else>{{ item.role }}</span>
                         </div></el-col
                     >
                     <el-col :span="4" :class="i > 10 ? `u-dps-10` : `u-dps-${i}`"
-                        ><div class="u-dps u-bar" :style="{ background: showMountColor(item.mount), width: getBarWidth(item._dhps) }">
+                        ><div
+                            class="u-dps u-bar"
+                            :style="{ background: showMountColor(item.mount), width: getBarWidth(item._dhps) }"
+                        >
                             {{ showDHPS(item) }}
                         </div></el-col
                     >
                     <el-col :span="6"
                         ><div class="u-total">
                             <span class="u-damage"
-                                ><span>{{ isTherapy(item.mount) ? "总治疗" : "总伤害" }}</span> <b>{{ item._total }}</b></span
+                                ><span>{{ isTherapy(item.mount) ? "总治疗" : "总伤害" }}</span>
+                                <b>{{ item._total }}</b></span
                             >
                             <span class="u-time">
                                 <span>战斗时间</span>
@@ -97,7 +155,13 @@
                     >
                     <el-col :span="2" class="u-misc">
                         <el-popover with="1260" popper-class="u-dps-rank-pop">
-                            <rank-item class="u-dps-rank-item" :show-index="false" :item="formatItem(item)" :i="4" :span="8"></rank-item>
+                            <rank-item
+                                class="u-dps-rank-item"
+                                :show-index="false"
+                                :item="formatItem(item)"
+                                :i="4"
+                                :span="8"
+                            ></rank-item>
                             <span class="u-more" slot="reference">查看</span>
                         </el-popover>
                         <span class="u-misc-div">|</span>
@@ -137,7 +201,7 @@ export default {
             dps_title_img: __imgPath + "image/rank/common/dps.png",
             loading: false,
 
-            aid: "",
+            aid: "all",
             mount: "0",
             data: [],
             server: "全部服务器",
@@ -149,18 +213,18 @@ export default {
         id: function() {
             return this.$store.state.id;
         },
-        achieves : function (){
-            return this.$store.state.achieves || []
+        achieves: function() {
+            return this.$store.state.achieves || [];
         },
         bossList: function() {
-            let dict = {}
+            let dict = {};
             this.achieves.forEach((item) => {
-                dict[item.achievement_id] = item.name
-            })
-            return dict
+                dict[item.achievement_id] = item.name;
+            });
+            return dict;
         },
         span: function() {
-            return ~~(24 / Object.keys(this.bossList).length);
+            return ~~(24 / Object.keys(this.bossList).length + 1);
         },
         params: function() {
             return {
@@ -168,7 +232,7 @@ export default {
                 limit: 100,
                 fight_time_min: 300000,
                 order_by: "dps",
-                belong_team : 1
+                belong_team: 1,
             };
         },
         list: function() {
@@ -204,12 +268,23 @@ export default {
                 this.aid && this.loadMountDps();
             },
         },
-        aid(val) {
-            val && this.loadMountDps();
+        aid: {
+            immediate: true,
+            handler: function(val) {
+                if(!val) return
+                if (val == "all") {
+                    // TODO:加载综合榜
+                } else {
+                    this.loadMountDps();
+                }
+            },
         },
-        achieves : function (){
-            this.aid = first(Object.keys(this.bossList));
-        }
+        // achieves: {
+        //     immediate: true,
+        //     handler: function() {
+        //         this.aid = first(Object.keys(this.bossList));
+        //     },
+        // },
     },
     methods: {
         // 路由
@@ -232,17 +307,17 @@ export default {
         },
         loadMountDps() {
             this.loading = true;
-            this.aid && getMountDpsRace(this.aid, this.params)
-                .then((res) => {
-                    this.data = res?.data?.data || [];
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+            this.aid &&
+                getMountDpsRace(this.aid, this.params)
+                    .then((res) => {
+                        this.data = res?.data?.data || [];
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
         },
         init: function() {
             this.parseQuery();
-            this.loadMountDps();
         },
 
         // 字段
@@ -279,13 +354,13 @@ export default {
         getBarWidth(dps) {
             return (dps / this.max_dps).toFixed(4) * 100 + "%";
         },
-        showDHPS(item){
-            if(item.mount == 10448){
-                return item.dps + ' / ' + item.hps
-            }else{
-                return item._dhps
+        showDHPS(item) {
+            if (item.mount == 10448) {
+                return item.dps + " / " + item.hps;
+            } else {
+                return item._dhps;
             }
-        }
+        },
     },
     filters: {
         showMountIcon: function(val) {

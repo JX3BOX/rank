@@ -1,29 +1,24 @@
 <template>
     <div class="m-race-tab">
-        <router-link
-            class="u-item"
-            :to="link(key)"
-            v-for="(label, key) in visible_blocks"
-            :key="key"
-            >{{ label }}</router-link
-        >
+        <router-link class="u-item" :to="link(key)" v-for="(label, key) in visible_blocks" :key="key">{{
+            label
+        }}</router-link>
     </div>
 </template>
 
 <script>
 import blocks from "@/assets/data/blocks.json";
 export default {
-    props: ['data'],
+    props: ["data"],
     data: function() {
-        return {
-        };
+        return {};
     },
     computed: {
-        id : function (){
-            return this.$store.state.id  
+        id: function() {
+            return this.$store.state.id;
         },
         visible_blocks: function() {
-            let enabled_blocks = this.data && this.data.blocks || [];
+            let enabled_blocks = (this.data && this.data.blocks) || [];
             let tabs = {};
             enabled_blocks.forEach((item) => {
                 tabs[item] = blocks[item];

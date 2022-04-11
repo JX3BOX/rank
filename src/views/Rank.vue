@@ -1,11 +1,19 @@
 <template>
     <!-- 排行榜成绩 -->
-    <div class="m-rank-rank" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <div
+        class="m-rank-rank"
+        v-loading="loading"
+        element-loading-text="加载中..."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
         <el-row class="m-rank-boss m-rank-filter" :gutter="20" type="flex">
             <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
                 <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id }">
                     <span class="u-boss-name">{{ label }}</span>
-                    <span class="u-boss-per" :class="getProcessCls(total[aid])">({{ total[aid] > 100 ? 100 : total[aid] }}/100)</span>
+                    <span class="u-boss-per" :class="getProcessCls(total[aid])"
+                        >({{ total[aid] > 100 ? 100 : total[aid] }}/100)</span
+                    >
                 </li>
             </el-col>
         </el-row>
@@ -13,7 +21,9 @@
         <div class="m-rank-server m-rank-filter">
             <ul>
                 <li :class="{ on: !server }" @click="changeServer('')">全区全服</li>
-                <li v-for="item in servers" :key="item" @click="changeServer(item)" :class="{ on: server == item }">{{ item }}</li>
+                <li v-for="item in servers" :key="item" @click="changeServer(item)" :class="{ on: server == item }">
+                    {{ item }}
+                </li>
             </ul>
         </div>
 
@@ -38,11 +48,11 @@ import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import _ from "lodash";
 import { getTop100, getTopTotal } from "@/service/race.js";
 
-import rank_item from '@/components/rank_item.vue'
+import rank_item from "@/components/rank_item.vue";
 
 export default {
     components: {
-        'rank-item': rank_item,
+        "rank-item": rank_item,
     },
     props: [],
     data: function() {
@@ -63,21 +73,21 @@ export default {
         id: function() {
             return this.$store.state.id;
         },
-        achieves : function (){
-            return this.$store.state.achieves || []
+        achieves: function() {
+            return this.$store.state.achieves || [];
         },
         bossList: function() {
-            let dict = {}
+            let dict = {};
             this.achieves.forEach((item) => {
-                dict[item.achievement_id] = item.name
-            })
-            return dict
-        },
-        span: function() {
-            return ~~(24 / Object.keys(this.bossList).length);
+                dict[item.achievement_id] = item.name;
+            });
+            return dict;
         },
         aids: function() {
             return Object.keys(this.bossList).join(",");
+        },
+        span: function() {
+            return ~~(24 / Object.keys(this.bossList).length);
         },
         data: function() {
             // let data = (this.server ? this.local_data : this.origin_data) || [];
@@ -143,15 +153,15 @@ export default {
                 return "isFull";
             }
         },
-
-
     },
     watch: {
+        // 修改赛事
         id: {
             handler: function(val) {
                 val && this.loadData();
             },
         },
+        // 修改服务器与boss
         params: {
             deep: true,
             handler: function(val) {
@@ -160,19 +170,37 @@ export default {
         },
         "$route.query.aid": {
             handler: function(val) {
-                if(val){
+                if (val) {
                     this.achieve_id = val;
                 }
             },
         },
-    },
-    created: function() {
-        this.achieve_id = this.$route.query.aid || _.first(Object.keys(this.bossList));
-        this.server = this.$route.query.server || "";
-
-        getTopTotal(this.aids).then((res) => {
-            this.total = res.data.data;
-        });
+        "$route.query.server": {
+            handler: function(val) {
+                if (val) {
+                    this.server = server;
+                }
+            },
+        },
+        achieves: {
+            immediate: true,
+            handler: function() {
+                if (!!~~this.$route.query.aid) {
+                    this.achieve_id = this.$route.query.aid;
+                } else {
+                    this.achieve_id = _.first(Object.keys(this.bossList));
+                }
+            },
+        },
+        aids: {
+            immediate: true,
+            handler: function(val) {
+                val &&
+                    getTopTotal(val).then((res) => {
+                        this.total = res.data.data;
+                    });
+            },
+        },
     },
     mounted: function() {},
 };
