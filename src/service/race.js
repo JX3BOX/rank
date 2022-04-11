@@ -1,4 +1,4 @@
-import { $team } from "./axios";
+import { $team } from "@jx3box/jx3box-common/js/https.js";
 function getTop100(params,event_id = 1) {
     return $team().get(`/api/team/race/achieve/${params.achieve_id}/top100`, {
         params: {

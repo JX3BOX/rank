@@ -1,4 +1,4 @@
-import { $team } from "./axios";
+import { $team } from "@jx3box/jx3box-common/js/https.js";
 
 function getVideos(event_id, params) {
     return $team().get(`/api/team/video/event/${event_id}`, {

@@ -1,6 +1,12 @@
 <template>
     <!-- 天团榜 -->
-    <div class="m-race-superstar" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <div
+        class="m-race-superstar"
+        v-loading="loading"
+        element-loading-text="加载中..."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
         <div class="m-rank-vote-title">
             <img :src="superstar_title_img" />
         </div>
@@ -19,7 +25,11 @@
                         </div>
                         <!-- 队徽 -->
                         <a class="u-logo" :href="item.team_id | teamLink" target="_blank">
-                            <el-image v-if="item.team_logo" :src="i < 3 ? teamLogo(item.team_logo, true) : teamLogo(item.team_logo, false)" fit="fill"></el-image>
+                            <el-image
+                                v-if="item.team_logo"
+                                :src="i < 3 ? teamLogo(item.team_logo, true) : teamLogo(item.team_logo, false)"
+                                fit="fill"
+                            ></el-image>
                             <div class="el-image" v-else>
                                 <img loading="lazy" src="../assets/img/misc/null.png" />
                             </div>
@@ -115,6 +125,17 @@ export default {
             });
             return data;
         },
+        aid: function() {
+            return this.$store.state.race.superstar;
+        },
+    },
+    watch: {
+        aid: {
+            immediate: true,
+            handler: function(val) {
+                val && this.loadData();
+            },
+        },
     },
     methods: {
         getRankImg: function(num) {
@@ -123,6 +144,16 @@ export default {
         teamLogo: function(val, mode) {
             if (!val) return "";
             return mode ? getThumbnail(val, 120, true) : getThumbnail(val, 88, true);
+        },
+        loadData: function() {
+            this.loading = true;
+            getTop100(this.aid, this.id)
+                .then((res) => {
+                    this.origin_data = res.data.data || [];
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
     },
     filters: {
@@ -152,16 +183,6 @@ export default {
             return (name && name.slice(0, 12)) || "未知";
         },
     },
-    mounted: function() {
-        getTop100(this.id)
-            .then((res) => {
-                this.origin_data = res.data.data || [];
-            })
-            .finally(() => {
-                this.loading = false;
-            });
-    },
-    components: {},
 };
 </script>
 
