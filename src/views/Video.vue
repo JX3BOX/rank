@@ -3,7 +3,7 @@
     <div class="m-rank-video" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="m-rank-video-title">
             <img :src="video_title_img" />
-            <el-button class="u-addv" v-if="isAdmin" type="primary" @click="add" icon="el-icon-circle-plus-outline">添加视频</el-button>
+            <!-- <el-button class="u-addv" v-if="isAdmin" type="primary" @click="add" icon="el-icon-circle-plus-outline">添加视频</el-button> -->
             <!-- <div class="u-extend">
                 <el-select
                     class="u-server"
@@ -65,10 +65,10 @@
                                         {{ item.title }}
                                     </a>
                                 </div>
-                                <div class="u-op" v-if="isEditor">
+                                <!-- <div class="u-op" v-if="isEditor">
                                     <el-button class="u-edit" type="primary" plain @click="edit(item)" icon="el-icon-edit-outline" size="mini">编辑</el-button>
                                     <el-button class="u-delete" type="danger" plain @click="del(item.ID)" icon="el-icon-delete" size="mini">删除</el-button>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </el-col>
@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import achieves from "@/assets/data/achieve.json";
+// import achieves from "@/assets/data/achieve.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getVideos, deleteVideo, addVideo, updateVideo } from "@/service/video.js";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
@@ -152,9 +152,6 @@ export default {
         id: function() {
             return this.$store.state.id;
         },
-        bossidDict: function() {
-            return achieves[this.$store.state.id];
-        },
         params: function() {
             return {
                 pageSize: this.per,
@@ -162,8 +159,15 @@ export default {
                 aid: this.current_boss,
             };
         },
+        achieves : function (){
+            return this.$store.state.achieves || []
+        },
         bossList: function() {
-            return achieves[this.id] || [];
+            let dict = {}
+            this.achieves.forEach((item) => {
+                dict[item.achievement_id] = item.name
+            })
+            return dict
         },
         demo_video: function() {
             return {

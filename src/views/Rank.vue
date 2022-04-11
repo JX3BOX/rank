@@ -33,7 +33,7 @@
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import achieves from "@/assets/data/achieve.json";
+// import achieves from "@/assets/data/achieve.json";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import _ from "lodash";
 import { getTop100, getTopTotal } from "@/service/race.js";
@@ -63,8 +63,15 @@ export default {
         id: function() {
             return this.$store.state.id;
         },
+        achieves : function (){
+            return this.$store.state.achieves || []
+        },
         bossList: function() {
-            return achieves[this.id] || [];
+            let dict = {}
+            this.achieves.forEach((item) => {
+                dict[item.achievement_id] = item.name
+            })
+            return dict
         },
         span: function() {
             return ~~(24 / Object.keys(this.bossList).length);
@@ -136,8 +143,8 @@ export default {
                 return "isFull";
             }
         },
-        
-        
+
+
     },
     watch: {
         id: {
@@ -153,7 +160,9 @@ export default {
         },
         "$route.query.aid": {
             handler: function(val) {
-                this.achieve_id = val;
+                if(val){
+                    this.achieve_id = val;
+                }
             },
         },
     },

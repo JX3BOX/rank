@@ -7,6 +7,7 @@ let store = {
     state: {
         id : '',
         race : "",
+        achieves : [],
     },
     mutations: {
     },

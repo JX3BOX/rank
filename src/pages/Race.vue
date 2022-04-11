@@ -42,6 +42,7 @@ export default {
             data: "",
             back_img_url: __imgPath + "image/rank/common/history.png",
             win_env: window.outerWidth < 780 ? "isMobile" : "isPC",
+            achieves : []
         };
     },
     computed: {
@@ -59,6 +60,7 @@ export default {
         init: function() {
             getEvent(this.id).then((res) => {
                 this.data = res.data.data;
+                this.$store.state.achieves = res.data.data.boss_map
                 this.$store.state.race = res.data.data;
             });
         },

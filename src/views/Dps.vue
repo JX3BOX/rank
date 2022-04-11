@@ -8,7 +8,7 @@
         <!-- <div class="m-rank-vote-header"></div> -->
         <!-- Boss导航 -->
         <el-row class="m-rank-boss m-rank-filter m-rank-dps-filter" :gutter="20" type="flex">
-            <el-col :span="span" v-for="(label, id) of boss_list" :key="'aid-' + id">
+            <el-col :span="span" v-for="(label, id) of bossList" :key="'aid-' + id">
                 <li class="u-boss" @click="changeBoss(id)" :class="{ on: id == aid }">
                     <span class="u-boss-name">{{ label }}</span>
                 </li>
@@ -117,7 +117,7 @@ import { authorLink, getLink, getThumbnail, showAvatar } from "@jx3box/jx3box-co
 import { mount_group } from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import server_std from "@jx3box/jx3box-data/data/server/server_cn";
 
-import achieves from "@/assets/data/achieve.json";
+// import achieves from "@/assets/data/achieve.json";
 
 import { getMountDpsRace } from "@/service/race";
 
@@ -149,11 +149,18 @@ export default {
         id: function() {
             return this.$store.state.id;
         },
-        boss_list: function() {
-            return achieves[this.id] || [];
+        achieves : function (){
+            return this.$store.state.achieves || []
+        },
+        bossList: function() {
+            let dict = {}
+            this.achieves.forEach((item) => {
+                dict[item.achievement_id] = item.name
+            })
+            return dict
         },
         span: function() {
-            return ~~(24 / Object.keys(this.boss_list).length);
+            return ~~(24 / Object.keys(this.bossList).length);
         },
         params: function() {
             return {
@@ -161,6 +168,7 @@ export default {
                 limit: 100,
                 fight_time_min: 300000,
                 order_by: "dps",
+                belong_team : 1
             };
         },
         list: function() {
@@ -193,12 +201,15 @@ export default {
         params: {
             deep: true,
             handler() {
-                this.loadMountDps();
+                this.aid && this.loadMountDps();
             },
         },
-        aid() {
-            this.loadMountDps();
+        aid(val) {
+            val && this.loadMountDps();
         },
+        achieves : function (){
+            this.aid = first(Object.keys(this.bossList));
+        }
     },
     methods: {
         // 路由
@@ -219,19 +230,19 @@ export default {
                 this[key] = this.$route.query[key];
             }
         },
-        init: function() {
-            this.parseQuery();
-            this.loadMountDps();
-        },
         loadMountDps() {
             this.loading = true;
-            getMountDpsRace(this.aid, this.params)
+            this.aid && getMountDpsRace(this.aid, this.params)
                 .then((res) => {
                     this.data = res?.data?.data || [];
                 })
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        init: function() {
+            this.parseQuery();
+            this.loadMountDps();
         },
 
         // 字段
@@ -300,8 +311,7 @@ export default {
             return showAvatar(item?.user_info?.user_avatar);
         },
     },
-    created: function() {
-        this.aid = first(Object.keys(this.boss_list));
+    mounted: function() {
         this.init();
     },
 };

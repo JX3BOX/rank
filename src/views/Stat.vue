@@ -2,14 +2,14 @@
     <!-- 统计分析 -->
     <div class="m-rank-stat" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-row class="m-rank-boss" :gutter="20" type="flex" justify="space-between">
-            <el-col :span="4" v-for="(label, achieve_id) of bossList" :key="achieve_id">
-                <div class="u-boss" :class="{ on: achieve_id == current_boss }" @click="changeBoss(achieve_id)">
-                    <span class="u-boss-name">{{ label }}</span>
-                </div>
-            </el-col>
             <el-col :span="4">
                 <div class="u-boss" :class="{ on: current_boss == 'all' }" @click="changeBoss('all')">
                     <span class="u-boss-name">全部</span>
+                </div>
+            </el-col>
+            <el-col :span="4" v-for="(label, achieve_id) of bossList" :key="achieve_id">
+                <div class="u-boss" :class="{ on: achieve_id == current_boss }" @click="changeBoss(achieve_id)">
+                    <span class="u-boss-name">{{ label }}</span>
                 </div>
             </el-col>
         </el-row>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import achieves from "@/assets/data/achieve.json";
+// import achieves from "@/assets/data/achieve.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import _ from "lodash";
 import BarChart from "../components/barChart.vue";
@@ -64,7 +64,7 @@ export default {
         return {
             null_img_url: __imgPath + "image/rank/common/null.png",
             loading: false,
-            current_boss: "",
+            current_boss: "all",
             ana: {},
             stats: {},
         };
@@ -73,12 +73,15 @@ export default {
         id: function() {
             return this.$store.state.id;
         },
+        achieves : function (){
+            return this.$store.state.achieves || []
+        },
         bossList: function() {
-            let tmp = achieves[this.id];
-            // if (tmp) {
-            //     tmp[0] = "综合";
-            // }
-            return tmp || [];
+            let dict = {}
+            this.achieves.forEach((item) => {
+                dict[item.achievement_id] = item.name
+            })
+            return dict
         },
     },
     watch: {
@@ -90,17 +93,11 @@ export default {
             this.loadData();
         },
     },
-    created() {
-        this.current_boss = _.first(Object.keys(this.bossList));
-    },
     mounted() {
         if (this.$route.query.aid) {
             this.current_boss = this.$route.query.aid;
         }
-        this.loading = true;
-        this.getStats().finally(() => {
-            this.loading = false;
-        });
+        this.getStats()
     },
     methods: {
         changeBoss: function(val) {
@@ -134,15 +131,16 @@ export default {
             //     });
         },
         getStats() {
+            this.loading = true;
             return axios(realUrl(__Root, `rank-analysis/stats/event${this.id}.json`), "GET", false)
                 .then((res) => {
                     this.stats = res;
+                    this.changeBoss(this.current_boss);
                 })
                 .catch((err) => {
                     this.$message.error("加载统计文件失败");
                 })
-                .then(() => {
-                    this.changeBoss(this.current_boss);
+                .finally(() => {
                     this.loading = false;
                 });
         },
