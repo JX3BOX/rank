@@ -12,7 +12,7 @@
                             <img :src="item.ID | eventCover" :alt="item.name" />
                             <b>{{ item.name }}</b>
                             <div class="u-status">
-                                <span v-if="item.client" :class="item.client">{{ item. client == 'std' ? '正式服' : '怀旧服' }}</span>
+                                <span v-if="item.client" :class="item.client">{{ item. client == 'std' ? '重制' : '缘起' }}</span>
                                 <i :class="{on : item.status}">{{ item.status ? '进行中' : '已结束' }}</i>
                             </div>
                         </a>
