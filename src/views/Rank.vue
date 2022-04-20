@@ -136,6 +136,7 @@ export default {
                 getTop100(this.params, this.id)
                     .then((res) => {
                         this.origin_data = res.data.data || [];
+                        this.origin_data = Object.freeze(this.origin_data)
                     })
                     .finally(() => {
                         this.loading = false;

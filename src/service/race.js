@@ -23,8 +23,16 @@ function getMountDpsRace(achieveId, query) {
     })
 }
 
+// 获取综合排名
+function getMixRank(params){
+    return $team().get(`/api/team/race/mix-rank/top`, {
+        params,
+    })
+}
+
 export {
     getTop100,
     getTopTotal,
-    getMountDpsRace
+    getMountDpsRace,
+    getMixRank,
 };

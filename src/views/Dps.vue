@@ -181,12 +181,8 @@ import { authorLink, getLink, getThumbnail, showAvatar } from "@jx3box/jx3box-co
 import { mount_group } from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import server_std from "@jx3box/jx3box-data/data/server/server_cn";
 
-// import achieves from "@/assets/data/achieve.json";
-
-import { getMountDpsRace } from "@/service/race";
-
-import { first, cloneDeep } from "lodash";
-
+import { getMountDpsRace, getMixRank } from "@/service/race";
+import { cloneDeep } from "lodash";
 import rank_item from "@/components/rank_item.vue";
 
 export default {
@@ -235,6 +231,13 @@ export default {
                 belong_team: 1,
             };
         },
+        allParams: function (){
+            return {
+                // mount: this.mount,
+                event_id: this.id,
+                aids: this.achieves.map(item => item.achievement_id).join(','),
+            }
+        },
         list: function() {
             return this.data.map((item, i) => {
                 if (this.isTherapy(item.mount)) {
@@ -274,6 +277,7 @@ export default {
                 if(!val) return
                 if (val == "all") {
                     // TODO:加载综合榜
+                    this.loadMixRank()
                 } else {
                     this.loadMountDps();
                 }
@@ -294,7 +298,7 @@ export default {
         },
         changeBoss: function(val) {
             this.aid = val;
-            this.go({ aid: val });
+            val !== 'all' && this.go({ aid: val });
         },
         changeMount: function(val) {
             this.mount = val;
@@ -311,6 +315,7 @@ export default {
                 getMountDpsRace(this.aid, this.params)
                     .then((res) => {
                         this.data = res?.data?.data || [];
+                        this.data = Object.freeze(this.data);
                     })
                     .finally(() => {
                         this.loading = false;
@@ -319,7 +324,6 @@ export default {
         init: function() {
             this.parseQuery();
         },
-
         // 字段
         calcDps: function(item) {
             return item.damage;
@@ -360,6 +364,17 @@ export default {
             } else {
                 return item._dhps;
             }
+        },
+        loadMixRank() {
+            this.loading = true;
+            getMixRank(this.allParams)
+                .then((res) => {
+                    this.data = res.data?.data || [];
+                    this.data = Object.freeze(this.data);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
     },
     filters: {
