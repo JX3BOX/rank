@@ -171,7 +171,7 @@
                 </el-row>
             </template>
         </div>
-        <el-popover v-if="showPop" ref="pop" :reference="reference" with="1260" popper-class="u-dps-rank-pop" trigger="click">
+        <el-popover v-if="showPop" ref="pop" :reference="reference" width="1260" popper-class="u-dps-rank-pop" trigger="click">
             <rank-item
                 class="u-dps-rank-item"
                 :show-index="false"
@@ -250,6 +250,7 @@ export default {
                 mount: this.mount,
                 event_id: this.id,
                 aids: this.achieves.map(item => item.achievement_id).join(','),
+                belong_team: 1,
             }
 
             if (this.server !== '全部服务器') {
