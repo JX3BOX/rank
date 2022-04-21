@@ -40,7 +40,7 @@
             </ul>
         </div>
         <!-- 数据列表 -->
-        <div class="m-rank-dps-list" v-if="list && list.length">
+        <div class="m-rank-dps-list">
             <el-row class="u-item u-head" :gutter="20">
                 <el-col :span="1"><div class="u-ranking">排名</div></el-col>
                 <el-col :span="2">
@@ -164,8 +164,8 @@
                             ></rank-item>
                             <span class="u-more" slot="reference">查看</span>
                         </el-popover> -->
-                        <span class="u-more" :ref="'pop'+ item.role" @click="clickPop(item)">查看</span>
-                        <span class="u-misc-div">|</span>
+                        <span v-show="aid !== 'all'" class="u-more" :ref="'pop'+ item.role" @click="clickPop(item)">查看</span>
+                        <span v-show="aid !== 'all'" class="u-misc-div">|</span>
                         <span class="u-log">日志</span>
                     </el-col>
                 </el-row>
