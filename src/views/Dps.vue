@@ -154,7 +154,7 @@
                         </div></el-col
                     >
                     <el-col :span="2" class="u-misc">
-                        <el-popover with="1260" popper-class="u-dps-rank-pop">
+                        <!-- <el-popover with="1260" popper-class="u-dps-rank-pop">
                             <rank-item
                                 class="u-dps-rank-item"
                                 :show-index="false"
@@ -163,13 +163,23 @@
                                 :span="8"
                             ></rank-item>
                             <span class="u-more" slot="reference">查看</span>
-                        </el-popover>
+                        </el-popover> -->
+                        <span class="u-more" :ref="'pop'+ item.role" @click="clickPop(item)">查看</span>
                         <span class="u-misc-div">|</span>
                         <span class="u-log">日志</span>
                     </el-col>
                 </el-row>
             </template>
         </div>
+        <el-popover v-if="showPop" ref="pop" :reference="reference" with="1260" popper-class="u-dps-rank-pop" trigger="click">
+            <rank-item
+                class="u-dps-rank-item"
+                :show-index="false"
+                :item="formatItem(popItem)"
+                :i="4"
+                :span="8"
+            ></rank-item>
+        </el-popover>
     </div>
 </template>
 
@@ -203,6 +213,10 @@ export default {
             server: "全部服务器",
             server_std,
             filterMount: "0",
+
+            showPop: false,
+            reference: {},
+            popItem: {}
         };
     },
     computed: {
@@ -232,11 +246,17 @@ export default {
             };
         },
         allParams: function (){
-            return {
-                // mount: this.mount,
+            const params = {
+                mount: this.mount,
                 event_id: this.id,
                 aids: this.achieves.map(item => item.achievement_id).join(','),
             }
+
+            if (this.server !== '全部服务器') {
+                params.server = this.server;
+            }
+
+            return params
         },
         list: function() {
             return this.data.map((item, i) => {
@@ -268,7 +288,7 @@ export default {
         params: {
             deep: true,
             handler() {
-                this.aid && this.loadMountDps();
+                this.aid && this.aid !== 'all' && this.loadMountDps();
             },
         },
         aid: {
@@ -276,19 +296,18 @@ export default {
             handler: function(val) {
                 if(!val) return
                 if (val == "all") {
-                    // TODO:加载综合榜
                     this.loadMixRank()
                 } else {
                     this.loadMountDps();
                 }
             },
         },
-        // achieves: {
-        //     immediate: true,
-        //     handler: function() {
-        //         this.aid = first(Object.keys(this.bossList));
-        //     },
-        // },
+        allParams: {
+            deep: true,
+            handler() {
+                this.aid && this.aid === 'all' && this.loadMixRank();
+            },
+        },
     },
     methods: {
         // 路由
@@ -376,6 +395,20 @@ export default {
                     this.loading = false;
                 });
         },
+        clickPop(item) {
+            if (this.popItem?.role === item.role && this.showPop) return
+            this.showPop = false
+            this.popItem = item
+
+            this.reference = this.$refs['pop'+ item.role][0]
+
+            this.$nextTick(() => {
+                this.showPop = true
+                this.$nextTick(() => {
+                    this.$refs.pop?.doShow()
+                })
+            })
+        }
     },
     filters: {
         showMountIcon: function(val) {

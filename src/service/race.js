@@ -25,7 +25,7 @@ function getMountDpsRace(achieveId, query) {
 
 // 获取综合排名
 function getMixRank(params){
-    return $team().get(`/api/team/race/mix-rank/top`, {
+    return $team().get(`/api/team/achieve-mix/top`, {
         params,
     })
 }
