@@ -140,19 +140,19 @@
                             {{ showDHPS(item) }}
                         </div></el-col
                     >
-                    <el-col :span="6"
-                        ><div class="u-total">
+                    <el-col :span="6">
+                        <div class="u-total">
                             <span class="u-damage"
                                 ><span>{{ isTherapy(item.mount) ? "总治疗" : "总伤害" }}</span>
                                 <b>{{ item._total }}</b></span
                             >
-                            <span class="u-time">
+                            <span class="u-time" v-if="aid !== 'all'">
                                 <span>战斗时间</span>
                                 <b>{{ item.fight_time / 1000 }}</b
                                 >秒
                             </span>
-                        </div></el-col
-                    >
+                        </div>
+                    </el-col>
                     <el-col :span="2" class="u-misc">
                         <!-- <el-popover with="1260" popper-class="u-dps-rank-pop">
                             <rank-item
@@ -164,8 +164,8 @@
                             ></rank-item>
                             <span class="u-more" slot="reference">查看</span>
                         </el-popover> -->
-                        <span v-show="aid !== 'all'" class="u-more" :ref="'pop'+ item.role" @click="clickPop(item)">查看</span>
-                        <span v-show="aid !== 'all'" class="u-misc-div">|</span>
+                        <span v-if="aid !== 'all'" class="u-more" :ref="'pop'+ item.role" @click="clickPop(item)">查看</span>
+                        <span v-if="aid !== 'all'" class="u-misc-div">|</span>
                         <span class="u-log">日志</span>
                     </el-col>
                 </el-row>
