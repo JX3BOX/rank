@@ -9,18 +9,17 @@
                 <div class="m-rank-content" v-if="isLogin">
                     <div class="m-join m-join-team" v-if="!status">
                         <h1 class="m-join-title">报名入口</h1>
-                        <el-alert class="u-warning" type="warning" show-icon>
-                            <span slot="title">
-                                仅认证团队可报名，可在「<a href="/team/" target="_blank">团队应用</a>」-「<a href="/team/org/manage/" target="_blank"
-                                    >团队管理</a
-                                >」中提交团队认证（已认证过的无需再次认证）。<br />
-                                请务必正确填写所有资料，报名后不可取消，亦不可再更改资料，认证团长Q群<a href="https://jq.qq.com/?_wv=1027&k=rHiKKYEV">【1048059072】</a>（必加）。
-                            </span>
-                        </el-alert>
+                        <div class="m-join-notice" v-html="notice"></div>
                         <el-form class="m-join-form" ref="form" :model="form" label-width="80px">
                             <el-form-item label="报名活动">
                                 <el-select v-model="form.event_id" placeholder="请选择活动">
-                                    <el-option v-for="event in events" :key="event.ID" :label="event.name" :value="event.ID"> </el-option>
+                                    <el-option
+                                        v-for="event in events"
+                                        :key="event.ID"
+                                        :label="event.name"
+                                        :value="event.ID"
+                                    >
+                                    </el-option>
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="选择团队">
@@ -28,17 +27,26 @@
                                     <el-option v-for="team in teams" :key="team.ID" :label="team.name" :value="team.ID"
                                         ><span class="m-join-team-item"
                                             ><b class="u-team-name">{{ team.name }}</b
-                                            ><span class="u-team-server">{{ team.server }}</span></span
+                                            ><span class="u-team-id">(ID:{{team.ID}})</span><span class="u-team-server">{{ team.server }}</span></span
                                         >
                                     </el-option>
                                 </el-select>
-                                <div class="u-tip" v-if="!teams || !teams.length">还没有团队？<a href="/team" target="_blank">创建团队</a></div>
+                                <div class="u-tip" v-if="!teams || !teams.length">
+                                    还没有团队？<a href="/team" target="_blank">创建团队</a>
+                                </div>
                             </el-form-item>
                             <el-form-item label="参赛宣言">
-                                <el-input v-model="form.slogan" placeholder="为您的团队打CALL,将显示在游戏内" :maxlength="20" show-word-limit></el-input>
+                                <el-input
+                                    v-model="form.slogan"
+                                    placeholder="为您的团队打CALL,将显示在游戏内"
+                                    :maxlength="20"
+                                    show-word-limit
+                                ></el-input>
                             </el-form-item>
                             <div class="u-btns">
-                                <el-button class="u-btn" type="primary" @click="submit" :disabled="!ready">报名</el-button>
+                                <el-button class="u-btn" type="primary" @click="submit" :disabled="!ready"
+                                    >报名</el-button
+                                >
                             </div>
                         </el-form>
                     </div>
@@ -54,7 +62,9 @@
                         </div>
                     </div>
                     <div class="u-footer">
-                        <a href="/notice/32280" target="_blank"><i class="el-icon-info"></i> <b>点击查看活动规则详情</b></a>
+                        <a href="/notice/32280" target="_blank"
+                            ><i class="el-icon-info"></i> <b>点击查看活动规则详情</b></a
+                        >
                     </div>
                 </div>
                 <div class="m-rank-content m-rank-null" v-else>
@@ -74,6 +84,7 @@ import { getEvents } from "@/service/event.js";
 import { joinEvent, hasJoined } from "@/service/join.js";
 import { getMyTeams } from "@/service/team.js";
 import User from "@jx3box/jx3box-common/js/user.js";
+import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
 export default {
     name: "App",
     props: [],
@@ -98,6 +109,7 @@ export default {
                 },
             },
             processing: false, //按钮提交锁定
+            notice: "",
         };
     },
     computed: {
@@ -169,9 +181,15 @@ export default {
         goLogin: function() {
             User.toLogin();
         },
+        loadNotice: function() {
+            getBreadcrumb("rank-join").then((data) => {
+                this.notice = data;
+            });
+        },
         init: function() {
             this.loadEvents();
             this.loadTeams();
+            this.loadNotice();
         },
     },
     watch: {
