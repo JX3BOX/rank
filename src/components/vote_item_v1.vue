@@ -127,8 +127,8 @@ export default {
     filters: {
         teamLogo: function(val) {
             return val
-                ? getThumbnail(val, 48, true)
-                : getThumbnail(default_avatar, 48, true);
+                ? getThumbnail(val, 96, true)
+                : getThumbnail(default_avatar, 96, true);
         },
         teamLink: function(val) {
             return getLink("org", val);

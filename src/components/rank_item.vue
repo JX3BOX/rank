@@ -91,7 +91,7 @@ export default {
         },
         teamLogo: function(val, mode) {
             if (!val) return "";
-            return mode ? getThumbnail(val, 120, true) : getThumbnail(val, 88, true);
+            return mode ? getThumbnail(val, 240, true) : getThumbnail(val, 176, true);
         },
     },
     filters: {

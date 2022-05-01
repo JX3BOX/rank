@@ -252,10 +252,10 @@ export default {
     },
     filters: {
         teamLogo: function(val) {
-            return val ? getThumbnail(val, 120, true) : default_avatar;
+            return val ? getThumbnail(val, 240, true) : default_avatar;
         },
         liveAvatar: function(val) {
-            return val ? getThumbnail(val, 68, true) : default_avatar;
+            return val ? getThumbnail(val, 136, true) : default_avatar;
         },
         teamLink: function(val) {
             // return "/team/#/org/view/" + val;
