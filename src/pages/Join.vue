@@ -7,7 +7,7 @@
                     <img class="u-logo" :src="LOGO" />
                 </div>
                 <div class="m-rank-content" v-if="isLogin">
-                    <div class="m-join m-join-team" v-if="!status">
+                    <div class="m-join m-join-team">
                         <h1 class="m-join-title">报名入口</h1>
                         <div class="m-join-notice" v-html="notice"></div>
                         <el-form class="m-join-form" ref="form" :model="form" label-width="80px">
@@ -44,13 +44,14 @@
                                 ></el-input>
                             </el-form-item>
                             <div class="u-btns">
+                                <div class="u-warning" v-show="status"><i class="el-icon-warning-outline"></i>当前活动你名下的【{{joined_team_name}}】已报名，无需重复报名。</div>
                                 <el-button class="u-btn" type="primary" @click="submit" :disabled="!ready"
                                     >报名</el-button
                                 >
                             </div>
                         </el-form>
                     </div>
-                    <div class="m-join m-join-done" v-else>
+                    <!-- <div class="m-join m-join-done" v-else>
                         <h1 class="u-title">已报名</h1>
                         <div>
                             <p>
@@ -60,10 +61,10 @@
                                 团队：<strong>{{ result.eventRecord.name }}</strong>
                             </p>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="u-footer">
                         <a href="/notice/32280" target="_blank"
-                            ><i class="el-icon-info"></i> <b>点击查看活动规则详情</b></a
+                            ><i class="el-icon-info"></i> <b>点击查看百强活动细则</b></a
                         >
                     </div>
                 </div>
@@ -99,6 +100,8 @@ export default {
             events: [],
             teams: [],
             status: false, //是否已经报名
+            joined_team_name : '',
+
             isLogin: User.isLogin(),
             result: {
                 event: {
@@ -110,6 +113,7 @@ export default {
             },
             processing: false, //按钮提交锁定
             notice: "",
+
         };
     },
     computed: {
@@ -174,6 +178,7 @@ export default {
                     this.result = res.data.data;
                     if (res.data.data.hasJoined) {
                         this.status = true;
+                        this.joined_team_name = res.data.data.eventRecord.name
                         this.$forceUpdate();
                     }
                 });
