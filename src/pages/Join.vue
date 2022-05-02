@@ -123,6 +123,17 @@ export default {
         event_id: function() {
             return this.form.event_id;
         },
+        team_name : function (){
+            let team_id = this.form.team_id
+            let team_name = ''
+            for(let team of this.teams){
+                if(team.ID == team_id){
+                    team_name = team.name
+                    break;
+                }
+            }
+            return team_name
+        }
     },
     methods: {
         submit: function() {
@@ -138,6 +149,7 @@ export default {
                                     type: "success",
                                 });
                                 this.status = true;
+                                this.joined_team_name = this.team_name
                                 this.$forceUpdate();
                             })
                             .finally(() => {
