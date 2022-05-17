@@ -9,7 +9,7 @@
                 <ul v-if="data && data.length">
                     <li class="u-item" v-for="(item, i) in data" :key="i">
                         <a :href="item.ID | eventLink" target="_blank">
-                            <img :src="item.ID | eventCover" :alt="item.name" />
+                            <img :src="item | eventCover" :alt="item.name" />
                             <b>{{ item.name }}</b>
                             <div class="u-status">
                                 <span v-if="item.client" :class="item.client">{{ item. client == 'std' ? '重制' : '缘起' }}</span>
@@ -67,7 +67,9 @@ export default {
         eventLink: function (val) {
             return "./race/#/" + val;
         },
-        eventCover: PICS.cover,
+        eventCover: function (item){
+            return item.banner_pc || PICS.cover(item.ID)
+        }
     },
     watch: {
         params: function () {
