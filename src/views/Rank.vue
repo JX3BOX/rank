@@ -92,6 +92,7 @@ export default {
         data: function() {
             // let data = (this.server ? this.local_data : this.origin_data) || [];
             let data = this.origin_data || [];
+            data = data.filter(item => !item.superstar) // 去除天团榜
             data.forEach((team, i) => {
                 let leader_name = team.leader;
                 let members = team.teammate.split(";");
