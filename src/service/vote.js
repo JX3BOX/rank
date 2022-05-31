@@ -39,4 +39,8 @@ function doVote(event_id, team_id) {
     }
 }
 
-export { getAllJoinedTeams, doVote };
+function getVoteStatus(event_id) {
+    return $team({ mute: true }).get(`/api/team/events/${event_id}/vote-team/status`);
+}
+
+export { getAllJoinedTeams, doVote, getVoteStatus };

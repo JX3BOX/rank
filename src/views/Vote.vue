@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <vote-item-v1 :team_name="team_name" :server="server" :data="data" v-if="id == 1" />
-            <vote-item-v2 :team_name="team_name" :server="server" :data="data" v-else />
+            <vote-item-v2 :team_name="team_name" :server="server" :data="data" :vote-team="voteTeam" v-else />
         </table>
     </div>
 </template>
@@ -38,7 +38,7 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
-import { getAllJoinedTeams } from "@/service/vote.js";
+import { getAllJoinedTeams, getVoteStatus } from "@/service/vote.js";
 import vote_item_v1 from "@/components/vote_item_v1.vue";
 import vote_item_v2 from "@/components/vote_item_v2.vue";
 export default {
@@ -53,6 +53,7 @@ export default {
             data: [],
             team_name: "",
             server: "",
+            voteTeam: []
         };
     },
     computed: {
@@ -74,8 +75,18 @@ export default {
                     this.loading = false;
                 });
         },
+        getStatus: function() {
+            getVoteStatus(this.id)
+                .then((res) => {
+                    this.voteTeam = Object.keys(res.data.data || {});
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
         init: function() {
             this.loadData();
+            this.getStatus();
         },
     },
     watch: {

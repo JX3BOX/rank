@@ -30,8 +30,8 @@
             <td class="u-vote-wapper">
                 <button
                     class="u-vote"
-                    :class="{ disabled: item.clicked || !event_status }"
-                    :disabled="item.clicked || !event_status"
+                    :class="{ disabled: item.clicked || !event_status || hasVoted(item) || !canVote }"
+                    :disabled="item.clicked || !event_status || hasVoted(item) || !canVote"
                     @click="vote(item)"
                 ></button>
             </td>
@@ -44,12 +44,13 @@ import {
     __imgPath,
     default_avatar,
 } from "@jx3box/jx3box-common/data/jx3box.json";
+import { moment } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink,authorLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { doVote } from "@/service/vote.js";
 export default {
     name: "voteItemV2",
-    props: ["data", "team_name", "server"],
+    props: ["data", "team_name", "server", "voteTeam"],
     data: function () {
         return {
             isLogin: User.isLogin(),
@@ -74,6 +75,12 @@ export default {
         hasCondition: function () {
             return this.search_team || this.search_server;
         },
+        vote_end: function (){
+            return this.$store.state.race.vote_end
+        },
+        canVote: function (){
+            return moment().isBefore(moment(this.vote_end))
+        }
     },
     methods: {
         isMatched: function (item) {
@@ -106,6 +113,9 @@ export default {
                 item.count = ~~item.count + 1;
                 this.$forceUpdate();
             });
+        },
+        hasVoted: function (item) {
+            return this.voteTeam.includes(String(item.team_id));
         },
     },
     filters: {
