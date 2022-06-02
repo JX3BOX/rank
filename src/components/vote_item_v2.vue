@@ -29,11 +29,13 @@
             </td>
             <td class="u-vote-wapper">
                 <button
+                    v-if="!hasVoted(item)"
                     class="u-vote"
-                    :class="{ disabled: item.clicked || !event_status || hasVoted(item) || !canVote }"
-                    :disabled="item.clicked || !event_status || hasVoted(item) || !canVote"
+                    :class="{ disabled: item.clicked || !event_status || !canVote }"
+                    :disabled="item.clicked || !event_status || !canVote"
                     @click="vote(item)"
                 ></button>
+                <div v-else>已投票</div>
             </td>
         </tr>
     </tbody>
