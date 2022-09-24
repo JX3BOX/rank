@@ -30,9 +30,7 @@
         <div class="m-rank-top100">
             <!-- A.列表不为空 -->
             <div class="m-rank-top100-list" v-if="data && data.length">
-                <template v-for="(item, i) in data">
-                    <rank-item :key="i" :i="i" :item="item"></rank-item>
-                </template>
+                <rank-item v-for="(item, i) in data" :key="i" :i="i" :item="item"></rank-item>
             </div>
 
             <!-- B.列表为空 -->
@@ -55,7 +53,7 @@ export default {
         "rank-item": rank_item,
     },
     props: [],
-    data: function() {
+    data: function () {
         return {
             loading: false,
             servers,
@@ -70,29 +68,29 @@ export default {
         };
     },
     computed: {
-        id: function() {
+        id: function () {
             return this.$store.state.id;
         },
-        achieves: function() {
+        achieves: function () {
             return this.$store.state.achieves || [];
         },
-        bossList: function() {
+        bossList: function () {
             let dict = {};
             this.achieves.forEach((item) => {
                 dict[item.achievement_id] = item.name;
             });
             return dict;
         },
-        aids: function() {
+        aids: function () {
             return Object.keys(this.bossList).join(",");
         },
-        span: function() {
+        span: function () {
             return ~~(24 / Object.keys(this.bossList).length);
         },
-        data: function() {
+        data: function () {
             // let data = (this.server ? this.local_data : this.origin_data) || [];
             let data = this.origin_data || [];
-            data = data.filter(item => !item.superstar) // 去除天团榜
+            data = data.filter((item) => !item.superstar); // 去除天团榜
             data.forEach((team, i) => {
                 let leader_name = team.leader;
                 let members = team.teammate.split(";");
@@ -111,7 +109,7 @@ export default {
             });
             return data;
         },
-        params: function() {
+        params: function () {
             return {
                 server: this.server,
                 achieve_id: ~~this.achieve_id,
@@ -119,7 +117,7 @@ export default {
         },
     },
     methods: {
-        changeBoss: function(val) {
+        changeBoss: function (val) {
             this.server = "";
             this.achieve_id = val;
             this.$router.push({
@@ -128,22 +126,24 @@ export default {
                 },
             });
         },
-        changeServer: function(val) {
+        changeServer: function (val) {
             this.server = val;
         },
-        loadData: function() {
+        loadData: function () {
+            if (!this.achieve_id) {
+                return;
+            }
             this.loading = true;
-            this.achieve_id &&
-                getTop100(this.params, this.id)
-                    .then((res) => {
-                        this.origin_data = res.data.data || [];
-                        this.origin_data = Object.freeze(this.origin_data)
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                    });
+            getTop100(this.params, this.id)
+                .then((res) => {
+                    this.origin_data = res.data.data || [];
+                    this.origin_data = Object.freeze(this.origin_data);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
-        getProcessCls: function(count) {
+        getProcessCls: function (count) {
             count = ~~count;
             if (count < 30) {
                 return "isLess";
@@ -159,26 +159,26 @@ export default {
     watch: {
         // 修改赛事
         id: {
-            handler: function(val) {
+            handler: function (val) {
                 val && this.loadData();
             },
         },
         // 修改服务器与boss
         params: {
             deep: true,
-            handler: function(val) {
+            handler: function (val) {
                 this.loadData();
             },
         },
         "$route.query.aid": {
-            handler: function(val) {
+            handler: function (val) {
                 if (val) {
                     this.achieve_id = val;
                 }
             },
         },
         "$route.query.server": {
-            handler: function(val) {
+            handler: function (val) {
                 if (val) {
                     this.server = server;
                 }
@@ -186,7 +186,7 @@ export default {
         },
         achieves: {
             immediate: true,
-            handler: function() {
+            handler: function () {
                 if (!!~~this.$route.query.aid) {
                     this.achieve_id = this.$route.query.aid;
                 } else {
@@ -196,7 +196,7 @@ export default {
         },
         aids: {
             immediate: true,
-            handler: function(val) {
+            handler: function (val) {
                 val &&
                     getTopTotal(val).then((res) => {
                         this.total = res.data.data;
@@ -204,7 +204,7 @@ export default {
             },
         },
     },
-    mounted: function() {},
+    mounted: function () {},
 };
 </script>
 <style lang="less">
