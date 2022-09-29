@@ -51,7 +51,7 @@
                             </div>
                         </el-form>
                         <div class="m-join m-join-done" v-if="status">
-                            <h1 class="u-title">已报名</h1>
+                            <h1 class="u-title" :class="statusText[audit_status].class">{{ statusText[audit_status].name }}</h1>
                             <div>
                                 <p>
                                     活动：<strong>{{ result.event.name }}</strong>
@@ -102,6 +102,12 @@ export default {
             teams: [],
             loading:true,//loading加载中先隐藏表单
             status: false, //是否已经报名
+            audit_status:0,//审核状态
+            statusText:[
+                {name:'待审核',class:'u-orange'},
+                {name:'已报名',class:''},
+                // {name:'已拒绝',class:'u-refuse'},
+            ],
             joined_team_name : '',
 
             isLogin: User.isLogin(),
@@ -151,6 +157,7 @@ export default {
                                     type: "success",
                                 });
                                 this.status = true;
+                                this.audit_status=res.data.data.status || 0
                                 this.joined_team_name = this.team_name
                                 this.$forceUpdate();
                             })
@@ -191,9 +198,12 @@ export default {
                 hasJoined(this.form.event_id).then((res) => {
                     this.result = res.data.data;
                     if (res.data.data.hasJoined) {
-                        this.status = true;
-                        this.joined_team_name = res.data.data.eventRecord.name
-                        this.$forceUpdate();
+                        this.audit_status=res.data.data.eventRecord.status
+                        if(this.audit_status != 2){
+                            this.status = true;
+                            this.joined_team_name = res.data.data.eventRecord.name
+                            this.$forceUpdate();
+                        }
                     }
                     this.loading=false
                 });
