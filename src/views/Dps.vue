@@ -411,7 +411,7 @@ export default {
             })
         },
         getBattleLink(id){
-            return `/battle/search?battle_id=${encodeURIComponent(id)}`
+            return `/battle?battle_id=${encodeURIComponent(id)}`
         }
     },
     filters: {
