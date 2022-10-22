@@ -44,7 +44,7 @@
 <script>
 import {
     __imgPath,
-    default_avatar,
+    default_avatar
 } from "@jx3box/jx3box-common/data/jx3box.json";
 import { moment } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink,authorLink } from "@jx3box/jx3box-common/js/utils";
@@ -104,16 +104,22 @@ export default {
                 User.toLogin();
                 return;
             }
-            doVote(this.id, ~~item.team_id).then((res) => {
-                this.$message({
-                    message: "感谢您的参与，投票成功！",
-                    type: "success",
-                    duration: 1000,
-                });
+            // doVote(this.id, ~~item.team_id).then((res) => {
+            //     this.$message({
+            //         message: "感谢您的参与，投票成功！",
+            //         type: "success",
+            //         duration: 1000,
+            //     });
 
-                item.clicked = true;
-                item.count = ~~item.count + 1;
-                this.$forceUpdate();
+            //     item.clicked = true;
+            //     item.count = ~~item.count + 1;
+            //     this.$forceUpdate();
+            // });
+            const src = `${__imgPath}image/rank/vote/${this.id}.png`
+            this.$alert(`<img src="${src}" alt="" />`, '打开微信扫码投票', {
+                showConfirmButton: false,
+                dangerouslyUseHTMLString: true,
+                center: true,
             });
         },
         hasVoted: function (item) {
