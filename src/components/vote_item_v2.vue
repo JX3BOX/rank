@@ -115,6 +115,7 @@ export default {
             //     item.count = ~~item.count + 1;
             //     this.$forceUpdate();
             // });
+            if (this.voteTeam.length) return
             const src = `${__imgPath}image/rank/vote/${this.id}.png`
             this.$alert(`<img src="${src}" alt="" />`, '打开微信扫码投票', {
                 showConfirmButton: false,
