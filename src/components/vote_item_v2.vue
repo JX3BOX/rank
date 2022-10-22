@@ -31,7 +31,7 @@
                 <button
                     v-if="!hasVoted(item)"
                     class="u-vote"
-                    :class="{ disabled: item.clicked || !event_status || !canVote }"
+                    :class="{ disabled: item.clicked || !event_status || !canVote || voteTeam.length }"
                     :disabled="item.clicked || !event_status || !canVote"
                     @click="vote(item)"
                 ></button>
