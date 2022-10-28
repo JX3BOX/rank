@@ -27,6 +27,10 @@ export default {
         height: {
             type: String,
             default: '800px'
+        },
+        seriesName:{
+            type:String,
+            default:'团队数量'
         }
     },
     watch: {
@@ -72,7 +76,7 @@ export default {
                 },
                 series: [
                     {
-                        name: "团队数量",
+                        name: this.seriesName,
                         type: "bar",
                         data: this.data,
                     },
