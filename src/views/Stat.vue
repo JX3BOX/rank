@@ -18,6 +18,7 @@
         <template v-else>
             <template v-for="item of chartArr">
                 <bar-chart
+                    :key="item.title"
                     v-if="item.chartType=='bar'"
                     :data="item.data"
                     :title="item.title"
@@ -28,6 +29,7 @@
                     }">
                  </bar-chart>
                 <pie-chart
+                    :key="item.title"
                     v-if="item.chartType=='pie'"
                     :data="item.data"
                     :title="item.title"
@@ -125,13 +127,12 @@ export default {
                 {name:'各输出心法出场率',type:'pie'},
                 {name:'输出心法平均伤害量',type:'bar'},
                 {name:'各输出心法平均DPS',type:'bar'},
-                {name:'各输出心法DPS占比',type:'pie'},
                 {name:'内外功出场比例',type:'pie'},
                 {name:'内外功输出占比',type:'pie'},
                 {name:'内功心法伤害DPS',type:'bar'},
                 {name:'外功心法伤害DPS',type:'bar'},
-                {name:'治疗心法平均HPS',type:'bar'},
                 {name:'治疗心法平均治疗量',type:'bar'},
+                {name:'治疗心法平均HPS',type:'bar'},
                 {name:'团长职业类型分布',type:'pie'},
             ], //图表名称与图表数据内保持一致，用于排序
             chartArr:[],
@@ -407,7 +408,12 @@ export default {
             let data = fullData.value;
             let item = fullData.item;
             let servers=item.map((name,i)=>{
-                return {value:data[i], name:name};
+                if(name=='外攻'){
+                    return {value:data[i], name:name,itemStyle: {color: "rgb(255,255,2)"}};
+                }else{
+                    return {value:data[i], name:name,itemStyle: {color: "rgb(0,204,255)"}};
+                }
+
             });
             this.chartArr['内外功出场比例']={
                 data: servers,
@@ -483,15 +489,15 @@ export default {
                 title: "各输出心法平均DPS",
                 seriesName:'DPS'
             };
-            let dpsRatio=item.map((name,i)=>{
-                return {value:parseInt(data[i]), name:xfids[name]};
-            });
-
-            this.chartArr['各输出心法DPS占比']={
-                data: dpsRatio.reverse(),
-                title: "各输出心法DPS占比",
-                seriesName:'DPS'
-            };
+            // let dpsRatio=item.map((name,i)=>{
+            //     return {value:parseInt(data[i]), name:xfids[name]};
+            // });
+            //
+            // this.chartArr['各输出心法DPS占比']={
+            //     data: dpsRatio.reverse(),
+            //     title: "各输出心法DPS占比",
+            //     seriesName:'DPS'
+            // };
             // console.log(servers)
             //筛选内外功分别统计
             let nei=[],wai=[],neiArr=mount_group.mount_types['内功'],waiArr=mount_group.mount_types['外功'],nei_dps=0,wai_dps=0
@@ -510,14 +516,14 @@ export default {
                 data: nei.reverse(),
                 title: "内功心法伤害DPS",
                 seriesName:'DPS',
-                position:'left'
+                // position:'left'
             };
 
             this.chartArr['外功心法伤害DPS']={
                 data: wai.reverse(),
                 title: "外功心法伤害DPS",
                 seriesName:'DPS',
-                position:'right'
+                // position:'right'
             };
         },
         doAna13(){
