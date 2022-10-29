@@ -98,11 +98,6 @@ import mount_group from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import { axios, realUrl } from "@/service/api.js";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 
-// import event_1 from './output/event_1.json'
-// import event_2 from './output/event_2.json'
-// import event_4 from './output/event_4.json'
-import event_5 from './output/event_5.json'
-
 export default {
     props: [],
     components: {
@@ -213,10 +208,11 @@ export default {
         },
         getStats() {
             this.loading = true;
-            return axios(realUrl(__Root, `rank-analysis/stats/event${this.id}.json`), "GET", false)
+            // return axios(realUrl(__Root, `rank-analysis/stats/event${this.id}.json`), "GET", false)
+            return axios(realUrl(__Root, `data/analysis-dungeon-rank/output/event_${this.id}.json`), "GET", false)
                 .then((res) => {
-                    // this.stats = res;
-                    this.stats = event_5;
+                    this.stats = res;
+                    // this.stats = event_5;
                     this.changeBoss(this.current_boss);
                 })
                 .catch((err) => {
