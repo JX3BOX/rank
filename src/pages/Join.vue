@@ -4,7 +4,9 @@
         <div class="m-rank-primary">
             <div class="m-rank-join">
                 <div class="m-rank-header">
-                    <img class="u-logo" :src="LOGO" />
+                    <a href="/rank" target="_blank">
+                        <img class="u-logo" :src="LOGO" />
+                    </a>
                 </div>
                 <div class="m-rank-content" v-if="isLogin"  v-loading="loading">
                     <div class="m-join m-join-team" >
