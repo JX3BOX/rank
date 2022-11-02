@@ -170,19 +170,16 @@ export default {
                 this.loadData();
             },
         },
-        "$route.query.aid": {
+        "$route.query": {
             handler: function (val) {
-                if (val) {
-                    this.achieve_id = val;
+                if (val.aid) {
+                    this.achieve_id = val.aid;
+                }
+                if (val.server) {
+                    this.server = val.server;
                 }
             },
-        },
-        "$route.query.server": {
-            handler: function (val) {
-                if (val) {
-                    this.server = server;
-                }
-            },
+            immediate: true,
         },
         achieves: {
             immediate: true,
