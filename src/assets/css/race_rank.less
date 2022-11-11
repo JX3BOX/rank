@@ -103,7 +103,7 @@
             color:#0cf;
         }
     }
-    
+
 }
 
 .m-rank-top100-null {
@@ -248,6 +248,11 @@
     .u-member {
         .fz(12px);
         .mb(5px);
+
+        &-content {
+            .flex;
+            align-items: center;
+        }
     }
 
     .u-username {
@@ -266,11 +271,11 @@
 
 .m-rank-top100-list {
     @w : (@box_width - 40px) / 3;
-    
+
     .is-No1,
     .is-No2,
     .is-No3 {
-        
+
         .w(@w);
         box-sizing: border-box;
         .pr;

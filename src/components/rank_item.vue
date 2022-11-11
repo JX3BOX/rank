@@ -49,9 +49,9 @@
         <!-- 队员 -->
         <el-row class="u-teammates" :gutter="10">
             <el-col class="u-member" :span="i < 3 ? 8 : span" v-for="(member, j) in item.members" :key="j">
-                <div>
+                <div class="u-member-content">
                     <img loading="lazy" class="u-mount" :src="member | showMemberMount" />
-                    <span class="u-username">{{ member | showMemberName }}</span>
+                    <span class="u-username" :title="member | showMemberName">{{ member | showMemberName }}</span>
                 </div>
             </el-col>
         </el-row>
