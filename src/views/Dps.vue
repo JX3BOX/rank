@@ -293,7 +293,7 @@ export default {
             },
         },
         aid: {
-            // immediate: true,
+            immediate: true,
             handler: function(val) {
                 if(!val) return
                 if (val == "all") {
@@ -386,6 +386,7 @@ export default {
             }
         },
         loadMixRank() {
+            if (!this.allParams.aids) return false;
             this.loading = true;
             getMixRank(this.allParams)
                 .then((res) => {
