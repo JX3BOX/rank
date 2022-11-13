@@ -293,7 +293,7 @@ export default {
             },
         },
         aid: {
-            immediate: true,
+            // immediate: true,
             handler: function(val) {
                 if(!val) return
                 if (val == "all") {
@@ -411,7 +411,7 @@ export default {
             })
         },
         getBattleLink(id){
-            return `/battle?battle_id=${encodeURIComponent(id)}`
+            return `/battle/#/search?battle_id=${encodeURIComponent(id)}`
         }
     },
     filters: {
