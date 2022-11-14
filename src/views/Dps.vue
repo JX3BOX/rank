@@ -280,7 +280,7 @@ export default {
         },
         max_dps: function() {
             let dps_bucket = this.data.map((item, i) => {
-                return item.dps || item.hps;
+                return this.isTherapy(item.mount) ? item.hps : item.dps;
             });
             return Math.max(...dps_bucket);
         },
