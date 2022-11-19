@@ -166,7 +166,7 @@
                         </el-popover> -->
                         <span v-if="aid !== 'all'" class="u-more" :ref="'pop'+ item.role" @click="clickPop(item)">查看</span>
                         <span v-if="aid !== 'all'" class="u-misc-div">|</span>
-                        <a class="u-log" target="_blank" :href="getBattleLink(item.battleId)">日志</a>
+                        <a class="u-log" v-if="item.battleId" target="_blank" :href="getBattleLink(item.battleId)">日志</a>
                     </el-col>
                 </el-row>
             </template>
