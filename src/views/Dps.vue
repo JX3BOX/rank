@@ -140,7 +140,7 @@
                             {{ showDHPS(item) }}
                         </div></el-col
                     >
-                    <el-col :span="6">
+                    <el-col :span="(aid !== 'all' || item.battle_exist) ? 6 : 8">
                         <div class="u-total">
                             <span class="u-damage"
                                 ><span>{{ isTherapy(item.mount) ? "总治疗" : "总伤害" }}</span>
@@ -153,7 +153,7 @@
                             </span>
                         </div>
                     </el-col>
-                    <el-col :span="2" class="u-misc">
+                    <el-col :span="2" class="u-misc" v-if="aid !== 'all' || item.battle_exist">
                         <!-- <el-popover with="1260" popper-class="u-dps-rank-pop">
                             <rank-item
                                 class="u-dps-rank-item"
@@ -165,8 +165,8 @@
                             <span class="u-more" slot="reference">查看</span>
                         </el-popover> -->
                         <span v-if="aid !== 'all'" class="u-more" :ref="'pop'+ item.role" @click="clickPop(item)">查看</span>
-                        <span v-if="aid !== 'all'" class="u-misc-div">|</span>
-                        <a class="u-log" v-if="item.battleId" target="_blank" :href="getBattleLink(item.battleId)">日志</a>
+                        <span v-if="aid !== 'all' && item.battle_exist" class="u-misc-div">|</span>
+                        <a v-if="item.battle_exist" class="u-log" target="_blank" :href="getBattleLink(item.battleId)">日志</a>
                     </el-col>
                 </el-row>
             </template>
