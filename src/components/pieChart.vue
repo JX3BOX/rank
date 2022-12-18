@@ -140,6 +140,9 @@ export default {
                                           case "药宗":
                                               return "#16708a";
                                               break;
+                                            case "刀宗":
+                                                return "#6bb7f2";
+                                                break;
                                           case "冰心诀":
                                               return "#FF7DAD";
                                               break;
@@ -227,6 +230,10 @@ export default {
                                           case "灵素":
                                               return "#39bf9b";
                                               break;
+                                            case "孤锋诀":
+                                            return "#6bb7f2";
+                                            break;
+
                                           default:
                                               // console.log(param)
                                               return undefined;
