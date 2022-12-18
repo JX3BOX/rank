@@ -232,7 +232,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["server_rank_team_count"][this.current_boss];
-
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let exist_servers = fullData.item;
             let servers=exist_servers.map((server,i)=>{
@@ -252,6 +254,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["force_attendance_count"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let exist_servers = fullData.item;
             let _this=this
@@ -271,6 +276,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["mount_attendance_count"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let exist_servers = fullData.item;
             let servers=exist_servers.map((server,i)=>{
@@ -287,6 +295,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["hps_count"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let item = fullData.item;
             let _this=this
@@ -310,6 +321,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["hps_attendance_count"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let exist_servers = fullData.item;
             let servers=exist_servers.map((server,i)=>{
@@ -333,6 +347,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["tank_count"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let item = fullData.item;
             let _this=this
@@ -357,6 +374,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["tank_attendance_count"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let exist_servers = fullData.item;
             let servers=exist_servers.map((server,i)=>{
@@ -379,6 +399,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["dps_count"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let exist_servers = fullData.item;
             let servers=exist_servers.map((server,i)=>{
@@ -401,6 +424,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["mount_type_attendance_count"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let item = fullData.item;
             let servers=item.map((name,i)=>{
@@ -428,6 +454,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["leader_mount_type_count"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let item = fullData.item;
             let servers=item.map((name,i)=>{
@@ -450,7 +479,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["top10_achieve_team_count"][this.current_boss];
-
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let exist_servers = fullData.item;
             let servers=exist_servers.map((server,i)=>{
@@ -473,7 +504,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["rank_mount_dps"][this.current_boss];
-
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let item = fullData.item;
             let servers=item.map((server,i)=>{
@@ -532,6 +565,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["rank_mount_hps"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let item = fullData.item;
             let servers=item.map((server,i)=>{
@@ -555,6 +591,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["rank_mount_therapy"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let item = fullData.item;
             let servers=item.map((server,i)=>{
@@ -578,6 +617,9 @@ export default {
                 return false;
             }
             let fullData = this.stats["rank_mount_damage"][this.current_boss];
+            if(!fullData){
+                return;
+            }
             let data = fullData.value;
             let item = fullData.item;
             let servers=item.map((server,i)=>{
