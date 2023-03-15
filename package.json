@@ -13,6 +13,7 @@
     "@jx3box/jx3box-common": "^7.7.6",
     "@jx3box/jx3box-common-ui": "^7.1.1",
     "@jx3box/jx3box-data": "^3.0.6",
+    "animate.css": "^4.1.1",
     "axios": "^0.19.2",
     "core-js": "^3.4.3",
     "echarts": "^4.9.0",

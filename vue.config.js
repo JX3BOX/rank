@@ -6,30 +6,34 @@ const Setting = require("./setting.json");
 module.exports = {
 
     //❤️ Multiple pages ~
-    pages:{
-        index : {
-            title : '剑三秘境百强榜 - JX3BOX',
-            entry:'src/pages/index.js',
-            template : 'public/index.html',
-            filename:'index.html',
+    pages: {
+        index: {
+            title: '剑三秘境百强榜 - JX3BOX',
+            entry: 'src/pages/Seven/Enroll/index.js',
+            template: 'public/seven.html',
         },
-        event : {
-            title : '活动设置 - JX3BOX',
-            entry:'src/pages/event.js',
-            template : 'public/subpath.html',
-            filename:'event/index.html',
+        welcome: {
+            title: '剑三秘境百强榜 - JX3BOX',
+            entry: 'src/pages/Seven/Welcome/index.js',
+            template: 'public/seven.html',
         },
-        join : {
-            title : '报名入口 - 剑三秘境百强榜 - JX3BOX',
-            entry:'src/pages/join.js',
-            template : 'public/subpath.html',
-            filename:'join/index.html',
+        event: {
+            title: '活动设置 - JX3BOX',
+            entry: 'src/pages/event.js',
+            template: 'public/subpath.html',
+            filename: 'event/index.html',
         },
-        race : {
-            title : '剑三秘境百强榜 - JX3BOX',
-            entry:'src/pages/race.js',
-            template : 'public/race.html',
-            filename:'race/index.html',
+        join: {
+            title: '报名入口 - 剑三秘境百强榜 - JX3BOX',
+            entry: 'src/pages/join.js',
+            template: 'public/subpath.html',
+            filename: 'join/index.html',
+        },
+        race: {
+            title: '剑三秘境百强榜 - JX3BOX',
+            entry: 'src/pages/race.js',
+            template: 'public/race.html',
+            filename: 'race/index.html',
         },
     },
 
@@ -60,7 +64,7 @@ module.exports = {
                     request.setHeader("origin", "");
                 }
             },
-            "/api/cms":{
+            "/api/cms": {
                 target: process.env["DEV_SERVER"] == "true" ? "http://localhost:5120" : "https://cms.jx3box.com"
             },
             "/api": {
@@ -135,8 +139,8 @@ module.exports = {
 
         //💝 in-line svg imgs ~
         config.module
-			.rule("vue")
-			.use("vue-svg-inline-loader")
+            .rule("vue")
+            .use("vue-svg-inline-loader")
             .loader("vue-svg-inline-loader")
 
 
@@ -148,12 +152,12 @@ module.exports = {
             path.resolve(__dirname, './node_modules/@jx3box/jx3box-common/css/var.less'),
             path.resolve(__dirname, './src/assets/css/var.less')
         )
-        function addStyleResource (rule) {
+        function addStyleResource(rule) {
             rule.use('style-resource')
-              .loader('style-resources-loader')
-              .options({
-                patterns: preload_styles,
-            })
+                .loader('style-resources-loader')
+                .options({
+                    patterns: preload_styles,
+                })
         }
         types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)));
 
