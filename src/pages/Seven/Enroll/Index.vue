@@ -12,28 +12,38 @@
                 <div class="m-top_banner-box_title-box">
                     <div class="m-top_banner-box_back-group">
                         <img
-                            class="m-top_banner-box_title-box_icon animate__animated animate__backInDown"
-                            src="@/assets/img/seven/top_back-icon.png"
+                            class="m-top_banner-box_title-box_icon-left"
+                            src="@/assets/img/seven/title_logo_left.png"
                         />
                         <img
-                            class="m-top_banner-box_title-box_rank-icon animate__animated animate__backInUp"
+                            class="m-top_banner-box_title-box_icon-right"
+                            src="@/assets/img/seven/title_logo_right.png"
+                        />
+
+                        <img
+                            class="m-top_banner-box_title-box_icon-sword animate__animated animate__backInDown"
+                            src="@/assets/img/seven/title_logo_sword.png"
+                        />
+
+                        <img
+                            class="m-top_banner-box_title-box_rank-icon animate__animated animate__fadeIn animate__delay-1s"
                             src="@/assets/img/seven/7th.png"
                         />
                     </div>
-                    <div class="m-top_banner-box_title-group animate__animated animate__backInLeft">
+                    <div class="m-top_banner-box_title-group animate__animated animate__fadeIn animate__delay-1s">
                         <img class="m-top_banner-box_title-box_title" src="@/assets/img/seven/top_title.png" />
                         <span>第七届 · 副本百强赛</span>
                     </div>
                     <img
-                        class="m-top_banner-box_logo-group animate__animated animate__backInLeft"
+                        class="m-top_banner-box_logo-group animate__animated animate__fadeIn animate__delay-1s"
                         src="@/assets/img/seven/top_logo.png"
                     />
                     <img
-                        class="m-top_banner-box_title animate__animated animate__lightSpeedInRight"
+                        class="m-top_banner-box_title animate__animated animate__fadeIn animate__delay-1s"
                         src="@/assets/img/seven/title.png"
                     />
                     <div
-                        class="m-top_banner-box_down-more animate__animated animate__backInUp"
+                        class="m-top_banner-box_down-more animate__animated animate__fadeIn animate__delay-1s"
                         @click="handleAnchor('m-notice')"
                     >
                         <img src="@/assets/img/seven/down_arrow.png" />
@@ -98,8 +108,8 @@
                 >
                     <img class="m-two-title" src="@/assets/img/seven/02_title.png" />
                     <div class="m-two-btn_box">
-                        <global-btn> 报名参赛 </global-btn>
-                        <global-btn> 创建团队 </global-btn>
+                        <global-btn @click="join_visible = true"> 报名参赛 </global-btn>
+                        <global-btn @click="create_team_visible = true"> 创建团队 </global-btn>
                     </div>
                     <div class="m-two-btn_box_tips">*如果没有团队，则先创建团队后再报名</div>
                     <div class="m-two_options">
@@ -107,7 +117,7 @@
                         <div class="m-two_options_btn-box">
                             <a>管理团队</a>
                             <a>绑定角色到团队</a>
-                            <a>生成邀请链接</a>
+                            <a @click="invite_visible = true">生成邀请链接</a>
                             <a>发布团队招募</a>
                         </div>
                     </div>
@@ -120,8 +130,8 @@
                 >
                     <img class="m-two-title" src="@/assets/img/seven/02_title_bind.png" />
                     <div class="m-two-btn_box">
-                        <global-btn> 绑定角色 </global-btn>
-                        <global-btn> 加入团队 </global-btn>
+                        <global-btn @click="bind_role_visible = true"> 绑定角色 </global-btn>
+                        <global-btn @click="bind_team_visible = true"> 加入团队 </global-btn>
                     </div>
                     <div class="m-two-btn_box_tips">如果你曾经加入过参赛团队，且没有任何角色变动，则无需绑定团队</div>
                     <div class="m-two_options_bind">
@@ -185,27 +195,51 @@
                         :total="1000"
                     >
                     </el-pagination>
-
-                    <!-- 弹窗们 -->
-
-                    <global-modal :visible="bind_visible" @handleClose="bind_visible = false">
-                        <Bind />
-                    </global-modal>
                 </div>
             </div>
         </div>
+        <!-- 弹窗们 -->
+
+        <!-- 绑定角色 -->
+        <global-modal height="409px" :visible="bind_role_visible" @close="bind_role_visible = false">
+            <BindRole />
+        </global-modal>
+        <!-- 绑定团队 -->
+        <global-modal :visible="bind_team_visible" @close="bind_team_visible = false">
+            <BindTeam />
+        </global-modal>
+        <!-- 创建团队 -->
+        <global-modal :visible="create_team_visible" @close="create_team_visible = false">
+            <CreateTeam />
+        </global-modal>
+        <!-- 邀请链接 -->
+        <global-modal :visible="invite_visible" @close="invite_visible = false">
+            <Invite />
+        </global-modal>
+        <!-- 报名参赛 -->
+        <global-modal :visible="join_visible" @close="join_visible = false">
+            <Join />
+        </global-modal>
     </div>
 </template>
 
 <script>
 import global_btn from "@/components/seven/global_btn.vue";
 import global_modal from "@/components/seven/global_modal.vue";
-import Bind from "./Bind.vue";
+import BindRole from "./BindRole.vue";
+import BindTeam from "./BindTeam.vue";
+import CreateTeam from "./CreateTeam.vue";
+import Invite from "./Invite.vue";
+import Join from "./Join.vue";
 export default {
     components: {
         "global-btn": global_btn,
         "global-modal": global_modal,
-        "Bind": Bind,
+        BindRole: BindRole,
+        BindTeam: BindTeam,
+        CreateTeam: CreateTeam,
+        Invite: Invite,
+        Join: Join,
     },
     props: [],
     data: () => ({
@@ -232,10 +266,14 @@ export default {
             },
         ],
         value: "",
-        bind_visible: true,
+        bind_role_visible: false, //绑定角色
+        bind_team_visible: false, //绑定团队
+        create_team_visible: false, //创建团队
+        invite_visible: false, //邀请链接
+        join_visible: false, //报名参赛
         list: [], //列表数据
         active: 1, //tabs状态
-        show_part: "bind_role", //02的展示内容
+        show_part: "", //02的展示内容
     }),
     computed: {
         id: function () {
@@ -309,8 +347,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "../../../assets/css/seven/index.less";
 .container {
     // width: 3840px;
+    margin: 0 auto;
     overflow: hidden;
 }
 
@@ -409,32 +449,6 @@ export default {
         .m-three-query {
             display: flex;
             gap: 30px;
-            /deep/ .el-select {
-                width: 309px;
-                height: 62px;
-
-                .el-input__suffix {
-                    display: none;
-                }
-                input::placeholder {
-                    color: #fff;
-                }
-                input {
-                    font-family: "Microsoft YaHei";
-                    font-style: normal;
-                    font-weight: 700;
-                    font-size: 32px;
-                    line-height: 42px;
-                    border: 1px solid #ffffff;
-                    border-radius: 0;
-
-                    background: #2e2e2e;
-
-                    color: #ffffff;
-
-                    height: 62px;
-                }
-            }
         }
         .m-three-title {
             margin-bottom: 30px;
@@ -699,7 +713,7 @@ export default {
                 font-size: 32px;
                 line-height: 42px;
                 color: #ffffff;
-                animation: flicker 1.5s ease 0s infinite;
+                animation: flicker 1.5s ease-in-out 2s infinite;
             }
             .m-top_banner-box_down-more:hover {
                 opacity: 1;
@@ -746,17 +760,60 @@ export default {
                 width: 471px;
                 height: 471px;
                 position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 .m-top_banner-box_title-box_rank-icon {
                     width: 123.75px;
                     position: absolute;
                     top: 60px;
                     left: 50%;
-                    margin-left: -61px;
+                    margin-left: -56px;
                     height: 130px;
                 }
-                .m-top_banner-box_title-box_icon {
-                    width: 471px;
-                    height: 471px;
+                .m-top_banner-box_title-box_icon-sword {
+                    height: 459px;
+                    width: 280px;
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    margin-left: -140px;
+                }
+                // .m-top_banner-box_title-box_icon {
+                //     width: 471px;
+                //     height: 471px;
+                // }
+                .m-top_banner-box_title-box_icon-left,
+                .m-top_banner-box_title-box_icon-right {
+                    height: 394px;
+                    width: 158px;
+                    opacity: 0;
+                }
+                .m-top_banner-box_title-box_icon-left {
+                    animation: transLeft 1.5s ease 1s forwards;
+                }
+                .m-top_banner-box_title-box_icon-right {
+                    animation: transRight 1.5s ease 1s forwards;
+                }
+                @keyframes transRight {
+                    form {
+                        opacity: 0;
+                        transform: translateX(0px);
+                    }
+                    to {
+                        transform: translateX(40px);
+                        opacity: 1;
+                    }
+                }
+                @keyframes transLeft {
+                    form {
+                        opacity: 0;
+                        transform: translateX(0px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(-40px);
+                    }
                 }
             }
         }
