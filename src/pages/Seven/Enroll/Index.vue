@@ -1,225 +1,252 @@
 <template>
-    <div class="container">
-        <!-- top_banner -->
-        <!-- <div class=" animate__backInDown" style="background-color: red; height: 100px">123</div> -->
-        <div class="m-top">
-            <div class="m-top_character"></div>
-            <!-- <img class="m-top_character" src="@/assets/img/seven/duge_huage.png" /> -->
-            <video loop autoplay muted class="m-top_back-video" src="@/assets/video/mda-ik1fjvkzb0pg1qdi.mp4"></video>
-            <div class="m-top_banner-box">
-                <img class="m-top_banner" src="@/assets/img/seven/top_banner.png" />
+    <div class="p-container">
+        <div class="m-main">
+            <!-- top_banner -->
+            <!-- <div class=" animate__backInDown" style="background-color: red; height: 100px">123</div> -->
+            <div class="m-top">
+                <!-- <div class="m-top_character"></div> -->
+                <img class="m-top_character" src="@/assets/img/seven/duge_huage.png" />
+                <img class="m-top_7th-logo" src="@/assets/img/seven/top_7th.png" />
+                <video
+                    loop
+                    autoplay
+                    muted
+                    class="m-top_back-video"
+                    src="@/assets/video/mda-ik1fjvkzb0pg1qdi.mp4"
+                    ></video>
+                <div class="m-top_banner-box">
+                    <img class="m-top_banner" src="@/assets/img/seven/top_banner.png" />
 
-                <div class="m-top_banner-box_title-box">
-                    <div class="m-top_banner-box_back-group">
-                        <img
-                            class="m-top_banner-box_title-box_icon-left"
-                            src="@/assets/img/seven/title_logo_left.png"
-                        />
-                        <img
-                            class="m-top_banner-box_title-box_icon-right"
-                            src="@/assets/img/seven/title_logo_right.png"
-                        />
+                    <div class="m-top_banner-box_title-box">
+                        <div class="m-top_banner-box_back-group">
+                            <img
+                                class="m-top_banner-box_title-box_icon-left"
+                                src="@/assets/img/seven/title_logo_left.png"
+                            />
+                            <img
+                                class="m-top_banner-box_title-box_icon-right"
+                                src="@/assets/img/seven/title_logo_right.png"
+                            />
 
-                        <img
-                            class="m-top_banner-box_title-box_icon-sword animate__animated animate__backInDown"
-                            src="@/assets/img/seven/title_logo_sword.png"
-                        />
+                            <img
+                                class="m-top_banner-box_title-box_icon-sword animate__animated animate__slideInDown"
+                                src="@/assets/img/seven/title_logo_sword.png"
+                            />
 
+                            <img
+                                class="m-top_banner-box_title-box_rank-icon animate__animated animate__bounceIn animate__delay-3s"
+                                src="@/assets/img/seven/7th.png"
+                            />
+                        </div>
+                        <div class="m-top_banner-box_title-group animate__animated animate__fadeIn animate__delay-2s">
+                            <img class="m-top_banner-box_title-box_title" src="@/assets/img/seven/top_title.png" />
+                            <span>第七届 · 副本百强赛</span>
+                        </div>
                         <img
-                            class="m-top_banner-box_title-box_rank-icon animate__animated animate__fadeIn animate__delay-1s"
-                            src="@/assets/img/seven/7th.png"
+                            class="m-top_banner-box_logo-group animate__animated animate__fadeIn animate__delay-2s"
+                            src="@/assets/img/seven/top_logo.png"
                         />
+                        <img
+                            class="m-top_banner-box_title animate__animated animate__fadeIn animate__delay-2s"
+                            src="@/assets/img/seven/title.png"
+                        />
+                        <div class="m-top_banner-box_down-more" @click="handleAnchor('m-notice')">
+                            <img src="@/assets/img/seven/down_arrow.png" />
+                            <span>向下滑动展示查看内容</span>
+                        </div>
                     </div>
-                    <div class="m-top_banner-box_title-group animate__animated animate__fadeIn animate__delay-1s">
-                        <img class="m-top_banner-box_title-box_title" src="@/assets/img/seven/top_title.png" />
-                        <span>第七届 · 副本百强赛</span>
+                </div>
+            </div>
+            <!-- m-notice -->
+            <!-- v-animate="'animate__animated animate__backInDown'" -->
+            <div class="m-notice" id="m-notice">
+                <!-- <img class="m-notice_backdrop" src="@/assets/img/seven/BG.png" /> -->
+                <div class="m-notice-box">
+                    <div class="m-notice-tabs">
+                        <div :class="['m-notice-tabs_item', active == 1 && 'is_active']" @click="active = 1">
+                            赛事介绍
+                        </div>
+                        <div :class="['m-notice-tabs_item', active == 2 && 'is_active']" @click="active = 2">
+                            赛事奖励
+                        </div>
                     </div>
+
+                    <!-- 内容 -->
+                    <div class="m-notice-content">
+                        <!-- 报名按钮 -->
+                        <div @click="handleOptionsClick('m-one')" class="m-notice-content_enroll_btn">
+                            我已了解，前往报名
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 01 -->
+            <div class="m-one" id="m-one" v-if="show_one">
+                <img
+                    v-animate="'animate__animated  animate__slideInLeft'"
+                    class="m-one-tangmen"
+                    src="@/assets/img/seven/tangmen.png"
+                />
+                <div class="m-watermark-box-left">
+                    <img class="m-watermark" src="@/assets/img/seven/01_watermark.png" />
+                </div>
+                <div class="m-one-title_box" v-animate="'animate__animated  animate__slideInRight'">
+                    <img class="m-one-title" src="@/assets/img/seven/01_title.png" alt="" />
+                    <div class="m-one-btn_box">
+                        <global-btn @click="handleOptionsClick('team_join')"> 团队报名 </global-btn>
+                        <global-btn @click="handleOptionsClick('bind_role')"> 绑定角色 </global-btn>
+                    </div>
+                    <div class="m-one_tips">*报名仅限团长操作，各位团长请先给团队进行报名</div>
+                    <div class="m-one_warning">
+                        <img class="m-warning_icon" src="@/assets/img/seven/ic_round-warning.png" />
+                        <span>如果你曾经报名过赛事，且没有角色变更，则<br />不需要重新绑定角色</span>
+                    </div>
+                </div>
+            </div>
+            <div v-if="show_part">
+                <!-- 背景图 -->
+                <img class="m-backdrop" src="@/assets/img/seven/backdrop_one.png" />
+                <!-- 02 -->
+                <div class="m-two" id="m-two" v-if="!['m-one'].includes(show_part)">
                     <img
-                        class="m-top_banner-box_logo-group animate__animated animate__fadeIn animate__delay-1s"
-                        src="@/assets/img/seven/top_logo.png"
-                    />
-                    <img
-                        class="m-top_banner-box_title animate__animated animate__fadeIn animate__delay-1s"
-                        src="@/assets/img/seven/title.png"
+                        class="m-two-cangjian"
+                        v-animate="'animate__animated  animate__slideInRight'"
+                        src="@/assets/img/seven/cangjian.png"
                     />
                     <div
-                        class="m-top_banner-box_down-more animate__animated animate__fadeIn animate__delay-1s"
-                        @click="handleAnchor('m-notice')"
+                        v-if="show_part == 'team_join'"
+                        class="m-two-title_box"
+                        v-animate="'animate__animated  animate__slideInLeft'"
                     >
-                        <img src="@/assets/img/seven/down_arrow.png" />
-                        <span>向下滑动展示查看内容</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- m-notice -->
-        <!-- v-animate="'animate__animated animate__backInDown'" -->
-        <div class="m-notice" id="m-notice">
-            <!-- <img class="m-notice_backdrop" src="@/assets/img/seven/BG.png" /> -->
-            <div class="m-notice-box">
-                <div class="m-notice-tabs">
-                    <div :class="['m-notice-tabs_item', active == 1 && 'is_active']" @click="active = 1">赛事介绍</div>
-                    <div :class="['m-notice-tabs_item', active == 2 && 'is_active']" @click="active = 2">赛事奖励</div>
-                </div>
-
-                <!-- 内容 -->
-                <div class="m-notice-content">
-                    <!-- 报名按钮 -->
-                    <div @click="handleAnchor('m-one')" class="m-notice-content_enroll_btn">我已了解，前往报名</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 01 -->
-        <div class="m-one" id="m-one">
-            <img
-                v-animate="'animate__animated  animate__slideInLeft'"
-                class="m-one-tangmen"
-                src="@/assets/img/seven/tangmen.png"
-            />
-            <img class="m-one_watermark" src="@/assets/img/seven/01_watermark.png" />
-            <div class="m-one-title_box" v-animate="'animate__animated  animate__slideInRight'">
-                <img class="m-one-title" src="@/assets/img/seven/01_title.png" alt="" />
-                <div class="m-one-btn_box">
-                    <global-btn @click="handleOptionsClick('team_join')"> 团队报名 </global-btn>
-                    <global-btn @click="handleOptionsClick('bind_role')"> 绑定角色 </global-btn>
-                </div>
-                <div class="m-one_tips">*报名仅限团长操作，各位团长请先给团队进行报名</div>
-                <div class="m-one_warning">
-                    <img class="m-warning_icon" src="@/assets/img/seven/ic_round-warning.png" />
-                    <span>如果你曾经报名过赛事，且没有角色变更，则<br />不需要重新绑定角色</span>
-                </div>
-            </div>
-        </div>
-        <div v-if="show_part" style="margin-left: -960px; width: 3840px">
-            <!-- 背景图 -->
-            <img class="m-backdrop" src="@/assets/img/seven/backdrop_one.png" />
-            <!-- 02 -->
-            <div class="m-two" id="m-two">
-                <img
-                    class="m-two-cangjian"
-                    v-animate="'animate__animated  animate__slideInRight'"
-                    src="@/assets/img/seven/cangjian.png"
-                />
-                <div
-                    v-if="show_part == 'team_join'"
-                    class="m-two-title_box"
-                    v-animate="'animate__animated  animate__slideInLeft'"
-                >
-                    <img class="m-two-title" src="@/assets/img/seven/02_title.png" />
-                    <div class="m-two-btn_box">
-                        <global-btn @click="join_visible = true"> 报名参赛 </global-btn>
-                        <global-btn @click="create_team_visible = true"> 创建团队 </global-btn>
-                    </div>
-                    <div class="m-two-btn_box_tips">*如果没有团队，则先创建团队后再报名</div>
-                    <div class="m-two_options">
-                        <span>报名成功，你还可以进行以下操作：</span>
-                        <div class="m-two_options_btn-box">
-                            <a>管理团队</a>
-                            <a>绑定角色到团队</a>
-                            <a @click="invite_visible = true">生成邀请链接</a>
-                            <a>发布团队招募</a>
+                        <img class="m-two-title" src="@/assets/img/seven/02_title.png" />
+                        <div class="m-two-btn_box">
+                            <global-btn @click="join_visible = true"> 报名参赛 </global-btn>
+                            <global-btn @click="create_team_visible = true"> 创建团队 </global-btn>
                         </div>
-                    </div>
-                </div>
-
-                <div
-                    v-if="show_part == 'bind_role'"
-                    class="m-two-title_box"
-                    v-animate="'animate__animated  animate__slideInLeft'"
-                >
-                    <img class="m-two-title" src="@/assets/img/seven/02_title_bind.png" />
-                    <div class="m-two-btn_box">
-                        <global-btn @click="bind_role_visible = true"> 绑定角色 </global-btn>
-                        <global-btn @click="bind_team_visible = true"> 加入团队 </global-btn>
-                    </div>
-                    <div class="m-two-btn_box_tips">如果你曾经加入过参赛团队，且没有任何角色变动，则无需绑定团队</div>
-                    <div class="m-two_options_bind">
-                        <div class="m-two_options_bind-box">
-                            <div class="m-two_options_bind-box_title">寻找正在招募的团队</div>
-                            <div class="m-two_options_bind-box_tips">请先绑定角色后点击下方招募大厅按钮</div>
-                            <a>查看招募大厅</a>
-                        </div>
-                        <div class="m-two_options_bind-box">
-                            <div class="m-two_options_bind-box_title">需要查看团队信息</div>
-                            <div class="m-two_options_bind-box_tips">点击下方按钮进入团队平台</div>
-                            <a>前往团队平台</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 背景图 -->
-            <img class="m-backdrop" src="@/assets/img/seven/backdrop_two.png" />
-            <!-- 03 -->
-
-            <div class="m-three" id="m-three">
-                <img
-                    v-animate="'animate__animated  animate__slideInLeft'"
-                    class="m-three-tiance"
-                    src="@/assets/img/seven/tiance.png"
-                />
-                <img class="m-three_watermark" src="@/assets/img/seven/01_watermark.png" />
-                <div class="m-three-title_box" v-animate="'animate__animated  animate__slideInRight'">
-                    <img class="m-three-title" src="@/assets/img/seven/03_title.png" />
-
-                    <div class="m-three-query">
-                        <el-select v-model="value" placeholder="请选择">
-                            <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
-                            >
-                            </el-option>
-                        </el-select>
-                        <global-btn style="height: 62px">发布招募</global-btn>
-                    </div>
-                    <div class="m-three-list">
-                        <div class="m-three-list_box" v-for="(item, index) in list" :key="index">
-                            <div class="m-three-list_box-cover"></div>
-                            <div class="m-three-list_box-info">
-                                <span>团队名字</span>
-                                <span>服务器</span>
-                                <div class="m-three-list_box-desc">
-                                    招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息
-                                </div>
+                        <div class="m-two-btn_box_tips">*如果没有团队，则先创建团队后再报名</div>
+                        <div class="m-two_options">
+                            <span>报名成功，你还可以进行以下操作：</span>
+                            <div class="m-two_options_btn-box">
+                                <a>管理团队</a>
+                                <a>绑定角色到团队</a>
+                                <a @click="invite_visible = true">生成邀请链接</a>
+                                <a @click="handleOptionsClick('publish')">发布团队招募</a>
                             </div>
                         </div>
                     </div>
 
-                    <el-pagination
-                        background
-                        :page-size="20"
-                        :pager-count="11"
-                        layout="prev, pager, next"
-                        :total="1000"
+                    <div
+                        v-if="show_part == 'bind_role'"
+                        class="m-two-title_box"
+                        v-animate="'animate__animated  animate__slideInLeft'"
                     >
-                    </el-pagination>
+                        <img class="m-two-title" src="@/assets/img/seven/02_title_bind.png" />
+                        <div class="m-two-btn_box">
+                            <global-btn @click="bind_role_visible = true"> 绑定角色 </global-btn>
+                            <global-btn @click="bind_team_visible = true"> 加入团队 </global-btn>
+                        </div>
+                        <div class="m-two-btn_box_tips">
+                            如果你曾经加入过参赛团队，且没有任何角色变动，则无需绑定团队
+                        </div>
+                        <div class="m-two_options_bind">
+                            <div class="m-two_options_bind-box">
+                                <div class="m-two_options_bind-box_title">寻找正在招募的团队</div>
+                                <div class="m-two_options_bind-box_tips">请先绑定角色后点击下方招募大厅按钮</div>
+                                <a @click="handleOptionsClick('check')">查看招募大厅</a>
+                            </div>
+                            <div class="m-two_options_bind-box">
+                                <div class="m-two_options_bind-box_title">需要查看团队信息</div>
+                                <div class="m-two_options_bind-box_tips">点击下方按钮进入团队平台</div>
+                                <a>前往团队平台</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="show_three">
+                    <!-- 背景图 -->
+                    <img class="m-backdrop" src="@/assets/img/seven/backdrop_two.png" />
+                    <!-- 03 -->
+
+                    <div class="m-three" id="m-three">
+                        <img
+                            v-animate="'animate__animated  animate__slideInLeft'"
+                            class="m-three-tiance"
+                            src="@/assets/img/seven/tiance.png"
+                        />
+                        <div class="m-watermark-box-left">
+                            <img class="m-watermark" src="@/assets/img/seven/01_watermark.png" />
+                        </div>
+                        <div class="m-three-title_box" v-animate="'animate__animated  animate__slideInRight'">
+                            <img class="m-three-title" src="@/assets/img/seven/03_title.png" />
+
+                            <div class="m-three-query">
+                                <el-select v-model="value" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in options"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+                                <global-btn v-if="show_three == 'publish'" style="height: 62px">发布招募</global-btn>
+                            </div>
+                            <div class="m-three-list">
+                                <div class="m-three-list_box" v-for="(item, index) in list" :key="index">
+                                    <div class="m-three-list_box-cover"></div>
+                                    <div class="m-three-list_box-info">
+                                        <span>团队名字</span>
+                                        <span>服务器</span>
+                                        <div class="m-three-list_box-desc">
+                                            招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息招募信息
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <el-pagination
+                                background
+                                :page-size="20"
+                                :pager-count="11"
+                                layout="prev, pager, next"
+                                :total="1000"
+                            >
+                            </el-pagination>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- 弹窗们 -->
 
-        <!-- 绑定角色 -->
-        <global-modal height="409px" :visible="bind_role_visible" @close="bind_role_visible = false">
-            <BindRole />
-        </global-modal>
-        <!-- 绑定团队 -->
-        <global-modal :visible="bind_team_visible" @close="bind_team_visible = false">
-            <BindTeam />
-        </global-modal>
-        <!-- 创建团队 -->
-        <global-modal :visible="create_team_visible" @close="create_team_visible = false">
-            <CreateTeam />
-        </global-modal>
-        <!-- 邀请链接 -->
-        <global-modal :visible="invite_visible" @close="invite_visible = false">
-            <Invite />
-        </global-modal>
-        <!-- 报名参赛 -->
-        <global-modal :visible="join_visible" @close="join_visible = false">
-            <Join />
-        </global-modal>
+            <!-- 弹窗们 -->
+
+            <!-- 绑定角色 -->
+            <global-modal
+                :seven_icon_style="{ bottom: '-150px' }"
+                height="409px"
+                :visible="bind_role_visible"
+                @close="bind_role_visible = false"
+            >
+                <BindRole />
+            </global-modal>
+            <!-- 绑定团队 -->
+            <global-modal :visible="bind_team_visible" @close="bind_team_visible = false">
+                <BindTeam />
+            </global-modal>
+            <!-- 创建团队 -->
+            <global-modal :visible="create_team_visible" @close="create_team_visible = false">
+                <CreateTeam />
+            </global-modal>
+            <!-- 邀请链接 -->
+            <global-modal :visible="invite_visible" @close="invite_visible = false">
+                <Invite />
+            </global-modal>
+            <!-- 报名参赛 -->
+            <global-modal :visible="join_visible" @close="join_visible = false">
+                <Join />
+            </global-modal>
+        </div>
     </div>
 </template>
 
@@ -274,6 +301,8 @@ export default {
         list: [], //列表数据
         active: 1, //tabs状态
         show_part: "", //02的展示内容
+        show_one: false, //01的展示内容
+        show_three: "", //03的展示内容
     }),
     computed: {
         id: function () {
@@ -290,6 +319,18 @@ export default {
                 case "team_join":
                     this.show_part = "team_join";
                     setTimeout(() => this.handleAnchor("m-two"), 100);
+                    break;
+                case "m-one":
+                    this.show_one = true;
+                    setTimeout(() => this.handleAnchor("m-one"), 100);
+                    break;
+                case "publish":
+                    this.show_three = "publish";
+                    setTimeout(() => this.handleAnchor("m-three"), 100);
+                    break;
+                case "check":
+                    this.show_three = "check";
+                    setTimeout(() => this.handleAnchor("m-three"), 100);
                     break;
                 case "bind_role":
                     this.show_part = "bind_role";
@@ -313,8 +354,7 @@ export default {
     directives: {
         animate: {
             inserted: function (el, binding) {
-                // console.log(distance)
-                console.log(binding, 111);
+                // console.log(binding, 111);
                 binding.addClass = () => {
                     const { top } = el.getBoundingClientRect();
                     const h = document.documentElement.clientHeight || document.body.clientHeight;
@@ -348,18 +388,61 @@ export default {
 
 <style lang="less" scoped>
 @import "../../../assets/css/seven/index.less";
-.container {
-    // width: 3840px;
-    margin: 0 auto;
+
+.p-container {
     overflow: hidden;
+    @media screen and (min-width: 1920px) and (max-width: 2560px) {
+        margin-left: -960px;
+    }
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+    img {
+        -webkit-user-drag: none;
+    }
+}
+.m-watermark-box-left {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    .m-watermark {
+        transform: translate(100%, -100%);
+        animation: run 10s linear infinite;
+        position: absolute;
+        width: 1836.66px;
+        height: 1675.66px;
+        left: -203px;
+        bottom: -415px;
+    }
 }
 
+@keyframes run {
+    form {
+        transform: translate(100%, -100%);
+    }
+    to {
+        transform: translate(-100%, 100%);
+    }
+}
+// .m-watermark-copy {
+//     transform: translate(100%, -100%);
+//     // animation: run 10s linear 10s infinite;
+// }
+// .m-watermark {
+//     // animation: run 10s linear infinite;
+// }
+
+.m-main {
+    width: 3840px;
+}
 .m-backdrop {
     height: 300px;
 }
 
 .m-three {
-    height: 1200px;
+    height: 1187px;
     background-repeat: no-repeat;
     background-image: url("../../../assets/img/seven/03.png");
     position: relative;
@@ -549,14 +632,11 @@ export default {
     }
 }
 .m-one {
-    width: 3840px;
     height: 900px;
     background-repeat: no-repeat;
     background-image: url("../../../assets/img/seven/01.png");
     position: relative;
-    margin-left: -960px;
-    // .m-one_watermark {
-    // }
+
     .m-one-title_box {
         position: absolute;
         left: 1180px;
@@ -564,15 +644,15 @@ export default {
         z-index: 9;
         .m-one_warning {
             display: flex;
-            // align-items: center;
             font-family: "Microsoft YaHei";
             font-weight: 700;
             font-size: 14px;
-            line-height: 18px;
             color: #fff;
             .m-warning_icon {
+                margin-top: 2px;
                 width: 15px;
-                height: 15px;
+                height: 14px;
+                margin-right: 4px;
             }
         }
         .m-one_tips {
@@ -643,7 +723,7 @@ export default {
             .m-notice-content_enroll_btn {
                 position: absolute;
                 bottom: -45px;
-                right: -220px;
+                right: -216px;
                 cursor: pointer;
                 width: 377px;
                 height: 90px;
@@ -688,6 +768,13 @@ export default {
     height: 1200px;
     display: flex;
     justify-content: center;
+    .m-top_7th-logo {
+        position: absolute;
+        width: 911px;
+        height: 957px;
+        right: 0;
+        bottom: 0;
+    }
     .m-top_banner-box {
         width: 1000px;
         position: relative;
@@ -736,6 +823,8 @@ export default {
                 height: 345px;
                 transform: rotate(2.59deg);
                 position: relative;
+                animation-delay: 2s;
+
                 z-index: 10;
             }
             .m-top_banner-box_logo-group {
@@ -748,6 +837,7 @@ export default {
                 font-style: normal;
                 font-weight: 700;
                 font-size: 20px;
+                animation-delay: 1.5s;
                 color: #ffffff;
                 span {
                     position: absolute;
@@ -826,12 +916,13 @@ export default {
     }
 
     .m-top_character {
-        background: url("../../../assets/img/seven/duge_huage.png") no-repeat;
-        background-position-x: -730px;
+        // background: url("../../../assets/img/seven/duge_huage.png") no-repeat;
+        // background-position-x: -730px;
         position: absolute;
-        left: 0;
-        height: 100%;
-        width: 100%;
+        left: 228px;
+
+        width: 3085px;
+        height: 1200px;
         bottom: 0;
         z-index: 9;
     }

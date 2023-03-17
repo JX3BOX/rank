@@ -4,13 +4,12 @@
         :close-on-click-modal="false"
         :show-close="false"
         :visible.sync="visible"
-        :modal="false"
         mode
         destroy-on-close
     >
         <div class="m-modal">
             <div class="m-content" :style="{ height }">
-                <img class="m-content_7th" src="@/assets/img/seven/modal_7th.png" />
+                <img :style="seven_icon_style" class="m-content_7th" src="@/assets/img/seven/modal_7th.png" />
                 <img class="m-content_logo" src="@/assets/img/seven/modal_logo.png" />
                 <div style="position: relative; z-index: 99; height: 100%">
                     <slot></slot>
@@ -30,6 +29,10 @@ export default {
         visible: {
             default: false,
             type: Boolean,
+        },
+        seven_icon_style: {
+            type: Object,
+            default: () => {},
         },
         height: {
             type: String,

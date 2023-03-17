@@ -38,7 +38,11 @@
                                 </el-select>
                             </el-form-item>
                             <el-form-item>
-                                <el-input placeholder="请输入抖音直播间号" v-model="formVals.checkPass"></el-input>
+                                <el-input
+                                    class="m-input"
+                                    placeholder="请输入抖音直播间号"
+                                    v-model="formVals.checkPass"
+                                ></el-input>
                             </el-form-item>
                         </div>
                     </div>
@@ -54,7 +58,7 @@
                             v-model="formVals.checkPass"
                         ></el-input>
                     </el-form-item>
-                    <div class="m-footer_create-btn" @click="handleJoinTeam">创建团队</div>
+                    <div class="m-footer_create-btn" @click="handleJoinTeam">创建<br />团队</div>
                 </div>
             </el-form>
         </div>
@@ -277,6 +281,7 @@ export default {
         }
         .m-textarea {
             /deep/ textarea {
+                padding: 10px;
                 width: 568px;
                 height: 150px !important;
                 background: #24292e;
@@ -299,7 +304,18 @@ export default {
                 .m-main_form-top_right-bottom {
                     width: 558px;
                     display: flex;
+                    gap: 10px;
+                    // /deep/ .el-input {
+                    // }
+                    .m-input {
+                        /deep/ input {
+                            width: 350px;
+                        }
+                    }
                     /deep/ .el-select {
+                        .el-input {
+                            width: 198px;
+                        }
                         width: 198px;
                         input {
                             width: 198px;
@@ -307,9 +323,7 @@ export default {
                             padding: 0;
                         }
                     }
-                    /deep/ .el-input {
-                        width: 350px;
-                    }
+
                     /deep/.el-input .el-select {
                         height: 62px;
                     }
