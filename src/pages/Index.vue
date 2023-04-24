@@ -12,8 +12,10 @@
                             <img :src="item | eventCover" :alt="item.name" />
                             <b>{{ item.name }}</b>
                             <div class="u-status">
-                                <span v-if="item.client" :class="item.client">{{ item. client == 'std' ? '重制' : '缘起' }}</span>
-                                <i :class="{on : item.status}">{{ item.status ? '进行中' : '已结束' }}</i>
+                                <span v-if="item.client" :class="item.client">{{
+                                    item.client == "std" ? "重制" : "缘起"
+                                }}</span>
+                                <i :class="{ on: item.status }">{{ item.status ? "进行中" : "已结束" }}</i>
                             </div>
                         </a>
                     </li>
@@ -67,9 +69,9 @@ export default {
         eventLink: function (val) {
             return "./race/#/" + val;
         },
-        eventCover: function (item){
-            return item.banner_pc || PICS.cover(item.ID)
-        }
+        eventCover: function (item) {
+            return item.banner_pc || PICS.cover(item.ID);
+        },
     },
     watch: {
         params: function () {
@@ -80,9 +82,14 @@ export default {
         this.loadData();
     },
     components: {},
+    beforeCreate: function () {
+        if (process.env.NODE_ENV == "production") {
+            location.href = location.origin + "/jdt";
+        }
+    },
 };
 </script>
 
 <style lang="less">
-    @import "../assets/css/index.less";
+@import "../assets/css/index.less";
 </style>

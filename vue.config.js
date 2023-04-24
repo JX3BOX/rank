@@ -9,13 +9,8 @@ module.exports = {
     pages: {
         index: {
             title: '剑三秘境百强榜 - JX3BOX',
-            entry: 'src/pages/Seven/Enroll/index.js',
-            template: 'public/seven.html',
-        },
-        welcome: {
-            title: '剑三秘境百强榜 - JX3BOX',
-            entry: 'src/pages/Seven/Welcome/index.js',
-            template: 'public/seven.html',
+            entry: 'src/pages/index.js',
+            template: 'public/index.html',
         },
         event: {
             title: '活动设置 - JX3BOX',
