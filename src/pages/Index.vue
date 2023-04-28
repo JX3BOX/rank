@@ -82,11 +82,11 @@ export default {
         this.loadData();
     },
     components: {},
-    beforeCreate: function () {
-        if (process.env.NODE_ENV == "production") {
-            location.href = location.origin + "/jdt";
-        }
-    },
+    // beforeCreate: function () {
+    //     if (process.env.NODE_ENV == "production") {
+    //         location.href = location.origin + "/jdt";
+    //     }
+    // },
 };
 </script>
 
