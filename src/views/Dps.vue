@@ -94,7 +94,8 @@
                 <el-col :span="3"><div class="u-team">来自团队</div></el-col>
                 <el-col :span="4"><div class="u-role">角色名</div></el-col>
                 <el-col :span="4"><div class="u-dps">DPS/HPS</div></el-col>
-                <el-col :span="8"><div class="u-more">击杀详情</div></el-col>
+                <el-col :span="2"><div class="u-achievement">成就点数</div></el-col>
+                <el-col :span="6"><div class="u-more">击杀详情</div></el-col>
             </el-row>
             <template v-for="(item, i) in list">
                 <el-row
@@ -140,7 +141,10 @@
                             {{ showDHPS(item) }}
                         </div></el-col
                     >
-                    <el-col :span="(aid !== 'all' || item.battle_exist) ? 6 : 8">
+                    <el-col :span="2">
+                        <div class="u-achievement">{{ item.achievement || '未记录' }}</div>
+                    </el-col>
+                    <el-col :span="(aid !== 'all' || item.battle_exist) ? 4 : 6">
                         <div class="u-total">
                             <span class="u-damage"
                                 ><span>{{ isTherapy(item.mount) ? "总治疗" : "总伤害" }}</span>
