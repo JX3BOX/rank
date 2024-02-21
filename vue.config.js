@@ -30,6 +30,12 @@ module.exports = {
             template: 'public/race.html',
             filename: 'race/index.html',
         },
+        lover: {
+            title: '剑三情缘杯 - JX3BOX',
+            entry: 'src/pages/lover.js',
+            template: 'public/lover.html',
+            filename: 'lover/index.html',
+        },
     },
 
     //❤️ Porxy ~
