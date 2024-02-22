@@ -1,0 +1,44 @@
+<template>
+    <div class="m-lover-info">
+        <div class="u-title">
+            <img class="u-img" :src="`${__imgRoot}info-title.png`" />
+        </div>
+        <div class="m-lover-box m-info-box"></div>
+        <div class="m-lover-process">
+            <div class="m-step" v-for="(item, i) in process" :key="i">
+                <div class="u-icon">
+                    <img class="u-img" :src="`${__imgRoot}step${i + 1}.svg`" />
+                </div>
+                <span class="u-dot"><i></i></span>
+                <span class="u-name">{{ item.name }}</span>
+                <span class="u-time">{{ item.time }}</span>
+                <span class="u-desc">{{ item.desc }}</span>
+            </div>
+        </div>
+        <div class="m-lover-box"></div>
+        <div class="m-lover-box"></div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "LoverInfo",
+    inject: ["__imgRoot"],
+    data: function () {
+        return {
+            process: [
+                { name: "报名申请", time: "~01.31", desc: "选择你心仪的TA一起参赛，必须用报名的角色进后续的比赛" },
+                { name: "海选投票", time: "02.01~02.21", desc: "快来磕CP，撒份子钱啦" },
+                { name: "海选入围", time: "02.21", desc: "" },
+                { name: "初赛日", time: "02.21", desc: "" },
+                { name: "决赛日", time: "02.21", desc: "" },
+            ],
+        };
+    },
+    computed: {},
+    methods: {},
+};
+</script>
+<style lang="less">
+@import "~@/assets/css/lover/info.less";
+</style>
