@@ -1,5 +1,6 @@
 <template>
     <div class="p-lover">
+        <Header></Header>
         <div class="m-lover-kv">
             <div class="m-menus wp">
                 <template v-for="item in 2">
@@ -19,6 +20,7 @@
         <div class="wp">
             <router-view></router-view>
         </div>
+        <Footer></Footer>
     </div>
 </template>
 

@@ -13,4 +13,14 @@ function hasJoined(event_id, uid) {
     });
 }
 
-export { joinEvent, hasJoined };
+function getMyJoin(eventId) {
+    return $team().get(`/api/pvp-event/${eventId}/my/join-record`);
+}
+function joinLover(eventId, data) {
+    return $team().post(`/api/pvp-event/${eventId}/join-record`, data);
+}
+function joinRecord(params) {
+    return $team().get(`/pvp-event/{eventId}/my/join-record`, { params });
+}
+
+export { joinEvent, hasJoined, getMyJoin, joinLover, joinRecord };

@@ -1,6 +1,6 @@
 <template>
-    <div class="m-lover-info">
-        <div class="u-title">
+    <div class="m-lover-info m-lover-page">
+        <div class="u-page-title">
             <img class="u-img" :src="`${__imgRoot}info-title.png`" />
         </div>
         <div class="m-lover-box m-info-box"></div>
