@@ -59,18 +59,6 @@ module.exports = {
                     request.setHeader("origin", "");
                 }
             }, 
-            "/api/my-lover": {
-                "target": "https://team.api.jx3box.com",
-                "onProxyReq": function (request) {
-                    request.setHeader("origin", "");
-                }
-            },
-            "/api/pvp-event": {
-                "target": "https://team.api.jx3box.com",
-                "onProxyReq": function (request) {
-                    request.setHeader("origin", "");
-                }
-            },
             "/api/team": {
                 "target": "https://team.api.jx3box.com",
                 "onProxyReq": function (request) {
