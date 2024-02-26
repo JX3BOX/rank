@@ -1,15 +1,15 @@
 <template>
     <div class="m-lover-vote">
         <div class="u-page-title">
-            <img class="u-img" :src="`${__imgRoot}vote-title.png`" />
+            <img class="u-img" :src="`${__imgRoot}vote-title.png?11`" />
         </div>
-        <div class="m-vote-box">
+        <div class="m-line-box">
             <div class="m-box">
                 <h2>投票规则</h2>
             </div>
         </div>
         <div class="m-vote-list">
-            <div class="m-vote-box" v-for="item in 8" :key="item">
+            <div class="m-line-box" v-for="item in 8" :key="item">
                 <div class="m-box">
                     <h4>人气值</h4>
                     <el-image class="u-img" src="">

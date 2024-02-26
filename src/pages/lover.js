@@ -16,11 +16,11 @@ reporter.install(Vue);
 
 // 数据与路由
 import router from "@/router/lover";
-// import store from "@/store/lover";
+import store from "@/store/lover";
 
 import App from "./Lover.vue";
 new Vue({
     router,
-    // store,
+    store,
     render: (h) => h(App),
 }).$mount("#app");
