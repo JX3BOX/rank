@@ -11,3 +11,13 @@ export function getMyLover() {
 export function setMyLover(id) {
     return $team().put(`/api/team/my-lover/item/${id}/star`);
 }
+
+// 报名
+export function joinLover(eventId, data) {
+    return $team().post(`/api/team/pvp-event/${eventId}/join-record`, data);
+}
+
+// 获取报名队伍
+export function getJoinList(eventId, params) {
+    return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/list`, { params });
+}

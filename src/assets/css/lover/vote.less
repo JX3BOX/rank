@@ -1,0 +1,75 @@
+.m-lover-vote {
+    @min-height: 120px;
+    .w(1240px);
+    .auto(x);
+    .m-vote-box {
+        .pr;
+        padding: 5px;
+        box-sizing: border-box;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        .m-box {
+            .full;
+            background: rgba(72, 36, 36, 0.7);
+            padding: 5px 10px;
+            min-height: @min-height;
+            box-sizing: border-box;
+        }
+    }
+    h2 {
+        .fz(24px,1.5);
+        margin: 0;
+        padding: 0;
+        color: #fff;
+    }
+    .m-vote-list {
+        .flex;
+        .mt(40px);
+        .fz(12px);
+        flex-wrap: wrap;
+        color: #fff;
+        gap: 10px;
+        .m-vote-box {
+            padding: 3px;
+            flex-shrink: 0;
+            .size(198px,288px);
+        }
+        h4 {
+            .fz(12px);
+            font-weight: normal;
+            margin: 0;
+            padding: 0;
+        }
+        .m-box {
+            .flex;
+            padding: 6px 5px;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .u-img {
+            .size(auto,120px);
+            background-color: #999;
+        }
+        .u-team {
+            .fz(20px);
+            .bold;
+            .nobreak;
+        }
+        .u-name {
+            .flex;
+            justify-content: space-between;
+        }
+        .u-slogan {
+            .nobreak;
+        }
+        .u-button {
+            .pointer;
+            .size(72px,30px);
+            align-self: flex-end;
+            background: url("@{lover}vote.svg") no-repeat center center;
+            background-size: 100% 100%;
+            &:hover {
+                filter: brightness(110%);
+            }
+        }
+    }
+}

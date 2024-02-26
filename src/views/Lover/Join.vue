@@ -84,7 +84,7 @@
 
 <script>
 import User from "@jx3box/jx3box-common/js/user.js";
-import { getMyLover } from "@/service/lover";
+import { getMyLover, joinLover } from "@/service/lover";
 import { authorLink } from "@jx3box/jx3box-common/js/utils";
 import uploadImage from "@jx3box/jx3box-comment-ui/src/components/upload.vue";
 export default {
@@ -131,6 +131,9 @@ export default {
         },
         toLogin() {
             User.toLogin();
+        },
+        submit() {
+            joinLover(this.form);
         },
     },
 };
