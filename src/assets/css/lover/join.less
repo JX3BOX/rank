@@ -1,5 +1,5 @@
 .m-lover-join {
-    @min-height: 360px; 
+    @min-height: 360px;
     .u-submit {
         .pointer;
         .size(286px,80px);
@@ -18,21 +18,24 @@
         align-items: center;
     }
     .no-login {
+        .flex;
+        .pt(60px);
+        box-sizing: border-box;
+        flex-direction: column;
         min-height: @min-height;
+        gap: 20px;
         h3 {
             .x;
-            .fz(22px);
-            margin: 20px 0;
-            padding: 0;
+            letter-spacing: 3px;
         }
         .u-button {
             .x;
+            .bold;
             .pointer;
             .auto(x);
             .r(5px);
             .fz(16px,40px);
             .size(160px,40px);
-            .bold;
             letter-spacing: 3px;
             background-color: #f66f6a;
             color: #fff;
@@ -45,9 +48,6 @@
                 background-color: #fdf5ee;
             }
         }
-    }
-    .m-lover-certificate {
-        min-height: @min-height;
     }
     .m-lover-list {
         .flex;
@@ -63,7 +63,7 @@
             &:hover {
                 filter: brightness(105%);
             }
-            .u-user-avatar {
+            .u-user {
                 .flex;
                 gap: 10px;
                 align-items: center;
@@ -75,5 +75,8 @@
         .c-upload-banner .el-alert {
             .none;
         }
+    }
+    .m-lover-form {
+        .mt(20px);
     }
 }

@@ -36,7 +36,7 @@ export default {
                 { name: "支持投票", key: "vote" },
                 { name: "直播平台", key: "live" },
                 { name: "赛事进程", key: "process" },
-                // { name: "相关活动", key: "activity" },
+                { name: "相关活动", key: "activity" },
             ],
         };
     },

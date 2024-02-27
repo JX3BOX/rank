@@ -3,7 +3,9 @@
         <div class="u-page-title">
             <img class="u-img" :src="`${__imgRoot}info-title.png`" />
         </div>
-        <div class="m-lover-box m-info-box"></div>
+        <div class="m-lover-box m-info-box">
+            <h2>情缘杯</h2>
+        </div>
         <div class="m-lover-process">
             <div class="m-step" v-for="(item, i) in process" :key="i">
                 <div class="u-icon">
@@ -15,8 +17,12 @@
                 <span class="u-desc">{{ item.desc }}</span>
             </div>
         </div>
-        <div class="m-lover-box"></div>
-        <div class="m-lover-box"></div>
+        <div class="m-lover-box">
+            <h3>奖品</h3>
+        </div>
+        <div class="m-lover-box">
+            <h3>赛事规则</h3>
+        </div>
     </div>
 </template>
 

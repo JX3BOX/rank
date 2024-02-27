@@ -11,7 +11,7 @@
         <div class="m-vote-list">
             <div class="m-line-box" v-for="item in 8" :key="item">
                 <div class="m-box">
-                    <h4>人气值</h4>
+                    <div class="u-hot">人气值</div>
                     <el-image class="u-img" src="">
                         <i slot="error"></i>
                     </el-image>

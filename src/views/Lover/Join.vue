@@ -12,11 +12,11 @@
         </template>
         <template v-if="isLogin">
             <!-- 情缘证 -->
-            <div class="m-lover-box m-lover-certificate">情缘证</div>
+            <certificate :data="certificate" />
             <!-- 情缘列表 -->
             <div class="m-lover-list">
                 <div class="m-lover-box" v-for="item in list" :key="item.id">
-                    <a :href="authorLink(item.user_info_1.id)" class="u-user-avatar">
+                    <div class="u-user">
                         <div class="u-avatar" target="_blank">
                             <el-avatar
                                 class="u-avatar-pic"
@@ -26,8 +26,8 @@
                             ></el-avatar>
                         </div>
                         <span class="u-name">{{ item.user_info_1.display_name }}</span>
-                    </a>
-                    <a :href="authorLink(item.user_info_2.id)" class="u-user-avatar">
+                    </div>
+                    <div class="u-user">
                         <div class="u-avatar" target="_blank">
                             <el-avatar
                                 class="u-avatar-pic"
@@ -37,12 +37,13 @@
                             ></el-avatar>
                         </div>
                         <span class="u-name">{{ item.user_info_2.display_name }}</span>
-                    </a>
+                    </div>
                 </div>
             </div>
             <!-- 报名 -->
             <div class="m-lover-box m-lover-enroll">
-                <div class="m-lover-show"></div>
+                <h3>情缘杯报名</h3>
+
                 <el-form class="m-lover-form" ref="form" :model="form" :rules="rules" label-width="80px">
                     <el-form-item label="队伍名" prop="team_name">
                         <el-input v-model.number="form.team_name" />
@@ -52,21 +53,6 @@
                     </el-form-item>
                     <el-form-item label="合照上传">
                         <uploadImage v-model="form.images[0]" :max-size="30"></uploadImage>
-                    </el-form-item>
-                </el-form>
-                <el-form
-                    class="m-database-form"
-                    ref="form"
-                    :model="user"
-                    :rules="userRules"
-                    label-width="80px"
-                    v-if="type === 'info'"
-                >
-                    <el-form-item label="名字" prop="display_name">
-                        <el-input v-model="user.display_name" placeholder="名字" />
-                    </el-form-item>
-                    <el-form-item label="头像" prop="user_avatar">
-                        <uploadBanner :content="user.user_avatar" @input="showBanner" />
                     </el-form-item>
                 </el-form>
                 <div class="u-submit">
@@ -87,9 +73,11 @@ import User from "@jx3box/jx3box-common/js/user.js";
 import { getMyLover, joinLover } from "@/service/lover";
 import { authorLink } from "@jx3box/jx3box-common/js/utils";
 import uploadImage from "@jx3box/jx3box-comment-ui/src/components/upload.vue";
+import certificate from "@/components/lover/certificate.vue";
 export default {
     name: "LoverJoin",
     inject: ["__imgRoot"],
+    components: { certificate, uploadImage },
     data: function () {
         return {
             success: false,
@@ -109,9 +97,13 @@ export default {
                 team_name: "",
                 user_jx3id: "",
             },
+            rules: {
+                team_name: [{ required: true, message: "请输入队伍名", trigger: "blur" }],
+            },
+
+            certificate: {},
         };
     },
-    components: { uploadImage },
     computed: {},
     watch: {
         isLogin: {
@@ -126,7 +118,6 @@ export default {
         loadMyLover() {
             getMyLover(1).then((res) => {
                 this.list = res.data.data.list;
-                console.log(this.list);
             });
         },
         toLogin() {

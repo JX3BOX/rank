@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import LoverBattle from "@/components/lover_battle.vue";
+import LoverBattle from "@/components/lover/battle.vue";
 export default {
     name: "LoverProcess",
     inject: ["__imgRoot"],

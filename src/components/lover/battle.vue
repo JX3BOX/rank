@@ -18,7 +18,9 @@
 export default {
     name: "battle",
     data: function () {
-        return {};
+        return {
+            url: "",
+        };
     },
     computed: {},
     methods: {},

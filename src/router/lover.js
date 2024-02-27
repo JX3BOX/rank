@@ -12,6 +12,7 @@ const Join = () => import("@/views/Lover/Join.vue");
 const Vote = () => import("@/views/Lover/Vote.vue");
 const Live = () => import("@/views/Lover/Live.vue");
 const Process = () => import("@/views/Lover/Process.vue");
+const Activity = () => import("@/views/Lover/Activity.vue");
 
 const routes = [
     { name: "index", path: "/", redirect: "/info" },
@@ -20,6 +21,7 @@ const routes = [
     { name: "vote", path: "/vote", component: Vote },
     { name: "live", path: "/live", component: Live },
     { name: "process", path: "/process", component: Process },
+    { name: "activity", path: "/activity", component: Activity },
 ];
 
 const router = new VueRouter({
