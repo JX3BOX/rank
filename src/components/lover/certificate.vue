@@ -1,7 +1,5 @@
 <template>
-    <div class="m-lover-box m-lover-certificate">
-        <div class="no-certificate">ღ 暂无绑定的主情缘 ღ</div>
-    </div>
+    <div class="m-certificate">情缘证</div>
 </template>
 
 <script>
@@ -21,16 +19,5 @@ export default {
 };
 </script>
 <style lang="less">
-.m-lover-certificate {
-    .flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 300px;
-    .no-certificate {
-        .bold;
-        .fz(30px);
-        letter-spacing: 5px;
-        color: #ff7272;
-    }
-}
+
 </style>

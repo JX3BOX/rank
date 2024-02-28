@@ -49,6 +49,9 @@ export default {
         };
     },
     computed: {
+        loverId() {
+            return this.$store.state.loverId;
+        },
         params() {
             return {
                 pageSize: this.pageSize,
@@ -67,7 +70,7 @@ export default {
     },
     methods: {
         load() {
-            getJoinList(2).then((res) => {
+            getJoinList(this.loverId).then((res) => {
                 this.list = res.data.data.list || [];
                 this.total = res.data.data.page.total;
             });

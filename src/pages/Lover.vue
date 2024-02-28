@@ -26,6 +26,7 @@
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import store from "@/store/lover";
 export default {
     name: "Lover",
     data: function () {
@@ -56,6 +57,9 @@ export default {
             };
             return data[i];
         },
+    },
+    mounted() {
+        store.dispatch("loadLoverId");
     },
 };
 </script>

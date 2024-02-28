@@ -21,3 +21,8 @@ export function joinLover(eventId, data) {
 export function getJoinList(eventId, params) {
     return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/list`, { params });
 }
+
+// 我参加的情缘活动
+export function getMyJoinLover(eventId) {
+    return $team().get(`/api/team/pvp-event/${eventId}/my/join-record`);
+}

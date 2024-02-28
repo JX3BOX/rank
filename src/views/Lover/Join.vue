@@ -3,21 +3,32 @@
         <div class="u-page-title">
             <img class="u-img" :src="`${__imgRoot}join-title.png`" />
         </div>
-
+        <!-- 报名成功提示 -->
         <template v-if="success">
             <div class="m-success">
                 <img class="u-img" :src="`${__imgRoot}success.svg`" />
                 <span>报名成功，你的报名信息如下</span>
             </div>
         </template>
+        <!-- 登录后 -->
         <template v-if="isLogin">
             <!-- 情缘证 -->
-            <certificate :data="certificate" />
+            <div class="m-lover-box m-lover-certificate">
+                <template v-if="list.length">
+                    <div class="no-certificate" v-if="!certificate">ღ 暂无绑定的主情缘 ღ</div>
+                    <template v-else>
+                        <certificate :data="certificate" />
+                        <div class="u-button" @click="setLover" v-if="!join">设定为主情缘</div>
+                    </template>
+                </template>
+                <div class="no-certificate" v-else>ღ 请按教程在游戏内绑定情缘 ღ</div>
+            </div>
+
             <!-- 情缘列表 -->
-            <div class="m-lover-list">
-                <div class="m-lover-box" v-for="item in list" :key="item.id">
+            <div class="m-lover-list" v-if="!join">
+                <div class="m-lover-box" v-for="(item, i) in list" :key="item.id" @click="changeLover(i)">
                     <div class="u-user">
-                        <div class="u-avatar" target="_blank">
+                        <div class="u-avatar">
                             <el-avatar
                                 class="u-avatar-pic"
                                 shape="circle"
@@ -28,7 +39,7 @@
                         <span class="u-name">{{ item.user_info_1.display_name }}</span>
                     </div>
                     <div class="u-user">
-                        <div class="u-avatar" target="_blank">
+                        <div class="u-avatar">
                             <el-avatar
                                 class="u-avatar-pic"
                                 shape="circle"
@@ -41,10 +52,16 @@
                 </div>
             </div>
             <!-- 报名 -->
-            <div class="m-lover-box m-lover-enroll">
+            <div class="m-lover-box m-lover-enroll" v-if="entry">
                 <h3>情缘杯报名</h3>
-
-                <el-form class="m-lover-form" ref="form" :model="form" :rules="rules" label-width="80px">
+                <el-form
+                    :class="['m-lover-form', { disabled: join }]"
+                    :disabled="join"
+                    ref="form"
+                    :model="form"
+                    :rules="rules"
+                    label-width="80px"
+                >
                     <el-form-item label="队伍名" prop="team_name">
                         <el-input v-model.number="form.team_name" />
                     </el-form-item>
@@ -55,12 +72,12 @@
                         <uploadImage v-model="form.images[0]" :max-size="30"></uploadImage>
                     </el-form-item>
                 </el-form>
-                <div class="u-submit">
+                <div :class="['u-submit', { disabled: join }]" @click="toJoin">
                     <img class="u-img" :src="`${__imgRoot}join.png`" />
                 </div>
             </div>
         </template>
-
+        <!-- 未登录 -->
         <div class="m-lover-box no-login" v-else>
             <h3>请登录后进行报名</h3>
             <div class="u-button" @click="toLogin">点击登录</div>
@@ -70,7 +87,7 @@
 
 <script>
 import User from "@jx3box/jx3box-common/js/user.js";
-import { getMyLover, joinLover } from "@/service/lover";
+import { getMyLover, joinLover, setMyLover, getMyJoinLover } from "@/service/lover";
 import { authorLink } from "@jx3box/jx3box-common/js/utils";
 import uploadImage from "@jx3box/jx3box-comment-ui/src/components/upload.vue";
 import certificate from "@/components/lover/certificate.vue";
@@ -80,7 +97,6 @@ export default {
     components: { certificate, uploadImage },
     data: function () {
         return {
-            success: false,
             lover: false,
             isLogin: User.isLogin(),
             list: [],
@@ -101,10 +117,17 @@ export default {
                 team_name: [{ required: true, message: "请输入队伍名", trigger: "blur" }],
             },
 
-            certificate: {},
+            certificate: null,
+            join: false,
+            entry: false,
+            success: false,
         };
     },
-    computed: {},
+    computed: {
+        loverId() {
+            return this.$store.state.loverId;
+        },
+    },
     watch: {
         isLogin: {
             immediate: true,
@@ -112,19 +135,62 @@ export default {
                 if (val) this.loadMyLover();
             },
         },
+        certificate: {
+            immediate: true,
+            handler: function (val) {
+                if (val) this.getMyEventStatus();
+            },
+        },
+        join(val) {
+            if (val) this.entry = true;
+        },
     },
     methods: {
         authorLink,
-        loadMyLover() {
-            getMyLover(1).then((res) => {
-                this.list = res.data.data.list;
-            });
-        },
         toLogin() {
             User.toLogin();
         },
-        submit() {
-            joinLover(this.form);
+        loadMyLover() {
+            // 获取我的情缘 && 判断是否有主情缘
+            getMyLover().then((res) => {
+                const list = res.data.data.list || [];
+                this.list = list;
+                this.certificate = list.filter((item) => item.star === 1)[0] || null;
+            });
+        },
+        changeLover(index) {
+            this.certificate = this.list[index];
+        },
+        setLover() {
+            // 设置主情缘 && 显示报名模块
+            setMyLover(this.certificate.id).then(() => {
+                this.entry = true;
+                this.$notify({
+                    title: "主情缘设置成功",
+                    type: "success",
+                });
+            });
+        },
+        getMyEventStatus() {
+            // 获取报名状态 && 报名信息
+            getMyJoinLover(this.loverId).then((res) => {
+                const data = res.data.data || null;
+                this.form = data || this.$options.data().form;
+                this.join = data ? true : false;
+                this.entry = true;
+            });
+        },
+        toJoin() {
+            // 报名
+            if (this.join) return;
+            joinLover(this.form).then(() => {
+                this.join = true;
+                this.success = true;
+                this.$notify({
+                    title: "报名成功",
+                    type: "success",
+                });
+            });
         },
     },
 };
