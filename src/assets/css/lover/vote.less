@@ -47,10 +47,22 @@
         }
         .u-name {
             .flex;
-            justify-content: space-between;
+            gap: 10px;
+            align-items: center;
+            .el-avatar {
+                .size(24px);
+                flex-shrink: 0;
+            }
+            span {
+                .nobreak;
+            }
+            .el-avatar > img {
+                width: 100%;
+            }
         }
         .u-slogan {
-            .nobreak;
+            .break(2);
+            .size(100%,32px);
         }
         .u-button {
             .pointer;

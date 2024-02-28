@@ -9,15 +9,23 @@
             </div>
         </div>
         <div class="m-vote-list">
-            <div class="m-line-box" v-for="item in 8" :key="item">
+            <div class="m-line-box" v-for="(item, i) in list" :key="i">
                 <div class="m-box">
-                    <div class="u-hot">人气值</div>
-                    <el-image class="u-img" src="">
+                    <div class="u-hot">人气值：{{ item.votes }}</div>
+                    <el-image class="u-img" :src="item.images[0]">
                         <i slot="error"></i>
                     </el-image>
-                    <div class="u-team">{{ `队伍名` }}</div>
-                    <div class="u-name"><strong>角色名</strong><strong>角色名</strong></div>
-                    <div class="u-slogan">队伍宣言</div>
+                    <div class="u-team">{{ item.team_name }}</div>
+                    <div class="u-name">
+                        <el-avatar
+                            class="u-avatar-pic"
+                            shape="circle"
+                            :size="24"
+                            :src="item.user_info.avatar"
+                        ></el-avatar>
+                        <span>{{ item.user_info.display_name }}</span>
+                    </div>
+                    <div class="u-slogan">{{ item.slogan }}</div>
                     <div class="u-button"></div>
                 </div>
             </div>
