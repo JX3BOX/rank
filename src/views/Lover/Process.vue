@@ -9,6 +9,7 @@
 
 <script>
 import LoverSteps from "@/components/lover/steps.vue";
+import { getLoverProgress } from "@/service/lover";
 export default {
     name: "LoverProcess",
     inject: ["__imgRoot"],
@@ -21,6 +22,14 @@ export default {
     computed: {
         limit() {
             return this.$store.state.info.join_limit;
+        },
+        loverId() {
+            return this.$store.state.loverId;
+        },
+        params() {
+            return {
+                event_id: this.loverId,
+            };
         },
     },
     watch: {
@@ -41,6 +50,14 @@ export default {
             steps.sort((a, b) => b.key - a.key);
             this.steps = steps;
         },
+        load() {
+            getLoverProgress(this.params).then((res) => {
+                console.log(res.data.data);
+            });
+        },
+    },
+    mounted() {
+        this.load();
     },
 };
 </script>

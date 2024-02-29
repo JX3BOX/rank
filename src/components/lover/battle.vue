@@ -10,7 +10,7 @@
             <span class="u-name"></span>
             <span class="u-status">胜</span>
         </div>
-        <a href="http://" target="_blank" class="u-detail">详情</a>
+        <span class="u-detail">详情</span>
     </div>
 </template>
 
@@ -39,15 +39,19 @@ export default {
     flex-direction: column;
     gap: 6px;
     .u-detail {
-        .size(40px,20px);
-        .fz(12px,20px);
+        .pointer;
         .bold;
         .x;
+        .size(40px,20px);
+        .fz(12px,20px);
         align-self: flex-end;
         color: #f3c768;
         letter-spacing: 3px;
         background: #f3c76814;
         border: 1px solid #f3c768;
+        &:hover {
+            background-color: #522c29;
+        }
     }
     .m-team {
         @h: 40px;

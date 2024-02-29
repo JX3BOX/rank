@@ -26,3 +26,8 @@ export function getJoinList(eventId, params) {
 export function getMyJoinLover(eventId) {
     return $team().get(`/api/team/pvp-event/${eventId}/my/join-record`);
 }
+
+// 获取情缘活动进程
+export function getLoverProgress(params) {
+    return $team().get(`/api/team/pvp-event-process/public/list`, { params });
+}
