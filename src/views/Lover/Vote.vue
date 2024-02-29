@@ -1,11 +1,12 @@
 <template>
-    <div class="m-lover-vote">
+    <div class="m-lover-vote wp">
         <div class="u-page-title">
             <img class="u-img" :src="`${__imgRoot}vote-title.png?11`" />
         </div>
         <div class="m-line-box">
             <div class="m-box">
                 <h2>投票规则</h2>
+                <div class="u-rule" v-html="vote_note"></div>
             </div>
         </div>
         <div class="m-vote-list">
@@ -59,6 +60,9 @@ export default {
     computed: {
         loverId() {
             return this.$store.state.loverId;
+        },
+        vote_note() {
+            return this.$store.state.info.vote_note;
         },
         params() {
             return {

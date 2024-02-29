@@ -1,10 +1,11 @@
 <template>
-    <div class="m-lover-info m-lover-page">
+    <div class="m-lover-info m-lover-page wp">
         <div class="u-page-title">
             <img class="u-img" :src="`${__imgRoot}info-title.png`" />
         </div>
         <div class="m-lover-box m-info-box">
             <h2>情缘杯</h2>
+            <div v-html="describe"></div>
         </div>
         <div class="m-lover-process">
             <div class="m-step" v-for="(item, i) in process" :key="i">
@@ -19,14 +20,17 @@
         </div>
         <div class="m-lover-box">
             <h3>奖品</h3>
+            <div v-html="gifts"></div>
         </div>
         <div class="m-lover-box">
             <h3>赛事规则</h3>
+            <div v-html="rule"></div>
         </div>
     </div>
 </template>
 
 <script>
+import { getLoverEvent } from "@/service/lover";
 export default {
     name: "LoverInfo",
     inject: ["__imgRoot"],
@@ -41,7 +45,20 @@ export default {
             ],
         };
     },
-    computed: {},
+    computed: {
+        loverId() {
+            return this.$store.state.loverId;
+        },
+        describe() {
+            return this.$store.state.info.describe;
+        },
+        gifts() {
+            return this.$store.state.info.gifts;
+        },
+        rule() {
+            return this.$store.state.info.rule;
+        },
+    },
     methods: {},
 };
 </script>

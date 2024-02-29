@@ -1,5 +1,5 @@
 <template>
-    <div class="m-lover-join m-lover-page">
+    <div class="m-lover-join m-lover-page wp">
         <div class="u-page-title">
             <img class="u-img" :src="`${__imgRoot}join-title.png`" />
         </div>

@@ -1,6 +1,8 @@
 <template>
-    <div class="m-lover-page m-lover-activity">
-        <div class="m-lover-box">相关活动</div>
+    <div class="m-lover-page m-lover-activity wp">
+        <div class="m-lover-box">
+            <div v-html="note"></div>
+        </div>
     </div>
 </template>
 
@@ -11,7 +13,11 @@ export default {
     data: function () {
         return {};
     },
-    computed: {},
+    computed: {
+        note() {
+            return this.$store.state.info.note;
+        },
+    },
     methods: {},
 };
 </script>

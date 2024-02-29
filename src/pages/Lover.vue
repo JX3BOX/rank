@@ -16,10 +16,8 @@
                     </div>
                 </template>
             </div>
-        </div>
-        <div class="wp">
-            <router-view></router-view>
-        </div>
+        </div> 
+        <router-view></router-view> 
         <Footer></Footer>
     </div>
 </template>

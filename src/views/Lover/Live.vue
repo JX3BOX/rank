@@ -1,5 +1,5 @@
 <template>
-    <div class="m-lover-page m-lover-live">
+    <div class="m-lover-page m-lover-live wp">
         <div class="u-page-title">
             <img class="u-img" :src="`${__imgRoot}live-title.png`" />
         </div>
