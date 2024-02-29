@@ -3,7 +3,7 @@
         <div class="u-page-title">
             <img class="u-img" :src="`${__imgRoot}process-title.png`" />
         </div>
-        <LoverSteps :steps="steps" />
+        <LoverSteps :steps="data" />
     </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
     data: function () {
         return {
             steps: [],
+            process: {},
         };
     },
     computed: {
@@ -29,7 +30,21 @@ export default {
         params() {
             return {
                 event_id: this.loverId,
+                round: -1,
+                pair: -1,
             };
+        },
+        data() {
+            // 将进程和分组合并
+            const process = this.process;
+            return this.steps.map((item, i) => {
+                const key = item.key;
+                const list = process[i] || [];
+                return {
+                    key,
+                    list,
+                };
+            });
         },
     },
     watch: {
@@ -51,8 +66,16 @@ export default {
             this.steps = steps;
         },
         load() {
+            // 获取所有进程并分组
             getLoverProgress(this.params).then((res) => {
-                console.log(res.data.data);
+                this.process = res.data.data.reduce((result, item) => {
+                    const key = item.round;
+                    if (!result[key]) {
+                        result[key] = [];
+                    }
+                    result[key].push(item);
+                    return result;
+                }, {});
             });
         },
     },

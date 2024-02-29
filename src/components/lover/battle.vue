@@ -1,35 +1,49 @@
 <template>
     <div class="m-lover-battle">
-        <div class="m-team">
-            <el-image class="u-img" :src="url"></el-image>
-            <span class="u-name"></span>
-            <span class="u-status">胜</span>
-        </div>
-        <div class="m-team win">
-            <el-image class="u-img" :src="url"></el-image>
-            <span class="u-name"></span>
-            <span class="u-status">胜</span>
+        <div :class="['m-team', isWin(item)]" v-for="(item, i) in list" :key="i">
+            <el-image class="u-img" :src="showAvatar(item)"></el-image>
+            <span class="u-name">{{ showName(item) }}</span>
+            <span class="u-status">{{ status(item) }}</span>
         </div>
         <span class="u-detail">详情</span>
     </div>
 </template>
 
 <script>
+import { showAvatar } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "battle",
-    props: {
-        data: {
-            type: Object,
-            default: () => {},
-        },
-    },
+    props: ["data"],
     data: function () {
         return {
-            url: "",
+            list: [],
         };
     },
+    watch: {
+        data: {
+            handler: function (data) {
+                this.list = data?.length ? data : [{}, {}];
+            },
+            immediate: true,
+        },
+    },
     computed: {},
-    methods: {},
+    methods: {
+        showAvatar({ user }) {
+            const avatar = user ? user.avatar : "";
+            return showAvatar(avatar);
+        },
+        showName({ user }) {
+            return user ? user.display_name : "";
+        },
+        isWin({ record }) {
+            const is_winner = record ? record.is_winner : false;
+            return is_winner ? "win" : "";
+        },
+        status({ record }) {
+            return "";
+        },
+    },
 };
 </script>
 <style lang="less">

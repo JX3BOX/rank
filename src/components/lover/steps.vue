@@ -2,19 +2,18 @@
     <div class="m-process-steps" ref="steps">
         <div
             class="u-step"
-            v-for="(item, i) in steps"
+            v-for="(item, i) in list"
             :key="i"
             :style="{ margin: `${~~i * 57}px  0`, gap: `${~~i * 114 + 57}px` }"
         >
             <template v-if="item.key != 0">
                 <div
                     class="u-group"
-                    v-for="(group, g) in ~~item.key"
+                    v-for="(group, g) in stepsList(item)"
                     :key="g"
                     :style="{ height: `calc(100%/${~~item.key} - 60px)` }"
                 >
-                    <battle />
-                    <battle />
+                    <battle :data="battle" v-for="(battle, b) in battleList(group)" :key="b" />
                 </div>
             </template>
             <battle v-else />
@@ -24,6 +23,7 @@
 
 <script>
 import battle from "@/components/lover/battle.vue";
+import { groupBy, chunk, values } from "lodash";
 export default {
     name: "steps",
     props: {
@@ -35,11 +35,34 @@ export default {
     components: { battle },
     data: function () {
         return {
-            url: "",
+            list: [],
         };
     },
+    watch: {
+        steps: {
+            handler: function (steps) {
+                this.list = steps.map((item) => {
+                    item.list = this.packet(item.list); 
+                    return item;
+                });
+            },
+            deep: true,
+            immediate: true,
+        },
+    },
     computed: {},
-    methods: {},
+    methods: {
+        packet(list) {
+            list = values(groupBy(list, "pair")); 
+            return chunk(list, 2);
+        },
+        stepsList(item) {
+            return item.list.length ? item.list : ~~item.key;
+        },
+        battleList(group) { 
+            return group.length ? group : group * 2;
+        },
+    },
 };
 </script>
 <style lang="less">
