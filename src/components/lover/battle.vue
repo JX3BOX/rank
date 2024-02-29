@@ -40,8 +40,13 @@ export default {
             const is_winner = record ? record.is_winner : false;
             return is_winner ? "win" : "";
         },
-        status({ record }) {
-            return "";
+        status({ is_advance }) {
+            const status = {
+                0: "",
+                1: "胜",
+                2: "负",
+            };
+            return status[is_advance];
         },
     },
 };
