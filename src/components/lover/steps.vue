@@ -42,7 +42,7 @@ export default {
         steps: {
             handler: function (steps) {
                 this.list = steps.map((item) => {
-                    item.list = this.packet(item.list); 
+                    item.list = this.packet(item.list);
                     return item;
                 });
             },
@@ -53,14 +53,15 @@ export default {
     computed: {},
     methods: {
         packet(list) {
-            list = values(groupBy(list, "pair")); 
+            list = values(groupBy(list, "pair"));
             return chunk(list, 2);
         },
         stepsList(item) {
+            console.log(~~item.key, "~~item.key");
             return item.list.length ? item.list : ~~item.key;
         },
-        battleList(group) { 
-            return group.length ? group : group * 2;
+        battleList(group) {
+            return group.length ? group : [{}, {}];
         },
     },
 };
@@ -88,7 +89,7 @@ export default {
         &::after {
             content: "";
             .pa;
-            .rt(-20px, 60px);
+            .rt(-20px, 42px);
             .size(4px ,calc(100% - 100px));
             background-color: #fff;
             transform: translateX(-1px);
