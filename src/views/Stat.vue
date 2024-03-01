@@ -198,10 +198,8 @@ export default {
                 }
             }
             this.$set(this, "chartArr", arr);
-            // console.log(arr)
         },
         loadData: function () {
-            console.log(8989);
             if (!this.id) return;
 
             // this.loading = true;
@@ -471,7 +469,6 @@ export default {
             }
             let data = fullData.value;
             let item = fullData.item;
-            console.log(item, data)
             let servers = item?.map((name, i) => {
                 return { value: data[i], name: name };
             });
@@ -540,7 +537,6 @@ export default {
             //     title: "各输出心法DPS占比",
             //     seriesName:'DPS'
             // };
-            // console.log(servers)
             //筛选内外功分别统计
             let nei = [],
                 wai = [],

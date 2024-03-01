@@ -226,7 +226,6 @@ export default {
                                             return "#39bf9b";
                                             break;
                                         default:
-                                            // console.log(param)
                                             return undefined;
                                             break;
                                     }

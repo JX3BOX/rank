@@ -6,14 +6,14 @@
             :key="i"
             :style="{ margin: `${~~i * 57}px  0`, gap: `${~~i * 114 + 57}px` }"
         >
-            <template v-if="item.key != 0">
+            <template v-if="item.length">
                 <div
                     class="u-group"
-                    v-for="(group, g) in stepsList(item)"
+                    v-for="(group, g) in item"
                     :key="g"
-                    :style="{ height: `calc(100%/${~~item.key} - 60px)` }"
+                    :style="{ height: `calc(100%/${~~item.length} - 60px)` }"
                 >
-                    <battle :data="battle" v-for="(battle, b) in battleList(group)" :key="b" />
+                    <battle :data="battle" v-for="(battle, b) in group" :key="b" />
                 </div>
             </template>
             <battle v-else />
@@ -23,11 +23,15 @@
 
 <script>
 import battle from "@/components/lover/battle.vue";
-import { groupBy, chunk, values } from "lodash";
+import { groupBy, chunk } from "lodash";
 export default {
     name: "steps",
     props: {
         steps: {
+            type: Array,
+            default: () => [],
+        },
+        data: {
             type: Array,
             default: () => [],
         },
@@ -41,29 +45,45 @@ export default {
     watch: {
         steps: {
             handler: function (steps) {
-                this.list = steps.map((item) => {
-                    item.list = this.packet(item.list);
-                    return item;
-                });
+                let arr = [];
+                for (let i = 0; i < steps.length; i++) {
+                    let subArray = [];
+                    for (let j = 0; j < steps[i]; j++) {
+                        subArray.push([
+                            [{}, {}],
+                            [{}, {}],
+                        ]);
+                    }
+                    arr.push(subArray);
+                }
+                this.list = arr;
+            },
+            deep: true,
+            immediate: true,
+        },
+        data: {
+            handler: function (list) {
+                if (list.length) {
+                    const _group = groupBy(list, "round");
+                    Object.keys(_group).forEach((i) => {
+                        _group[i] = chunk(chunk(_group[i], 2), 2);
+                    });
+                    this.list.forEach((array, index) => {
+                        const key = index + 1;
+                        if (_group[key]) {
+                            if (index < _group[key].length) {
+                                array.splice(0, _group[key].length, ..._group[key]);
+                            }
+                        }
+                    });
+                }
             },
             deep: true,
             immediate: true,
         },
     },
     computed: {},
-    methods: {
-        packet(list) {
-            list = values(groupBy(list, "pair"));
-            return chunk(list, 2);
-        },
-        stepsList(item) {
-            console.log(~~item.key, "~~item.key");
-            return item.list.length ? item.list : ~~item.key;
-        },
-        battleList(group) {
-            return group.length ? group : [{}, {}];
-        },
-    },
+    methods: {},
 };
 </script>
 <style lang="less">

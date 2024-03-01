@@ -35,7 +35,6 @@ export default {
     },
     watch: {
         data(newVal, oldVal) {
-            // console.log(newVal);
             this.pieOption.series[0].data = newVal;
         },
     },
@@ -235,7 +234,6 @@ export default {
                                             break;
 
                                           default:
-                                              // console.log(param)
                                               return undefined;
                                               break;
                                       }

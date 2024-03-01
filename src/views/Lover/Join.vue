@@ -13,7 +13,7 @@
         <!-- 登录后 -->
         <template v-if="isLogin">
             <!-- 情缘证 -->
-            <div class="m-lover-box m-lover-certificate">
+            <div class="m-lover-box m-lover-certificate" v-loading="loading">
                 <template v-if="list.length">
                     <div class="no-certificate" v-if="!certificate">ღ 暂无绑定的主情缘 ღ</div>
                     <template v-else>
@@ -21,11 +21,11 @@
                         <div class="u-button" @click="setLover" v-if="!join">设定为主情缘</div>
                     </template>
                 </template>
-                <div class="no-certificate" v-else>ღ 请按教程在游戏内绑定情缘 ღ</div>
+                <div class="no-certificate" v-else-if="!loading">ღ 请按教程在游戏内绑定情缘 ღ</div>
             </div>
 
             <!-- 情缘列表 -->
-            <div class="m-lover-list" v-if="!join">
+            <div class="m-lover-list" v-if="!join" v-loading="loading">
                 <div class="m-lover-box" v-for="(item, i) in list" :key="item.id" @click="changeLover(i)">
                     <div class="u-user">
                         <div class="u-avatar">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <!-- 报名 -->
-            <div class="m-lover-box m-lover-enroll" v-if="entry">
+            <div class="m-lover-box m-lover-enroll" v-if="entry" v-loading="loading">
                 <h3>情缘杯报名</h3>
                 <el-form
                     :class="['m-lover-form', { disabled: join }]"
@@ -69,7 +69,7 @@
                         <el-input v-model="form.slogan" type="textarea" :rows="2" />
                     </el-form-item>
                     <el-form-item label="合照上传">
-                        <uploadImage v-model="form.images[0]" :max-size="30"></uploadImage>
+                        <uploadImage v-model="form.image" :max-size="30"></uploadImage>
                     </el-form-item>
                 </el-form>
                 <div :class="['u-submit', { disabled: join }]" @click="toJoin">
@@ -87,7 +87,7 @@
 
 <script>
 import User from "@jx3box/jx3box-common/js/user.js";
-import { getMyLover, joinLover, setMyLover, getMyJoinLover } from "@/service/lover";
+import { getMyLover, joinLover, setMyLover } from "@/service/lover";
 import { authorLink } from "@jx3box/jx3box-common/js/utils";
 import uploadImage from "@jx3box/jx3box-comment-ui/src/components/upload.vue";
 import certificate from "@/components/lover/certificate.vue";
@@ -97,6 +97,7 @@ export default {
     components: { certificate, uploadImage },
     data: function () {
         return {
+            loading: false,
             lover: false,
             isLogin: User.isLogin(),
             list: [],
@@ -127,22 +128,32 @@ export default {
         loverId() {
             return this.$store.state.loverId;
         },
+        myJoin() {
+            return this.$store.state.my_join || null;
+        },
     },
     watch: {
         isLogin: {
             immediate: true,
             handler: function (val) {
-                if (val) this.loadMyLover();
-            },
-        },
-        certificate: {
-            immediate: true,
-            handler: function (val) {
-                if (val) this.getMyEventStatus();
+                if (val) {
+                    this.loadMyLover();
+                    this.$store.dispatch("getMyEventStatus");
+                }
             },
         },
         join(val) {
             if (val) this.entry = true;
+        },
+        myJoin: {
+            immediate: true,
+            handler: function (obj) {
+                if (obj?.id) {
+                    this.form = val;
+                    this.join = true;
+                    this.entry = true;
+                }
+            },
         },
     },
     methods: {
@@ -152,11 +163,16 @@ export default {
         },
         loadMyLover() {
             // 获取我的情缘 && 判断是否有主情缘
-            getMyLover().then((res) => {
-                const list = res.data.data.list || [];
-                this.list = list;
-                this.certificate = list.filter((item) => item.star === 1)[0] || null;
-            });
+            this.loading = true;
+            getMyLover()
+                .then((res) => {
+                    const list = res.data.data.list || [];
+                    this.list = list;
+                    this.certificate = list.filter((item) => item.star === 1)[0] || null;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         changeLover(index) {
             this.certificate = this.list[index];
@@ -171,15 +187,7 @@ export default {
                 });
             });
         },
-        getMyEventStatus() {
-            // 获取报名状态 && 报名信息
-            getMyJoinLover(this.loverId).then((res) => {
-                const data = res.data.data || null;
-                this.form = data || this.$options.data().form;
-                this.join = data ? true : false;
-                this.entry = true;
-            });
-        },
+
         toJoin() {
             // 报名
             if (this.join) return;

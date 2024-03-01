@@ -314,7 +314,6 @@ export default {
     },
     methods: {
         handleOptionsClick(action) {
-            console.log(action);
             switch (action) {
                 case "team_join":
                     this.show_part = "team_join";
@@ -343,7 +342,6 @@ export default {
             }
         },
         handleAnchor(dom) {
-            console.log(dom);
             document.querySelector(`#${dom}`).scrollIntoView({
                 behavior: "smooth",
                 block: "center",
@@ -354,7 +352,6 @@ export default {
     directives: {
         animate: {
             inserted: function (el, binding) {
-                // console.log(binding, 111);
                 binding.addClass = () => {
                     const { top } = el.getBoundingClientRect();
                     const h = document.documentElement.clientHeight || document.body.clientHeight;

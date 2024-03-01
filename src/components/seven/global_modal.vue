@@ -39,12 +39,7 @@ export default {
             default: "550px",
         },
     },
-    computed: {},
     methods: {},
-    mounted: function () {
-        console.log(this.$props);
-    },
-    components: {},
 };
 </script>
 <style lang="less" scoped>

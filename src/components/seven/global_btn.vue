@@ -14,10 +14,6 @@ export default {
     },
     computed: {},
     methods: {},
-    mounted: function () {
-        console.log(this);
-    },
-    components: {},
 };
 </script>
 <style lang="less" scoped>
