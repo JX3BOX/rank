@@ -56,7 +56,7 @@ export default {
     data: function () {
         return {
             loading: false,
-            servers,
+            servers: ["跨服", ...servers],
 
             achieve_id: "", //boss成就ID
             server: "", //服务器
