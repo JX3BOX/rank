@@ -18,6 +18,7 @@ const Stat = () => import("../views/Stat.vue");
 const Superstar = () => import("../views/Superstar.vue");
 const Seven = () => import("../pages/Seven/Enroll/Index.vue");
 const Welcome = () => import("../pages/Seven/Welcome/Index.vue");
+const Awards = () => import("../views/Awards.vue");
 
 Vue.use(VueRouter);
 
@@ -33,9 +34,9 @@ const routes = [
     { name: "video", path: "/:id/video", component: Video },
     { name: "stat", path: "/:id/stat", component: Stat },
     { name: "superstar", path: "/:id/superstar", component: Superstar },
+    { name: "awards", path: "/:id/awards", component: Awards },
     { name: "seven", path: "/seven", component: Seven },
     { name: "welcome", path: "/welcome", component: Welcome },
-
 ];
 
 const router = new VueRouter({
