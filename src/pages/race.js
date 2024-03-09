@@ -6,7 +6,7 @@ import ElementUI from "element-ui";
 Vue.use(ElementUI);
 
 // 通用UI模块
-import JX3BOX_UI from '@jx3box/jx3box-common-ui'
+import JX3BOX_UI from "@jx3box/jx3box-common-ui";
 import "@jx3box/jx3box-common/css/element.css";
 import "@jx3box/jx3box-common/css/normalize.css";
 Vue.use(JX3BOX_UI);
@@ -15,27 +15,27 @@ Vue.use(JX3BOX_UI);
 import router from "@/router/race.js";
 import store from "@/store/race.js";
 
-import ECharts from 'vue-echarts' // 在 webpack 环境下指向 components/ECharts.vue
+import ECharts from "vue-echarts"; // 在 webpack 环境下指向 components/ECharts.vue
 
 // 手动引入 ECharts 各模块来减小打包体积
-import 'echarts/lib/chart/bar'
-import 'echarts/lib/chart/pie'
-import 'echarts/lib/component/tooltip'
-import 'echarts/lib/component/markPoint'
-import 'echarts/lib/component/markLine'
-import 'echarts/lib/component/dataZoom'
-import 'echarts/lib/component/legend'
-import 'echarts/lib/component/title'
+import "echarts/lib/chart/bar";
+import "echarts/lib/chart/pie";
+import "echarts/lib/component/tooltip";
+import "echarts/lib/component/markPoint";
+import "echarts/lib/component/markLine";
+import "echarts/lib/component/dataZoom";
+import "echarts/lib/component/legend";
+import "echarts/lib/component/title";
 
-import jx3DarkTheme from '@/assets/data/echartsTheme.json'
+import jx3DarkTheme from "@/assets/data/echartsTheme.json";
 
-Vue.component('v-chart', ECharts)
-ECharts.registerTheme('jx3box-dark', jx3DarkTheme)
-
+Vue.component("v-chart", ECharts);
+ECharts.registerTheme("jx3box-dark", jx3DarkTheme);
+import Katex from "vue-katex-auto-render";
+Vue.directive("katex", Katex);
 import App from "./Race.vue";
 new Vue({
     router,
     store,
-    render: h => h(App),
+    render: (h) => h(App),
 }).$mount("#app");
-

@@ -20,24 +20,71 @@
                 <img src="../assets/img/rank/top-right.png" />
             </div>
         </div>
+        <!-- 奖项table -->
+        <div class="m-awards-header">
+            <div class="m-awards-th">序号</div>
+            <div class="m-awards-th">出奖人</div>
+            <div class="m-awards-th">奖项</div>
+            <div class="m-awards-th">授予</div>
+            <div class="m-awards-th">获奖人</div>
+            <div class="m-awards-th">备注</div>
+        </div>
+        <div class="m-awards-list" v-for="(item, index) in list" :key="index">
+            <div class="m-awards-td">
+                <div class="u-number">{{ index + 1 }}</div>
+            </div>
+            <template v-if="item.name">
+                <div class="m-awards-td">
+                    <div class="u-name">{{ item.name || "" }}</div>
+                </div>
+                <div class="m-awards-td">
+                    <div class="m-break">{{ item.gift || "" }}</div>
+                </div>
+                <div class="m-awards-td">
+                    <div class="m-break" v-katex="options">{{ item.target }}</div>
+                </div>
+                <div class="m-awards-td">
+                    <div class="u-name">{{ item.prizewinner || "待定" }}</div>
+                </div>
+                <div class="m-awards-td">
+                    <div v-if="item.name" class="u-btn" :class="!item.remark && 'is-disabled'">领奖信息</div>
+                </div>
+            </template>
+            <div v-else class="m-awards-td u-no-data">虚位以待</div>
+        </div>
     </div>
 </template>
 
 <script>
+import { getGifts } from "@/service/awards";
 export default {
     name: "Awards",
     components: {},
     data() {
         return {
-            showApplyDialog: false,
-            description: "",
-            party: "",
+            options: {
+                delimiters: [
+                    { left: "$$", right: "$$", display: false },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true },
+                ],
+            },
             list: [],
         };
     },
-    methods: {},
+    methods: {
+        getList() {
+            getGifts({ orderBy: "rank" }).then((res) => {
+                // 通过rank字段来排序
+                const list = res?.data?.data?.list.sort((a, b) => ~~a.order - ~~b.order);
+                const len = 100 - list.length;
+                this.list = list.concat(new Array(len).fill({}));
+            });
+        },
+    },
     mounted() {
-        console.log("进入awards");
+        this.getList();
         // this.getGifts();
         // this.getDesc();
     },
