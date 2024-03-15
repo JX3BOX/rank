@@ -11,7 +11,7 @@
                 <div class="m-rank-content">
                     <router-view></router-view>
                 </div>
-                <div class="m-rank-union">
+                <div class="m-rank-union" v-if="note">
                     <h5 class="u-title">媒体宣传</h5>
                     <div v-html="note"></div>
                 </div>
