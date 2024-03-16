@@ -39,7 +39,7 @@
             </el-col>
             <el-col :span="3" v-for="(label, achieve_id) of bossList" :key="label + achieve_id">
                 <div class="u-boss" :class="{ on: achieve_id == current_boss }" @click="changeBoss(achieve_id)">
-                    <img class="u-boss-icon" :src="bossIcon('8552')" alt="" />
+                    <img class="u-boss-icon" :src="bossIcon(achieve_id)" :onerror="defaultBossIcon" />
                     <span class="u-boss-name">{{ label }}</span>
                 </div>
             </el-col>
@@ -180,6 +180,9 @@ export default {
                 url: "",
             };
         },
+        defaultBossIcon:function (e){
+            return `this.src='${this.bossIcon('0')}';this.onerror=null`
+        }
     },
     methods: {
         changeBoss: function(val) {

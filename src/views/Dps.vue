@@ -21,7 +21,7 @@
             </el-col>
             <el-col :span="span" v-for="(label, id) of bossList" :key="'aid-' + id">
                 <li class="u-boss" @click="changeBoss(id)" :class="{ on: id == aid }">
-                    <img class="u-boss-icon" :src="bossIcon('8552')" alt="" />
+                    <img class="u-boss-icon" :src="bossIcon(id)" :onerror="defaultBossIcon" />
                     <span class="u-boss-name">{{ label }}</span>
                 </li>
             </el-col>
@@ -289,6 +289,9 @@ export default {
             });
             return Math.max(...dps_bucket);
         },
+        defaultBossIcon:function (e){
+            return `this.src='${this.bossIcon('0')}';this.onerror=null`
+        }
     },
     watch: {
         params: {
