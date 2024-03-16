@@ -1,6 +1,6 @@
 <template>
     <!-- 视频直播 -->
-    <div class="m-rank-video" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <div class="m-rank-video" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.3)">
         <div class="m-rank-video-title">
             <img :src="video_title_img" />
             <div class="u-extend">

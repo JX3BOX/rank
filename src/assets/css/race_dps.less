@@ -1,5 +1,5 @@
 .m-rank-dps-filter {
-    .mt(20px) !important;
+    .mt(62px) !important;
 }
 
 .m-rank-dps-xf {
@@ -17,12 +17,14 @@
         border: 1px solid transparent;
 
         &.on {
-            border-color: #0cf;
+            // border-color: #0cf;
+            background-color: #FFEDC6;
+            color: #703100;
         }
     }
     .u-mount {
         padding: 5px 10px;
-        background-color: #222;
+        background-color: #3E576D;
         img {
             .size(24px);
             .y;
@@ -31,7 +33,11 @@
         color: #eee;
         .fz(14px);
         .pointer;
-        .r(2px);
+
+        &:hover{
+            background-color: #5A7C99;
+            color: #FFEDC6;
+        }
     }
 }
 
@@ -47,9 +53,9 @@
         .h(40px);
         .r(2px);
 
-        background-color: #181818;
+        background-color: #3E576D;
         &:nth-child(2n) {
-            background: #111;
+            // background: #111;
         }
 
         color: #eee;
@@ -154,9 +160,10 @@
     }
 
     .u-head {
+        background-color: #FFEDC6;
         * {
-            color: #aaa !important;
-            font-weight: normal;
+            color: #1E374D !important;
+            font-weight: bold;
             .fz(12px);
         }
         color: #aaa !important;

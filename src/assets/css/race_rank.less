@@ -18,29 +18,41 @@
     .x;
     .u-boss {
         .db;
-        background-color: #222;
+        background-color: #3E576D;
         .mb(20px);
-        .r(4px);
-        padding: 0 10px;
-        color: #eee;
+        padding: 0 10px 0 50px;
+        color: #FFEDC6;
         .fz(16px, 50px);
+        height: 50px;
         .pointer;
         transition: 0.1s ease-in-out;
         .bold;
+        border-bottom-right-radius: 10px;
+        position: relative;
 
         &:last-child {
             .mr(0);
         }
-
         &:hover{
-            color: #0cf;
-            outline: 1px solid #0cf;
+            background-color: #5A7C99;
+            color: #FFEDC6;
+            // outline: 1px solid #0cf;
+        }
+        &.u-boss-is_all{
+            padding: 0 10px;
         }
     }
     .on,.router-link-active {
-        background-color: #171717;
-        color: #0cf;
-        outline: 1px solid #0cf;
+        background-color: #FFEDC6;
+        color: #703100;
+        // outline: 1px solid #0cf;
+    }
+    .u-boss-icon{
+        .size(50px);
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0
     }
     .u-boss-per {
         .fz(12px);
@@ -57,7 +69,7 @@
             color:#fd3c1d;
         }
         &.isFull{
-            color:#aaa;
+            color:rgba(255, 255, 255, 0.49);
         }
     }
 }
@@ -84,23 +96,24 @@
     }
     li,a{
         .fl;.w(80px);
-        background-color:#222;
+        background-color:#3E576D;
         .mr(5px);
         .mb(5px);
-        .r(2px);
         .x;
         .fz(12px,2.5);
-        color:#ccc;
+        color:#FFEDC6;
         .pointer;
         &:hover{
-            color:#ff0;
+            background-color: #5A7C99;
+            color: #FFEDC6;
         }
     }
     .on,.router-link-exact-active{
         .bold;
-        color:#0cf;
+        color:#703100;
+        background-color: #FFEDC6;
         &:hover{
-            color:#0cf;
+            color:#703100;
         }
     }
 
@@ -113,28 +126,36 @@
 }
 
 .m-rank-top100-item {
-    border: 1px solid #777;
-    background: #313131;
+    // border: 1px solid #777;
+    background: linear-gradient(90deg, #3F586E 0%, #264259 50%);
     box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23);
     .mb(20px);
-    .r(10px);
     .pr;
-
+    border-left: 4px solid #FFEDC6;
+    border-bottom-right-radius: 20px;
     @padding: 40px;
     @logosize: 88px;
     @leftspace: 40px + @logosize + 20px;
     @logopadding: 5px;
-
     padding: @padding;
     padding-bottom: @padding - 10px;
+    .pl(100px + @logosize + @logopadding*2);
+
+
+    &:hover{
+        background: linear-gradient(90deg, rgba(38, 66, 89, 1) 0%, rgba(63, 88, 110, 1) 50%);
+    }
 
     .u-ranking {
-        .fz(32px, @logosize);
+        .fz(32px, 52px);
         color: #66afff;
         .pa;
-        .lt(@padding);
         .x;
-        .w(60px);
+        .w(115px);
+        background:url('@{img}common/ranking_number_bg.svg');
+        background-size: 100% 100%;
+        left: 0;
+        top: 0
     }
 
     .u-logo {
@@ -142,8 +163,7 @@
 
         .el-image {
             .db;
-            .size(@logosize);
-            border: @logopadding solid #fff;
+            .size(120px);
             img{
                 .full;
                 .db;
@@ -151,10 +171,9 @@
         }
 
         .pa;
-        .lt(@logosize + 32px, 40px);
+        .lt(38px, 80px);
     }
 
-    .pl(@leftspace + @logosize + @logopadding*2);
 
     .u-title {
         .db;
@@ -168,15 +187,15 @@
     .u-teamname {
         .nobreak;
         .mr(5px);
-        color: #0cf;
+        color: #FFEDC6;
         .fz(24px, 24px);
         .bold;
 
         &:hover {
-            color: #f39;
-            i {
-                color: #f39;
-            }
+            // color: #f39;
+            // i {
+            //     color: #f39;
+            // }
         }
 
         &.u-teamname-null{
@@ -191,7 +210,8 @@
         &:before {
             content: "@";
         }
-        color: #787878;
+        color: #fff;
+        font-weight: bold;
         .fz(12px);
     }
 
@@ -213,13 +233,20 @@
         .pa;
         .rt(40px);
         font-size: 12px;
-        color: #787878;
+
+        .u-time-finish{
+            color: rgba(255, 255, 255, 0.5);
+            display: block;
+        }
+        .u-time-fight{
+            color: white
+        }
     }
 
     .u-time-fight {
         .x(right);
         b {
-            color: #fada23;
+            color: #FFEDC6;
             .fz(20px);
         }
     }
@@ -232,7 +259,7 @@
     .u-leader {
         .bold;
         .fz(14px, 24px);
-        color: #aaa;
+        color: #fff;
         .u-username {
             .y(top);
             white-space: visible;
@@ -257,7 +284,7 @@
 
     .u-username {
         .nobreak;
-        color: #aaa;
+        color: #fff;
         width: 97px;
         display: inline-block;
         vertical-align: middle;
@@ -275,18 +302,22 @@
     .is-No1,
     .is-No2,
     .is-No3 {
-
         .w(@w);
         box-sizing: border-box;
         .pr;
         padding: 0;
-        background-color: #222;
+        padding-bottom: 20px;
+        background: linear-gradient(180deg, #3F586E 0%, #264259 50%);
+        border-left: none;
+        border-top: 5px solid #FFEDC6;
+        
 
         .u-ranking {
             .pa;
-            .lt(50%, -80px);
+            .lt(50%, -50px);
             transform: translateX(-50%);
             .w(140px);
+            background: none;
             span {
                 .none;
             }
@@ -313,7 +344,7 @@
                 .db;
                 .x;
             }
-            border-bottom: 1px solid #787878;
+            // border-bottom: 1px solid #787878;
             padding-bottom: 20px;
             margin-bottom: 20px;
         }

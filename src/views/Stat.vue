@@ -5,16 +5,17 @@
         v-loading="loading"
         element-loading-text="加载中..."
         element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
+        element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <el-row class="m-rank-boss" :gutter="20" type="flex" justify="space-between">
             <el-col :span="4">
-                <div class="u-boss" :class="{ on: current_boss == 'all' }" @click="changeBoss('all')">
+                <div class="u-boss u-boss-is_all" :class="{ on: current_boss == 'all' }" @click="changeBoss('all')">
                     <span class="u-boss-name">全部</span>
                 </div>
             </el-col>
             <el-col :span="4" v-for="(label, achieve_id) of bossList" :key="achieve_id">
                 <div class="u-boss" :class="{ on: achieve_id == current_boss }" @click="changeBoss(achieve_id)">
+                    <img class="u-boss-icon" :src="bossIcon('8552')" alt="" />
                     <span class="u-boss-name">{{ label }}</span>
                 </div>
             </el-col>
@@ -110,6 +111,7 @@ import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
 import mount_group from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import { axios, realUrl } from "@/service/api.js";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import PICS from "@/assets/js/pics.js";
 
 export default {
     name: "Stat",
@@ -235,6 +237,9 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        bossIcon: function(val) {
+            return PICS.bossIcon(val);
         },
         doAna1() {
             // 1-区服-bar: 区服入榜团队数量,

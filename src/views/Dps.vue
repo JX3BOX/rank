@@ -5,22 +5,23 @@
         v-loading="loading"
         element-loading-text="加载中..."
         element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
+        element-loading-background="rgba(0, 0, 0, 0.3)"
     >
-        <div class="m-rank-vote-title">
+        <!-- <div class="m-rank-vote-title">
             <img :src="dps_title_img" />
-        </div>
+        </div> -->
         <!-- TODO: -->
         <!-- <div class="m-rank-vote-header"></div> -->
         <!-- Boss导航 -->
         <el-row class="m-rank-boss m-rank-filter m-rank-dps-filter" :gutter="20" type="flex">
             <el-col :span="span">
-                <div class="u-boss" :class="{ on: aid == 'all' }" @click="changeBoss('all')">
+                <div class="u-boss u-boss-is_all" :class="{ on: aid == 'all' }" @click="changeBoss('all')">
                     <span class="u-boss-name">全部</span>
                 </div>
             </el-col>
             <el-col :span="span" v-for="(label, id) of bossList" :key="'aid-' + id">
                 <li class="u-boss" @click="changeBoss(id)" :class="{ on: id == aid }">
+                    <img class="u-boss-icon" :src="bossIcon('8552')" alt="" />
                     <span class="u-boss-name">{{ label }}</span>
                 </li>
             </el-col>
@@ -194,7 +195,7 @@ import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { authorLink, getLink, getThumbnail, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { mount_group } from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import server_std from "@jx3box/jx3box-data/data/server/server_cn";
-
+import PICS from "@/assets/js/pics.js";
 import { getMountDpsRace, getMixRank } from "@/service/race";
 import { cloneDeep } from "lodash";
 import rank_item from "@/components/rank_item.vue";
@@ -417,7 +418,10 @@ export default {
         },
         getBattleLink(id){
             return `/battle/#/search?battle_id=${encodeURIComponent(id)}`
-        }
+        },
+        bossIcon: function(val) {
+            return PICS.bossIcon(val);
+        },
     },
     filters: {
         showMountIcon: function(val) {

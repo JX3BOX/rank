@@ -49,6 +49,7 @@ export default {
 
         return {
             pieOption: {
+                backgroundColor: 'transparent',
                 title: {
                     text: `${this.title}统计图`,
                     left: "center",

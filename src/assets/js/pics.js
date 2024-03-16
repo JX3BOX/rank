@@ -13,6 +13,9 @@ const PICS = {
     },
     logos : function (val){
         return __imgPath + "image/rank/logos/" + val + '.png'
+    },
+    bossIcon : function (id){
+        return __imgPath + `image/rank/boss/${id}.png`
     }
 };
 

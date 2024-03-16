@@ -1,9 +1,9 @@
 <template>
     <!-- 投票竞猜页 -->
-    <div class="m-rank-vote" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
-        <div class="m-rank-vote-title">
+    <div class="m-rank-vote" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.3)">
+        <!-- <div class="m-rank-vote-title">
             <img :src="vote_title_img" />
-        </div>
+        </div> -->
         <div class="m-rank-vote-header" v-html="vote_note" v-if="vote_note"></div>
         <table class="m-rank-vote-table">
             <thead>

@@ -5,11 +5,12 @@
         v-loading="loading"
         element-loading-text="加载中..."
         element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
+        element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <el-row class="m-rank-boss m-rank-filter" :gutter="20" type="flex">
             <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
                 <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id }">
+                    <img class="u-boss-icon" :src="bossIcon('8552')" alt="" />
                     <span class="u-boss-name">{{ label }}</span>
                     <span class="u-boss-per" :class="getProcessCls(total[aid])"
                         >({{ total[aid] > 100 ? 100 : total[aid] }}/100)</span
@@ -45,7 +46,7 @@ import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import _ from "lodash";
 import { getTop100, getTopTotal } from "@/service/race.js";
-
+import PICS from "@/assets/js/pics.js";
 import rank_item from "@/components/rank_item.vue";
 
 export default {
@@ -145,15 +146,24 @@ export default {
         },
         getProcessCls: function (count) {
             count = ~~count;
-            if (count < 30) {
+            if (count < 100) {
                 return "isLess";
-            } else if (count < 70) {
-                return "isMore";
-            } else if (count < 100) {
-                return "isDanger";
             } else {
-                return "isFull";
+                return "isDanger";
             }
+            // 原判断
+            // if (count < 30) {
+            //     return "isLess";
+            // } else if (count < 70) {
+            //     return "isMore";
+            // } else if (count < 100) {
+            //     return "isDanger";
+            // } else {
+            //     return "isFull";
+            // }
+        },
+        bossIcon: function(val) {
+            return PICS.bossIcon(val);
         },
     },
     watch: {

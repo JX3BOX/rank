@@ -47,7 +47,7 @@
                     <div class="u-name">{{ item.prizewinner || "待定" }}</div>
                 </div>
                 <div class="m-awards-td">
-                    <div v-if="item.name" class="u-btn" :class="!item.remark && 'is-disabled'">领奖信息</div>
+                    <div v-if="item.name" class="u-btn" :class="!item.remark && 'is-disabled'"></div>
                 </div>
             </template>
             <div v-else class="m-awards-td u-no-data">虚位以待</div>

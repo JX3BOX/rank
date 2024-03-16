@@ -60,7 +60,7 @@
         <race-tab :data="data" />
 
         <!-- 公众号二维码 -->
-        <img class="u-wechat-qrcode" :src="qrcode_img_url" />
+        <!-- <img class="u-wechat-qrcode" :src="qrcode_img_url" /> -->
     </div>
 </template>
 

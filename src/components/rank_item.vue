@@ -32,11 +32,11 @@
         </div>
         <!-- 时间 -->
         <div class="u-time">
-            <span class="u-time-finish">{{ item.created | showTime }}</span>
             <span class="u-time-fight">
                 用时 :
                 <b>{{ item.fight_time | showTC }}</b>
             </span>
+            <span class="u-time-finish">{{ item.created | showTime }}</span>
         </div>
         <!-- 队长 -->
         <div class="u-leader" v-if="item.leaders">

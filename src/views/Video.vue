@@ -1,8 +1,8 @@
 <template>
     <!-- 通关视频 -->
-    <div class="m-rank-video" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <div class="m-rank-video" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.3)">
         <div class="m-rank-video-title">
-            <img :src="video_title_img" />
+            <!-- <img :src="video_title_img" /> -->
             <!-- <el-button class="u-addv" v-if="isAdmin" type="primary" @click="add" icon="el-icon-circle-plus-outline">添加视频</el-button> -->
             <!-- <div class="u-extend">
                 <el-select
@@ -33,12 +33,13 @@
         </div>
         <el-row class="m-rank-boss" :gutter="20" type="flex" justify="space-between">
             <el-col :span="3">
-                <div class="u-boss" :class="{ on: current_boss == '' }" @click="changeBoss(0)">
+                <div class="u-boss u-boss-is_all" :class="{ on: current_boss == '' }" @click="changeBoss(0)">
                     <span class="u-boss-name">全部</span>
                 </div>
             </el-col>
             <el-col :span="3" v-for="(label, achieve_id) of bossList" :key="label + achieve_id">
                 <div class="u-boss" :class="{ on: achieve_id == current_boss }" @click="changeBoss(achieve_id)">
+                    <img class="u-boss-icon" :src="bossIcon('8552')" alt="" />
                     <span class="u-boss-name">{{ label }}</span>
                 </div>
             </el-col>
@@ -120,6 +121,7 @@ import { getVideos, deleteVideo, addVideo, updateVideo } from "@/service/video.j
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
+import PICS from "@/assets/js/pics.js";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import _ from "lodash";
 export default {
@@ -240,6 +242,9 @@ export default {
                     this.dialogVisible = false;
                 });
             }
+        },
+        bossIcon: function(val) {
+            return PICS.bossIcon(val);
         },
     },
     watch: {

@@ -53,6 +53,7 @@ export default {
 
         return {
             barOption: {
+                backgroundColor: 'transparent',
                 title: {
                     show: true,
                     text: `${this.title}统计图`,

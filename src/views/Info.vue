@@ -2,7 +2,7 @@
     <!-- 活动规则与奖励设置 -->
     <div class="m-rank-info">
         <div class="m-rank-btns">
-            <a class="u-btn u-btn-join" href="../join/" target="_blank" rel="noopener">立即参与报名</a>
+            <a class="u-btn u-btn-join" href="../join/" target="_blank" rel="noopener"></a>
         <!-- <a class="u-btn u-btn-lucky" href="/fb" target="_blank" rel="noopener">副本开荒攻略</a> -->
         </div>
         <div class="m-rank-txt" v-html="desc"></div>
