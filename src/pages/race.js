@@ -29,6 +29,10 @@ import "echarts/lib/component/title";
 
 import jx3DarkTheme from "@/assets/data/echartsTheme.json";
 
+import reporter from "@jx3box/jx3box-common/js/reporter";
+reporter.install(Vue);
+
+
 Vue.component("v-chart", ECharts);
 ECharts.registerTheme("jx3box-dark", jx3DarkTheme);
 import Katex from "vue-katex-auto-render";
