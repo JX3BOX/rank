@@ -2,7 +2,19 @@
 
 .m-rank-index {
     // min-height:800px;
-    background: url("@{img}common/bg_back.png") center top repeat-x;
+    background: url("@{img}common/bg_back.png") center top no-repeat;
+    background-size: 100% 100%;
+    &::after {
+        content: "";
+        display: block;
+        background-color: black;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: -1;
+    }
 }
 
 .m-rank-header {

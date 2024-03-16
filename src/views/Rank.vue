@@ -10,7 +10,7 @@
         <el-row class="m-rank-boss m-rank-filter" :gutter="20" type="flex">
             <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
                 <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id }">
-                    <img class="u-boss-icon" :src="bossIcon('8552')" alt="" />
+                    <img class="u-boss-icon" :src="bossIcon(aid)" :onerror="defaultBossIcon" />
                     <span class="u-boss-name">{{ label }}</span>
                     <span class="u-boss-per" :class="getProcessCls(total[aid])"
                         >({{ total[aid] > 100 ? 100 : total[aid] }}/100)</span
@@ -80,6 +80,7 @@ export default {
             this.achieves.forEach((item) => {
                 dict[item.achievement_id] = item.name;
             });
+            console.log(dict);
             return dict;
         },
         aids: function () {
@@ -116,6 +117,9 @@ export default {
                 achieve_id: ~~this.achieve_id,
             };
         },
+        defaultBossIcon:function (e){
+            return `this.src='${this.bossIcon('0')}';this.onerror=null`
+        }
     },
     methods: {
         changeBoss: function (val) {
