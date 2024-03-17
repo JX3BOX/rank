@@ -79,8 +79,7 @@ export default {
             let dict = {};
             this.achieves.forEach((item) => {
                 dict[item.achievement_id] = item.name;
-            });
-            console.log(dict);
+            }); 
             return dict;
         },
         aids: function () {

@@ -13,19 +13,7 @@
         <!-- TODO: -->
         <!-- <div class="m-rank-vote-header"></div> -->
         <!-- Boss导航 -->
-        <el-row class="m-rank-boss m-rank-filter m-rank-dps-filter" :gutter="20" type="flex">
-            <el-col :span="span">
-                <div class="u-boss u-boss-is_all" :class="{ on: aid == 'all' }" @click="changeBoss('all')">
-                    <span class="u-boss-name">全部</span>
-                </div>
-            </el-col>
-            <el-col :span="span" v-for="(label, id) of bossList" :key="'aid-' + id">
-                <li class="u-boss" @click="changeBoss(id)" :class="{ on: id == aid }">
-                    <img class="u-boss-icon" :src="bossIcon(id)" :onerror="defaultBossIcon" />
-                    <span class="u-boss-name">{{ label }}</span>
-                </li>
-            </el-col>
-        </el-row>
+        <rank-boss :data="bossList" :aid="aid" @update="changeBoss" />
         <!-- 心法导航 -->
         <div class="m-rank-dps-xf">
             <ul>
@@ -36,7 +24,7 @@
                     :key="'xf-' + xfid"
                     @click="changeMount(xfid)"
                 >
-                    <img :src="xfid | showMountIcon" :title="label" />
+                    <img :src="showMountIcon(xfid)" :title="label" />
                 </li>
             </ul>
         </div>
@@ -102,10 +90,10 @@
                 <el-row
                     class="u-item"
                     :gutter="20"
-                    :key="'dps' + i"
+                    :key="i"
                     v-show="
                         (server === '全部服务器' ? true : item.server == server) &&
-                            (filterMount === '0' ? true : item.mount == filterMount)
+                        (filterMount === '0' ? true : item.mount == filterMount)
                     "
                 >
                     <el-col :span="1"
@@ -113,7 +101,7 @@
                     >
                     <el-col :span="2"
                         ><div class="u-mount" :style="{ color: showMountColor(item.mount) }">
-                            <img :src="item.mount | showMountIcon" />{{ item.mount | showMountLabel }}
+                            <img :src="showMountIcon(item.mount)" />{{ showMountLabel(item.mount) }}
                         </div></el-col
                     >
                     <el-col :span="2"
@@ -121,15 +109,15 @@
                     >
                     <el-col :span="3">
                         <div class="u-team">
-                            <a :href="item.team_id | showTeamLink" target="_blank" v-if="item.team_id"
-                                ><img :src="item | showTeamLogo" /><span>{{ item | showTeamName }}</span></a
+                            <a :href="showTeamLink(item.team_id)" target="_blank" v-if="item.team_id"
+                                ><img :src="showTeamLogo(item)" /><span>{{ showTeamName(item) }}</span></a
                             ><span v-else>-</span>
                         </div></el-col
                     >
                     <el-col :span="4"
                         ><div class="u-role">
-                            <a :href="item.uid | authorLink" target="_blank" v-if="item.uid"
-                                ><img :src="item | showUserAvatar" />{{ item.role }}</a
+                            <a :href="authorLink(item.uid)" target="_blank" v-if="item.uid"
+                                ><img :src="showUserAvatar(item)" />{{ item.role }}</a
                             >
                             <span v-else>{{ item.role }}</span>
                         </div></el-col
@@ -143,9 +131,9 @@
                         </div></el-col
                     >
                     <el-col :span="2">
-                        <div class="u-achievement">{{ item.achievement || '未记录' }}</div>
+                        <div class="u-achievement">{{ item.achievement || "未记录" }}</div>
                     </el-col>
-                    <el-col :span="(aid !== 'all' || item.battle_exist) ? 4 : 6">
+                    <el-col :span="aid !== 'all' || item.battle_exist ? 4 : 6">
                         <div class="u-total">
                             <span class="u-damage"
                                 ><span>{{ isTherapy(item.mount) ? "总治疗" : "总伤害" }}</span>
@@ -169,14 +157,25 @@
                             ></rank-item>
                             <span class="u-more" slot="reference">查看</span>
                         </el-popover> -->
-                        <span v-if="aid !== 'all'" class="u-more" :ref="'pop'+ item.role" @click="clickPop(item)">查看</span>
+                        <span v-if="aid !== 'all'" class="u-more" :ref="'pop' + item.role" @click="clickPop(item)"
+                            >查看</span
+                        >
                         <span v-if="aid !== 'all' && item.battle_exist" class="u-misc-div">|</span>
-                        <a v-if="item.battle_exist" class="u-log" target="_blank" :href="getBattleLink(item.battleId)">日志</a>
+                        <a v-if="item.battle_exist" class="u-log" target="_blank" :href="getBattleLink(item.battleId)"
+                            >日志</a
+                        >
                     </el-col>
                 </el-row>
             </template>
         </div>
-        <el-popover v-if="showPop" ref="pop" :reference="reference" width="1260" popper-class="u-dps-rank-pop" trigger="click">
+        <el-popover
+            v-if="showPop"
+            ref="pop"
+            :reference="reference"
+            width="1260"
+            popper-class="u-dps-rank-pop"
+            trigger="click"
+        >
             <rank-item
                 class="u-dps-rank-item"
                 :show-index="false"
@@ -195,18 +194,18 @@ import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { authorLink, getLink, getThumbnail, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { mount_group } from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import server_std from "@jx3box/jx3box-data/data/server/server_cn";
-import PICS from "@/assets/js/pics.js";
 import { getMountDpsRace, getMixRank } from "@/service/race";
 import { cloneDeep } from "lodash";
 import rank_item from "@/components/rank_item.vue";
+import rank_boss from "@/components/rank_boss.vue";
 
 export default {
     name: "Dps",
-    props: [],
     components: {
         "rank-item": rank_item,
+        "rank-boss": rank_boss,
     },
-    data: function() {
+    data: function () {
         return {
             xfmap,
             dps_title_img: __imgPath + "image/rank/common/dps.png",
@@ -221,27 +220,24 @@ export default {
 
             showPop: false,
             reference: {},
-            popItem: {}
+            popItem: {},
         };
     },
     computed: {
-        id: function() {
+        id: function () {
             return this.$store.state.id;
         },
-        achieves: function() {
+        achieves: function () {
             return this.$store.state.achieves || [];
         },
-        bossList: function() {
+        bossList: function () {
             let dict = {};
             this.achieves.forEach((item) => {
                 dict[item.achievement_id] = item.name;
             });
             return dict;
-        },
-        span: function() {
-            return ~~(24 / Object.keys(this.bossList).length + 1);
-        },
-        params: function() {
+        }, 
+        params: function () {
             return {
                 mount: this.mount,
                 limit: 100,
@@ -250,21 +246,21 @@ export default {
                 belong_team: 1,
             };
         },
-        allParams: function (){
+        allParams: function () {
             const params = {
                 mount: this.mount,
                 event_id: this.id,
-                aids: this.achieves.map(item => item.achievement_id).join(','),
+                aids: this.achieves.map((item) => item.achievement_id).join(","),
                 belong_team: 1,
-            }
+            };
 
-            if (this.server !== '全部服务器') {
+            if (this.server !== "全部服务器") {
                 params.server = this.server;
             }
 
-            return params
+            return params;
         },
-        list: function() {
+        list: function () {
             return this.data.map((item, i) => {
                 if (this.isTherapy(item.mount)) {
                     item._therapy = true;
@@ -283,29 +279,26 @@ export default {
             delete _xfmap["0"];
             return _xfmap;
         },
-        max_dps: function() {
+        max_dps: function () {
             let dps_bucket = this.data.map((item, i) => {
                 return this.isTherapy(item.mount) ? item.hps : item.dps;
             });
             return Math.max(...dps_bucket);
-        },
-        defaultBossIcon:function (e){
-            return `this.src='${this.bossIcon('0')}';this.onerror=null`
-        }
+        }, 
     },
     watch: {
         params: {
             deep: true,
             handler() {
-                this.aid && this.aid !== 'all' && this.loadMountDps();
+                this.aid && this.aid !== "all" && this.loadMountDps();
             },
         },
         aid: {
             immediate: true,
-            handler: function(val) {
-                if(!val) return
+            handler: function (val) {
+                if (!val) return;
                 if (val == "all") {
-                    this.loadMixRank()
+                    this.loadMixRank();
                 } else {
                     this.loadMountDps();
                 }
@@ -314,25 +307,21 @@ export default {
         allParams: {
             deep: true,
             handler() {
-                this.aid && this.aid === 'all' && this.loadMixRank();
+                this.aid && this.aid === "all" && this.loadMixRank();
             },
         },
     },
     methods: {
         // 路由
-        go: function(query) {
-            let _query = Object.assign({}, this.$route.query, query);
-            return this.$router.push({ name: this.$route.name, query: _query });
-        },
-        changeBoss: function(val) {
-            this.aid = val;
-            val !== 'all' && this.go({ aid: val });
-        },
-        changeMount: function(val) {
+        changeMount: function (val) {
             this.mount = val;
             this.go({ mount: val });
         },
-        parseQuery: function() {
+        go: function (query) {
+            let _query = Object.assign({}, this.$route.query, query);
+            return this.$router.push({ name: this.$route.name, query: _query });
+        },
+        parseQuery: function () {
             for (let key in this.$route.query) {
                 this[key] = this.$route.query[key];
             }
@@ -349,18 +338,18 @@ export default {
                         this.loading = false;
                     });
         },
-        init: function() {
+        init: function () {
             this.parseQuery();
         },
         // 字段
-        calcDps: function(item) {
+        calcDps: function (item) {
             return item.damage;
         },
-        showMountColor: function(val) {
+        showMountColor: function (val) {
             let xfname = xfmap[val] || "通用";
             return colors_by_mount_name[xfname] || "#fff";
         },
-        isTherapy: function(mount) {
+        isTherapy: function (mount) {
             return mount_group.治疗.includes(~~mount);
         },
         formatItem(data) {
@@ -406,51 +395,51 @@ export default {
                 });
         },
         clickPop(item) {
-            if (this.popItem?.role === item.role && this.showPop) return
-            this.showPop = false
-            this.popItem = item
+            if (this.popItem?.role === item.role && this.showPop) return;
+            this.showPop = false;
+            this.popItem = item;
 
-            this.reference = this.$refs['pop'+ item.role][0]
+            this.reference = this.$refs["pop" + item.role][0];
 
             this.$nextTick(() => {
-                this.showPop = true
+                this.showPop = true;
                 this.$nextTick(() => {
-                    this.$refs.pop?.doShow()
-                })
-            })
+                    this.$refs.pop?.doShow();
+                });
+            });
         },
-        getBattleLink(id){
-            return `/battle/#/search?battle_id=${encodeURIComponent(id)}`
+        getBattleLink(id) {
+            return `/battle/#/search?battle_id=${encodeURIComponent(id)}`;
         },
-        bossIcon: function(val) {
-            return PICS.bossIcon(val);
+        changeBoss(val) {
+            this.aid = val;
+            val !== "all" && this.go({ aid: val });
         },
-    },
-    filters: {
-        showMountIcon: function(val) {
+
+        showMountIcon: function (val) {
             return __imgPath + "image/xf/" + val + ".png";
         },
-        showMountLabel: function(val) {
+        showMountLabel: function (val) {
             return (val && xfmap[val]) || "-";
         },
         authorLink,
-        showTeamLink: function(team_id) {
+        showTeamLink: function (team_id) {
             return getLink("org", team_id);
         },
-        showTeamLogo: function(item) {
+        showTeamLogo: function (item) {
             if (item?.team_info?.logo) {
                 return getThumbnail(item?.team_info.logo, 88);
             }
             return require("../assets/img/misc/null.png");
         },
-        showTeamName: function(item) {
+        showTeamName: function (item) {
             return item?.team_info?.name || "-";
         },
-        showUserAvatar: function(item) {
+        showUserAvatar: function (item) {
             return showAvatar(item?.user_info?.user_avatar);
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.init();
     },
 };

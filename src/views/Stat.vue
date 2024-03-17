@@ -7,20 +7,8 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
-        <el-row class="m-rank-boss" :gutter="20" type="flex" justify="space-between">
-            <el-col :span="4">
-                <div class="u-boss u-boss-is_all" :class="{ on: current_boss == 'all' }" @click="changeBoss('all')">
-                    <span class="u-boss-name">全部</span>
-                </div>
-            </el-col>
-            <el-col :span="4" v-for="(label, achieve_id) of bossList" :key="achieve_id">
-                <div class="u-boss" :class="{ on: achieve_id == current_boss }" @click="changeBoss(achieve_id)">
-                    <img class="u-boss-icon" :src="bossIcon(achieve_id)" :onerror="defaultBossIcon" />
-                    <span class="u-boss-name">{{ label }}</span>
-                </div>
-            </el-col>
-        </el-row>
-
+        <!-- Boss导航 -->
+        <rank-boss :data="bossList" :aid="current_boss" @update="changeBoss" />
         <img
             :src="null_img_url"
             class="m-rank-null"
@@ -57,68 +45,27 @@
                     }"
                 ></pie-chart>
             </template>
-
-            <!--            <bar-chart v-if="ana[21]" :data="ana[21]['data']" :title="ana[21]['title']" height="450px">-->
-            <!--                &lt;!&ndash; <div>testtest</div> &ndash;&gt;-->
-            <!--            </bar-chart>-->
-            <!--            <bar-chart v-if="ana[1]" :data="ana[1]['data']" :title="ana[1]['title']" >-->
-            <!--                &lt;!&ndash; <div>testtest</div> &ndash;&gt;-->
-            <!--            </bar-chart>-->
-
-            <!--            <template v-for="item of 10">-->
-            <!--                <pie-chart-->
-            <!--                    :key="item"-->
-            <!--                    v-if="ana[item + 1]"-->
-            <!--                    :data="ana[item + 1]['data']"-->
-            <!--                    :title="ana[item + 1]['title']"-->
-            <!--                    :isCustomColor="ana[item + 1]['isCustomColor'] === undefined ? true : ana[item + 1]['isCustomColor']"-->
-            <!--                    :isSmall="ana[item + 1]['position'] !== undefined"-->
-            <!--                    :class="{-->
-            <!--                        'chart-left': ana[item + 1]['position'] === 'left',-->
-            <!--                        'chart-right': ana[item + 1]['position'] === 'right',-->
-            <!--                    }"-->
-            <!--                ></pie-chart>-->
-            <!--            </template>-->
-            <!--            <bar-chart v-if="ana[23]" :data="ana[23]['data']" :title="ana[23]['title']" :seriesName="ana[23]['seriesName']"-->
-            <!--                       :class="{-->
-            <!--                        'chart-left': ana[23]['position'] === 'left',-->
-            <!--                        'chart-right': ana[23]['position'] === 'right',-->
-            <!--                    }">-->
-            <!--            </bar-chart>-->
-            <!--            <bar-chart v-if="ana[24]" :data="ana[24]['data']" :title="ana[24]['title']" :seriesName="ana[24]['seriesName']" :class="{-->
-            <!--                        'chart-left': ana[24]['position'] === 'left',-->
-            <!--                        'chart-right': ana[24]['position'] === 'right',-->
-            <!--                    }">-->
-            <!--            </bar-chart>-->
-            <!--            <bar-chart v-if="ana[22]" :data="ana[22]['data']" :title="ana[22]['title']" :seriesName="ana[22]['seriesName']" >-->
-            <!--            </bar-chart>-->
-            <!--&lt;!&ndash;            <pie-chart v-if="ana[17]" :data="ana[17]['data']" :title="ana[17]['title']"></pie-chart>&ndash;&gt;-->
-            <!--            <bar-chart v-if="ana[25]" :data="ana[25]['data']" :title="ana[25]['title']" :seriesName="ana[25]['seriesName']" >-->
-            <!--            </bar-chart>-->
         </template>
     </div>
 </template>
 
 <script>
-// import achieves from "@/assets/data/achieve.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import _ from "lodash";
-import BarChart from "../components/barChart.vue";
-import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
-import PieChart from "../components/pieChart.vue";
 import schools from "@jx3box/jx3box-data/data/xf/school.json";
 import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
 import mount_group from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import { axios, realUrl } from "@/service/api.js";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
-import PICS from "@/assets/js/pics.js";
+import BarChart from "@/components/barChart.vue";
+import PieChart from "@/components/pieChart.vue";
+import rank_boss from "@/components/rank_boss.vue";
 
 export default {
     name: "Stat",
-    props: [],
     components: {
         BarChart,
         PieChart,
+        "rank-boss": rank_boss,
     },
     data: function () {
         return {
@@ -163,18 +110,6 @@ export default {
             });
             return dict;
         },
-        defaultBossIcon:function (e){
-            return `this.src='${this.bossIcon('0')}';this.onerror=null`
-        }
-    },
-    watch: {
-        current_boss: function () {
-            this.loadData();
-        },
-        "$route.query.aid": function (val) {
-            this.current_boss = val;
-            this.loadData();
-        },
     },
     mounted() {
         if (this.$route.query.aid) {
@@ -204,18 +139,7 @@ export default {
             }
             this.$set(this, "chartArr", arr);
         },
-        loadData: function () {
-            if (!this.id) return;
 
-            // this.loading = true;
-            // getTop100(this.current_boss)
-            //     .then((res) => {
-            //         this.origin_data = res.data.data;
-            //     })
-            //     .finally(() => {
-            //         this.loading = false;
-            //     });
-        },
         getschoolName(id) {
             for (let key in schools) {
                 if (id == schools[key].force_id) {
@@ -226,7 +150,6 @@ export default {
         },
         getStats() {
             this.loading = true;
-            // return axios(realUrl(__Root, `rank-analysis/stats/event${this.id}.json`), "GET", false)
             return axios(realUrl(__Root, `data/analysis-dungeon-rank/output/event_${this.id}.json`), "GET", false)
                 .then((res) => {
                     this.stats = res;
@@ -240,9 +163,6 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
-        },
-        bossIcon: function(val) {
-            return PICS.bossIcon(val);
         },
         doAna1() {
             // 1-区服-bar: 区服入榜团队数量,

@@ -1,8 +1,12 @@
 <template>
     <div class="m-race-tab">
-        <router-link class="u-item" :to="link(key)" v-for="(label, key) in visible_blocks" :key="key">{{
-            label
-        }}</router-link>
+        <router-link
+            :class="['u-item', active(key)]"
+            :to="link(key)"
+            v-for="(label, key) in visible_blocks"
+            :key="key"
+            >{{ label }}</router-link
+        >
     </div>
 </template>
 
@@ -10,14 +14,17 @@
 import blocks from "@/assets/data/blocks.json";
 export default {
     props: ["data"],
-    data: function() {
+    data: function () {
         return {};
     },
     computed: {
-        id: function() {
+        id: function () {
             return this.$store.state.id;
         },
-        visible_blocks: function() {
+        key: function () {
+            return this.$route.matched[0]?.name;
+        },
+        visible_blocks: function () {
             let enabled_blocks = (this.data && this.data.blocks) || [];
             let tabs = {};
             enabled_blocks.forEach((item) => {
@@ -27,11 +34,13 @@ export default {
         },
     },
     methods: {
-        link: function(val) {
+        link: function (val) {
             return "/" + this.id + "/" + val;
         },
+        active(key) {
+            return key == this.key ? "active" : "";
+        },
     },
-    filters: {},
 };
 </script>
 

@@ -8,8 +8,8 @@
             <div class="m-rank-content">
                 <ul v-if="data && data.length">
                     <li class="u-item" v-for="(item, i) in data" :key="i">
-                        <a :href="item.ID | eventLink" target="_blank">
-                            <img :src="item | eventCover" :alt="item.name" />
+                        <a :href="eventLink(item.ID)" target="_blank">
+                            <img :src="eventCover(item)" :alt="item.name" />
                             <b>{{ item.name }}</b>
                             <div class="u-status">
                                 <span v-if="item.client" :class="item.client">{{
@@ -64,8 +64,6 @@ export default {
                 this.data = res.data.data.list;
             });
         },
-    },
-    filters: {
         eventLink: function (val) {
             return "./race/#/" + val;
         },
