@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="less">
-.m-rank-boss { 
+.m-rank-boss {
     .u-boss {
         .db;
         .pointer;
@@ -85,5 +85,9 @@ export default {
         left: 0;
         top: 0;
     }
+}
+.el-image__error,
+.el-image__placeholder {
+    background-color: #24292d;
 }
 </style>

@@ -24,7 +24,7 @@ Vue.use(VueRouter);
 
 const routes = [
     // 当前活动进程，开赛后修改为Rank
-    { name: "index", path: "/:id", component: Info },
+    { name: "index", path: "/:id", redirect: { name: "info" } },
     { name: "info", path: "/:id/info", component: Info },
     { name: "lucky", path: "/:id/lucky", component: Lucky },
     { name: "dps", path: "/:id/dps", component: Dps },
