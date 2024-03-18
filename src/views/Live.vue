@@ -56,7 +56,6 @@
                                     <a class="u-team-name" :href="item.team.ID | teamLink" target="_blank">{{ item.team.name }}</a>
                                 </div>
                                 <div class="u-room">
-                                    <span class="u-label">房间 : </span>
                                     <a class="u-room-name" :href="getTVlink(item.team.tv_type, item.team.tv)" target="_blank">
                                         {{ (item.team.tv_type == "douyu" && item.douyu.room_name) || item.team.name + "的直播间" }}
                                     </a>

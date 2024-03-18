@@ -5,10 +5,14 @@ body {
     background: linear-gradient(180deg, rgba(32, 51, 69, 1) 62%, rgba(84, 102, 120, 1) 100%);
 }
 
-body,
+body {
+    height: 100vh;
+}
 .m-rank-container,
 #m-rank-star {
-    min-height: calc(100vh - 64px);
+    height: calc(100vh);
+    overflow: auto;
+    .scrollbar(#2d3c4e, #222);
 }
 
 #m-rank-star {
