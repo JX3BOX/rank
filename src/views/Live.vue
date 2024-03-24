@@ -17,7 +17,7 @@
             </div>
             <div class="u-list">
                 <li v-for="(item, i) in list" :key="i" @click="play(item)" :class="{ on: !!item.isActive }">
-                    <img class="u-live-logo" :src="item.team.logo | teamLogo" />
+                    <img class="u-live-logo" :src="teamLogo(item.team.logo)" />
                     <span class="u-live-name"
                         >{{ item.team.name }} <em>@{{ item.team.server }}</em>
                     </span>
@@ -32,7 +32,7 @@
                             <a class="u-video" :href="getTVlink(item.team.tv_type, item.team.tv)" target="_blank">
                                 <template v-if="item.team.tv_type == 'douyu'">
                                     <img v-if="item.douyu.room_src" :src="item.douyu.room_src" class="u-live-cover" loading="lazy" />
-                                    <img v-else :src="item.team.logo | teamLogo" class="u-live-null" loading="lazy" />
+                                    <img v-else :src="teamLogo(item.team.logo)" class="u-live-null" loading="lazy" />
                                     <i
                                         class="u-status"
                                         :class="{
@@ -45,15 +45,15 @@
                                     </i>
                                 </template>
                                 <template v-else>
-                                    <img :src="item.team.logo | teamLogo" class="u-live-null" loading="lazy" />
+                                    <img :src="teamLogo(item.team.logo)" class="u-live-null" loading="lazy" />
                                     <i class="u-status"><i class="el-icon-warning-outline"></i> 未知</i>
                                 </template>
                             </a>
                             <div class="u-info">
-                                <img :src="item.team.logo | liveAvatar" class="u-team-logo" loading="lazy" />
+                                <img :src="liveAvatar(item.team.logo)" class="u-team-logo" loading="lazy" />
                                 <div class="u-team">
                                     <span class="u-label">团队 : </span>
-                                    <a class="u-team-name" :href="item.team.ID | teamLink" target="_blank">{{ item.team.name }}</a>
+                                    <a class="u-team-name" :href="teamLink(item.team.ID)" target="_blank">{{ item.team.name }}</a>
                                 </div>
                                 <div class="u-room">
                                     <a class="u-room-name" :href="getTVlink(item.team.tv_type, item.team.tv)" target="_blank">
@@ -162,16 +162,6 @@ export default {
                 item.isActive = false;
             });
         },
-    },
-    watch: {
-        params: {
-            deep: true,
-            handler: function() {
-                this.loadData();
-            },
-        },
-    },
-    filters: {
         teamLogo: function(val) {
             return val ? getThumbnail(val, 240, true) : default_avatar;
         },
@@ -183,10 +173,17 @@ export default {
             return getLink("org", val);
         },
     },
+    watch: {
+        params: {
+            deep: true,
+            handler: function() {
+                this.loadData();
+            },
+        },
+    },
     created: function() {
         this.loadData();
     },
-    components: {},
 };
 </script>
 

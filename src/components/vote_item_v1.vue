@@ -9,11 +9,11 @@
                 <i class="u-ranking">{{ i + 1 }}</i>
             </td>
             <td>
-                <a :href="item.team_id | teamLink" target="_blank">
+                <a :href="teamLink(item.team_id)" target="_blank">
                     <img
                         loading="lazy"
                         class="u-logo"
-                        :src="item.logo | teamLogo"
+                        :src="teamLogo(item.logo)"
                         :alt="item.name"
                     />
                 </a>
@@ -21,7 +21,7 @@
             <td>
                 <a
                     class="u-name"
-                    :href="item.team_id | teamLink"
+                    :href="teamLink(item.team_id)"
                     target="_blank"
                 >
                     {{ item.name }}
@@ -133,8 +133,6 @@ export default {
         hasVoted: function (item) {
             return this.voteTeam.includes(String(item.team_id));
         },
-    },
-    filters: {
         teamLogo: function(val) {
             return val
                 ? getThumbnail(val, 96, true)

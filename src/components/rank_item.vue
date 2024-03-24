@@ -1,22 +1,26 @@
 <template>
     <div class="m-rank-top100-item" :class="showIndex ? 'is-No' + (i + 1) : ''">
         <!-- 排名 -->
-        <div v-if="showIndex" class="u-ranking" :class="'is-Top' + (i + 1)">
+        <div v-if="showIndex" class="u-ranking" :class="'is-Top' + (i + 1)" @click="copy(item.team_name)">
             <i class="u-pic">
                 <img loading="lazy" :src="getRankImg(i + 1)" v-if="i < 3" />
             </i>
             <span>{{ i + 1 }}</span>
         </div>
         <!-- 队徽 -->
-        <a class="u-logo" :href="item.team_id | teamLink" target="_blank">
-            <el-image v-if="item.team_logo" :src="i < 3 ? teamLogo(item.team_logo, true) : teamLogo(item.team_logo, false)" fit="fill"></el-image>
+        <a class="u-logo" :href="teamLink(item.team_id)" target="_blank">
+            <el-image
+                v-if="item.team_logo"
+                :src="i < 3 ? teamLogo(item.team_logo, true) : teamLogo(item.team_logo, false)"
+                fit="fill"
+            ></el-image>
             <div class="el-image" v-else>
                 <img loading="lazy" src="../assets/img/misc/null.png" />
             </div>
         </a>
         <!-- 名称 -->
         <div class="u-title">
-            <a class="u-teamname" :href="item.team_id | teamLink" target="_blank" v-if="item.team_id">
+            <a class="u-teamname" :href="teamLink(item.team_id)" target="_blank" v-if="item.team_id">
                 <i class="el-icon-link"></i>
                 {{ item.team_name && item.team_name.slice(0, 6) }}
             </a>
@@ -31,27 +35,27 @@
             >-->
         </div>
         <!-- 时间 -->
-        <div class="u-time">
+        <div class="u-time" @click="copy(showTime(item.created))">
             <span class="u-time-fight">
                 用时 :
-                <b>{{ item.fight_time | showTC }}</b>
+                <b>{{ showTC(item.fight_time) }}</b>
             </span>
-            <span class="u-time-finish">{{ item.created | showTime }}</span>
+            <span class="u-time-finish">{{ showTime(item.created) }}</span>
         </div>
         <!-- 队长 -->
         <div class="u-leader" v-if="item.leaders">
             <span class="u-leader-label">团长 :</span>
-            <img loading="lazy" class="u-mount" :src="item.leaders[1] | showLeaderMount" />
+            <img loading="lazy" class="u-mount" :src="showLeaderMount(item.leaders[1])" />
             <span class="u-username">
-                {{ item.leaders[0] | showLeaderName }}
+                {{ showLeaderName(item.leaders[0]) }}
             </span>
         </div>
         <!-- 队员 -->
         <el-row class="u-teammates" :gutter="10">
             <el-col class="u-member" :span="i < 3 ? 8 : span" v-for="(member, j) in item.members" :key="j">
                 <div class="u-member-content">
-                    <img loading="lazy" class="u-mount" :src="member | showMemberMount" />
-                    <span class="u-username" :title="member | showMemberName">{{ member | showMemberName }}</span>
+                    <img loading="lazy" class="u-mount" :src="showMemberMount(member)" />
+                    <span class="u-username" :title="showMemberName(member)">{{ showMemberName(member) }}</span>
                 </div>
             </el-col>
         </el-row>
@@ -77,48 +81,49 @@ export default {
             type: Boolean,
             default: true,
         },
-        span:{
-            type : Number,
-            default : 4
-        }
+        span: {
+            type: Number,
+            default: 4,
+        },
     },
     data() {
         return {};
     },
     methods: {
-        getRankImg: function(num) {
+        getRankImg: function (num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";
         },
-        teamLogo: function(val, mode) {
+        teamLogo: function (val, mode) {
             if (!val) return "";
             return mode ? getThumbnail(val, 240, true) : getThumbnail(val, 176, true);
         },
-    },
-    filters: {
-        teamLink: function(val) {
+        teamLink: function (val) {
             return getLink("org", val);
         },
-        showTime: function(val) {
+        showTime: function (val) {
             return showTime(new Date(val * 1000));
         },
-        showTC: function(val) {
+        showTC: function (val) {
             let s = val / 1000;
             return ~~(s / 60) + "分" + ~~(s % 60) + "秒";
         },
-        showMemberMount: function(member) {
+        showMemberMount: function (member) {
             let mount = (member && member[1]) || 0;
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";
             return mountIcon;
         },
-        showMemberName: function(member) {
+        showMemberName: function (member) {
             return (member && member[0].slice(0, 12)) || "未知";
         },
-        showLeaderMount: function(mount) {
+        showLeaderMount: function (mount) {
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";
             return mountIcon;
         },
-        showLeaderName: function(name) {
+        showLeaderName: function (name) {
             return (name && name.slice(0, 12)) || "未知";
+        },
+        copy(text) {
+            navigator.clipboard.writeText(text);
         },
     },
 };

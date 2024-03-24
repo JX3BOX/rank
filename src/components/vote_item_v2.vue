@@ -5,19 +5,19 @@
                 <i class="u-ranking">{{ i + 1 }}</i>
             </td>
             <td>
-                <a :href="item.team_id | teamLink" target="_blank">
-                    <img loading="lazy" class="u-logo" :src="item.logo | teamLogo" :alt="item.name" />
+                <a :href="teamLink(item.team_id)" target="_blank">
+                    <img loading="lazy" class="u-logo" :src="teamLogo(item.logo)" :alt="item.name" />
                 </a>
             </td>
             <td>
-                <a class="u-name" :href="item.team_id | teamLink" target="_blank">{{ item.name }}</a>
+                <a class="u-name" :href="teamLink(item.team_id)" target="_blank">{{ item.name }}</a>
             </td>
             <td>
                 <span class="u-server">{{ item.server }}</span>
             </td>
             <td>
                 <div>
-                    <a class="u-leader" :href="item.uid | authorLink">{{ item.leader }}</a>
+                    <a class="u-leader" :href="authorLink(item.uid)">{{ item.leader }}</a>
                     <span class="u-slogan">{{ item.slogan }}</span>
                 </div>
             </td>
@@ -42,12 +42,9 @@
 </template>
 
 <script>
-import {
-    __imgPath,
-    default_avatar
-} from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { moment } from "@jx3box/jx3box-common/js/moment";
-import { getThumbnail, getLink,authorLink } from "@jx3box/jx3box-common/js/utils";
+import { getThumbnail, getLink, authorLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { doVote } from "@/service/vote.js";
 export default {
@@ -77,25 +74,20 @@ export default {
         hasCondition: function () {
             return this.search_team || this.search_server;
         },
-        vote_end: function (){
-            return this.$store.state.race.vote_end
+        vote_end: function () {
+            return this.$store.state.race.vote_end;
         },
-        canVote: function (){
-            return moment().isBefore(moment(this.vote_end))
-        }
+        canVote: function () {
+            return moment().isBefore(moment(this.vote_end));
+        },
     },
     methods: {
         isMatched: function (item) {
             if (this.search_team && this.search_server) {
-                return (
-                    item.name.includes(this.search_team) &&
-                    item.server == this.search_server
-                );
+                return item.name.includes(this.search_team) && item.server == this.search_server;
             }
-            let matchName =
-                this.search_team && item.name.includes(this.search_team);
-            let matchServer =
-                this.search_server && item.server == this.search_server;
+            let matchName = this.search_team && item.name.includes(this.search_team);
+            let matchServer = this.search_server && item.server == this.search_server;
             return matchName || matchServer;
         },
         vote: function (item) {
@@ -115,9 +107,9 @@ export default {
             //     item.count = ~~item.count + 1;
             //     this.$forceUpdate();
             // });
-            if (this.voteTeam.length) return
-            const src = `${__imgPath}image/rank/vote/${this.id}.png`
-            this.$alert(`<img src="${src}" alt="" />`, '打开微信扫码投票', {
+            if (this.voteTeam.length) return;
+            const src = `${__imgPath}image/rank/vote/${this.id}.png`;
+            this.$alert(`<img src="${src}" alt="" />`, "打开微信扫码投票", {
                 showConfirmButton: false,
                 dangerouslyUseHTMLString: true,
                 center: true,
@@ -126,27 +118,13 @@ export default {
         hasVoted: function (item) {
             return this.voteTeam.includes(String(item.team_id));
         },
-    },
-    filters: {
         teamLogo: function (val) {
-            return val
-                ? getThumbnail(val, 96, true)
-                : getThumbnail(default_avatar, 96, true);
+            return val ? getThumbnail(val, 96, true) : getThumbnail(default_avatar, 96, true);
         },
         teamLink: function (val) {
             return getLink("org", val);
         },
-        authorLink
+        authorLink,
     },
-    watch: {
-        // search_team: function () {
-        //     this.$forceUpdate();
-        // },
-        // search_server: function () {
-        //     this.$forceUpdate();
-        // },
-    },
-    mounted: function () {},
-    components: {},
 };
 </script>
