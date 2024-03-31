@@ -2,11 +2,11 @@
     <div class="w-time-line-box">
         <h2>活动时间线</h2>
         <div class="m-time-line-box">
-            <img class="u-arr u-arr-left" @click="scrollLeft" :src="arrow" />
+            <img class="u-arr u-arr-left" @click="scroll('left')" :src="arrow" />
             <div class="m-timeline">
                 <ul ref="timeline" :style="{ left: listLeft + 'px' }" v-html="html"></ul>
             </div>
-            <img class="u-arr u-arr-right" @click="scrollRight" :src="arrow" />
+            <img class="u-arr u-arr-right" @click="scroll('right')" :src="arrow" />
         </div>
     </div>
 </template>
@@ -50,19 +50,16 @@ export default {
                 }
             }
         },
-        scrollLeft() {
+        scroll(direction) {
             const list = this.$refs.timeline;
             const li = list.querySelector("li");
             if (!li) return;
-            this.currentIndex = Math.max(0, this.currentIndex - 1);
-            this.setLiPosition();
-        },
-        scrollRight() {
-            const list = this.$refs.timeline;
-            const li = list.querySelector("li");
-            if (!li) return;
-            this.currentIndex = Math.min(this.currentIndex + 1, list.children.length - 1);
-            this.setLiPosition();
+            if (direction === "left") {
+                this.currentIndex = Math.max(0, this.currentIndex - 1);
+            } else if (direction === "right") {
+                this.currentIndex = Math.min(this.currentIndex + 1, list.children.length - 1);
+            }
+            this.setLiPosition(this.currentIndex);
         },
     },
 };
@@ -86,7 +83,7 @@ export default {
         gap: 10px;
         align-items: center;
         padding: 0 20px;
-        margin: 104px auto 146px auto;
+        margin: 50px auto;
         box-sizing: border-box;
         .m-timeline {
             .clip;
