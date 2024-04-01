@@ -96,22 +96,37 @@ export default {
             const list = this.$refs.timeline;
             const liElements = list.querySelectorAll("li");
             let left = 0;
-            let liDom = liElements[this.currentIndex];
-            if (firstLoad) {
-                for (let i = 0; i < liElements.length; i++) {
-                    const li = liElements[i];
-                    li.style.left = left + "px";
-                    left += li.offsetWidth + 34;
+            for (let i = 0; i < liElements.length; i++) {
+                const li = liElements[i];
+                li.style.left = left + "px";
+                left += li.offsetWidth + 34;
+                if (!firstLoad) {
+                    if (i === this.currentIndex) {
+                        this.listLeft = -li.offsetLeft;
+                    }
+                } else {
                     if (li.classList[0] == "nearest") {
-                        liDom = li;
-                        this.currentIndex = i;
+                        this.initTreatment(li);
                     }
                 }
             }
+        },
+        initTreatment(dom) {
             const parentWidth = this.$refs.timeline.offsetWidth;
-            const liOffsetLeft = liDom.offsetLeft;
-            const offsetLeft = parentWidth / 2 - liOffsetLeft - liDom.offsetWidth / 2;
+            const liOffsetLeft = dom.offsetLeft;
+            const offsetLeft = parentWidth / 2 - liOffsetLeft - dom.offsetWidth / 2;
             this.listLeft = offsetLeft;
+            this.$nextTick(() => {
+                const list = this.$refs.timeline;
+                const liElements = list.querySelectorAll("li");
+                for (let i = 0; i < liElements.length; i++) {
+                    if (-this.listLeft >= liElements[i].offsetLeft && -this.listLeft <= liElements[i + 1].offsetLeft) {
+                        this.currentIndex = i;
+                        // 如果需要左侧保持不裁剪，增加下面代码
+                        // this.listLeft = -liElements[i].offsetLeft;
+                    }
+                }
+            });
         },
         scroll(direction) {
             const list = this.$refs.timeline;
@@ -146,7 +161,7 @@ export default {
         .mb(50px);
         gap: 10px;
         align-items: center;
-        padding: 0 20px; 
+        padding: 0 20px;
         box-sizing: border-box;
         .m-timeline {
             .clip;
