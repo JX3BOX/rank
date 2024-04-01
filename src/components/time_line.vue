@@ -142,16 +142,18 @@ export default {
         .flex;
         .clip;
         .h(200px);
+        .auto(x);
+        .mb(50px);
         gap: 10px;
         align-items: center;
-        padding: 0 20px;
-        margin: 50px auto;
+        padding: 0 20px; 
         box-sizing: border-box;
         .m-timeline {
             .clip;
             .size(100%,200px);
             .flex;
-            padding: 0 10px;
+            box-sizing: border-box;
+            padding: 57px 10px 0 10px;
             box-sizing: border-box;
             align-items: center;
 
@@ -265,6 +267,7 @@ export default {
         .pointer;
         .size(35px);
         .z(9);
+        .mt(57px);
         bottom: 0;
         transition: 0.2s all;
         &.u-arr-left {
