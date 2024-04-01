@@ -21,7 +21,6 @@
     "katex": "^0.16.9",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
-    "swiper": "^11.1.0",
     "vue": "^2.6.11",
     "vue-echarts": "^5.0.0-beta.0",
     "vue-katex-auto-render": "^0.2.0",

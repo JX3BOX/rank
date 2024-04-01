@@ -2,11 +2,25 @@
     <div class="w-time-line-box">
         <h2>活动时间线</h2>
         <div class="m-time-line-box">
-            <img class="u-arr u-arr-left" @click="scroll('left')" :src="arrow" />
+            <img
+                class="u-arr u-arr-left"
+                :class="{
+                    'u-arr__hide': !currentIndex,
+                }"
+                @click="scroll('left')"
+                :src="arrow"
+            />
             <div class="m-timeline">
                 <ul ref="timeline" :style="{ left: listLeft + 'px' }" v-html="html"></ul>
             </div>
-            <img class="u-arr u-arr-right" @click="scroll('right')" :src="arrow" />
+            <img
+                class="u-arr u-arr-right"
+                :class="{
+                    'u-arr__hide': currentIndex == totalDay,
+                }"
+                @click="scroll('right')"
+                :src="arrow"
+            />
         </div>
     </div>
 </template>
@@ -25,6 +39,7 @@ export default {
         return {
             listLeft: 0,
             currentIndex: 0,
+            totalDay: 0,
             arrow: `${__imgPath}image/rank/common/timeline_arrow.svg`,
         };
     },
@@ -32,23 +47,71 @@ export default {
         html: {
             immediate: true,
             handler(val) {
-                val && this.$nextTick(this.setLiPosition);
+                val &&
+                    this.$nextTick(() => {
+                        const list = this.$refs.timeline;
+                        const liElements = list.querySelectorAll("li");
+                        const today = new Date();
+                        const currentMonth = today.getMonth() + 1; // 月份是从0开始计数的，所以需要加1
+                        const currentDate = today.getDate();
+                        let nearestIndex = -1;
+                        let hasReachedToday = false;
+                        let totalDays = 0;
+                        liElements.forEach((li, index) => {
+                            const timeSpan = li.querySelector(".u-time");
+                            if (timeSpan) {
+                                const timeParts = timeSpan.textContent.split("-");
+                                const month = parseInt(timeParts[0], 10);
+                                const date = parseInt(timeParts[1], 10);
+                                totalDays++;
+                                if (month === currentMonth && date === currentDate) {
+                                    hasReachedToday = true;
+                                    nearestIndex = index;
+                                } else if (month === currentMonth && date < currentDate) {
+                                    nearestIndex = index;
+                                }
+                            }
+                        });
+                        if (nearestIndex !== -1) {
+                            const nearestLi = liElements[nearestIndex];
+                            nearestLi.classList.add("nearest");
+                            const progressDiv = document.createElement("div");
+                            progressDiv.classList.add("progress"); // 添加 class
+                            progressDiv.textContent = `当前进度`;
+                            nearestLi.appendChild(progressDiv);
+                        }
+                        if (hasReachedToday) {
+                            for (let i = nearestIndex + 1; i < liElements.length; i++) {
+                                liElements[i].classList.add("after-today");
+                            }
+                        }
+                        this.totalDay = totalDays - 1;
+                        this.setLiPosition(true);
+                    });
             },
         },
     },
     methods: {
-        setLiPosition() {
+        setLiPosition(firstLoad) {
             const list = this.$refs.timeline;
             const liElements = list.querySelectorAll("li");
             let left = 0;
-            for (let i = 0; i < liElements.length; i++) {
-                const li = liElements[i];
-                li.style.left = left + "px";
-                left += li.offsetWidth + 34;
-                if (i === this.currentIndex) {
-                    this.listLeft = -li.offsetLeft;
+            let liDom = liElements[this.currentIndex];
+            if (firstLoad) {
+                for (let i = 0; i < liElements.length; i++) {
+                    const li = liElements[i];
+                    li.style.left = left + "px";
+                    left += li.offsetWidth + 34;
+                    if (li.classList[0] == "nearest") {
+                        liDom = li;
+                        this.currentIndex = i;
+                    }
                 }
             }
+            const parentWidth = this.$refs.timeline.offsetWidth;
+            const liOffsetLeft = liDom.offsetLeft;
+            const offsetLeft = parentWidth / 2 - liOffsetLeft - liDom.offsetWidth / 2;
+            this.listLeft = offsetLeft;
         },
         scroll(direction) {
             const list = this.$refs.timeline;
@@ -59,7 +122,7 @@ export default {
             } else if (direction === "right") {
                 this.currentIndex = Math.min(this.currentIndex + 1, list.children.length - 1);
             }
-            this.setLiPosition(this.currentIndex);
+            this.setLiPosition();
         },
     },
 };
@@ -71,7 +134,6 @@ export default {
     .clip;
     .mb(88px);
     .w(100%);
-
     h2 {
         margin: 0;
     }
@@ -79,7 +141,7 @@ export default {
         .pr;
         .flex;
         .clip;
-        .h(150px);
+        .h(200px);
         gap: 10px;
         align-items: center;
         padding: 0 20px;
@@ -87,11 +149,29 @@ export default {
         box-sizing: border-box;
         .m-timeline {
             .clip;
-            .size(100%,142px);
+            .size(100%,200px);
             .flex;
             padding: 0 10px;
             box-sizing: border-box;
             align-items: center;
+
+            .progress {
+                position: absolute;
+                .fz(18px);
+                top: -30px;
+                color: white;
+                font-weight: bold;
+                &::after {
+                    content: "";
+                    .pa;
+                    .size(107px,6px);
+                    bottom: 40px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border-radius: 3px;
+                    background-color: #feecc5;
+                }
+            }
         }
 
         ul {
@@ -168,6 +248,16 @@ export default {
                     background: linear-gradient(180deg, rgba(254, 236, 197, 0) 0%, #fcf1da 100%);
                 }
             }
+            &.after-today {
+                .u-time {
+                    &::after {
+                        .pr;
+                        .z(1);
+                        background-color: #37495b;
+                        border-color: #8d99a6;
+                    }
+                }
+            }
         }
     }
     .u-arr {
@@ -176,6 +266,7 @@ export default {
         .size(35px);
         .z(9);
         bottom: 0;
+        transition: 0.2s all;
         &.u-arr-left {
             left: -45px;
         }
@@ -185,6 +276,11 @@ export default {
         }
         &:hover {
             filter: brightness(110%);
+        }
+
+        &.u-arr__hide {
+            opacity: 0;
+            cursor: initial;
         }
     }
 }
