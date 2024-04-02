@@ -67,8 +67,10 @@ export default {
                                 if (month === currentMonth && date === currentDate) {
                                     hasReachedToday = true;
                                     nearestIndex = index;
-                                } else if (month === currentMonth && date < currentDate) {
-                                    nearestIndex = index;
+                                } else {
+                                    if (month < currentMonth || (month === currentMonth && date <= currentDate)) {
+                                        nearestIndex = index;
+                                    }
                                 }
                             }
                         });
