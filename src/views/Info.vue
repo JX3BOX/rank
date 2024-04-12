@@ -12,7 +12,6 @@
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
 import TimeLine from "@/components/time_line.vue";
 export default {
     components: {
@@ -21,7 +20,6 @@ export default {
     data: function () {
         return {
             timelineArrow: __imgPath + "image/rank/common/timeline_arrow.svg",
-            times: "",
         };
     },
     computed: {
@@ -31,11 +29,19 @@ export default {
         desc: function () {
             return this.$store.state.race.desc;
         },
-    },
-    created: function () {
-        getBreadcrumb(`top_time_line_${this.id}`).then((data) => {
-            this.times = data;
-        });
+        times() {
+            const timeline = this.$store.state.race?.timeline || [];
+            return timeline
+                .map(
+                    (item) => `
+                        <li>
+                            <span class="u-time">${item.time}</span>
+                            <span class="u-label">${item.text}</span>
+                        </li>
+                    `
+                )
+                .join("");
+        },
     },
     methods: {
         timeShaftChange(type) {
@@ -51,7 +57,7 @@ export default {
 
 <style lang="less">
 @import "../assets/css/race_info.less";
-.m-rank-info .w-time-line-box h2{
+.m-rank-info .w-time-line-box h2 {
     margin: 0;
 }
 </style>
