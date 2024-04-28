@@ -144,3 +144,36 @@
         .mb(20px);
     }
 }
+
+.u-back-top {
+    .pf();
+    .rb(50px);
+    .z(9);
+    transform: rotate(90deg) translateX(0%);
+    transition: 0.5s all;
+    cursor: pointer;
+    &.conceal {
+        transform: translateX(300%) rotate(90deg);
+        animation: hideMove 1s linear;
+    }
+    @keyframes hideMove {
+        0% {
+            transform: translateX(0%) rotate(90deg);
+        }
+        10% {
+            transform: translateX(-70%) rotate(90deg);
+        }
+        30% {
+            transform: translateX(-80%) rotate(90deg);
+        }
+        60% {
+            transform: translateX(-90%) rotate(90deg);
+        }
+        90% {
+            transform: translateX(-100%) rotate(90deg);
+        }
+        100% {
+            transform: translateX(300%) rotate(90deg);
+        }
+    }
+}
