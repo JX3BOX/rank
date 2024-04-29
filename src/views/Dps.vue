@@ -215,7 +215,7 @@ export default {
             mount: "0",
             data: [],
             server: "全部服务器",
-            server_std: ["跨服", ...server_std],
+            server_std: server_std,
             filterMount: "0",
 
             showPop: false,
@@ -272,7 +272,7 @@ export default {
                     item._dhps = item.dps || 0; //Math.round(item.damage / item.fight_time);
                 }
                 return item;
-            }); 
+            });
             return this.aid === "all" ? list : uniqBy(list, "battleId").slice(0, 100);
         },
         filterXf() {

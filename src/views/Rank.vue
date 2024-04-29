@@ -79,7 +79,7 @@ export default {
             let dict = {};
             this.achieves.forEach((item) => {
                 dict[item.achievement_id] = item.name;
-            }); 
+            });
             return dict;
         },
         aids: function () {
@@ -111,8 +111,9 @@ export default {
             return data;
         },
         params: function () {
+            const server = this.server === "跨服" ? "" : this.server;
             return {
-                server: this.server,
+                server,
                 achieve_id: ~~this.achieve_id,
             };
         },
@@ -141,7 +142,11 @@ export default {
             getTop100(this.params, this.id)
                 .then((res) => {
                     this.origin_data = res.data.data || [];
-                    this.origin_data = Object.freeze(this.origin_data);
+                    if (this.server == '跨服') {
+                        this.origin_data = this.origin_data.filter((item) => item.leader?.includes('·'));
+                    } else {
+                        this.origin_data = Object.freeze(this.origin_data);
+                    }
                 })
                 .finally(() => {
                     this.loading = false;
