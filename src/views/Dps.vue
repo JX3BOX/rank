@@ -195,7 +195,7 @@ import { authorLink, getLink, getThumbnail, showAvatar } from "@jx3box/jx3box-co
 import { mount_group } from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import server_std from "@jx3box/jx3box-data/data/server/server_cn";
 import { getMountDpsRace, getMixRank } from "@/service/race";
-import { cloneDeep } from "lodash";
+import { cloneDeep, uniqBy } from "lodash";
 import rank_item from "@/components/rank_item.vue";
 import rank_boss from "@/components/rank_boss.vue";
 
@@ -236,12 +236,12 @@ export default {
                 dict[item.achievement_id] = item.name;
             });
             return dict;
-        }, 
+        },
         params: function () {
             return {
                 mount: this.mount,
-                limit: 100,
-                fight_time_min: 300000,
+                limit: 160,
+                // fight_time_min: 300000,
                 order_by: "dps",
                 belong_team: 1,
             };
@@ -261,7 +261,7 @@ export default {
             return params;
         },
         list: function () {
-            return this.data.map((item, i) => {
+            const list = this.data.map((item, i) => {
                 if (this.isTherapy(item.mount)) {
                     item._therapy = true;
                     item._total = item.therapy || item.damage;
@@ -273,6 +273,7 @@ export default {
                 }
                 return item;
             });
+            return uniqBy(list, "battleId").slice(0, 100);
         },
         filterXf() {
             const _xfmap = cloneDeep(xfmap);
@@ -284,7 +285,7 @@ export default {
                 return this.isTherapy(item.mount) ? item.hps : item.dps;
             });
             return Math.max(...dps_bucket);
-        }, 
+        },
     },
     watch: {
         params: {
