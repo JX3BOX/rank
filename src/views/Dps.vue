@@ -272,8 +272,8 @@ export default {
                     item._dhps = item.dps || 0; //Math.round(item.damage / item.fight_time);
                 }
                 return item;
-            });
-            return uniqBy(list, "battleId").slice(0, 100);
+            }); 
+            return this.aid === "all" ? list : uniqBy(list, "battleId").slice(0, 100);
         },
         filterXf() {
             const _xfmap = cloneDeep(xfmap);
