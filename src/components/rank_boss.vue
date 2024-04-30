@@ -76,6 +76,10 @@ export default {
         &.active {
             background-color: #ffedc6;
             color: #703100;
+            &:hover{
+                background-color: #ffedc6;
+                color: #703100;
+            }
         }
     }
     .u-boss-icon {
