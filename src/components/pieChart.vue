@@ -64,7 +64,7 @@ export default {
                     orient: "horizontal",
                     left: "center",
                     top: "bottom",
-                    data: this.data.map((item) => item["name"]),
+                    data: this.data?.map((item) => item["name"]),
                     icon: "circle",
                 },
                 series: [
