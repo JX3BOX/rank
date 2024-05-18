@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { colors_by_school_name, colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json"
+import { colors_by_school_name, colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
 export default {
     name: "pieChart",
     components: {
