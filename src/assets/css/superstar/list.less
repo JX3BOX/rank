@@ -1,0 +1,232 @@
+@mainColor: #f5cba4;
+.u-sort-box {
+    .pr;
+    // top: 180px;
+    padding-top: 180px;
+    .flex;
+    justify-content: space-between;
+    .u-sort-3-item {
+        .pr;
+        .size(380px,662px);
+        background-image: url("@{superstar}ty.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        .u-sort-2,
+        .u-sort-1,
+        .u-sort-3 {
+            .pa;
+            z-index: 4;
+        }
+        .u-sort-1 {
+            .size(150px);
+            top: -110px;
+            left: calc(calc(100% - 150px) / 2);
+        }
+        .u-sort-2 {
+            .size(130px);
+            top: -90px;
+            left: calc(calc(100% - 130px) / 2);
+        }
+        .u-sort-3 {
+            .size(110px);
+            top: -70px;
+            left: calc(calc(100% - 110px) / 2);
+        }
+        .u-team-info {
+            // .pr;
+            // top: 70px;
+            margin-top: 70px;
+            .flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            .u-team-icon {
+                .size(120px);
+                background-color: #fff;
+                margin: 0 auto;
+            }
+            .u-team-name {
+                .mt(10px);
+                .fz(20px,26.4px);
+                .bold(700);
+                color: @mainColor;
+            }
+            .u-team-serve {
+                .fz(12px,16px);
+                .bold(400);
+                padding: 4px 0;
+                color: rgba(255, 255, 255, 0.5);
+            }
+            .u-team-time {
+                .fz(14px,18.5px);
+                .bold(700);
+                color: #fff;
+                .flex;
+                align-items: center;
+                span {
+                    .fz(20px,26.4px);
+                    color: @mainColor;
+                }
+            }
+        }
+        //团队列表
+        .u-team-list {
+            .w(340px);
+            margin: 0 auto;
+            .mt(10px);
+            .u-team-leader {
+                .flex;
+                align-items: center;
+                .fz(14px,18.5px);
+                .bold(700);
+                color: @mainColor;
+            }
+            .u-team-member {
+                .flex;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                align-items: center;
+                .mt(16px);
+                .u-team-member-item {
+                    width: calc((100% - 10px) / 3);
+                    margin-right: 5px;
+                    margin-bottom: 16px;
+                    .flex;
+                    align-items: center;
+                    .fz(12px,16px);
+                    .bold(400);
+                    color: @mainColor;
+                    div {
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                    &:nth-child(3n) {
+                        /* 去除第3n个的margin-right */
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+.u-sort-other {
+    .pr;
+    // top: 220px;
+    padding: 40px 0;
+
+    .u-sort-other-item {
+        .pr;
+        background-image: url("@{superstar}ty-2.jpg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        .size(1200px,242px);
+        padding: 30px 30px 30px 0;
+        box-sizing: border-box;
+        .mb(30px);
+        .flex;
+        &:last-child {
+            .mb(0);
+        }
+        .u-sort-number {
+            .flex;
+            align-items: center;
+            justify-content: center;
+            .w(60px);
+            .fz(40px,53px);
+            .bold(800);
+            color: @mainColor;
+        }
+        .u-team-list {
+            padding-left: 20px;
+            box-sizing: border-box;
+            .flex;
+            .u-team-info {
+                .flex;
+                justify-content: start;
+                flex-direction: column;
+                align-items: center;
+                .u-team-icon {
+                    .size(120px);
+                    background-color: #fff;
+                    margin: 0 auto;
+                }
+                .u-team-name {
+                    .w(100%);
+                    .mt(10px);
+                    .fz(20px,26.4px);
+                    .bold(700);
+                    color: @mainColor;
+                }
+                .u-team-serve {
+                    .w(100%);
+                    .fz(12px,16px);
+                    .bold(400);
+                    padding: 4px 0;
+                    color: rgba(255, 255, 255, 0.5);
+                }
+            }
+            .u-team-people {
+                margin-left: 40px;
+                .w(930px);
+                .u-team-leader {
+                    .flex;
+                    align-items: center;
+                    .fz(14px,18.5px);
+                    .bold(700);
+                    color: #fff;
+                    .mb(20px);
+                }
+                .u-team-member {
+                    .flex;
+                    justify-content: flex-start;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    .mt(16px);
+                    .u-team-member-item {
+                        width: calc((100% - 25px) / 6);
+                        margin-right: 5px;
+                        margin-bottom: 16px;
+                        .flex;
+                        align-items: center;
+                        .fz(12px,16px);
+                        .bold(400);
+                        color: #fff;
+                        div {
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+                        &:nth-child(6n) {
+                            /* 去除第3n个的margin-right */
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+            .u-team-time-box {
+                .pa;
+                z-index: 3;
+                right: 30px;
+                top: 15px;
+                .u-team-time {
+                    .fz(14px,18.5px);
+                    .bold(700);
+                    color: #fff;
+                    .flex;
+                    align-items: center;
+                    span {
+                        .fz(20px,26.4px);
+                        color: @mainColor;
+                    }
+                }
+                .u-serve {
+                    .mt(4px);
+                    .fz(12px,16px);
+                    .bold(400);
+                    color: rgba(255, 255, 255, 0.5);
+                }
+            }
+        }
+    }
+}

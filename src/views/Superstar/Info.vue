@@ -4,83 +4,46 @@
         <!-- 活动主体部分 -->
         <div class="m-superstar-main">
             <div class="u-menu">
-                <div v-for="item in menu" :key="item.key" class="u-menu-item">
-                    <img :src="imgurl + item.img" />
+                <div v-for="(item, index) in menu" :key="item.key" class="u-menu-item" @click="menuActive = index">
+                    <img :src="imgurl + (index == menuActive ? item.active : item.img)" />
                 </div>
             </div>
-            <!-- 前三排名 -->
-            <div class="u-sort-box">
-                <div class="u-sort-3-item">
-                    <div class="u-sort-2">
-                        <img :src="imgurl + '2.png'" />
-                    </div>
-                    <!-- 团队信息 -->
-                    <div class="u-team-info">
-                        <div class="u-team-icon"></div>
-                        <div class="u-team-name">团队名字</div>
-                        <div class="u-team-serve">服务器 长安城</div>
-                        <div class="u-team-time">战斗用时&nbsp;:&nbsp;<span>07分27秒</span></div>
-                    </div>
-                    <!-- 团长+团员部分 -->
-                    <div class="u-team-list">
-                        <div class="u-team-leader">
-                            团长:&nbsp;
-                            <!-- TODO心法图标,后续替换 -->
-                            <img src="https://img.jx3box.com/image/xf/10081.png" width="30" />&nbsp;tuanzhangmingzi
-                        </div>
-                        <!-- 团员list -->
-                        <div class="u-team-member">
-                            <div class="u-team-member-item" v-for="i in 24" :key="i">
-                                <img src="https://img.jx3box.com/image/xf/10081.png" width="20" />&nbsp;
-                                <div>成员名字成员</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="u-sort-3-item">
-                    <div class="u-sort-1">
-                        <img :src="imgurl + '1.png'" />
-                    </div>
-                </div>
-                <div class="u-sort-3-item">
-                    <div class="u-sort-3">
-                        <img :src="imgurl + '3.png'" />
-                    </div>
-                </div>
-            </div>
-            <!-- 后续排名部分展示 -->
-            <div class="u-sort-other">
-                <div class="u-sort-other-item">
-                    <!-- 排序 -->
-                    <div class="u-sort-number">4</div>
-                    <!-- 团队 -->
-                    <div class="u-team-list">xxx</div>
-                </div>
-            </div>
+            <!-- 活动介绍部分 -->
+            <transition name="fade">
+                <Introduce v-if="menuActive == 0"></Introduce>
+            </transition>
+            <!-- 报名 -->
+            <transition name="fade"> <SignUp v-if="menuActive == 1"></SignUp></transition>
+            <!-- 天团榜 -->
+            <transition name="fade"> <List v-if="menuActive == 2"></List></transition>
         </div>
-        <!-- 活动规则部分 -->
     </div>
 </template>
 
 <script>
+import List from "./List.vue";
+import Introduce from "./Introduce.vue";
+import SignUp from "./SignUp.vue";
 export default {
     name: "SuperstarInfo",
-    inject: ["__imgRoot"],
+    components: { List, Introduce, SignUp },
     data: function () {
         return {
             imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
             menu: [
-                { name: "活动介绍", img: "hdjs.jpg", key: "jdjs" },
-                { name: "活动规则", img: "hdgz.jpg", key: "hdgz" },
-                { name: "天团榜", img: "ttb.jpg", key: "ttb" },
-                { name: "战斗分析", img: "zdfx.jpg", key: "zdfx" },
+                { name: "活动介绍", img: "biaoqianye/hdjs.png", active: "biaoqianye/hdjs-active.png", key: "hdjs" },
+                { name: "报名", img: "biaoqianye/bm.jpg", active: "biaoqianye/bm-active.jpg", key: "bm" },
+                { name: "天团榜", img: "biaoqianye/ttb.jpg", active: "biaoqianye/ttb-active.jpg", key: "ttb" },
+                { name: "数据榜", img: "biaoqianye/sjb.jpg", active: "biaoqianye/sjb-active.jpg", key: "sjb" },
+                { name: "视频集锦", img: "biaoqianye/spjj.jpg", active: "biaoqianye/spjj-active.jpg", key: "spjj" },
             ],
+            menuActive: 1,
         };
     },
     computed: {},
     methods: {},
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 @import "~@/assets/css/superstar/index.less";
 </style>
