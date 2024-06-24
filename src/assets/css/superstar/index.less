@@ -36,6 +36,13 @@
             .u-menu-item {
                 .size(224px,120px);
                 cursor: pointer;
+                &.no-enable {
+                    cursor: no-drop;
+                    img {
+                        // filter: brightness(1) invert(0.3);
+                        filter: opacity(0.5);
+                    }
+                }
             }
         }
     }
