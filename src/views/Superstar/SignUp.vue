@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-06-23 22:12:15
  * @LastEditors: zhusha
- * @LastEditTime: 2024-06-23 22:39:00
+ * @LastEditTime: 2024-06-26 21:14:43
  * @Description: 报名
  * @FilePath: \JX3box\rank\src\views\Superstar\SignUp.vue
  * 
@@ -36,7 +36,7 @@
                 <img :src="imgurl + 'baoming/cslc.png'" height="24" />
             </div>
             <div class="u-text">
-                ① 团长 前往<a href="#" target="_blank">团队平台</a>创建并认证团队。（往期参赛 或 已创建并认证过团队 的团长则跳过此步）
+                ① 团长 前往<a href="/team" target="_blank">团队平台</a>创建并认证团队。（往期参赛 或 已创建并认证过团队 的团长则跳过此步）
             </div>
             <div class="u-text">
                 ② 在游戏内，通过茗伊插件集的团队平台功能进行角色绑定，并且团队内 至少有一名角色未通关 过该难度的副本，该角色需要 开启插件的赛事上报 。
@@ -47,13 +47,13 @@
                 <li>录制整场战斗的视频（需包含1-5号首领）</li>
                 <li>挑战结束后在魔盒社区发布一份帖子，包含：视频（链接）以及攻略心得。</li>
             </ul>
-            <div class="u-text">④ 其余规则与<a href="#" target="_blank">秘境百强榜活动细则</a>相同</div>
+            <div class="u-text">④ 其余规则与<a href="/notice/32280" target="_blank">秘境百强榜活动细则</a>相同</div>
             <div class="u-text">⑤ 在明确以上内容后，请 团长 点击下方按钮，进入报名页。</div>
             <div class="u-text">注1：所有参赛团长务必加入魔盒认证团长群，以便于后续流程的沟通。</div>
             <div class="u-text">注2：若仅参赛（放弃奖励），则 ③ 只需要完成第1项“挑战1-5号首领” 即可。</div>
             <!-- 报名按钮 -->
             <div class="u-sign-up-btn">
-                <img :src="imgurl + 'baoming/bm-1.png'" width="191" />
+                <a href="./superstar/#/join"> <img :src="imgurl + 'baoming/bm-1.png'" width="191" /></a>
             </div>
             <div class="u-events-rewards">
                 <img :src="imgurl + 'huodonguize/jl.png'" height="24" />

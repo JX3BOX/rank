@@ -8,10 +8,11 @@ VueRouter.prototype.push = function push(to) {
 };
 
 const Info = () => import("@/views/Superstar/Info.vue");
+const Join = () => import("@/views/Superstar/Join.vue");
 
 const routes = [
-    { name: "index", path: "/", redirect: "/info" },
-    { name: "info", path: "/info", component: Info },
+    { name: "info", path: "/", component: Info },
+    { name: "join", path: "/join", component: Join },
 ];
 
 const router = new VueRouter({
