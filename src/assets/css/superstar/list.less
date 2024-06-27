@@ -3,14 +3,31 @@
     .pr;
     // top: 180px;
     padding-top: 180px;
-    .flex;
-    justify-content: space-between;
+    // .flex;
+    // justify-content: space-between;
     .u-sort-3-item {
         .pr;
         .size(380px,662px);
         background-image: url("@{superstar}ty.png");
         background-size: contain;
         background-repeat: no-repeat;
+        margin-bottom: 70px;
+        &.u-sort-item-1 {
+            left: 430px;
+            top: 70px;
+        }
+        &.u-sort-item-2 {
+            .pa;
+            left: 0;
+            top: 250px;
+            z-index: 2;
+        }
+        &.u-sort-item-3 {
+            .pa;
+            right: 0;
+            top: 250px;
+            z-index: 2;
+        }
         .u-sort-2,
         .u-sort-1,
         .u-sort-3 {
@@ -24,6 +41,7 @@
         }
         .u-sort-2 {
             .size(130px);
+
             top: -90px;
             left: calc(calc(100% - 130px) / 2);
         }
@@ -35,7 +53,9 @@
         .u-team-info {
             // .pr;
             // top: 70px;
-            margin-top: 70px;
+            .x;
+            // margin-top: 70px;
+            padding-top: 70px;
             .flex;
             justify-content: center;
             flex-direction: column;
@@ -143,6 +163,7 @@
             .flex;
             .u-team-info {
                 .flex;
+                .x;
                 // justify-content: start;
                 flex-direction: column;
                 align-items: center;

@@ -43,7 +43,7 @@ export default {
                 { name: "数据榜", img: "biaoqianye/sjb.jpg", active: "biaoqianye/sjb-active.jpg", key: "sjb", noEnable: true },
                 { name: "视频集锦", img: "biaoqianye/spjj.jpg", active: "biaoqianye/spjj-active.jpg", key: "spjj", noEnable: true },
             ],
-            menuActive: 1,
+            menuActive: 2,
         };
     },
     computed: {},
