@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-06-23 22:12:15
  * @LastEditors: zhusha
- * @LastEditTime: 2024-06-26 21:14:43
+ * @LastEditTime: 2024-06-30 22:39:01
  * @Description: 报名
  * @FilePath: \JX3box\rank\src\views\Superstar\SignUp.vue
  * 
@@ -53,7 +53,7 @@
             <div class="u-text">注2：若仅参赛（放弃奖励），则 ③ 只需要完成第1项“挑战1-5号首领” 即可。</div>
             <!-- 报名按钮 -->
             <div class="u-sign-up-btn">
-                <a href="./superstar/#/join"> <img :src="imgurl + 'baoming/bm-1.png'" width="191" /></a>
+                <router-link to="join"><img :src="imgurl + 'baoming/bm-1.png'" width="191" /></router-link>
             </div>
             <div class="u-events-rewards">
                 <img :src="imgurl + 'huodonguize/jl.png'" height="24" />
@@ -77,8 +77,10 @@ export default {
             imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
         };
     },
-    created() {},
-    mounted() {},
+    created() {
+        console.log(this.id)
+    },
+    mounted() { },
     methods: {},
 };
 </script>

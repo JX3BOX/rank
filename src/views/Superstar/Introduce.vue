@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-06-23 14:37:08
  * @LastEditors: zhusha
- * @LastEditTime: 2024-06-23 21:39:54
+ * @LastEditTime: 2024-06-28 09:24:54
  * @Description: 活动介绍
  * @FilePath: \JX3box\rank\src\views\Superstar\Introduce.vue
  * 
@@ -25,7 +25,7 @@
             <div class="u-text">为了给玩家们更多的展示平台，魔盒将在每年的夏季进行门派天团活动，用于展示玩家们更强的技艺。</div>
             <div class="u-text">恰逢无界移动端的开启与120等级的末尾，不仅是让玩家们展示门派天团的风采，更时纳新的好时机。</div>
             <div class="u-events-aim">
-                <img :src="imgurl + 'huodongjieshao/hd-bg-1.png'" width="99.5" />
+                <img :src="imgurl + 'huodongjieshao/md-yy.png'" width="99.5" />
             </div>
             <div class="u-text">1，给玩家们一个可以同台竞技的舞台</div>
             <div class="u-text">2，在等级末期给玩家获取装备的动力，用以提高活跃度</div>

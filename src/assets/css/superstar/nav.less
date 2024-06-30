@@ -1,0 +1,60 @@
+.p-superstar-nav {
+    background-image: url("@{superstar}baoming/bm-bg.jpg");
+    background-size: 100%;
+    min-height: calc(100vh - 123px);
+    max-width: 1920px;
+    min-width: 1440px;
+    margin: 63px auto 0 auto;
+    .flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .m-nav-list {
+        .size(1200px,50px);
+        padding: 30px 0;
+        .flex;
+        .u-nav-item {
+            .flex;
+            justify-content: center;
+            align-items: center;
+            .u-line {
+                background: repeating-linear-gradient(
+                    to right,
+                    #cda481,
+                    #cda481 10px,
+                    transparent 10px,
+                    transparent 20px
+                );
+                height: 1px;
+                width: 277px;
+            }
+            .u-img {
+                .size(50px);
+                margin: 0 10px;
+                &.active {
+                    background-color: #ffe3ca;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+    .m-list {
+        .size(1000px);
+        .u-item {
+            .size(100%,150px);
+            background-image: url("@{superstar}nav/bg.png");
+            background-size: 100%;
+            .flex;
+            align-items: center;
+            justify-content: center;
+            .mb(20px);
+            .pr;
+            .u-btn {
+                .pa;
+                z-index: 2;
+                right: 145px;
+                cursor: pointer;
+            }
+        }
+    }
+}

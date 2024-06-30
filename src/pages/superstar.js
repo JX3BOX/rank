@@ -16,11 +16,11 @@ reporter.install(Vue);
 
 // 数据与路由
 import router from "@/router/superstar";
-// import store from "@/store/lover";
+import store from "@/store/superstar";
 
 import App from "./Superstar.vue";
 new Vue({
     router,
-    // store,
+    store,
     render: (h) => h(App),
 }).$mount("#app");

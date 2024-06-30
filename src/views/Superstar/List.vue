@@ -17,15 +17,16 @@
                         <div class="u-team-serve">{{ item.server }} {{ showTime(item.created) }}</div>
                         <div class="u-team-time">
                             战斗用时&nbsp;:&nbsp;<span>{{ showTC(item.fight_time) }}</span>
-                        </div></a
-                    >
+                        </div>
+                    </a>
                 </div>
                 <!-- 团长+团员部分 -->
                 <div class="u-team-list">
                     <div class="u-team-leader">
                         团长:&nbsp;
                         <!-- TODO心法图标,后续替换 -->
-                        <img loading="lazy" width="30" :src="showLeaderMount(item.leaders[1])" />&nbsp;{{ showLeaderName(item.leaders[0]) }}
+                        <img loading="lazy" width="30" :src="showLeaderMount(item.leaders[1])" />&nbsp;{{
+                            showLeaderName(item.leaders[0]) }}
                     </div>
                     <!-- 团员list -->
                     <div class="u-team-member">
@@ -53,15 +54,16 @@
                             </div>
                             <div class="u-team-name">{{ item.team_name && item.team_name.slice(0, 6) }}</div>
                             <div class="u-team-serve">{{ item.server }}</div>
-                        </div></a
-                    >
+                        </div>
+                    </a>
 
                     <!--团长+ 团员list -->
                     <div class="u-team-people">
                         <div class="u-team-leader">
                             团长:&nbsp;
                             <!-- TODO心法图标,后续替换 -->
-                            <img loading="lazy" width="30" :src="showLeaderMount(item.leaders[1])" />&nbsp;{{ showLeaderName(item.leaders[0]) }}
+                            <img loading="lazy" width="30" :src="showLeaderMount(item.leaders[1])" />&nbsp;{{
+                                showLeaderName(item.leaders[0]) }}
                         </div>
                         <div class="u-team-member">
                             <div class="u-team-member-item" v-for="(member, j) in item.members" :key="j">
@@ -91,6 +93,7 @@ import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     components: {},
+
     data() {
         return {
             imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
@@ -155,7 +158,7 @@ export default {
     created() {
         this.loadData();
     },
-    mounted() {},
+    mounted() { },
     methods: {
         getRankImg: function (num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";
@@ -166,8 +169,7 @@ export default {
         },
         loadData: function () {
             this.loading = true;
-            // getTop100(this.aid, this.id)
-            getTop100(10088, 5)
+            getTop100(this.aid, this.id)
                 .then((res) => {
                     console.log(res);
                     this.origin_data = res.data.data || [];
