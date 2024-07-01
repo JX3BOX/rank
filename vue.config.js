@@ -42,10 +42,10 @@ module.exports = {
             filename: "superstar/index.html",
         },
         superstarjoin: {
-            title: "剑三门派天团 - JX3BOX",
+            title: "报名入口 - 剑三门派天团 - JX3BOX",
             entry: "src/pages/superstarjoin.js",
             template: "public/superstar.html",
-            filename: "SuperstarJoin/index.html",
+            filename: "superstarjoin/index.html",
         },
     },
 
