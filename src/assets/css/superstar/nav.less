@@ -9,52 +9,61 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    .m-nav-list {
-        .size(1200px,50px);
-        padding: 30px 0;
-        .flex;
-        .u-nav-item {
-            .flex;
-            justify-content: center;
-            align-items: center;
-            .u-line {
-                background: repeating-linear-gradient(
-                    to right,
-                    #cda481,
-                    #cda481 10px,
-                    transparent 10px,
-                    transparent 20px
-                );
-                height: 1px;
-                width: 277px;
-            }
-            .u-img {
-                .size(50px);
-                margin: 0 10px;
-                &.active {
-                    background-color: #ffe3ca;
-                    border-radius: 50%;
-                }
-            }
-        }
-    }
+    // .m-nav-list {
+    //     .size(1200px,50px);
+    //     padding: 30px 0;
+    //     .flex;
+    //     .u-nav-item {
+    //         .flex;
+    //         justify-content: center;
+    //         align-items: center;
+    //         .u-line {
+    //             background: repeating-linear-gradient(
+    //                 to right,
+    //                 #cda481,
+    //                 #cda481 10px,
+    //                 transparent 10px,
+    //                 transparent 20px
+    //             );
+    //             height: 1px;
+    //             width: 277px;
+    //         }
+    //         .u-img {
+    //             .size(50px);
+    //             margin: 0 10px;
+    //             &.active {
+    //                 background-color: #ffe3ca;
+    //                 border-radius: 50%;
+    //             }
+    //         }
+    //     }
+    // }
     .m-list {
-        .size(1000px);
+        padding-top: 30px;
+        box-sizing: border-box;
+        .size(1000px,auto);
+        .flex;
+        flex-wrap: wrap;
         .u-item {
-            .size(100%,150px);
-            background-image: url("@{superstar}nav/bg.png");
+            .size(300px,250px);
+            background-image: url("@{superstar}nav/bg-1.jpg");
             background-size: 100%;
             .flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             .mb(20px);
-            .pr;
+            margin-right: 50px;
             .u-btn {
-                .pa;
-                z-index: 2;
-                right: 145px;
-                cursor: pointer;
+                .mt(10px);
+                // .pa;
+                // z-index: 2;
+                // right: 145px;
+                // cursor: pointer;
             }
+        }
+        .u-item:nth-child(3n + 3) {
+            margin-right: 0;
         }
     }
 }
