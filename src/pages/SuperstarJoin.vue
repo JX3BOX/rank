@@ -1,59 +1,90 @@
 <template>
-    <div class="p-superstar-join">
-        <div class="m-main">
-            <div class="u-content">
-                <div class="u-logo"><img :src="imgurl + 'baoming/logo.png'" width="112" /></div>
-                <div class="u-title">
-                    <img :src="imgurl + 'baoming/bm.png'" height="38" />
-                </div>
-                <div class="m-join" v-if="isLogin" v-loading="loading">
-                    <div class="m-join-notice" v-html="notice"></div>
-                    <el-form class="m-join-form" ref="form" :model="form" label-width="80px" v-if="!loading && !status">
-                        <el-form-item label="报名活动">
-                            <el-select v-model="form.event_id" placeholder="请选择活动">
-                                <el-option v-for="event in events" :key="event.ID" :label="event.name" :value="event.ID"> </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="选择团队">
-                            <el-select v-model="form.team_id" placeholder="请选择团队" @change="updateTeam">
-                                <el-option v-for="team in teams" :key="team.ID" :label="team.name" :value="team.ID"
-                                    ><span class="m-join-team-item"
-                                        ><b class="u-team-name">{{ team.name }}</b
-                                        ><span class="u-team-id">(ID:{{ team.ID }})</span><span class="u-team-server">{{ team.server }}</span></span
+    <div>
+        <Header></Header>
+
+        <div class="p-superstar-join">
+            <div class="m-main">
+                <div class="u-content">
+                    <div class="u-logo"><img :src="imgurl + 'baoming/logo.png'" width="112" /></div>
+                    <div class="u-title">
+                        <img :src="imgurl + 'baoming/bm.png'" height="38" />
+                    </div>
+                    <div class="m-join" v-if="isLogin" v-loading="loading">
+                        <div class="m-join-notice" v-html="notice"></div>
+                        <el-form
+                            class="m-join-form"
+                            ref="form"
+                            :model="form"
+                            label-width="80px"
+                            v-if="!loading && !status"
+                        >
+                            <el-form-item label="报名活动">
+                                <el-select v-model="form.event_id" placeholder="请选择活动">
+                                    <el-option
+                                        v-for="event in events"
+                                        :key="event.ID"
+                                        :label="event.name"
+                                        :value="event.ID"
                                     >
-                                </el-option>
-                            </el-select>
-                            <div class="u-tip" v-if="!teams || !teams.length">还没有团队？<a href="/team" target="_blank">创建团队</a></div>
-                        </el-form-item>
-                        <el-form-item label="参赛宣言">
-                            <el-input v-model="form.slogan" placeholder="为您的团队打CALL,将显示在游戏内" :maxlength="20" show-word-limit></el-input>
-                        </el-form-item>
-                        <div class="u-btns">
-                            <!-- <div class="u-warning" v-show="status"><i class="el-icon-warning-outline"></i>当前活动你名下的【{{joined_team_name}}】已报名，无需重复报名。</div>-->
-                            <el-button class="u-btn" type="primary" @click="submit" :disabled="!ready">报名</el-button>
-                            <div class="u-footer">
-                                <a href="/notice/32280" target="_blank"><i class="el-icon-info"></i> <b>点击查看百强活动细则</b></a>
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="选择团队">
+                                <el-select v-model="form.team_id" placeholder="请选择团队" @change="updateTeam">
+                                    <el-option v-for="team in teams" :key="team.ID" :label="team.name" :value="team.ID"
+                                        ><span class="m-join-team-item"
+                                            ><b class="u-team-name">{{ team.name }}</b
+                                            ><span class="u-team-id">(ID:{{ team.ID }})</span
+                                            ><span class="u-team-server">{{ team.server }}</span></span
+                                        >
+                                    </el-option>
+                                </el-select>
+                                <div class="u-tip" v-if="!teams || !teams.length">
+                                    还没有团队？<a href="/team" target="_blank">创建团队</a>
+                                </div>
+                            </el-form-item>
+                            <el-form-item label="参赛宣言">
+                                <el-input
+                                    v-model="form.slogan"
+                                    placeholder="为您的团队打CALL,将显示在游戏内"
+                                    :maxlength="20"
+                                    show-word-limit
+                                ></el-input>
+                            </el-form-item>
+                            <div class="u-btns">
+                                <!-- <div class="u-warning" v-show="status"><i class="el-icon-warning-outline"></i>当前活动你名下的【{{joined_team_name}}】已报名，无需重复报名。</div>-->
+                                <el-button class="u-btn" type="primary" @click="submit" :disabled="!ready"
+                                    >报名</el-button
+                                >
+                                <div class="u-footer">
+                                    <a href="/notice/32280" target="_blank"
+                                        ><i class="el-icon-info"></i> <b>点击查看百强活动细则</b></a
+                                    >
+                                </div>
+                            </div>
+                        </el-form>
+                        <div class="m-join m-join-done" v-if="status">
+                            <h1 class="u-title" :class="statusText[audit_status].class">
+                                {{ statusText[audit_status].name }}
+                            </h1>
+                            <div>
+                                <p>
+                                    活动：<strong>{{ result.event.name }}</strong>
+                                </p>
+                                <p>
+                                    团队：<strong>{{ result.eventRecord.name }}</strong>
+                                </p>
                             </div>
                         </div>
-                    </el-form>
-                    <div class="m-join m-join-done" v-if="status">
-                        <h1 class="u-title" :class="statusText[audit_status].class">{{ statusText[audit_status].name }}</h1>
-                        <div>
-                            <p>
-                                活动：<strong>{{ result.event.name }}</strong>
-                            </p>
-                            <p>
-                                团队：<strong>{{ result.eventRecord.name }}</strong>
-                            </p>
-                        </div>
                     </div>
-                </div>
-                <div class="u-no-login" v-else>
-                    <p>你尚未登录</p>
-                    <el-button type="primary" @click="goLogin">登录</el-button>
+                    <div class="u-no-login" v-else>
+                        <p>你尚未登录</p>
+                        <el-button type="primary" @click="goLogin">登录</el-button>
+                    </div>
                 </div>
             </div>
         </div>
+        <Footer></Footer>
     </div>
 </template>
 
