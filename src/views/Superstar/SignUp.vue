@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-06-23 22:12:15
  * @LastEditors: zhusha
- * @LastEditTime: 2024-06-30 22:39:01
+ * @LastEditTime: 2024-07-01 17:24:30
  * @Description: 报名
  * @FilePath: \JX3box\rank\src\views\Superstar\SignUp.vue
  * 
@@ -36,10 +36,12 @@
                 <img :src="imgurl + 'baoming/cslc.png'" height="24" />
             </div>
             <div class="u-text">
-                ① 团长 前往<a href="/team" target="_blank">团队平台</a>创建并认证团队。（往期参赛 或 已创建并认证过团队 的团长则跳过此步）
+                ① 团长 前往<a href="/team" target="_blank">团队平台</a>创建并认证团队。（往期参赛 或 已创建并认证过团队
+                的团长则跳过此步）
             </div>
             <div class="u-text">
-                ② 在游戏内，通过茗伊插件集的团队平台功能进行角色绑定，并且团队内 至少有一名角色未通关 过该难度的副本，该角色需要 开启插件的赛事上报 。
+                ② 在游戏内，通过茗伊插件集的团队平台功能进行角色绑定，并且团队内 至少有一名角色未通关
+                过该难度的副本，该角色需要 开启插件的赛事上报 。
             </div>
             <div class="u-text">③ 团队进入副本，并完成以下三项：</div>
             <ul class="u-team-rule">
@@ -53,13 +55,15 @@
             <div class="u-text">注2：若仅参赛（放弃奖励），则 ③ 只需要完成第1项“挑战1-5号首领” 即可。</div>
             <!-- 报名按钮 -->
             <div class="u-sign-up-btn">
-                <router-link to="join"><img :src="imgurl + 'baoming/bm-1.png'" width="191" /></router-link>
+                <a href="/rank/superstarjoin" target="_blank" rel="noopener"><img :src="imgurl + 'baoming/bm-1.png'" width="191" /></a>
             </div>
             <div class="u-events-rewards">
                 <img :src="imgurl + 'huodonguize/jl.png'" height="24" />
             </div>
             <div class="u-text">① 团长获得50000盒币，该盒币的分配方式由团长自行决定。（盒币可1比1兑换为通宝）</div>
-            <div class="u-text">② 全团每人的魔盒账号获得赛季门派定制的魔盒社区勋章一枚。（需要在茗伊插件的团队平台将角色绑定到对应团队）</div>
+            <div class="u-text">
+                ② 全团每人的魔盒账号获得赛季门派定制的魔盒社区勋章一枚。（需要在茗伊插件的团队平台将角色绑定到对应团队）
+            </div>
             <div class="u-text">③ 攻略心得帖子将会获得额外盒币打赏，优质作品将进行首页宣传</div>
         </div>
         <!-- 底部 -->
@@ -78,9 +82,9 @@ export default {
         };
     },
     created() {
-        console.log(this.id)
+        console.log(this.id);
     },
-    mounted() { },
+    mounted() {},
     methods: {},
 };
 </script>

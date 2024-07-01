@@ -20,8 +20,7 @@
                 <!-- <img :src="imgurl + 'nav/sort-1-bg.png'" height="130" /> -->
                 <img :src="item.banner_pc" height="130" />
                 <div class="u-btn">
-                    <a :href="eventLink(item.ID)" target="_blank">
-                        <img :src="imgurl + 'nav/in.png'" height="50" /></a>
+                    <a :href="eventLink(item.ID)" target="_blank"> <img :src="imgurl + 'nav/in.png'" height="50" /></a>
                 </div>
             </div>
         </div>
@@ -60,16 +59,17 @@ export default {
     methods: {
         loadData: function () {
             getEvents(this.params).then((res) => {
-                let arr = [], data = res.data.data.list
-                data.forEach(item => {
-                    if (item.superstar != 0) arr.push(item)
-                })
+                let arr = [],
+                    data = res.data.data.list;
+                data.forEach((item) => {
+                    if (item.superstar != 0) arr.push(item);
+                });
                 this.data = arr;
-                this.active = arr.length - 1 || 0
+                this.active = arr.length - 1 || 0;
             });
         },
         eventLink: function (val) {
-            return "./#/" + val;
+            return "/rank/superstar/#/" + val;
         },
     },
 };
