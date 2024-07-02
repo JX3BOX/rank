@@ -35,11 +35,19 @@
             .u-menu-item {
                 .size(224px,120px);
                 cursor: pointer;
+                &.actived,
+                &:hover {
+                    box-shadow: 0 0 10px 0px #252328;
+                }
+
                 &.no-enable {
                     cursor: no-drop;
                     img {
                         // filter: brightness(1) invert(0.3);
                         filter: opacity(0.7);
+                    }
+                    &:hover {
+                        box-shadow: none;
                     }
                 }
             }

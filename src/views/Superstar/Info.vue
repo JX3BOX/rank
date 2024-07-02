@@ -4,8 +4,13 @@
         <!-- 活动主体部分 -->
         <div class="m-superstar-main">
             <div class="u-menu">
-                <div v-for="(item, index) in menu" :key="item.key" class="u-menu-item"
-                    :class="item.noEnable ? 'no-enable' : ''" @click="menuClick(item, index)">
+                <div
+                    v-for="(item, index) in menu"
+                    :key="item.key"
+                    class="u-menu-item"
+                    :class="[item.noEnable ? 'no-enable' : '', index == menuActive ? 'actived' : '']"
+                    @click="menuClick(item, index)"
+                >
                     <img :src="imgurl + (index == menuActive ? item.active : item.img)" />
                 </div>
             </div>
@@ -40,8 +45,20 @@ export default {
                 { name: "活动介绍", img: "biaoqianye/hdjs.png", active: "biaoqianye/hdjs-active.png", key: "hdjs" },
                 { name: "报名", img: "biaoqianye/bm.jpg", active: "biaoqianye/bm-active.jpg", key: "bm" },
                 { name: "天团榜", img: "biaoqianye/ttb.jpg", active: "biaoqianye/ttb-active.jpg", key: "ttb" },
-                { name: "数据榜", img: "biaoqianye/sjb.jpg", active: "biaoqianye/sjb-active.jpg", key: "sjb", noEnable: true },
-                { name: "视频集锦", img: "biaoqianye/spjj.jpg", active: "biaoqianye/spjj-active.jpg", key: "spjj", noEnable: true },
+                {
+                    name: "数据榜",
+                    img: "biaoqianye/sjb.jpg",
+                    active: "biaoqianye/sjb-active.jpg",
+                    key: "sjb",
+                    noEnable: true,
+                },
+                {
+                    name: "视频集锦",
+                    img: "biaoqianye/spjj.jpg",
+                    active: "biaoqianye/spjj-active.jpg",
+                    key: "spjj",
+                    noEnable: true,
+                },
             ],
             menuActive: 0,
         };
@@ -53,7 +70,7 @@ export default {
     },
     created() {
         this.$store.state.id = this.id || 0;
-        this.init()
+        this.init();
     },
     methods: {
         menuClick(item, index) {

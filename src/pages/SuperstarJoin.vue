@@ -63,8 +63,8 @@
                                 </div>
                             </div>
                         </el-form>
-                        <div class="m-join m-join-done" v-if="status">
-                            <h1 class="u-title" :class="statusText[audit_status].class">
+                        <div class="m-join-done" v-if="status">
+                            <h1 class="u-status-title" :class="statusText[audit_status].class">
                                 {{ statusText[audit_status].name }}
                             </h1>
                             <div>
