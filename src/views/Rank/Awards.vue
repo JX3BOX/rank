@@ -17,7 +17,7 @@
                 </span>
             </div>
             <div class="u-right">
-                <img src="../assets/img/rank/top-right.png" />
+                <img src="../../assets/img/rank/top-right.png" />
             </div>
         </div>
         <!-- 奖项table -->
@@ -92,5 +92,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/awards.less";
+@import "~@/assets/css/awards.less";
 </style>

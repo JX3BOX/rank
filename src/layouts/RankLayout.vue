@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="m-rank-container" ref="appRef" :class="[id_cls, win_env, 'm-rank-bg-' + id]">
+    <div class="m-rank-container" ref="appRef" :class="[id_cls, win_env, 'm-rank-bg-' + id]">
         <Header></Header>
 
         <!-- <race-bg :class="'m-rank-bg-' + id"></race-bg> -->
@@ -17,12 +17,13 @@
                 </div>
             </div>
         </div>
-        <div class="m-rank-misc">
+        <div class="m-rank-misc" v-if="id">
             <!-- 往届赛事 -->
             <a href="/rank" class="u-history"><img :src="back_img_url" /></a>
 
             <!-- 网页二维码 -->
             <QRcode class="u-mobile-qrcode" v="static" :s="100" />
+
         </div>
 
         <img

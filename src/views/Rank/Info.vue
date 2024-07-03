@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/race_info.less";
+@import "~@/assets/css/race_info.less";
 .m-rank-info .w-time-line-box h2 {
     margin: 0;
 }

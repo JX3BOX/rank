@@ -18,7 +18,7 @@
                                 <i :class="{ on: item.status }">{{ item.status ? "进行中" : "已结束" }}</i>
                             </div>
                         </a>
-                    </li> 
+                    </li>
                 </ul>
             </div>
         </div>
@@ -55,7 +55,7 @@ export default {
             });
         },
         eventLink: function (val) {
-            return "./race/#/" + val;
+            return "./#/" + val;
         },
         eventCover: function (item) {
             return item.banner_pc || PICS.cover(item.ID);
@@ -79,5 +79,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/index.less";
+@import "~@/assets/css/index.less";
 </style>

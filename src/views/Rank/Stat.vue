@@ -580,5 +580,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/race_stat.less";
+@import "~@/assets/css/race_stat.less";
 </style>

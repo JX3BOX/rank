@@ -41,7 +41,7 @@
                                         ><i class="el-icon-video-camera"></i> {{ liveStatusMap[~~item.douyu.show_status] }}</i
                                     >
                                     <i class="u-player" v-if="~~item.douyu.show_status == 1">
-                                        <img svg-inline src="../assets/img/video/play.svg" />
+                                        <img svg-inline src="../../assets/img/video/play.svg" />
                                     </i>
                                 </template>
                                 <template v-else>
@@ -188,5 +188,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/race_video.less";
+@import "~@/assets/css/race_video.less";
 </style>

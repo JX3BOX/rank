@@ -6,11 +6,11 @@ const Setting = require("./setting.json");
 module.exports = {
     //❤️ Multiple pages ~
     pages: {
-        index: {
-            title: "剑三秘境百强榜 - JX3BOX",
-            entry: "src/pages/index.js",
-            template: "public/index.html",
-        },
+        // index: {
+        //     title: "剑三秘境百强榜 - JX3BOX",
+        //     entry: "src/pages/index.js",
+        //     template: "public/index.html",
+        // },
         // event: {
         //     title: "活动设置 - JX3BOX",
         //     entry: "src/pages/event.js",
@@ -23,11 +23,11 @@ module.exports = {
         //     template: "public/subpath.html",
         //     filename: "join/index.html",
         // },
-        race: {
+        rank: {
             title: "剑三秘境百强榜 - JX3BOX",
-            entry: "src/pages/race.js",
-            template: "public/race.html",
-            filename: "race/index.html",
+            entry: "src/pages/rank.js",
+            template: "public/rank.html",
+            filename: "rank/index.html",
         },
         lover: {
             title: "剑三情缘杯 - JX3BOX",
