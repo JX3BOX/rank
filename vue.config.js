@@ -45,7 +45,7 @@ module.exports = {
             title: "报名入口 - 剑三门派天团 - JX3BOX",
             entry: "src/pages/superstarjoin.js",
             template: "public/superstar.html",
-            filename: "superstarjoin/index.html",
+            filename: "superstar/join/index.html",
         },
     },
 
