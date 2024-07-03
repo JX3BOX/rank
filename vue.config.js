@@ -23,12 +23,12 @@ module.exports = {
         //     template: "public/subpath.html",
         //     filename: "join/index.html",
         // },
-        // race: {
-        //     title: "剑三秘境百强榜 - JX3BOX",
-        //     entry: "src/pages/race.js",
-        //     template: "public/race.html",
-        //     filename: "race/index.html",
-        // },
+        race: {
+            title: "剑三秘境百强榜 - JX3BOX",
+            entry: "src/pages/race.js",
+            template: "public/race.html",
+            filename: "race/index.html",
+        },
         lover: {
             title: "剑三情缘杯 - JX3BOX",
             entry: "src/pages/lover.js",
