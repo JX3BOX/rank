@@ -6,28 +6,16 @@ const Setting = require("./setting.json");
 module.exports = {
     //❤️ Multiple pages ~
     pages: {
-        index: {
-            title: "剑三秘境百强榜 - JX3BOX",
-            entry: "src/pages/index.js",
-            template: "public/index.html",
-        },
-        // event: {
-        //     title: "活动设置 - JX3BOX",
-        //     entry: "src/pages/event.js",
-        //     template: "public/subpath.html",
-        //     filename: "event/index.html",
-        // },
-        // join: {
-        //     title: "报名入口 - 剑三秘境百强榜 - JX3BOX",
-        //     entry: "src/pages/join.js",
-        //     template: "public/subpath.html",
-        //     filename: "join/index.html",
+        // index: {
+        //     title: "剑三秘境百强榜 - JX3BOX",
+        //     entry: "src/pages/index.js",
+        //     template: "public/index.html",
         // },
         race: {
             title: "剑三秘境百强榜 - JX3BOX",
             entry: "src/pages/race.js",
             template: "public/race.html",
-            filename: "race/index.html",
+            filename: "rank/index.html",
         },
         lover: {
             title: "剑三情缘杯 - JX3BOX",
@@ -41,12 +29,6 @@ module.exports = {
             template: "public/superstar.html",
             filename: "superstar/index.html",
         },
-        // superstarjoin: {
-        //     title: "报名入口 - 剑三门派天团 - JX3BOX",
-        //     entry: "src/pages/superstarjoin.js",
-        //     template: "public/superstar.html",
-        //     filename: "superstar/join/index.html",
-        // },
     },
 
     //❤️ Porxy ~
