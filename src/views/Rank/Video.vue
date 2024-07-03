@@ -23,7 +23,7 @@
                             <a class="u-video" :href="item.url" target="_blank">
                                 <img :src="videoCover(item.aid)" class="u-live-cover" loading="lazy" />
                                 <i class="u-player">
-                                    <img svg-inline src="../assets/img/video/play.svg" />
+                                    <img svg-inline src="../../assets/img/video/play.svg" />
                                 </i>
                             </a>
                             <div class="u-info">
@@ -107,7 +107,7 @@ import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getVideos, deleteVideo, addVideo, updateVideo } from "@/service/video.js";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
-import User from "@jx3box/jx3box-common/js/user"; 
+import User from "@jx3box/jx3box-common/js/user";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import rank_boss from "@/components/rank_boss.vue";
 import { cloneDeep } from "lodash";
@@ -172,7 +172,7 @@ export default {
     },
     methods: {
         changeBoss(val) {
-            this.current_boss = val == 'all' ? '' : val;    
+            this.current_boss = val == 'all' ? '' : val;
             this.page = 1;
             this.loadData();
         },
@@ -231,7 +231,7 @@ export default {
                 });
             }
         },
- 
+
         liveAvatar: function (val) {
             return val ? getThumbnail(val, 136, true) : default_avatar;
         },
@@ -251,13 +251,13 @@ export default {
             },
         },
     },
-  
+
     created: function () {
         this.loadData();
-    }, 
+    },
 };
 </script>
 
 <style lang="less">
-@import "../assets/css/race_video.less";
+@import "~@/assets/css/race_video.less";
 </style>

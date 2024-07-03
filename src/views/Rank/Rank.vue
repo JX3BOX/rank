@@ -223,5 +223,5 @@ export default {
 };
 </script>
 <style lang="less">
-@import "../assets/css/race_rank.less";
+@import "~@/assets/css/race_rank.less";
 </style>

@@ -431,7 +431,7 @@ export default {
             if (item?.team_info?.logo) {
                 return getThumbnail(item?.team_info.logo, 88);
             }
-            return require("../assets/img/misc/null.png");
+            return require("../../assets/img/misc/null.png");
         },
         showTeamName: function (item) {
             return item?.team_info?.name || "-";
@@ -447,7 +447,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/race_vote.less";
-@import "../assets/css/race_rank.less";
-@import "../assets/css/race_dps.less";
+@import "~@/assets/css/race_vote.less";
+@import "~@/assets/css/race_rank.less";
+@import "~@/assets/css/race_dps.less";
 </style>

@@ -88,6 +88,11 @@ export default {
             imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
         };
     },
+    computed: {
+        id: function () {
+            return this.$route.params.id;
+        },
+    },
     created() {
     },
     mounted() {},

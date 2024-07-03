@@ -12,8 +12,8 @@ import "@jx3box/jx3box-common/css/normalize.css";
 Vue.use(JX3BOX_UI);
 
 // 数据与路由
-import router from "@/router/race.js";
-import store from "@/store/race.js";
+import router from "@/router/rank.js";
+import store from "@/store/rank.js";
 
 import ECharts from "vue-echarts"; // 在 webpack 环境下指向 components/ECharts.vue
 
@@ -37,7 +37,7 @@ Vue.component("v-chart", ECharts);
 ECharts.registerTheme("jx3box-dark", jx3DarkTheme);
 import Katex from "vue-katex-auto-render";
 Vue.directive("katex", Katex);
-import App from "./Race.vue";
+import App from "./Rank.vue";
 new Vue({
     router,
     store,

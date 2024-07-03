@@ -105,5 +105,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/race_vote.less";
+@import "~@/assets/css/race_vote.less";
 </style>

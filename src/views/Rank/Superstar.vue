@@ -31,7 +31,7 @@
                                 fit="fill"
                             ></el-image>
                             <div class="el-image" v-else>
-                                <img loading="lazy" src="../assets/img/misc/null.png" />
+                                <img loading="lazy" src="../../assets/img/misc/null.png" />
                             </div>
                         </a>
                         <!-- 名称 -->
@@ -185,7 +185,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/race_vote.less";
-@import "../assets/css/race_rank.less";
-@import "../assets/css/race_superstar.less";
+@import "~@/assets/css/race_vote.less";
+@import "~@/assets/css/race_rank.less";
+@import "~@/assets/css/race_superstar.less";
 </style>
