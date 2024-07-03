@@ -1,12 +1,12 @@
 <!--
- * @Author: zhusha 
+ * @Author: zhusha
  * @Date: 2024-06-23 22:12:15
  * @LastEditors: zhusha
  * @LastEditTime: 2024-07-02 15:14:03
  * @Description: 报名
  * @FilePath: \JX3box\rank\src\views\Superstar\SignUp.vue
- * 
- * Copyright (c) 2024 by zhusha, email: no email, All Rights Reserved. 
+ *
+ * Copyright (c) 2024 by zhusha, email: no email, All Rights Reserved.
 -->
 <template>
     <div class="m-sign-up">
@@ -58,7 +58,7 @@
                 <div class="u-text">注2：若仅参赛（放弃奖励），则 ③ 只需要完成第1项“挑战1-5号首领” 即可。</div>
                 <!-- 报名按钮 -->
                 <div class="u-sign-up-btn">
-                    <a href="/rank/superstarjoin" target="_blank" rel="noopener"
+                    <a :href="'/superstar/#/'+ id + '/join'" target="_blank" rel="noopener"
                         ><img :src="imgurl + 'baoming/bm-1.png'" width="191"
                     /></a>
                 </div>
@@ -89,7 +89,6 @@ export default {
         };
     },
     created() {
-        console.log(this.id);
     },
     mounted() {},
     methods: {},

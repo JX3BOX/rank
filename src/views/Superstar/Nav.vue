@@ -6,7 +6,7 @@
         <!-- 活动交互位置 -->
         <!-- <div class="m-nav-list">
             <div class="u-nav-item" v-for="(item, i) in 3" :key="item">
-         
+
                 <div class="u-line"></div>
                 <div class="u-img" :class="active == i ? 'active' : ''">
                     <img :src="imgurl + 'nav/sort/' + item + (active == i ? '' : '-1') + '.png'" height="50" />
@@ -71,7 +71,7 @@ export default {
             });
         },
         eventLink: function (val) {
-            return "/rank/superstar/#/" + val;
+            return "/superstar/#/" + val;
         },
     },
 };
