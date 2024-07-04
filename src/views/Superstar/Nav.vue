@@ -17,13 +17,13 @@
         <!-- 入场券列表 -->
         <div class="m-list">
             <div class="u-item" v-for="(item, i) in data" :key="i">
-                <!-- <img :src="imgurl + 'nav/sort-1-bg.png'" height="130" /> -->
-                <img :src="item.banner_pc" height="158" />
-                <div class="u-btn">
-                    <a :href="eventLink(item.ID)" target="_blank">
-                        <img :src="imgurl + 'nav/' + (item.status ? 'rc.png' : 'hg.png')" height="50"
-                    /></a>
-                </div>
+                <a :href="eventLink(item.ID)" target="_blank">
+                    <!-- <img :src="imgurl + 'nav/sort-1-bg.png'" height="130" /> -->
+                    <img :src="item.banner_pc" height="158" />
+                    <div class="u-btn">
+                        <img :src="imgurl + 'nav/' + (item.status ? 'rc.png' : 'hg.png')" height="50" />
+                    </div>
+                </a>
             </div>
         </div>
     </div>
