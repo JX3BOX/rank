@@ -2,7 +2,7 @@
  * @Author: zhusha
  * @Date: 2024-06-23 22:12:15
  * @LastEditors: zhusha
- * @LastEditTime: 2024-07-02 15:14:03
+ * @LastEditTime: 2024-07-06 13:01:01
  * @Description: 报名
  * @FilePath: \JX3box\rank\src\views\Superstar\SignUp.vue
  *
@@ -58,9 +58,10 @@
                 <div class="u-text">注2：若仅参赛（放弃奖励），则 ③ 只需要完成第1项“挑战1-5号首领” 即可。</div>
                 <!-- 报名按钮 -->
                 <div class="u-sign-up-btn">
-                    <a :href="'/superstar/#/'+ id + '/join'" target="_blank" rel="noopener"
+                    <!-- <a :href="'/superstar/#/join'" target="_blank" rel="noopener"
                         ><img :src="imgurl + 'baoming/bm-1.png'" width="191"
-                    /></a>
+                    /></a> -->
+                    <router-link to="/join"><img :src="imgurl + 'baoming/bm-1.png'" width="191" /></router-link>
                 </div>
                 <div class="u-events-rewards">
                     <img :src="imgurl + 'huodonguize/jl.png'" height="24" />
@@ -93,8 +94,7 @@ export default {
             return this.$route.params.id;
         },
     },
-    created() {
-    },
+    created() {},
     mounted() {},
     methods: {},
 };

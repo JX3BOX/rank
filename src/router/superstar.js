@@ -7,15 +7,26 @@ VueRouter.prototype.push = function push(to) {
     return VueRouterPush.call(this, to).catch((err) => err);
 };
 
-const Info = () => import("@/views/Superstar/Info.vue");
 const Join = () => import("@/views/Superstar/Join.vue");
 const Nav = () => import("@/views/Superstar/Nav.vue");
+const Introduce = () => import("@/views/Superstar/Introduce.vue");
+const SignUp = () => import("@/views/Superstar/SignUp.vue");
+const List = () => import("@/views/Superstar/List.vue");
 
 const routes = [
-    { name: "index", path: "/:id", redirect: { name: "info" } },
-    { name: "info", path: "/:id/info", component: Info },
-    { name: "join", path: "/:id/join", component: Join },
+    { name: "join", path: "/join", component: Join },
     { name: "nav", path: "/", component: Nav },
+    {
+        name: "detail",
+        path: "/:id",
+        redirect: { name: "introduce" },
+        component: () => import("@/layouts/SuperstarLayout.vue"),
+        children: [
+            { name: "introduce", path: "/:id/introduce", component: Introduce },
+            { name: "signup", path: "/:id/signup", component: SignUp },
+            { name: "list", path: "/:id/list", component: List },
+        ],
+    },
 ];
 
 const router = new VueRouter({
