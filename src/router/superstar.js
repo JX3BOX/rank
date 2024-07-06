@@ -14,7 +14,7 @@ const SignUp = () => import("@/views/Superstar/SignUp.vue");
 const List = () => import("@/views/Superstar/List.vue");
 
 const routes = [
-    { name: "join", path: "/join", component: Join },
+    { name: "join", path: "/:id/join", component: Join },
     { name: "nav", path: "/", component: Nav },
     {
         name: "detail",

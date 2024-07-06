@@ -61,7 +61,7 @@
                     <!-- <a :href="'/superstar/#/join'" target="_blank" rel="noopener"
                         ><img :src="imgurl + 'baoming/bm-1.png'" width="191"
                     /></a> -->
-                    <router-link to="/join"><img :src="imgurl + 'baoming/bm-1.png'" width="191" /></router-link>
+                    <router-link :to="link('join')"><img :src="imgurl + 'baoming/bm-1.png'" width="191" /></router-link>
                 </div>
                 <div class="u-events-rewards">
                     <img :src="imgurl + 'huodonguize/jl.png'" height="24" />
@@ -96,7 +96,11 @@ export default {
     },
     created() {},
     mounted() {},
-    methods: {},
+    methods: {
+        link: function (val) {
+            return "/" + this.id + "/" + val;
+        },
+    },
 };
 </script>
 
