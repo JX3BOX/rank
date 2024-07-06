@@ -26,7 +26,8 @@
                         团长:&nbsp;
                         <!-- TODO心法图标,后续替换 -->
                         <img loading="lazy" width="30" :src="showLeaderMount(item.leaders[1])" />&nbsp;{{
-                            showLeaderName(item.leaders[0]) }}
+                            showLeaderName(item.leaders[0])
+                        }}
                     </div>
                     <!-- 团员list -->
                     <div class="u-team-member">
@@ -63,7 +64,8 @@
                             团长:&nbsp;
                             <!-- TODO心法图标,后续替换 -->
                             <img loading="lazy" width="30" :src="showLeaderMount(item.leaders[1])" />&nbsp;{{
-                                showLeaderName(item.leaders[0]) }}
+                                showLeaderName(item.leaders[0])
+                            }}
                         </div>
                         <div class="u-team-member">
                             <div class="u-team-member-item" v-for="(member, j) in item.members" :key="j">
@@ -130,9 +132,7 @@ export default {
         data: function () {
             let d = cloneDeep(this.origin_data || []),
                 data = [];
-
             if (d.length > 3) data = d.splice(3, d.length);
-            console.log(data);
             data.forEach((team, i) => {
                 let leader_name = team.leader;
                 let members = team.teammate.split(";");
@@ -155,10 +155,16 @@ export default {
             return this.$store.state.race.superstar;
         },
     },
-    created() {
-        this.loadData();
+    watch: {
+        aid: {
+            immediate: true,
+            handler: function (val) {
+                val && this.loadData();
+            },
+        },
     },
-    mounted() { },
+    created() {},
+    mounted() {},
     methods: {
         getRankImg: function (num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";

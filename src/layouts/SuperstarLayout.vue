@@ -63,6 +63,8 @@ export default {
         },
     },
     created() {
+        let i = this.menu.findIndex((item) => item.key == this.$route.name);
+        this.menuActive = i;
         this.$store.state.id = this.id || 0;
         this.init();
     },
