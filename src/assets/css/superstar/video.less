@@ -1,9 +1,16 @@
-.m-rank-video {
+.m-superstar-video {
     .mt(40px);
     .u-boss {
-        background-color: #252328;
+        background-color: #252328 !important;
         &.active {
+            color: #fff;
             background-color: #fef2da;
+            &:hover {
+                color: #fff;
+            }
+        }
+        &:hover {
+            color: #fff;
         }
     }
 }
@@ -31,18 +38,11 @@
             &.active {
                 color: #ffff00;
             }
-            &:hover {
-                color: #f39;
-            }
         }
         .btn-next,
         .btn-prev {
             background: none;
             color: #0cf;
-
-            &:hover {
-                color: #f39;
-            }
         }
         button:disabled {
             color: #444;
@@ -83,9 +83,6 @@
         }
 
         transition: 0.1s ease-in-out;
-        // &:hover {
-        //     // background-color: #111;
-        // }
 
         @keyframes playerRotate {
             0% {

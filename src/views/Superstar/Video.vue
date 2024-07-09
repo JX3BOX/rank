@@ -1,7 +1,7 @@
 <template>
     <!-- 通关视频 -->
     <div
-        class="m-rank-video"
+        class="m-superstar-video"
         v-loading="loading"
         element-loading-text="加载中..."
         element-loading-spinner="el-icon-loading"
