@@ -30,21 +30,19 @@
                                 <a :href="teamLink(item.team_id)" target="_blank"
                                     ><img :src="liveAvatar(item.logo)" class="u-team-logo" loading="lazy"
                                 /></a>
-                                <div class="u-team">
-                                    <span class="u-label">团队 : </span>
-                                    <a class="u-team-name" :href="teamLink(item.team_id)" target="_blank">{{
-                                        item.name
-                                    }}</a>
+                                <div class="u-team-right">
+                                    <div class="u-team">
+                                        <span class="u-label">团队 : </span>
+                                        <a class="u-team-name" :href="teamLink(item.team_id)" target="_blank">{{
+                                            item.name
+                                        }}</a>
+                                    </div>
+                                    <div class="u-room">
+                                        <a class="u-room-name" :href="item.url" target="_blank">
+                                            {{ item.title }}
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="u-room">
-                                    <a class="u-room-name" :href="item.url" target="_blank">
-                                        {{ item.title }}
-                                    </a>
-                                </div>
-                                <!-- <div class="u-op" v-if="isEditor">
-                                    <el-button class="u-edit" type="primary" plain @click="edit(item)" icon="el-icon-edit-outline" size="mini">编辑</el-button>
-                                    <el-button class="u-delete" type="danger" plain @click="del(item.ID)" icon="el-icon-delete" size="mini">删除</el-button>
-                                </div> -->
                             </div>
                         </div>
                     </el-col>
@@ -62,53 +60,14 @@
             </template>
             <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
         </div>
-        <el-dialog
-            class="m-rank-video-dialog"
-            title="添加/编辑视频"
-            :visible.sync="dialogVisible"
-            width="30%"
-            :append-to-body="true"
-        >
-            <div class="m-rank-video-form">
-                <el-form ref="form" label-width="80px">
-                    <el-form-item label="团队ID">
-                        <el-input v-model.number="video.team_id" placeholder="请输入正确的团队数字编号"></el-input>
-                    </el-form-item>
-                    <el-form-item label="成就ID">
-                        <el-select v-model.number="video.aid" placeholder="请选择">
-                            <el-option
-                                v-for="(label, achieve_id) of bossList"
-                                :key="achieve_id"
-                                :label="label"
-                                :value="achieve_id"
-                            >
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="视频链接">
-                        <el-input v-model="video.url" placeholder="请输入视频网址"></el-input>
-                    </el-form-item>
-                    <el-form-item label="视频标题">
-                        <el-input v-model="video.title" placeholder="请注明XX视角"></el-input>
-                    </el-form-item>
-                </el-form>
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="submit">确 定</el-button>
-            </span>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-// import achieves from "@/assets/data/achieve.json";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getVideos, deleteVideo, addVideo, updateVideo } from "@/service/video.js";
+import { getVideos } from "@/service/video.js";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
-import User from "@jx3box/jx3box-common/js/user";
-import servers from "@jx3box/jx3box-data/data/server/server_list.json";
 import rank_boss from "@/components/rank_boss.vue";
 import { cloneDeep } from "lodash";
 export default {
@@ -123,11 +82,7 @@ export default {
             page: 1,
             total: 1,
             loading: false,
-            servers,
-            server: "",
             current_boss: "",
-            isAdmin: User.isAdmin(),
-            isEditor: User.isEditor(),
             dialogVisible: false,
             video: {
                 ID: "",
@@ -160,15 +115,6 @@ export default {
             });
             return dict;
         },
-        demo_video: function () {
-            return {
-                team_id: "",
-                event_id: ~~this.id,
-                aid: "",
-                title: "",
-                url: "",
-            };
-        },
     },
     methods: {
         changeBoss(val) {
@@ -187,49 +133,6 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
-        },
-        del: function (id) {
-            this.$alert("确认删除吗", "消息", {
-                confirmButtonText: "确定",
-                callback: (action) => {
-                    if (action == "confirm") {
-                        deleteVideo(id).then((res) => {
-                            this.$message({
-                                type: "success",
-                                message: `删除成功`,
-                            });
-                            location.reload();
-                        });
-                    }
-                },
-            });
-        },
-        edit: function (item) {
-            this.dialogVisible = true;
-            this.video = item;
-        },
-        add: function () {
-            this.dialogVisible = true;
-            this.video = cloneDeep(this.demo_video);
-        },
-        submit: function () {
-            if (this.video.ID) {
-                updateVideo(this.video.ID, this.video).then((res) => {
-                    this.$message({
-                        type: "success",
-                        message: `更新成功`,
-                    });
-                    this.dialogVisible = false;
-                });
-            } else {
-                addVideo(this.video).then((res) => {
-                    this.$message({
-                        type: "success",
-                        message: `发布成功`,
-                    });
-                    this.dialogVisible = false;
-                });
-            }
         },
 
         liveAvatar: function (val) {
@@ -259,5 +162,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "~@/assets/css/race_video.less";
+@import "~@/assets/css/superstar/video.less";
 </style>

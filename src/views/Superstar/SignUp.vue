@@ -2,7 +2,7 @@
  * @Author: zhusha
  * @Date: 2024-06-23 22:12:15
  * @LastEditors: zhusha
- * @LastEditTime: 2024-07-06 13:01:01
+ * @LastEditTime: 2024-07-09 08:48:18
  * @Description: 报名
  * @FilePath: \JX3box\rank\src\views\Superstar\SignUp.vue
  *
@@ -20,9 +20,15 @@
             </div>
             <!-- 中间部 -->
             <div class="u-center">
-                <div class="u-events-time">
+                <!-- 报名按钮 -->
+                <div class="u-sign-up-btn">
+                    <router-link :to="link('join')"><img :src="imgurl + 'baoming/bm-1.png'" width="191" /></router-link>
+                </div>
+                <div class="m-rank-info" v-html="desc"></div>
+                <!-- <div class="u-events-time">
                     <img :src="imgurl + 'baoming/hdsj.png'" height="24" />
                 </div>
+
                 <div class="u-text">报名日：2024年7月1日</div>
                 <div class="u-text">参赛日：2024年7月13日</div>
                 <div class="u-text">结榜日：2024年7月20日</div>
@@ -56,13 +62,7 @@
                 <div class="u-text">⑤ 在明确以上内容后，请 团长 点击下方按钮，进入报名页。</div>
                 <div class="u-text">注1：所有参赛团长务必加入魔盒认证团长群，以便于后续流程的沟通。</div>
                 <div class="u-text">注2：若仅参赛（放弃奖励），则 ③ 只需要完成第1项“挑战1-5号首领” 即可。</div>
-                <!-- 报名按钮 -->
-                <div class="u-sign-up-btn">
-                    <!-- <a :href="'/superstar/#/join'" target="_blank" rel="noopener"
-                        ><img :src="imgurl + 'baoming/bm-1.png'" width="191"
-                    /></a> -->
-                    <router-link :to="link('join')"><img :src="imgurl + 'baoming/bm-1.png'" width="191" /></router-link>
-                </div>
+
                 <div class="u-events-rewards">
                     <img :src="imgurl + 'huodonguize/jl.png'" height="24" />
                 </div>
@@ -71,7 +71,7 @@
                     ②
                     全团每人的魔盒账号获得赛季门派定制的魔盒社区勋章一枚。（需要在茗伊插件的团队平台将角色绑定到对应团队）
                 </div>
-                <div class="u-text">③ 攻略心得帖子将会获得额外盒币打赏，优质作品将进行首页宣传</div>
+                <div class="u-text">③ 攻略心得帖子将会获得额外盒币打赏，优质作品将进行首页宣传</div> -->
             </div>
             <!-- 底部 -->
             <div class="u-bottom">
@@ -93,6 +93,9 @@ export default {
         id: function () {
             return this.$route.params.id;
         },
+        desc: function () {
+            return this.$store.state.race.desc;
+        },
     },
     created() {},
     mounted() {},
@@ -104,6 +107,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "~@/assets/css/superstar/signup.less";
+@import "~@/assets/css/superstar/text.less";
 </style>

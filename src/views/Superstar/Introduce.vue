@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-06-23 14:37:08
  * @LastEditors: zhusha
- * @LastEditTime: 2024-07-02 15:17:44
+ * @LastEditTime: 2024-07-09 08:48:29
  * @Description: 活动介绍
  * @FilePath: \JX3box\rank\src\views\Superstar\Introduce.vue
  * 
@@ -20,9 +20,10 @@
             </div>
             <!-- 中间部 -->
             <div class="u-center">
-                <div class="u-events-bg">
+                <div class="m-rank-info" v-html="superstar_desc"></div>
+                <!-- <div class="u-events-bg">
                     <img :src="imgurl + 'huodongjieshao/hd-bg-1.png'" width="99.5" />
-                </div>
+                </div> 
                 <div class="u-text">
                     为了给玩家们更多的展示平台，魔盒将在每年的夏季进行门派天团活动，用于展示玩家们更强的技艺。
                 </div>
@@ -34,7 +35,7 @@
                 </div>
                 <div class="u-text">1，给玩家们一个可以同台竞技的舞台</div>
                 <div class="u-text">2，在等级末期给玩家获取装备的动力，用以提高活跃度</div>
-                <div class="u-text">3，提高各心法门派玩家的凝聚力</div>
+                <div class="u-text">3，提高各心法门派玩家的凝聚力</div> -->
             </div>
             <!-- 底部 -->
             <div class="u-bottom">
@@ -52,12 +53,21 @@ export default {
             imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
         };
     },
+    computed: {
+        id: function () {
+            return this.$route.params.id;
+        },
+        superstar_desc: function () {
+            return this.$store.state.race.superstar_desc;
+        },
+    },
     created() {},
     mounted() {},
     methods: {},
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "~@/assets/css/superstar/introduce.less";
+@import "~@/assets/css/superstar/text.less";
 </style>

@@ -1,65 +1,36 @@
 <template>
     <div>
-        <!-- 前三排名 -->
-        <div class="u-sort-box">
-            <div class="u-sort-3-item" :class="'u-sort-item-' + (i + 1)" v-for="(item, i) in threeData || []" :key="i">
-                <div :class="'u-sort-' + (i + 1)">
-                    <img :src="imgurl + (i + 1) + '.png'" />
-                </div>
-                <!-- 团队信息 -->
-                <div class="u-team-info">
-                    <a :href="teamLink(item.team_id)" target="_blank">
-                        <div class="u-team-icon">
-                            <el-image v-if="item.team_logo" :src="teamLogo(item.team_logo)" fit="fill"></el-image>
-                            <img loading="lazy" src="../../assets/img/misc/null.png" width="100%" v-else />
-                        </div>
-                        <div class="u-team-name">{{ item.team_name && item.team_name.slice(0, 6) }}</div>
-                        <div class="u-team-serve">{{ item.server }} {{ showTime(item.created) }}</div>
-                        <div class="u-team-time">
-                            战斗用时&nbsp;:&nbsp;<span>{{ showTC(item.fight_time) }}</span>
-                        </div>
-                    </a>
-                </div>
-                <!-- 团长+团员部分 -->
-                <div class="u-team-list">
-                    <div class="u-team-leader">
-                        团长:&nbsp;
-                        <!-- TODO心法图标,后续替换 -->
-                        <img loading="lazy" width="30" :src="showLeaderMount(item.leaders[1])" />&nbsp;{{
-                            showLeaderName(item.leaders[0])
-                        }}
-                    </div>
-                    <!-- 团员list -->
-                    <div class="u-team-member">
-                        <div class="u-team-member-item" v-for="(member, j) in item.members" :key="j">
-                            <img loading="lazy" width="20" :src="showMemberMount(member)" />&nbsp;
-                            <div>{{ showMemberName(member) }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="m-sort-null" v-if="!origin_data || origin_data.length == 0">
+            <i class="el-icon-warning-outline"></i> 暂时还没有任何记录
         </div>
-        <!-- 后续排名部分展示 -->
-        <div class="u-sort-other">
-            <div class="u-sort-other-item" v-for="(item, i) in data || []" :key="i">
-                <!-- 排序 -->
-                <div class="u-sort-number">{{ i + 4 }}</div>
-                <!-- 团队 -->
-                <div class="u-team-list">
-                    <!-- 左右两块布局 -->
-                    <a :href="teamLink(item.team_id)" target="_blank">
-                        <div class="u-team-info">
+        <div v-else>
+            <!-- 前三排名 -->
+            <div class="u-sort-box">
+                <div
+                    class="u-sort-3-item"
+                    :class="'u-sort-item-' + (i + 1)"
+                    v-for="(item, i) in threeData || []"
+                    :key="i"
+                >
+                    <div :class="'u-sort-' + (i + 1)">
+                        <img :src="imgurl + (i + 1) + '.png'" />
+                    </div>
+                    <!-- 团队信息 -->
+                    <div class="u-team-info">
+                        <a :href="teamLink(item.team_id)" target="_blank">
                             <div class="u-team-icon">
                                 <el-image v-if="item.team_logo" :src="teamLogo(item.team_logo)" fit="fill"></el-image>
                                 <img loading="lazy" src="../../assets/img/misc/null.png" width="100%" v-else />
                             </div>
                             <div class="u-team-name">{{ item.team_name && item.team_name.slice(0, 6) }}</div>
-                            <div class="u-team-serve">{{ item.server }}</div>
-                        </div>
-                    </a>
-
-                    <!--团长+ 团员list -->
-                    <div class="u-team-people">
+                            <div class="u-team-serve">{{ item.server }} {{ showTime(item.created) }}</div>
+                            <div class="u-team-time">
+                                战斗用时&nbsp;:&nbsp;<span>{{ showTC(item.fight_time) }}</span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- 团长+团员部分 -->
+                    <div class="u-team-list">
                         <div class="u-team-leader">
                             团长:&nbsp;
                             <!-- TODO心法图标,后续替换 -->
@@ -67,6 +38,7 @@
                                 showLeaderName(item.leaders[0])
                             }}
                         </div>
+                        <!-- 团员list -->
                         <div class="u-team-member">
                             <div class="u-team-member-item" v-for="(member, j) in item.members" :key="j">
                                 <img loading="lazy" width="20" :src="showMemberMount(member)" />&nbsp;
@@ -74,12 +46,54 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 通关时间,飘在右侧顶部 -->
-                    <div class="u-team-time-box">
-                        <div class="u-team-time">
-                            战斗用时&nbsp;:&nbsp;<span>{{ showTC(item.fight_time) }}</span>
+                </div>
+            </div>
+            <!-- 后续排名部分展示 -->
+            <div class="u-sort-other">
+                <div class="u-sort-other-item" v-for="(item, i) in data || []" :key="i">
+                    <!-- 排序 -->
+                    <div class="u-sort-number">{{ i + 4 }}</div>
+                    <!-- 团队 -->
+                    <div class="u-team-list">
+                        <!-- 左右两块布局 -->
+                        <a :href="teamLink(item.team_id)" target="_blank">
+                            <div class="u-team-info">
+                                <div class="u-team-icon">
+                                    <el-image
+                                        v-if="item.team_logo"
+                                        :src="teamLogo(item.team_logo)"
+                                        fit="fill"
+                                    ></el-image>
+                                    <img loading="lazy" src="../../assets/img/misc/null.png" width="100%" v-else />
+                                </div>
+                                <div class="u-team-name">{{ item.team_name && item.team_name.slice(0, 6) }}</div>
+                                <div class="u-team-serve">{{ item.server }}</div>
+                            </div>
+                        </a>
+
+                        <!--团长+ 团员list -->
+                        <div class="u-team-people">
+                            <div class="u-team-leader">
+                                团长:&nbsp;
+                                <!-- TODO心法图标,后续替换 -->
+                                <img loading="lazy" width="30" :src="showLeaderMount(item.leaders[1])" />&nbsp;{{
+                                    showLeaderName(item.leaders[0])
+                                }}
+                            </div>
+                            <div class="u-team-member">
+                                <div class="u-team-member-item" v-for="(member, j) in item.members" :key="j">
+                                    <img loading="lazy" width="20" :src="showMemberMount(member)" />&nbsp;
+                                    <div>{{ showMemberName(member) }}</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="u-serve">{{ item.server }} {{ showTime(item.created) }}</div>
+                        <!-- 通关时间,飘在右侧顶部 -->
+                        <div class="u-team-time-box">
+                            <div class="u-team-time">
+                                战斗用时&nbsp;:&nbsp;<span>{{ showTC(item.fight_time) }}</span>
+                            </div>
+                            <div class="u-serve">{{ item.server }} {{ showTime(item.created) }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
