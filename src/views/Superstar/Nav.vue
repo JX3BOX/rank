@@ -3,23 +3,14 @@
         <div class="m-logo">
             <img :src="imgurl + 'nav/1.png'" height="183" />
         </div>
-        <!-- 活动交互位置 -->
-        <!-- <div class="m-nav-list">
-            <div class="u-nav-item" v-for="(item, i) in 3" :key="item">
 
-                <div class="u-line"></div>
-                <div class="u-img" :class="active == i ? 'active' : ''">
-                    <img :src="imgurl + 'nav/sort/' + item + (active == i ? '' : '-1') + '.png'" height="50" />
-                </div>
-                <div class="u-line" v-if="i == 2"></div>
-            </div>
-        </div> -->
         <!-- 入场券列表 -->
         <div class="m-list">
             <div class="u-item" v-for="(item, i) in data" :key="i">
                 <a :href="eventLink(item.ID)" target="_blank">
                     <!-- <img :src="imgurl + 'nav/sort-1-bg.png'" height="130" /> -->
-                    <img :src="item.banner_pc" height="158" />
+                    <div class="u-nav-img"><img :src="item.banner_pc" height="158" /></div>
+
                     <div class="u-btn">
                         <img :src="imgurl + 'nav/' + (item.status ? 'rc.png' : 'hg.png')" height="50" />
                     </div>
