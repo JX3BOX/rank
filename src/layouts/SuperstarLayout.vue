@@ -37,7 +37,7 @@ export default {
                     active: "biaoqianye/hdjs-active.png",
                     key: "introduce",
                 },
-                { name: "报名", img: "biaoqianye/bm.jpg", active: "biaoqianye/bm-active.jpg", key: "signup" },
+                { name: "报名", img: "biaoqianye/bm.jpg", active: "biaoqianye/bm-active.jpg", key: "join" },
                 { name: "天团榜", img: "biaoqianye/ttb.jpg", active: "biaoqianye/ttb-active.jpg", key: "list" },
                 {
                     name: "数据榜",

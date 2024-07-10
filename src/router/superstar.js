@@ -16,7 +16,6 @@ const Video = () => import("@/views/Superstar/Video.vue");
 const Dps = () => import("@/views/Superstar/Dps.vue");
 
 const routes = [
-    { name: "join", path: "/:id/join", component: Join },
     { name: "nav", path: "/", component: Nav },
     {
         name: "detail",
@@ -25,10 +24,11 @@ const routes = [
         component: () => import("@/layouts/SuperstarLayout.vue"),
         children: [
             { name: "introduce", path: "/:id/introduce", component: Introduce },
-            { name: "signup", path: "/:id/signup", component: SignUp },
+            { name: "signup", path: "/:id/signup", redirect: { name: "join" } },
             { name: "list", path: "/:id/list", component: List },
             { name: "video", path: "/:id/video", component: Video },
             { name: "dps", path: "/:id/dps", component: Dps },
+            { name: "join", path: "/:id/join", component: Join },
         ],
     },
 ];

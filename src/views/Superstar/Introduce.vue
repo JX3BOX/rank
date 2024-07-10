@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-06-23 14:37:08
  * @LastEditors: zhusha
- * @LastEditTime: 2024-07-09 08:48:29
+ * @LastEditTime: 2024-07-10 10:10:23
  * @Description: 活动介绍
  * @FilePath: \JX3box\rank\src\views\Superstar\Introduce.vue
  * 
@@ -20,7 +20,7 @@
             </div>
             <!-- 中间部 -->
             <div class="u-center">
-                <div class="m-rank-info" v-html="superstar_desc"></div>
+                <div class="m-superstar-introduce-info" v-html="superstar_desc"></div>
                 <!-- <div class="u-events-bg">
                     <img :src="imgurl + 'huodongjieshao/hd-bg-1.png'" width="99.5" />
                 </div> 
