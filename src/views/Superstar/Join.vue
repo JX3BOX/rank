@@ -13,7 +13,7 @@
                 <div class="p-superstar-join">
                     <div class="m-main">
                         <div class="u-content">
-                            <div class="u-logo"><img :src="imgurl + 'baoming/logo.png'" width="112" /></div>
+                            <!-- <div class="u-logo"><img :src="imgurl + 'baoming/logo.png'" width="112" /></div> -->
                             <!-- <div class="u-title">
                                 <img :src="imgurl + 'baoming/bm.png'" height="38" />
                             </div> -->
