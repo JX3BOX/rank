@@ -124,7 +124,7 @@ export default {
         threeData: function () {
             let d = cloneDeep(this.origin_data || []),
                 data = [];
-            if (d.length > 3) data = d.splice(0, 3);
+            if (d.length > 2) data = d.splice(0, 3);
             data.forEach((team, i) => {
                 let leader_name = team.leader;
                 let members = team.teammate.split(";");

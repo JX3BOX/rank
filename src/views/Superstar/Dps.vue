@@ -1,11 +1,15 @@
 <template>
     <div class="m-superstar-box">
+        <div class="m-superstar-dps-null" v-if="blocks.indexOf('dps') == -1">
+            <i class="el-icon-warning-outline"></i> 暂时还没有任何记录
+        </div>
         <div
             class="m-superstar-dps"
             v-loading="loading"
             element-loading-text="加载中..."
             element-loading-spinner="el-icon-loading"
             element-loading-background="rgba(0, 0, 0, 0.3)"
+            v-else
         >
             <!-- 顶部 -->
             <div class="u-top">
@@ -234,6 +238,10 @@ export default {
     computed: {
         id: function () {
             return this.$store.state.id;
+        },
+
+        blocks: function () {
+            return this.$store.state.race.blocks;
         },
         achieves: function () {
             return this.$store.state.achieves || [];
