@@ -58,7 +58,7 @@
                 >
                 </el-pagination>
             </template>
-            <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
+            <div class="m-video-null" v-else><i class="el-icon-warning-outline"></i> 没有找到相关条目</div>
         </div>
     </div>
 </template>
@@ -69,7 +69,7 @@ import { getVideos } from "@/service/video.js";
 import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import rank_boss from "@/components/rank_boss.vue";
-import { cloneDeep } from "lodash";
+import { cloneDeep, filter } from "lodash";
 export default {
     components: {
         "rank-boss": rank_boss,
@@ -78,7 +78,7 @@ export default {
         return {
             video_title_img: __imgPath + "image/rank/common/videos.png",
             data: [],
-            per: 24,
+            per: 36,
             page: 1,
             total: 1,
             loading: false,
@@ -126,7 +126,9 @@ export default {
             this.loading = true;
             getVideos(this.id, this.params)
                 .then((res) => {
-                    this.data = res.data.data.list;
+                    this.data = filter(res.data.data.list, function (o) {
+                        return o.is_superstar == 1;
+                    });
                     this.page = res.data.data.page.index;
                     this.total = res.data.data.page.total;
                 })
