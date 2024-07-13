@@ -46,6 +46,27 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 分割线 -->
+                    <div class="u-team-line"></div>
+                    <!-- 链接按钮 -->
+                    <div class="u-battle-jcl">
+                        <div class="u-two-link" v-if="item.jx3box_battle_id && item.jx3box_jcl_id">
+                            <a :href="jclLink(item.jx3box_jcl_id)" target="_blank">
+                                <img :src="imgurl + 'JCL_2.png'" />
+                            </a>
+                            <a :href="battleLink(item.jx3box_battle_id)" target="_blank">
+                                <img :src="imgurl + 'BATTLE_2.png'" />
+                            </a>
+                        </div>
+                        <div v-else>
+                            <a :href="jclLink(item.jx3box_jcl_id)" target="_blank" v-if="item.jx3box_jcl_id">
+                                <img :src="imgurl + 'JCL.png'" />
+                            </a>
+                            <a :href="battleLink(item.jx3box_battle_id)" target="_blank" v-if="item.jx3box_battle_id">
+                                <img :src="imgurl + 'BATTLE.png'" />
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- 后续排名部分展示 -->
@@ -86,6 +107,25 @@
                                     <div>{{ showMemberName(member) }}</div>
                                 </div>
                             </div>
+                        </div>
+                        <!-- jcl-battle btn -->
+                        <div class="u-team-other-btn">
+                            <a
+                                :href="jclLink(item.jx3box_jcl_id)"
+                                target="_blank"
+                                class="u-jcl-battle-link"
+                                v-if="item.jx3box_jcl_id"
+                            >
+                                <img :src="imgurl + 'JCL_3.jpg'" />
+                            </a>
+                            <a
+                                :href="battleLink(item.jx3box_battle_id)"
+                                target="_blank"
+                                class="u-jcl-battle-link"
+                                v-if="item.jx3box_battle_id"
+                            >
+                                <img :src="imgurl + 'BATTLE_3.jpg'" />
+                            </a>
                         </div>
                         <!-- 通关时间,飘在右侧顶部 -->
                         <div class="u-team-time-box">
@@ -180,6 +220,12 @@ export default {
     created() {},
     mounted() {},
     methods: {
+        jclLink(id) {
+            return `/jcl/view?id=${id}`;
+        },
+        battleLink(id) {
+            return "/battle/#/combat/" + id;
+        },
         getRankImg: function (num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";
         },
