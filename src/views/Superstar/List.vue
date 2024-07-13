@@ -1,5 +1,18 @@
 <template>
-    <div>
+    <div
+        v-loading="loading"
+        element-loading-text="加载中..."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.3)"
+    >
+        <el-row class="m-rank-boss m-rank-filter" :gutter="20" type="flex">
+            <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
+                <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id }">
+                    <img class="u-boss-icon" :src="bossIcon(aid)" :onerror="defaultBossIcon" />
+                    <span class="u-boss-name">{{ label }}</span>
+                </li>
+            </el-col>
+        </el-row>
         <div class="m-sort-null" v-if="!origin_data || origin_data.length == 0">
             <i class="el-icon-warning-outline"></i> 暂时还没有任何记录
         </div>
@@ -147,6 +160,7 @@ import { cloneDeep } from "lodash";
 import { getTop100 } from "@/service/superstar.js";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
+import PICS from "@/assets/js/pics.js";
 export default {
     components: {},
 
@@ -154,6 +168,7 @@ export default {
         return {
             imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
             loading: false,
+            achieve_id: "", //boss成就ID
             origin_data: [],
         };
     },
@@ -212,18 +227,54 @@ export default {
         aid: function () {
             return this.$store.state.race.superstar;
         },
+        achieves: function () {
+            return this.$store.state.achieves || [];
+        },
+        bossList: function () {
+            let dict = {};
+            this.achieves.forEach((item) => {
+                dict[item.achievement_id] = item.name;
+            });
+            return dict;
+        },
     },
     watch: {
-        aid: {
+        achieve_id: {
             immediate: true,
             handler: function (val) {
                 val && this.loadData();
+            },
+        },
+        "$route.query": {
+            handler: function (val) {
+                if (val.aid) {
+                    this.achieve_id = val.aid;
+                }
+            },
+            immediate: true,
+        },
+        achieves: {
+            immediate: true,
+            handler: function () {
+                if (!!~~this.$route.query.aid) {
+                    this.achieve_id = this.$route.query.aid;
+                } else {
+                    this.achieve_id = _.first(Object.keys(this.bossList));
+                }
             },
         },
     },
     created() {},
     mounted() {},
     methods: {
+        changeBoss: function (val) {
+            this.achieve_id = val;
+            this.$router.push({
+                query: {
+                    aid: val,
+                },
+            });
+        },
         jclLink(id) {
             return `/jcl/view?id=${id}`;
         },
@@ -238,10 +289,12 @@ export default {
             return getThumbnail(val, 120, true);
         },
         loadData: function () {
+            if (!this.achieve_id) {
+                return;
+            }
             this.loading = true;
-            getTop100(this.aid, this.id)
+            getTop100(this.achieve_id, this.id)
                 .then((res) => {
-                    console.log(res);
                     this.origin_data = res.data.data || [];
                 })
                 .finally(() => {
@@ -272,6 +325,10 @@ export default {
         },
         showLeaderName: function (name) {
             return (name && name.slice(0, 12)) || "未知";
+        },
+
+        bossIcon: function (val) {
+            return PICS.bossIcon(val);
         },
     },
 };

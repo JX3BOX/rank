@@ -5,6 +5,72 @@
     color: #252328;
     min-height: 30vh;
 }
+.m-rank-boss {
+    padding: 0;
+    margin-top: 40px;
+    list-style: none;
+    .x;
+    .el-col {
+        flex-grow: 1;
+    }
+
+    .u-boss {
+        .db;
+        .pointer;
+        .bold;
+        .mb(20px);
+        .fz(16px, 50px);
+        .x;
+        position: relative;
+        background-color: #3e576d;
+        padding: 0 10px 0 50px;
+        color: #ffedc6;
+        height: 50px;
+        transition: 0.1s ease-in-out;
+        border-bottom-right-radius: 10px;
+
+        &:last-child {
+            .mr(0);
+        }
+        &:hover {
+            background-color: #5a7c99;
+            color: #ffedc6;
+        }
+        &.u-boss-is_all {
+            padding: 0 10px;
+        }
+        &.on {
+            background-color: #ffedc6;
+            color: #703100;
+        }
+    }
+    .u-boss-icon {
+        .size(50px);
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .u-boss-per {
+        .fz(12px);
+        color: #aaa;
+        .ml(5px);
+
+        &.isLess {
+            color: #49c10f;
+        }
+        &.isMore {
+            color: #fba524;
+        }
+        &.isDanger {
+            color: #fd3c1d;
+        }
+        &.isFull {
+            color: rgba(255, 255, 255, 0.49);
+        }
+    }
+}
+
 .u-sort-box {
     .pr;
     // top: 180px;
