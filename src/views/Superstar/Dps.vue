@@ -25,7 +25,19 @@
                         <img loading="lazy" src="../../assets/img/misc/null.png" width="100%" v-else />
                     </div>
                     <div class="u-team-name" :title="item.team_name">{{ item.team_name }}</div>
-                    <div class="u-team-data">上传数据名称</div>
+                    <div class="u-team-data">
+                        <div class="u-battle-jcl" v-if="item.jx3box_battle_id || item.jx3box_jcl_id">
+                            <!-- 战斗数据 -->
+                            <a :href="battleLink(item.jx3box_battle_id)" target="_blank" v-if="item.jx3box_battle_id">
+                                {{ item.battleInfo?.title || "-" }}（战斗数据）
+                            </a>
+                            <!-- JCL数据 -->
+                            <a :href="jclLink(item.jx3box_jcl_id)" target="_blank" v-if="item.jx3box_jcl_id">
+                                {{ item.jclInfo?.title || "-" }}（战斗分析JCL）
+                            </a>
+                        </div>
+                        <div v-else>暂未上传数据</div>
+                    </div>
                 </div>
             </div>
             <!-- 底部 -->
@@ -39,7 +51,7 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { cloneDeep } from "lodash";
-import { getTop100 } from "@/service/superstar.js";
+import { getTop100, getBattleOrJcl } from "@/service/superstar.js";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 export default {
@@ -70,6 +82,12 @@ export default {
     },
     mounted() {},
     methods: {
+        jclLink(id) {
+            return `/jcl/view?id=${id}`;
+        },
+        battleLink(id) {
+            return "/battle/#/combat/" + id;
+        },
         teamLogo: function (val) {
             if (!val) return "";
             return getThumbnail(val, 36, true);
@@ -78,11 +96,33 @@ export default {
             this.loading = true;
             getTop100(this.aid, this.id)
                 .then((res) => {
-                    this.origin_data = res.data.data || [];
+                    // this.origin_data = res.data.data || [];
+                    console.log(res.data.data);
+                    this.getBattleOrJcl(res.data.data || []);
                 })
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        getBattleOrJcl: function (data) {
+            let ids = [];
+
+            data.forEach((item) => {
+                if (item.jx3box_battle_id) ids.push(item.jx3box_battle_id);
+                if (item.jx3box_jcl_id) ids.push(item.jx3box_jcl_id);
+            });
+            getBattleOrJcl({ ids: ids.toString() })
+                .then((res) => {
+                    let list = res.data.data.list || [];
+                    data.forEach((item) => {
+                        list.forEach((value) => {
+                            if (item.jx3box_battle_id == value.id) item.battleInfo = value;
+                            if (item.jx3box_jcl_id == value.id) item.jclInfo = value;
+                        });
+                    });
+                    this.origin_data = data;
+                })
+                .finally(() => {});
         },
         teamLink: function (val) {
             return getLink("org", val);

@@ -25,7 +25,7 @@
                 {{ item.team_name && item.team_name.slice(0, 6) }}
             </a>
             <span class="u-teamname u-teamname-null" v-else>未知</span>
-            <span class="u-server">{{ item.server }}</span>
+            <span class="u-server">{{ item.team_server }}</span>
             <!-- <span
                 class="u-verified el-icon-success"
                 v-if="item.verified"

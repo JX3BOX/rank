@@ -36,7 +36,7 @@
                                 <img loading="lazy" src="../../assets/img/misc/null.png" width="100%" v-else />
                             </div>
                             <div class="u-team-name">{{ item.team_name && item.team_name.slice(0, 6) }}</div>
-                            <div class="u-team-serve">{{ item.server }} {{ showTime(item.created) }}</div>
+                            <div class="u-team-serve">{{ item.team_server }} {{ showTime(item.created) }}</div>
                             <div class="u-team-time">
                                 战斗用时&nbsp;:&nbsp;<span>{{ showTC(item.fight_time) }}</span>
                             </div>
@@ -101,7 +101,7 @@
                                     <img loading="lazy" src="../../assets/img/misc/null.png" width="100%" v-else />
                                 </div>
                                 <div class="u-team-name">{{ item.team_name && item.team_name.slice(0, 6) }}</div>
-                                <div class="u-team-serve">{{ item.server }}</div>
+                                <div class="u-team-serve">{{ item.team_server }}</div>
                             </div>
                         </a>
 
@@ -145,7 +145,7 @@
                             <div class="u-team-time">
                                 战斗用时&nbsp;:&nbsp;<span>{{ showTC(item.fight_time) }}</span>
                             </div>
-                            <div class="u-serve">{{ item.server }} {{ showTime(item.created) }}</div>
+                            <div class="u-serve">{{ item.team_server }} {{ showTime(item.created) }}</div>
                         </div>
                     </div>
                 </div>
