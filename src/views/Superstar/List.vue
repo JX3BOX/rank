@@ -8,7 +8,7 @@
         <el-row class="m-rank-boss m-rank-filter" :gutter="20" type="flex">
             <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
                 <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id }">
-                    <img class="u-boss-icon" :src="bossIcon(aid)" :onerror="defaultBossIcon" />
+                    <img class="u-boss-icon" :src="bossIcon(aid)" />
                     <span class="u-boss-name">{{ label }}</span>
                 </li>
             </el-col>
@@ -236,6 +236,9 @@ export default {
                 dict[item.achievement_id] = item.name;
             });
             return dict;
+        },
+        span: function () {
+            return ~~(24 / Object.keys(this.bossList).length + 1);
         },
     },
     watch: {
