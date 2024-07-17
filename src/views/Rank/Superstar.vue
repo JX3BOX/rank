@@ -81,7 +81,7 @@
                         >
                             <!-- JCL数据 -->
                             <a :href="jclLink(item.jx3box_jcl_id)" target="_blank" v-if="item.jx3box_jcl_id">
-                                <img :src="imgurl + 'rank/rank_jcl_1.png'" v-if="i < 4" />
+                                <img :src="imgurl + 'rank/rank_jcl_1.png'" v-if="i < 3" />
                                 <img :src="imgurl + 'rank/rank_jcl.png'" v-else />
                             </a>
                             <!-- 战斗数据 -->
@@ -91,7 +91,7 @@
                                 v-if="item.jx3box_battle_id"
                                 class="u-battle-btn"
                             >
-                                <img :src="imgurl + 'rank/rank_battle_1.png'" v-if="i < 4" />
+                                <img :src="imgurl + 'rank/rank_battle_1.png'" v-if="i < 3" />
                                 <img :src="imgurl + 'rank/rank_battle.png'" v-else />
                             </a>
                         </div>
