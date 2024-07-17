@@ -138,7 +138,7 @@
                             <span class="u-damage"
                                 ><span>{{ isTherapy(item.mount) ? "总治疗" : "总伤害" }}</span>
                                 <b>{{ item._total }}</b></span
-                            >
+                            ><br />
                             <span class="u-time" v-if="aid !== 'all'">
                                 <span>战斗时间</span>
                                 <b>{{ item.fight_time / 1000 }}</b
@@ -157,13 +157,34 @@
                             ></rank-item>
                             <span class="u-more" slot="reference">查看</span>
                         </el-popover> -->
+
                         <span v-if="aid !== 'all'" class="u-more" :ref="'pop' + item.role" @click="clickPop(item)"
                             >查看</span
                         >
-                        <span v-if="aid !== 'all' && item.battle_exist" class="u-misc-div">|</span>
-                        <a v-if="item.battle_exist" class="u-log" target="_blank" :href="getBattleLink(item.battleId)"
-                            >日志</a
+                        <!-- <span v-if="aid !== 'all' && item.battle_exist" class="u-misc-div">|</span> -->
+
+                        <el-dropdown
+                            size="small"
+                            class="u-more-dropdown"
+                            v-if="item.battle_exist || item.jx3box_battle_id || item.jx3box_jcl_id"
                         >
+                            <el-button type="text" class="u-btn-more">
+                                更多<i class="el-icon-arrow-down el-icon--right"></i>
+                            </el-button>
+                            <el-dropdown-menu slot="dropdown" class="u-more-dropdown-item">
+                                <el-dropdown-item v-if="item.battle_exist">
+                                    <a class="u-log" target="_blank" :href="getBattleLink(item.battleId)">日志</a>
+                                </el-dropdown-item>
+                                <el-dropdown-item v-if="item.jx3box_battle_id">
+                                    <!-- 战斗数据 -->
+                                    <a :href="battleLink(item.jx3box_battle_id)" target="_blank">战斗数据</a>
+                                </el-dropdown-item>
+                                <el-dropdown-item v-if="item.jx3box_jcl_id">
+                                    <!-- JCL数据 -->
+                                    <a :href="jclLink(item.jx3box_jcl_id)" target="_blank">战斗分析</a>
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
                     </el-col>
                 </el-row>
             </template>
@@ -313,6 +334,12 @@ export default {
         },
     },
     methods: {
+        jclLink(id) {
+            return `/jcl/view?id=${id}`;
+        },
+        battleLink(id) {
+            return "/battle/#/combat/" + id;
+        },
         // 路由
         changeMount: function (val) {
             this.mount = val;

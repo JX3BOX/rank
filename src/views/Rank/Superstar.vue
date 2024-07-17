@@ -74,6 +74,27 @@
                                 </div>
                             </el-col>
                         </el-row>
+                        <div
+                            class="u-battle-jcl"
+                            :class="['is-btn-No' + (i + 1), i > 2 ? 'is_other' : '']"
+                            v-if="item.jx3box_battle_id || item.jx3box_jcl_id"
+                        >
+                            <!-- JCL数据 -->
+                            <a :href="jclLink(item.jx3box_jcl_id)" target="_blank" v-if="item.jx3box_jcl_id">
+                                <img :src="imgurl + 'rank/rank_jcl_1.png'" v-if="i < 4" />
+                                <img :src="imgurl + 'rank/rank_jcl.png'" v-else />
+                            </a>
+                            <!-- 战斗数据 -->
+                            <a
+                                :href="battleLink(item.jx3box_battle_id)"
+                                target="_blank"
+                                v-if="item.jx3box_battle_id"
+                                class="u-battle-btn"
+                            >
+                                <img :src="imgurl + 'rank/rank_battle_1.png'" v-if="i < 4" />
+                                <img :src="imgurl + 'rank/rank_battle.png'" v-else />
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -95,6 +116,7 @@ export default {
     props: [],
     data: function () {
         return {
+            imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
             superstar_title_img: __imgPath + "image/rank/common/superstar.png",
             loading: false,
             origin_data: [],
@@ -138,6 +160,12 @@ export default {
         },
     },
     methods: {
+        jclLink(id) {
+            return `/jcl/view?id=${id}`;
+        },
+        battleLink(id) {
+            return "/battle/#/combat/" + id;
+        },
         getRankImg: function (num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";
         },
