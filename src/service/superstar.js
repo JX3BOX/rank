@@ -1,5 +1,5 @@
-import { $team } from "@jx3box/jx3box-common/js/https.js";
-
+import { $team, $https } from "@jx3box/jx3box-common/js/https.js";
+import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
 function getTop100(aid, event_id) {
     return $team().get(`/api/team/race/achieve/${aid}/top100`, {
         params: {
@@ -14,4 +14,7 @@ function getBattleOrJcl(params) {
         params,
     });
 }
-export { getTop100, getBattleOrJcl };
+function getDps(id) {
+    return $https().get(__dataPath + `superstar/superstar_${id}.json`);
+}
+export { getTop100, getBattleOrJcl, getDps };
