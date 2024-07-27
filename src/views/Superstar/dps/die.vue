@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-07-22 02:43:39
  * @LastEditors: zhusha
- * @LastEditTime: 2024-07-27 13:14:42
+ * @LastEditTime: 2024-07-27 13:16:00
  * @Description: 死亡数据统计
  * 
  * Copyright (c) 2024 by zhusha, email: no email, All Rights Reserved. 
@@ -70,12 +70,12 @@ export default {
                     formatter: "{a} <br/>{b} : {c} ({d}%)",
                 },
 
-                legend: {
-                    type: "plain",
-                    orient: "horizontal",
-                    data: legend,
-                    icon: "circle",
-                },
+                // legend: {
+                //     type: "plain",
+                //     orient: "horizontal",
+                //     data: legend,
+                //     icon: "circle",
+                // },
 
                 series: [
                     {
