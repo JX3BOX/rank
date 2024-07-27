@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-07-22 02:43:39
  * @LastEditors: zhusha
- * @LastEditTime: 2024-07-27 03:58:15
+ * @LastEditTime: 2024-07-27 13:14:42
  * @Description: 死亡数据统计
  * 
  * Copyright (c) 2024 by zhusha, email: no email, All Rights Reserved. 
@@ -65,40 +65,14 @@ export default {
                 legend.push(item.team);
             });
             let options = {
-                // tooltip: {
-                //     show: true,
-                //     trigger: "item",
-                //     confine: true,
-                //     formatter: "{a} <br/>{b} : {c} ({d}%)",
-                // },
                 tooltip: {
                     trigger: "item",
-                    color: "#fff",
-                    backgroundColor: "rgba(0,0,0,.5)", // 自定义背景颜色
-                    fontSize: 14,
-                    borderColor: "rgba(255, 255, 255, .16)", // 自定义边框颜色
-                    textStyle: {
-                        color: "#fff", // 自定义文字颜色
-                        fontSize: 14, // 自定义文字大小
-                    },
-                    axisPointer: {
-                        lineStyle: {
-                            color: "rgba(28, 124, 196, .6)",
-                        },
-                    },
-                    //             // 自定义内容
-                    //             formatter: (params) => {
-                    //                 return `
-                    // 	<div>${params[0].name}</div>
-                    // 	<div>${params[0].marker}重量：<span style="color: #09ffd2;font-weight: bold;">${params[0].data}</span> kg</div>
-                    // `;
-                    //             },
+                    formatter: "{a} <br/>{b} : {c} ({d}%)",
                 },
 
                 legend: {
                     type: "plain",
                     orient: "horizontal",
-
                     data: legend,
                     icon: "circle",
                 },

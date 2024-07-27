@@ -102,7 +102,6 @@ export default {
                     }
                 }
             });
-            console.log(res);
             this.data = res;
         },
         jclLink(id) {

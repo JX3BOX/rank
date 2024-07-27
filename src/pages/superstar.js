@@ -17,7 +17,7 @@ reporter.install(Vue);
 import ECharts from "vue-echarts"; //
 import "echarts/lib/chart/pie";
 import "echarts/lib/component/legend";
-import "echarts/lib/component/title";
+import "echarts/lib/component/tooltip";
 Vue.component("v-chart", ECharts);
 // 数据与路由
 import router from "@/router/superstar";

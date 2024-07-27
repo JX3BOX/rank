@@ -13,7 +13,7 @@ const Introduce = () => import("@/views/Superstar/Introduce.vue");
 const SignUp = () => import("@/views/Superstar/SignUp.vue");
 const List = () => import("@/views/Superstar/List.vue");
 const Video = () => import("@/views/Superstar/Video.vue");
-const Dps = () => import("@/views/Superstar/Dps.vue");
+const Dps = () => import("@/views/Superstar/Dps_v2.vue");
 
 const routes = [
     { name: "nav", path: "/", component: Nav },
