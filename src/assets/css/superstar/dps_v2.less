@@ -11,12 +11,27 @@
         .flex;
         justify-content: space-between;
         .u-boss-item {
-            .size(200px);
+            .size(220px);
+            padding: 10px;
+            box-sizing: border-box;
             background-image: url("@{superstar}dps/buttom.png");
             background-repeat: no-repeat;
-            background-size: 100%;
+            background-size: 200px;
+            background-position: center;
             .x;
             cursor: pointer;
+            &.on,
+            &:hover {
+                padding: 0;
+                background-image: url("@{superstar}dps/buttom-active.png");
+                background-size: 100%;
+                .u-boss-name {
+                    color: #f5cba4;
+                }
+                .u-boss-icon {
+                    .mt(39px);
+                }
+            }
             .u-boss-icon {
                 border-radius: 50%;
                 .mt(29px);
@@ -24,9 +39,6 @@
             .u-boss-name {
                 color: #f6f6f6;
                 .mt(14px);
-                &.on {
-                    color: #f5cba4;
-                }
             }
         }
     }
@@ -171,13 +183,19 @@
                 background: #25232880;
             }
         }
+        .u-center-green,
+        .u-center-white {
+            .u-team-info_bg {
+                .h(450px);
+            }
+        }
         .u-top-green,
         .u-bottom-green,
         .u-bottom-white,
         .u-top-white {
             .h(60px);
             background-repeat: no-repeat;
-            background-size: 100%;
+            background-size: 100% 100%;
         }
         .u-top-green {
             background-image: url("@{superstar}dps/green1.png");
@@ -215,13 +233,11 @@
                 .flex;
                 flex-direction: column;
                 .x;
-                min-height: 400px;
-
                 .u-team-logo {
                     .size(160px);
                     margin: 59px auto 0 auto;
                     &.xf {
-                        background: #d9d9d9;
+                        // background: #d9d9d9;
                         .flex;
                         align-items: center;
                         justify-content: center;
@@ -229,6 +245,12 @@
                 }
                 .u-team-member {
                     padding: 0 20px;
+                    .u-player-name {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        .w(100%);
+                    }
                     .u-team-info_item {
                         .flex;
                         align-items: center;
@@ -263,10 +285,15 @@
                     }
                 }
                 .u-team-btn {
-                    .flex;
-                    justify-content: space-between;
+                    .db;
+                    .x;
                     padding: 20px;
+                    &.two {
+                        .flex;
+                        justify-content: space-between;
+                    }
                     .u-jcl-battle-link {
+                        .dbi;
                         .w(100px);
                     }
                 }
@@ -332,33 +359,13 @@
                         align-items: center;
                         padding: 0 4px;
                         .w(521px);
+                        min-width: 198px;
                         span {
                             .fz(14px);
                         }
-                        &.u-name-1 {
-                            .w(198px);
-                        }
-                        &.u-name-2 {
-                            .w(218px);
-                        }
-                        &.u-name-3 {
-                            .w(238px);
-                        }
-                        &.u-name-4 {
-                            .w(269px);
-                        }
-                        &.u-name-5 {
-                            .w(332px);
-                        }
-                        &.u-name-6 {
-                            .w(375px);
-                        }
-                        &.u-name-7 {
-                            .w(473px);
-                        }
-                        &.u-name-8 {
-                            .w(521px);
-                        }
+                    }
+                    .u-number {
+                        .ml(6px);
                     }
                 }
             }

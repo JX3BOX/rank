@@ -8,20 +8,21 @@
             element-loading-background="rgba(0, 0, 0, 0.3)"
         >
             <div class="m-superstar-boss">
-                <div class="u-boss-item" v-for="(label, aid) of bossList" :key="aid" @click="changeBoss(aid)">
+                <div
+                    class="u-boss-item"
+                    v-for="(label, aid) of bossList"
+                    :key="aid"
+                    @click="changeBoss(aid)"
+                    :class="{ on: aid == achieve_id }"
+                >
                     <img class="u-boss-icon" :src="bossIcon(aid)" />
-                    <div
-                        class="u-boss-name"
-                        :class="{ on: aid == achieve_id }"
-                        v-html="label?.replace(/&/g, '<br/>') || '-'"
-                    ></div>
+                    <div class="u-boss-name" v-html="label?.replace(/&/g, '<br/>') || '-'"></div>
                 </div>
             </div>
             <div class="m-superstar-dps-null" v-if="!origin_data || origin_data.length == 0">
                 <i class="el-icon-warning-outline"></i> 暂时还没有任何记录
             </div>
             <div v-else>
-                <el-icon><Switch /></el-icon>
                 <item :origin_data="origin_data" title="团队通关速度"></item>
 
                 <die :data="death"></die>
@@ -49,6 +50,7 @@
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getTop100, getDps } from "@/service/superstar.js";
+import { getEvents } from "@/service/event.js";
 import PICS from "@/assets/js/pics.js";
 import item from "./dps/item.vue";
 import xfItem from "./dps/xfItem.vue";
@@ -149,10 +151,22 @@ export default {
                 });
         },
         getData() {
-            getDps(3).then((data) => {
-                let res = data.data;
-                this.dataBak = res;
-                this.dataInit();
+            getEvents(this.params).then((res) => {
+                let arr = [],
+                    data = res.data.data.list;
+                data.forEach((item) => {
+                    if (item.superstar != 0) arr.push(item);
+                });
+
+                let id = this.id;
+                let index = arr.reverse().findIndex((item) => {
+                    return item.ID == id;
+                });
+                getDps(index + 1).then((data) => {
+                    let res = data.data;
+                    this.dataBak = res;
+                    this.dataInit();
+                });
             });
         },
         //json数据初始化

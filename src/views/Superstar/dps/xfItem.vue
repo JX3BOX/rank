@@ -28,9 +28,13 @@
                             <el-image :src="showMount(item.xfId)" fit="fill"></el-image>
                         </div>
                         <div class="u-line"></div>
-                        <div class="u-name" :class="'u-name-' + (i + 1)">
+                        <div
+                            class="u-name"
+                            :style="{ background: showMountColor(item.xfId), width: getBarWidth(item.dps) }"
+                        >
                             {{ item.forceName }}
                         </div>
+                        <div class="u-number">{{ item.dps || 0 }}</div>
                     </div>
                 </div>
             </div>
@@ -40,11 +44,13 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink, showMountIcon } from "@jx3box/jx3box-common/js/utils";
-
+import { orderBy } from "lodash";
+import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
+import xfmap from "@jx3box/jx3box-data/data/xf/xfid.json";
 export default {
     components: {},
     props: {
@@ -102,7 +108,8 @@ export default {
                     }
                 }
             });
-            this.data = res;
+            this.data = orderBy(res, ["dps"], ["desc"]);
+            console.log(this.data);
         },
         jclLink(id) {
             return `/jcl/view?id=${id}`;
@@ -113,6 +120,18 @@ export default {
         showMount: function (mount) {
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";
             return mountIcon;
+        },
+        showMountSvg: function (mount) {
+            let mountIcon = __cdn + "design/vector/mount/" + mount + ".svg";
+            return mountIcon;
+        },
+        showMountColor: function (val) {
+            let xfname = xfmap[val] || "通用";
+            return colors_by_mount_name[xfname] || "#fff";
+        },
+        getBarWidth(dps) {
+            let max = this.data[0].dps;
+            return (dps / max).toFixed(4) * 750 + "px";
         },
         teamLogo: function (val, size = 40) {
             if (!val) return "";

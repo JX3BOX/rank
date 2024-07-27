@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-07-22 02:43:39
  * @LastEditors: zhusha
- * @LastEditTime: 2024-07-27 13:16:00
+ * @LastEditTime: 2024-07-28 01:52:24
  * @Description: 死亡数据统计
  * 
  * Copyright (c) 2024 by zhusha, email: no email, All Rights Reserved. 
@@ -85,7 +85,10 @@ export default {
                         radius: "80%",
                         label: {
                             normal: {
-                                show: false,
+                                position: "inner", // 文本位置
+                                show: true,
+                                formatter: "{b}: {c} ({d}%)",
+                                minShowLabelPercent: 1, // 最小显示的百分比为1%
                             },
                         },
                         labelLine: {

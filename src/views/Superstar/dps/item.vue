@@ -25,7 +25,11 @@
                     :style="{ 'min-height': data.length > 9 ? 9 : data.length * 50 + 12 + 'px' }"
                 >
                     <div class="u-team-logo xf" v-if="type == 2">
-                        <el-image :src="showMount(clearanceSpeedItem.xfId)" fit="fill"></el-image>
+                        <el-image
+                            :src="showMountSvg(clearanceSpeedItem.xfId)"
+                            fit="fill"
+                            v-if="clearanceSpeedItem.xfId"
+                        ></el-image>
                     </div>
                     <div class="u-team-logo" v-else>
                         <el-image
@@ -36,7 +40,7 @@
                         <img loading="lazy" src="../../../assets/img/misc/null.png" width="100%" v-else />
                     </div>
                     <div class="u-team-member" v-if="type == 2">
-                        <span>{{ clearanceSpeedItem.playerName }}</span>
+                        <div class="u-player-name">{{ clearanceSpeedItem.playerName }}</div>
                         <div class="u-team-info_item">
                             <span>所属团队：</span>
                             <el-image
@@ -52,10 +56,18 @@
                     <div class="u-team-server">
                         {{ clearanceSpeedItem.team_server }} {{ showTime(clearanceSpeedItem.created) }}
                     </div>
-                    <div class="u-team-time">
+                    <div class="u-team-time" v-if="type">
+                        {{ options[active]?.name || "-" }}&nbsp;:&nbsp;<span>{{
+                            type == 2 ? clearanceSpeedItem.dps : clearanceSpeedItem[options[active]?.key] || 0
+                        }}</span>
+                    </div>
+                    <div class="u-team-time" v-else>
                         战斗用时&nbsp;:&nbsp;<span>{{ showTC(clearanceSpeedItem.fight_time) }}</span>
                     </div>
-                    <div class="u-team-btn">
+                    <div
+                        class="u-team-btn"
+                        :class="{ two: clearanceSpeedItem.jx3box_jcl_id && clearanceSpeedItem.jx3box_battle_id }"
+                    >
                         <a
                             :href="jclLink(clearanceSpeedItem.jx3box_jcl_id)"
                             target="_blank"
@@ -95,10 +107,16 @@
                         >
                             <div class="u-sort">{{ i + 1 }}</div>
                             <div class="u-logo">
-                                <el-image :src="showMount(clearanceSpeedItem.xfId)" fit="fill"></el-image>
+                                <el-image :src="showMount(item.xfId)" fit="fill"></el-image>
                             </div>
                             <div class="u-line"></div>
-                            <div class="u-name" :class="'u-name-' + (i + 1)">{{ item.playerName }}</div>
+                            <div
+                                class="u-name"
+                                :style="{ background: showMountColor(i), width: getBarWidth(item.dps) }"
+                            >
+                                {{ item.playerName }}
+                            </div>
+                            <div class="u-number">{{ item.dps || 0 }}</div>
                         </div>
                     </div>
                     <div v-else>
@@ -118,9 +136,16 @@
                                 <img loading="lazy" src="../../../assets/img/misc/null.png" width="100%" v-else />
                             </div>
                             <div class="u-line"></div>
-                            <div class="u-name" :class="'u-name-' + (i + 1)">
+                            <div
+                                class="u-name"
+                                :style="{
+                                    background: showMountColor(i),
+                                    width: getBarWidth(item[options[active]?.key], i),
+                                }"
+                            >
                                 {{ item.team_name }}<span>@{{ item.team_server }}</span>
                             </div>
+                            <div class="u-number">{{ item[options[active]?.key] || showTC(item.fight_time) }}</div>
                         </div>
                     </div>
                 </div>
@@ -131,11 +156,12 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
-import { options } from "less";
+import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
+import { orderBy } from "lodash";
 
 export default {
     components: {},
@@ -200,8 +226,7 @@ export default {
         init() {
             if (this.type == 1 || this.type == 2) {
                 //团队数据
-
-                let arr = [];
+                let filterArr = [];
                 this.origin_data[this.active].forEach((item) => {
                     let xfid = 0;
                     if (this.type == 2) {
@@ -213,7 +238,7 @@ export default {
                         }
                     }
 
-                    arr.push(
+                    filterArr.push(
                         Object.assign(
                             {
                                 team_name: item.team,
@@ -227,6 +252,14 @@ export default {
                         )
                     );
                 });
+                let arr = [];
+                if (this.type == 2) {
+                    arr = orderBy(filterArr, ["dps"], ["desc"]);
+                } else {
+                    let key = this.options[this.active].key;
+                    arr = orderBy(filterArr, [key], ["desc"]);
+                }
+
                 this.clearanceSpeedItem = arr[0];
                 this.clearanceSpeedActive = this.type == 2 ? arr[0].playerName : arr[0].ID;
                 this.data = arr;
@@ -250,6 +283,60 @@ export default {
         showMount: function (mount) {
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";
             return mountIcon;
+        },
+        showMountSvg: function (mount) {
+            let mountIcon = __cdn + "design/vector/mount/" + mount + ".svg";
+            return mountIcon;
+        },
+        showMountColor: function (index) {
+            let colors = [
+                "#c3c5c1",
+                "#FF7DAD",
+                "#ffadcb",
+                "#BA9BE4",
+                "#d8c4ff",
+                "#4B9BFB",
+                "#7db8ff",
+                "#6DDFE2",
+                "#78f0f3",
+                "#EC4B2C",
+                "#d43618",
+                "#E6BC31",
+                "#b58f12",
+                "#f16040",
+                "#c55036",
+                "#6568ad",
+                "#4f5186",
+                "#37C0E2",
+                "#48d6f9",
+                "#90CC50",
+                "#a2e05f",
+                "#FDDD70",
+                "#FDDD70",
+                "#D6A16F",
+                "#8D90D8",
+                "#94C7DC",
+                "#872F37",
+                "#b9c1ff",
+                "#16708a",
+                "#39bf9b",
+                "#6bb7f2",
+                "#ffde7b",
+            ];
+            if (index > colors.length) {
+                // 获取下一个颜色的索引，如果超出数组长度，则从头开始
+                const nextIndex = (index + 1) % colors.length;
+                return colors[nextIndex];
+            } else {
+                return colors[index];
+            }
+        },
+        getBarWidth(dps, i) {
+            let max = this.type ? (this.type == 2 ? this.data[0].dps : this.data[0][this.options[this.active].key]) : 0;
+            if (max == 0) {
+                return 521 - i * 20 + "px";
+            }
+            return (dps / max).toFixed(4) * 520 + "px";
         },
         showTime: function (val) {
             return showTime(new Date(val * 1000));
