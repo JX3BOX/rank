@@ -2,7 +2,7 @@
  * @Author: zhusha 
  * @Date: 2024-07-22 02:43:39
  * @LastEditors: zhusha
- * @LastEditTime: 2024-07-28 01:52:24
+ * @LastEditTime: 2024-07-29 10:41:17
  * @Description: 死亡数据统计
  * 
  * Copyright (c) 2024 by zhusha, email: no email, All Rights Reserved. 
@@ -67,7 +67,7 @@ export default {
             let options = {
                 tooltip: {
                     trigger: "item",
-                    formatter: "{a} <br/>{b} : {c} ({d}%)",
+                    formatter: "{a} <br/>{b} : {c}",
                 },
 
                 // legend: {
@@ -87,7 +87,7 @@ export default {
                             normal: {
                                 position: "inner", // 文本位置
                                 show: true,
-                                formatter: "{b}: {c} ({d}%)",
+                                formatter: "{b}: {c}",
                                 minShowLabelPercent: 1, // 最小显示的百分比为1%
                             },
                         },
