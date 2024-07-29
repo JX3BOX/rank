@@ -166,7 +166,6 @@ export default {
                     aid: val,
                 },
             });
-            this.dataInit();
         },
 
         loadData: function () {
@@ -204,15 +203,27 @@ export default {
         },
         //json数据初始化
         dataInit() {
+            console.log("d", this.achieve_id);
             let data = this.dataBak;
             let key = this.bossList[this.achieve_id];
             let res = data[key.indexOf("&") == -1 ? key : key.split("&")[0]];
             this.death = res?.death?.sortByTeam || [];
-            for (let i = 0; i < this.options.length; i++) {
-                this.sortByTeam.push(res[this.options[i].key]?.sortByTeam || []);
-                this.sortByForce.push(res[this.options[i].key]?.sortByForce || []);
-                this.sortByPlayer.push(res[this.options[i].key]?.sortByPlayer || []);
-            }
+            let sortByTeam = [],
+                sortByForce = [],
+                sortByPlayer = [];
+            this.options.forEach((item) => {
+                sortByTeam.push(res[item.key]?.sortByTeam || []);
+                sortByForce.push(res[item.key]?.sortByForce || []);
+                sortByPlayer.push(res[item.key]?.sortByPlayer || []);
+            });
+            this.sortByTeam = sortByTeam;
+            this.sortByForce = sortByForce;
+            this.sortByPlayer = sortByPlayer;
+            // for (let i = 0; i < this.options.length; i++) {
+            //     this.sortByTeam.push(res[this.options[i].key]?.sortByTeam || []);
+            //     this.sortByForce.push(res[this.options[i].key]?.sortByForce || []);
+            //     this.sortByPlayer.push(res[this.options[i].key]?.sortByPlayer || []);
+            // }
         },
     },
 };
