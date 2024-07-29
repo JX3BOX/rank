@@ -1,5 +1,19 @@
 <template>
     <div class="m-superstar-box">
+        <!-- 侧栏固定boss -->
+        <transition name="fade">
+            <div class="m-superstar-boss-fixed" v-show="showBossFixed" :style="{ top: bossFixedTop + 'px' }">
+                <div
+                    class="u-boss-item"
+                    v-for="(label, aid) of bossList"
+                    :key="aid"
+                    @click="changeBoss(aid)"
+                    :class="{ on: aid == achieve_id }"
+                >
+                    <img class="u-boss-icon" :src="bossIcon(aid)" />
+                </div>
+            </div>
+        </transition>
         <div
             class="m-superstar-dps"
             v-loading="loading"
@@ -22,7 +36,7 @@
             <div class="m-superstar-dps-null" v-if="!origin_data || origin_data.length == 0">
                 <i class="el-icon-warning-outline"></i> 暂时还没有任何记录
             </div>
-            <div v-else>
+            <div v-else ref="main">
                 <item :origin_data="origin_data" title="团队通关速度"></item>
 
                 <die :data="death"></die>
@@ -75,6 +89,8 @@ export default {
             sortByTeam: [],
             sortByForce: [],
             sortByPlayer: [],
+            showBossFixed: false,
+            bossFixedTop: 0,
         };
     },
     computed: {
@@ -121,8 +137,25 @@ export default {
             },
         },
     },
+    created() {
+        window.addEventListener("scroll", this.handleScroll);
+    },
     mounted() {},
     methods: {
+        handleScroll() {
+            this.$nextTick(() => {
+                // let top = this.$refs.main?.offsetTop || 0;
+                // let height = document.body.clientHeight;
+                let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+                if (scrollTop > 1100) {
+                    this.showBossFixed = true;
+                    this.bossFixedTop = scrollTop - (Object.keys(this.bossList).length * 90 + 200);
+                } else {
+                    this.showBossFixed = false;
+                }
+            });
+        },
         bossIcon: function (val) {
             return PICS.bossIcon(val);
         },

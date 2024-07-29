@@ -110,7 +110,7 @@
                             <div class="u-line"></div>
                             <div
                                 class="u-name"
-                                :style="{ background: showMountColor(i), width: getBarWidth(item.dps) }"
+                                :style="{ background: showMountColor(i, item), width: getBarWidth(item.dps) }"
                             >
                                 {{ item.playerName }}
                             </div>
@@ -137,7 +137,7 @@
                             <div
                                 class="u-name"
                                 :style="{
-                                    background: showMountColor(i),
+                                    background: showMountColor(i, item),
                                     width: getBarWidth(item[options[active]?.key], i),
                                 }"
                             >
@@ -159,8 +159,8 @@ import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
-import { orderBy } from "lodash";
-
+import { orderBy, cloneDeep } from "lodash";
+import xfmap from "@jx3box/jx3box-data/data/xf/xfid.json";
 export default {
     components: {},
     props: {
@@ -262,9 +262,10 @@ export default {
                 this.clearanceSpeedActive = this.type == 2 ? arr[0].playerName : arr[0].ID;
                 this.data = arr;
             } else {
-                this.clearanceSpeedItem = this.origin_data[0];
-                this.clearanceSpeedActive = this.origin_data[0].ID;
-                this.data = this.origin_data;
+                let arr = orderBy(this.origin_data, ["fight_time"], ["aes"]);
+                this.clearanceSpeedItem = arr[0];
+                this.clearanceSpeedActive = arr[0].ID;
+                this.data = arr;
             }
         },
         jclLink(id) {
@@ -286,53 +287,58 @@ export default {
             let mountIcon = __cdn + "design/vector/mount/" + mount + ".svg";
             return mountIcon;
         },
-        showMountColor: function (index) {
-            let colors = [
-                "#c3c5c1",
-                "#FF7DAD",
-                "#ffadcb",
-                "#BA9BE4",
-                "#d8c4ff",
-                "#4B9BFB",
-                "#7db8ff",
-                "#6DDFE2",
-                "#78f0f3",
-                "#EC4B2C",
-                "#d43618",
-                "#E6BC31",
-                "#b58f12",
-                "#f16040",
-                "#c55036",
-                "#6568ad",
-                "#4f5186",
-                "#37C0E2",
-                "#48d6f9",
-                "#90CC50",
-                "#a2e05f",
-                "#FDDD70",
-                "#FDDD70",
-                "#D6A16F",
-                "#8D90D8",
-                "#94C7DC",
-                "#872F37",
-                "#b9c1ff",
-                "#16708a",
-                "#39bf9b",
-                "#6bb7f2",
-                "#ffde7b",
-            ];
-            if (index > colors.length) {
-                // 获取下一个颜色的索引，如果超出数组长度，则从头开始
-                const nextIndex = (index + 1) % colors.length;
-                return colors[nextIndex];
+        showMountColor: function (index, item) {
+            if (this.type != 2) {
+                let colors = [
+                    "#c3c5c1",
+                    "#FF7DAD",
+                    "#ffadcb",
+                    "#BA9BE4",
+                    "#d8c4ff",
+                    "#4B9BFB",
+                    "#7db8ff",
+                    "#6DDFE2",
+                    "#78f0f3",
+                    "#EC4B2C",
+                    "#d43618",
+                    "#E6BC31",
+                    "#b58f12",
+                    "#f16040",
+                    "#c55036",
+                    "#6568ad",
+                    "#4f5186",
+                    "#37C0E2",
+                    "#48d6f9",
+                    "#90CC50",
+                    "#a2e05f",
+                    "#FDDD70",
+                    "#FDDD70",
+                    "#D6A16F",
+                    "#8D90D8",
+                    "#94C7DC",
+                    "#872F37",
+                    "#b9c1ff",
+                    "#16708a",
+                    "#39bf9b",
+                    "#6bb7f2",
+                    "#ffde7b",
+                ];
+                if (index > colors.length) {
+                    // 获取下一个颜色的索引，如果超出数组长度，则从头开始
+                    const nextIndex = (index + 1) % colors.length;
+                    return colors[nextIndex];
+                } else {
+                    return colors[index];
+                }
             } else {
-                return colors[index];
+                let xfname = xfmap[item.xfId] || "通用";
+                return colors_by_mount_name[xfname] || "#fff";
             }
         },
         getBarWidth(dps, i) {
             let max = this.type ? (this.type == 2 ? this.data[0].dps : this.data[0][this.options[this.active].key]) : 0;
             if (max == 0) {
-                return 521 - i * 20 + "px";
+                return 198 + i * 30 + "px";
             }
             return (dps / max).toFixed(4) * 520 + "px";
         },

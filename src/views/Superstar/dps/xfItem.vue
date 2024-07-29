@@ -109,7 +109,6 @@ export default {
                 }
             });
             this.data = orderBy(res, ["dps"], ["desc"]);
-            console.log(this.data);
         },
         jclLink(id) {
             return `/jcl/view?id=${id}`;

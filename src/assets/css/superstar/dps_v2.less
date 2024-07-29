@@ -4,7 +4,48 @@
     color: #252328;
     min-height: 30vh;
 }
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 1s;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
+
 .m-superstar-box {
+    .pr;
+    // 侧栏浏览器定位boss切换
+    .m-superstar-boss-fixed {
+        .w(90px);
+        .pa;
+        left: -130px;
+        top: 20px;
+        background: #252328;
+        box-shadow: 0px 0px 10px 0px #252328;
+        .flex;
+        flex-direction: column;
+        .x;
+        padding: 10px;
+        box-sizing: border-box;
+        .u-boss-item {
+            .mb(10px);
+            .w(70px);
+            padding: 10px;
+            box-sizing: border-box;
+
+            img {
+                .w(50px);
+            }
+            &:last-child {
+                .mb(0);
+            }
+            &.on {
+                border: 2px dotted #f5cba4cc;
+            }
+        }
+    }
     padding: 60px 0;
     .m-superstar-boss {
         .w(1200px);
