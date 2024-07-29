@@ -20,10 +20,8 @@
         <div class="m-team-box" :class="' u-superstar-' + color">
             <div :class="'u-top-' + color"><div class="u-team-info_bg"></div></div>
             <div class="u-team-box_item" :class="'u-center-' + color">
-                <div
-                    class="u-team-info_bg u-team-info"
-                    :style="{ 'min-height': data.length > 9 ? 9 : data.length * 50 + 12 + 'px' }"
-                >
+                <!-- :style="{ 'min-height': data.length > 9 ? 9 : data.length * 52 + 'px' }" -->
+                <div class="u-team-info_bg u-team-info">
                     <div class="u-team-logo xf" v-if="type == 2">
                         <el-image
                             :src="showMountSvg(clearanceSpeedItem.xfId)"
@@ -89,7 +87,7 @@
                 <!-- 排行 -->
                 <div
                     :class="{
-                        scroll: data.length > 9,
+                        scroll: data.length > 8,
                         'u-team-rank_left': site == 'left',
                         'u-team-rank_right': site == 'right',
                     }"
