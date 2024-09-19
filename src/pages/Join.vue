@@ -12,10 +12,22 @@
                     <div class="m-join m-join-team">
                         <h1 class="m-join-title">报名入口</h1>
                         <div class="m-join-notice" v-html="notice"></div>
-                        <el-form class="m-join-form" ref="form" :model="form" label-width="80px" v-if="!loading && !status">
+                        <el-form
+                            class="m-join-form"
+                            ref="form"
+                            :model="form"
+                            label-width="80px"
+                            v-if="!loading && !status"
+                        >
                             <el-form-item label="报名活动">
                                 <el-select v-model="form.event_id" placeholder="请选择活动">
-                                    <el-option v-for="event in events" :key="event.ID" :label="event.name" :value="event.ID"> </el-option>
+                                    <el-option
+                                        v-for="event in events"
+                                        :key="event.ID"
+                                        :label="event.name"
+                                        :value="event.ID"
+                                    >
+                                    </el-option>
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="选择团队">
@@ -28,7 +40,9 @@
                                         >
                                     </el-option>
                                 </el-select>
-                                <div class="u-tip" v-if="!teams || !teams.length">还没有团队？<a href="/team" target="_blank">创建团队</a></div>
+                                <div class="u-tip" v-if="!teams || !teams.length">
+                                    还没有团队？<a href="/team" target="_blank">创建团队</a>
+                                </div>
                             </el-form-item>
                             <el-form-item label="参赛宣言">
                                 <el-input
@@ -40,11 +54,15 @@
                             </el-form-item>
                             <div class="u-btns">
                                 <!--                                <div class="u-warning" v-show="status"><i class="el-icon-warning-outline"></i>当前活动你名下的【{{joined_team_name}}】已报名，无需重复报名。</div>-->
-                                <el-button class="u-btn" type="primary" @click="submit" :disabled="!ready">报名</el-button>
+                                <el-button class="u-btn" type="primary" @click="submit" :disabled="!ready"
+                                    >报名</el-button
+                                >
                             </div>
                         </el-form>
                         <div class="m-join m-join-done" v-if="status">
-                            <h1 class="u-title" :class="statusText[audit_status].class">{{ statusText[audit_status].name }}</h1>
+                            <h1 class="u-title" :class="statusText[audit_status].class">
+                                {{ statusText[audit_status].name }}
+                            </h1>
                             <div>
                                 <p>
                                     活动：<strong>{{ result.event.name }}</strong>
@@ -57,7 +75,9 @@
                     </div>
 
                     <div class="u-footer">
-                        <a href="/notice/32280" target="_blank"><i class="el-icon-info"></i> <b>点击查看百强活动细则</b></a>
+                        <a href="/notice/32280" target="_blank"
+                            ><i class="el-icon-info"></i> <b>点击查看百强活动细则</b></a
+                        >
                     </div>
                 </div>
                 <div class="m-rank-content m-rank-null" v-else>
@@ -67,6 +87,8 @@
             </div>
         </div>
         <Footer></Footer>
+
+        <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
     </div>
 </template>
 
@@ -78,6 +100,10 @@ import { joinEvent, hasJoined } from "@/service/join.js";
 import { getMyTeams } from "@/service/team.js";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
+import { getUserInfo } from "@/service/awards";
+
+import BindWxMp from "@/components/misc/bind_wx_mp.vue";
+
 export default {
     name: "App",
     props: [],
@@ -112,6 +138,10 @@ export default {
             },
             processing: false, //按钮提交锁定
             notice: "",
+
+            // 用户信息
+            profile: null,
+            showBindWxMp: false,
         };
     },
     computed: {
@@ -132,9 +162,25 @@ export default {
             }
             return team_name;
         },
+        isWechatVerified() {
+            return !!this.profile?.wechat_mp_openid;
+        },
     },
     methods: {
         submit: function () {
+            // 如果未绑定微信公众号，提示绑定
+            if (!this.isWechatVerified) {
+                this.$alert("请先绑定微信公众号，再进行报名", "消息", {
+                    confirmButtonText: "去绑定",
+                    callback: (action) => {
+                        if (action == "confirm") {
+                            this.showBindWxMp = true;
+                        }
+                    },
+                });
+                return;
+            }
+
             this.$alert("报名后资料将不可再更改，更多咨询请联系认证团长Q群【1048059072】", "消息", {
                 confirmButtonText: "确定",
                 callback: (action) => {
@@ -207,9 +253,22 @@ export default {
             });
         },
         init: function () {
+            this.loadUser();
             this.loadEvents();
             this.loadTeams();
             this.loadNotice();
+        },
+
+        loadUser() {
+            if (!this.isLogin) {
+                return;
+            }
+            getUserInfo().then((res) => {
+                this.profile = res.data.data;
+            });
+        },
+        onBindWxMpUpdate() {
+            this.loadUser();
         },
     },
     watch: {
@@ -220,7 +279,9 @@ export default {
     created: function () {
         this.isLogin && this.init();
     },
-    components: {},
+    components: {
+        BindWxMp
+    },
 };
 </script>
 
