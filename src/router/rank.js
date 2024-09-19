@@ -18,14 +18,12 @@ const Stat = () => import("../views/Rank/Stat.vue");
 const Superstar = () => import("../views/Rank/Superstar.vue");
 const Awards = () => import("../views/Rank/Awards.vue");
 const Index = () => import("../views/Rank/Index.vue");
-const Join = () => import("../views/Rank/Join.vue");
 
 Vue.use(VueRouter);
 
 const routes = [
     // 当前活动进程，开赛后修改为Rank
     { name: "index", path: "/", component: Index },
-    { name: "join", path: "/join", component: Join },
     {
         name: "detail",
         path: "/:id",

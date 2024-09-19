@@ -3,7 +3,7 @@
     <div class="m-rank-info">
         <TimeLine :html="times" v-if="times" />
         <div class="m-rank-btns">
-            <a class="u-btn u-btn-join" :href="href" target="_blank" rel="noopener"></a>
+            <a class="u-btn u-btn-join" href="../join/" target="_blank" rel="noopener"></a>
             <!-- <a class="u-btn u-btn-lucky" href="/fb" target="_blank" rel="noopener">副本开荒攻略</a> -->
         </div>
         <div class="m-rank-txt" v-html="desc"></div>
@@ -42,13 +42,6 @@ export default {
                 )
                 .join("");
         },
-        href() {
-            const path = this.$router.resolve({
-                name: 'join',
-            });
-
-            return path.href;
-        }
     },
     methods: {
         timeShaftChange(type) {
