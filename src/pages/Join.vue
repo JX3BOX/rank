@@ -14,29 +14,23 @@
                         <div class="m-join-notice" v-html="notice"></div>
                         <el-form class="m-join-form" ref="form" :model="form" label-width="80px" v-if="!loading && !status">
                             <el-form-item label="报名活动">
-                                <el-select v-model="form.event_id" placeholder="请选择活动">
-                                    <el-option v-for="event in events" :key="event.ID" :label="event.name" :value="event.ID"> </el-option>
+                                <el-select v-model="form.event_id" placeholder="请选择活动" no-data-text="暂无活动">
+                                    <el-option v-for="event in events" :key="event.ID" :label="event.name" :value="event.ID">
+                                    </el-option>
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="选择团队">
                                 <el-select v-model="form.team_id" placeholder="请选择团队" @change="updateTeam">
-                                    <el-option v-for="team in teams" :key="team.ID" :label="team.name" :value="team.ID"
-                                        ><span class="m-join-team-item"
-                                            ><b class="u-team-name">{{ team.name }}</b
-                                            ><span class="u-team-id">(ID:{{ team.ID }})</span
-                                            ><span class="u-team-server">{{ team.server }}</span></span
-                                        >
+                                    <el-option v-for="team in teams" :key="team.ID" :label="team.name" :value="team.ID"><span class="m-join-team-item"><b class="u-team-name">{{
+                                                team.name }}</b><span class="u-team-id">(ID:{{ team.ID }})</span><span class="u-team-server">{{ team.server }}</span></span>
                                     </el-option>
                                 </el-select>
-                                <div class="u-tip" v-if="!teams || !teams.length">还没有团队？<a href="/team" target="_blank">创建团队</a></div>
+                                <div class="u-tip" v-if="!teams || !teams.length">
+                                    还没有团队？<a href="/team" target="_blank">创建团队</a>
+                                </div>
                             </el-form-item>
                             <el-form-item label="参赛宣言">
-                                <el-input
-                                    v-model="form.slogan"
-                                    placeholder="为您的团队打CALL,将显示在游戏内"
-                                    :maxlength="20"
-                                    show-word-limit
-                                ></el-input>
+                                <el-input v-model="form.slogan" placeholder="为您的团队打CALL,将显示在游戏内" :maxlength="20" show-word-limit></el-input>
                             </el-form-item>
                             <div class="u-btns">
                                 <!--                                <div class="u-warning" v-show="status"><i class="el-icon-warning-outline"></i>当前活动你名下的【{{joined_team_name}}】已报名，无需重复报名。</div>-->
@@ -44,7 +38,9 @@
                             </div>
                         </el-form>
                         <div class="m-join m-join-done" v-if="status">
-                            <h1 class="u-title" :class="statusText[audit_status].class">{{ statusText[audit_status].name }}</h1>
+                            <h1 class="u-title" :class="statusText[audit_status].class">
+                                {{ statusText[audit_status].name }}
+                            </h1>
                             <div>
                                 <p>
                                     活动：<strong>{{ result.event.name }}</strong>
@@ -67,6 +63,8 @@
             </div>
         </div>
         <Footer></Footer>
+
+        <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
     </div>
 </template>
 
@@ -78,6 +76,10 @@ import { joinEvent, hasJoined } from "@/service/join.js";
 import { getMyTeams } from "@/service/team.js";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
+import { getUserInfo } from "@/service/awards";
+
+import BindWxMp from "@/components/misc/bind_wx_mp.vue";
+
 export default {
     name: "App",
     props: [],
@@ -91,7 +93,7 @@ export default {
             },
             events: [],
             teams: [],
-            loading: true, //loading加载中先隐藏表单
+            loading: false, //loading加载中先隐藏表单
             status: false, //是否已经报名
             audit_status: 0, //审核状态
             statusText: [
@@ -112,6 +114,10 @@ export default {
             },
             processing: false, //按钮提交锁定
             notice: "",
+
+            // 用户信息
+            profile: null,
+            showBindWxMp: false,
         };
     },
     computed: {
@@ -132,9 +138,25 @@ export default {
             }
             return team_name;
         },
+        isWechatVerified() {
+            return !!this.profile?.wechat_mp_openid;
+        },
     },
     methods: {
         submit: function () {
+            // 如果未绑定微信公众号，提示绑定
+            if (!this.isWechatVerified) {
+                this.$alert("请先绑定微信公众号，再进行报名", "消息", {
+                    confirmButtonText: "去绑定",
+                    callback: (action) => {
+                        if (action == "confirm") {
+                            this.showBindWxMp = true;
+                        }
+                    },
+                });
+                return;
+            }
+
             this.$alert("报名后资料将不可再更改，更多咨询请联系认证团长Q群【1048059072】", "消息", {
                 confirmButtonText: "确定",
                 callback: (action) => {
@@ -171,7 +193,7 @@ export default {
                 status: 1,
             }).then((res) => {
                 this.events = res.data.data.list || [];
-                this.form.event_id = this.events[0].ID || this.event_id;
+                this.form.event_id = this.events[0]?.ID || this.event_id;
                 this.$forceUpdate();
             });
         },
@@ -184,19 +206,20 @@ export default {
             });
         },
         checkJoin: function () {
-            this.form.event_id &&
-                hasJoined(this.form.event_id).then((res) => {
-                    this.result = res.data.data;
-                    if (res.data.data.hasJoined) {
-                        this.audit_status = res.data.data.eventRecord.status;
-                        if (this.audit_status != 2) {
-                            this.status = true;
-                            this.joined_team_name = res.data.data.eventRecord.name;
-                            this.$forceUpdate();
-                        }
+            if (!this.form.event_id) return
+            this.loading = true;
+            hasJoined(this.form.event_id).then((res) => {
+                this.result = res.data.data;
+                if (res.data.data.hasJoined) {
+                    this.audit_status = res.data.data.eventRecord.status;
+                    if (this.audit_status != 2) {
+                        this.status = true;
+                        this.joined_team_name = res.data.data.eventRecord.name;
+                        this.$forceUpdate();
                     }
-                    this.loading = false;
-                });
+                }
+                this.loading = false;
+            });
         },
         goLogin: function () {
             User.toLogin();
@@ -207,9 +230,22 @@ export default {
             });
         },
         init: function () {
+            this.loadUser();
             this.loadEvents();
             this.loadTeams();
             this.loadNotice();
+        },
+
+        loadUser() {
+            if (!this.isLogin) {
+                return;
+            }
+            getUserInfo().then((res) => {
+                this.profile = res.data.data;
+            });
+        },
+        onBindWxMpUpdate() {
+            this.loadUser();
         },
     },
     watch: {
@@ -220,10 +256,12 @@ export default {
     created: function () {
         this.isLogin && this.init();
     },
-    components: {},
+    components: {
+        BindWxMp
+    },
 };
 </script>
 
 <style lang="less">
-@import "../assets/css/join.less";
+@import "~@/assets/css/join.less";
 </style>
