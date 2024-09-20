@@ -22,7 +22,8 @@ export default {
             return this.$store.state.id;
         },
         key: function () {
-            return this.$route.matched[0]?.name;
+            // return this.$route.matched[0]?.name;
+            return this.$route.name;
         },
         visible_blocks: function () {
             let enabled_blocks = (this.data && this.data.blocks) || [];
