@@ -5,6 +5,7 @@
         width="30%"
         custom-class="m-notice-wechat__dialog"
         :before-close="handleClose"
+        append-to-body
     >
         <div class="m-wechat-content" v-loading="loading">
             <el-image class="u-qr" v-if="ticket" :src="qrcodeValue" lazy>

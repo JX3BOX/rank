@@ -27,7 +27,7 @@ const routes = [
     {
         name: "detail",
         path: "/:id",
-        redirect: { name: "info" },
+        redirect: { name: "rank" },
         component: () => import("@/layouts/RankLayout.vue"),
         children: [
             { name: "info", path: "/:id/info", component: Info },

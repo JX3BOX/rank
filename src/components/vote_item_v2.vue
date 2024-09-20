@@ -32,27 +32,36 @@
                     v-if="!hasVoted(item)"
                     class="u-vote"
                     :class="{ disabled: item.clicked || !event_status || !canVote || voteTeam.length }"
-                    :disabled="item.clicked || !event_status || !canVote"
                     @click="vote(item)"
-                ></button>
+                    ></button>
+                    <!-- :disabled="item.clicked || !event_status || !canVote" -->
                 <div v-else>已投票</div>
             </td>
         </tr>
+        <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
     </tbody>
 </template>
 
 <script>
-import { __imgPath, default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, default_avatar, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 import { moment } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink, authorLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { doVote } from "@/service/vote.js";
+import { getUserInfo } from "@/service/awards";
+import BindWxMp from "@/components/misc/bind_wx_mp.vue";
 export default {
     name: "voteItemV2",
     props: ["data", "team_name", "server", "voteTeam"],
+    components: {
+        BindWxMp,
+    },
     data: function () {
         return {
             isLogin: User.isLogin(),
+
+            profile: null,
+            showBindWxMp: false,
         };
     },
     computed: {
@@ -80,6 +89,12 @@ export default {
         canVote: function () {
             return moment().isBefore(moment(this.vote_end));
         },
+        isWechatVerified() {
+            return !!this.profile?.wechat_mp_openid;
+        },
+    },
+    mounted() {
+        this.loadUser();
     },
     methods: {
         isMatched: function (item) {
@@ -96,24 +111,38 @@ export default {
                 User.toLogin();
                 return;
             }
-            // doVote(this.id, ~~item.team_id).then((res) => {
-            //     this.$message({
-            //         message: "感谢您的参与，投票成功！",
-            //         type: "success",
-            //         duration: 1000,
-            //     });
 
-            //     item.clicked = true;
-            //     item.count = ~~item.count + 1;
-            //     this.$forceUpdate();
-            // });
-            if (this.voteTeam.length) return;
-            const src = `${__imgPath}image/rank/vote/${this.id}.png`;
-            this.$alert(`<img src="${src}" alt="" />`, "打开微信扫码投票", {
-                showConfirmButton: false,
-                dangerouslyUseHTMLString: true,
-                center: true,
+            // 如果未绑定微信公众号，提示绑定
+            if (!this.isWechatVerified) {
+                this.$alert("请先绑定微信公众号，再进行投票", "消息", {
+                    confirmButtonText: "去绑定",
+                    callback: (action) => {
+                        if (action == "confirm") {
+                            this.showBindWxMp = true;
+                        }
+                    },
+                });
+                return;
+            }
+
+            doVote(this.id, ~~item.team_id).then((res) => {
+                this.$message({
+                    message: "感谢您的参与，投票成功！",
+                    type: "success",
+                    duration: 1000,
+                });
+
+                item.clicked = true;
+                item.count = ~~item.count + 1;
+                this.$forceUpdate();
             });
+            // if (this.voteTeam.length) return;
+            // const src = `${__imgPath}image/rank/vote/${this.id}.png`;
+            // this.$alert(`<img src="${src}" alt="" />`, "打开微信扫码投票", {
+            //     showConfirmButton: false,
+            //     dangerouslyUseHTMLString: true,
+            //     center: true,
+            // });
         },
         hasVoted: function (item) {
             return this.voteTeam.includes(String(item.team_id));
@@ -125,6 +154,17 @@ export default {
             return getLink("org", val);
         },
         authorLink,
+        loadUser() {
+            if (!this.isLogin) {
+                return;
+            }
+            getUserInfo().then((res) => {
+                this.profile = res.data.data;
+            });
+        },
+        onBindWxMpUpdate() {
+            this.loadUser();
+        },
     },
 };
 </script>

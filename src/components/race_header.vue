@@ -60,7 +60,10 @@
         <race-tab :data="data" />
 
         <!-- 公众号二维码 -->
-        <!-- <img class="u-wechat-qrcode" :src="qrcode_img_url" /> -->
+        <!-- <img  :src="qrcode_img_url" /> -->
+        <div class="u-wechat-qrcode">
+            <QrcodeVue class="u-qrcode" :value="value" :size="80" level="H"></QrcodeVue>
+        </div>
     </div>
 </template>
 
@@ -68,6 +71,7 @@
 import PICS from "@/assets/js/pics.js";
 import tabs from "./race_tab.vue";
 import { __imgPath, __ossMirror } from "@jx3box/jx3box-common/data/jx3box.json";
+import QrcodeVue from 'qrcode.vue'
 export default {
     props: ["data"],
     data: function() {
@@ -94,6 +98,9 @@ export default {
                 return true
             }
             return false
+        },
+        value() {
+            return "https://www.jx3box.com/rank/race/#/" + this.id + "/rank";
         }
     },
     filters: {},
@@ -105,6 +112,7 @@ export default {
     mounted: function() {},
     components: {
         "race-tab": tabs,
+        QrcodeVue
     },
 };
 </script>
