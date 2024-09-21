@@ -8,8 +8,12 @@ VueRouter.prototype.push = function push(to) {
 };
 
 const Index = () => import("@/views/Surprise/Index.vue");
+const Single = () => import("@/views/Surprise/Single.vue");
 
-const routes = [{ name: "index", path: "/", component: Index }];
+const routes = [
+    { name: "index", path: "/", component: Index },
+    { name: "single", path: "/:id", component: Single },
+];
 
 const router = new VueRouter({
     // mode: "history",

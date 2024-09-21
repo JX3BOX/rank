@@ -26,5 +26,9 @@ function checkApply(params) {
         params,
     });
 }
-
-export { getApplyRecord, postApplyRecord, getApply, getEvents, checkApply };
+function getMyManageTeams(params) {
+    return $team().get("/api/team/my-manage-teams", {
+        params: params,
+    });
+}
+export { getApplyRecord, postApplyRecord, getApply, getEvents, checkApply, getMyManageTeams };

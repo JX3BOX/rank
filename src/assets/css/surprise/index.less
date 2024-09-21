@@ -5,12 +5,11 @@
     background-size: contain;
     background-position: top center;
     overflow: auto;
-
-    .m-box {
-        min-height: 100vh;
-        padding-bottom: 40px;
-        background-color: rgba(59, 79, 95, 0.7);
-    }
+}
+.m-surprise {
+    min-height: 100vh;
+    padding-bottom: 40px;
+    background-color: rgba(26, 34, 41, 0.75);
     .m-weal {
         .w(1280px);
         margin: 0 auto;
@@ -18,7 +17,7 @@
         box-sizing: border-box;
         .u-img-bottom {
             .h(4px);
-
+            .mb(30px);
             background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
         }
         .u-content {
@@ -28,11 +27,11 @@
             flex-wrap: wrap;
         }
         .u-item {
-            .mt(40px);
+            .mt(10px);
             .size(304px,256px);
             padding: 12px 12px 24px 12px;
             box-sizing: border-box;
-            background: linear-gradient(to bottom, #667b8d, #21394c);
+            background: linear-gradient(180deg, rgba(61, 81, 98, 0.75) 15.44%, rgba(26, 34, 41, 0.75) 100%);
             border-top: 4px solid #ffedc6;
             cursor: pointer;
             .u-info {
@@ -40,6 +39,7 @@
                     .mt(6px);
                     color: #f7e6c2;
                     .fz(15px,20px);
+                    .bold(700);
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
