@@ -24,18 +24,6 @@ module.exports = {
             template: "public/superstar.html",
             filename: "superstar/index.html",
         },
-        surprise: {
-            title: "剑三福利申请 - JX3BOX",
-            entry: "src/pages/surprise.js",
-            template: "public/surprise.html",
-            filename: "surprise/index.html",
-        },
-        join: {
-            title: "报名入口 - 剑三秘境百强榜 - JX3BOX",
-            entry: "src/pages/join.js",
-            template: "public/subpath.html",
-            filename: "join/index.html",
-        },
     },
 
     //❤️ Porxy ~

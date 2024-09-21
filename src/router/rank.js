@@ -17,13 +17,19 @@ const Lucky = () => import("../views/Rank/Lucky.vue");
 const Stat = () => import("../views/Rank/Stat.vue");
 const Superstar = () => import("../views/Rank/Superstar.vue");
 const Awards = () => import("../views/Rank/Awards.vue");
+const Join = () => import("../views/Rank/Join.vue");
 const Index = () => import("../views/Rank/Index.vue");
+const SurpriseList = () => import("@/views/Rank/SurpriseList.vue");
+const SurpriseSingle = () => import("@/views/Rank/SurpriseSingle.vue");
 
 Vue.use(VueRouter);
 
 const routes = [
     // 当前活动进程，开赛后修改为Rank
     { name: "index", path: "/", component: Index },
+    { name: "join", path: "/join", component: Join },
+    { name: "surprise-list", path: "/surprise", component: SurpriseList },
+    { name: "surprise-single", path: "/surprise/:id", component: SurpriseSingle },
     {
         name: "detail",
         path: "/:id",
@@ -42,8 +48,6 @@ const routes = [
             { name: "awards", path: "/:id/awards", component: Awards },
         ],
     },
-    // { name: "seven", path: "/seven", component: Seven },
-    // { name: "welcome", path: "/welcome", component: Welcome },
 ];
 
 const router = new VueRouter({
