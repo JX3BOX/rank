@@ -24,7 +24,7 @@ module.exports = {
             template: "public/superstar.html",
             filename: "superstar/index.html",
         },
-        superstar: {
+        surprise: {
             title: "剑三福利申请 - JX3BOX",
             entry: "src/pages/surprise.js",
             template: "public/surprise.html",
