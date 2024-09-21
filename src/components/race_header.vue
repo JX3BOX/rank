@@ -62,7 +62,7 @@
         <!-- 公众号二维码 -->
         <!-- <img  :src="qrcode_img_url" /> -->
         <div class="u-wechat-qrcode">
-            <QrcodeVue class="u-qrcode" :value="value" :size="80" level="H"></QrcodeVue>
+            <QrcodeVue class="u-qrcode" :value="value" :size="84" level="H"></QrcodeVue>
         </div>
     </div>
 </template>

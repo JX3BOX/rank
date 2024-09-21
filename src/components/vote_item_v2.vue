@@ -31,10 +31,10 @@
                 <button
                     v-if="!hasVoted(item)"
                     class="u-vote"
-                    :class="{ disabled: item.clicked || !event_status || !canVote || voteTeam.length }"
+                    :class="{ disabled: item.clicked || !event_status || !canVote || voteTeam.length > voteLimit }"
                     @click="vote(item)"
+                    :disabled="item.clicked || !event_status || !canVote"
                     ></button>
-                    <!-- :disabled="item.clicked || !event_status || !canVote" -->
                 <div v-else>已投票</div>
             </td>
         </tr>
@@ -50,6 +50,7 @@ import User from "@jx3box/jx3box-common/js/user.js";
 import { doVote } from "@/service/vote.js";
 import { getUserInfo } from "@/service/awards";
 import BindWxMp from "@/components/misc/bind_wx_mp.vue";
+import { getConfig } from "@jx3box/jx3box-common/js/api_misc"
 export default {
     name: "voteItemV2",
     props: ["data", "team_name", "server", "voteTeam"],
@@ -62,6 +63,8 @@ export default {
 
             profile: null,
             showBindWxMp: false,
+
+            voteLimit: 0,
         };
     },
     computed: {
@@ -94,6 +97,7 @@ export default {
         },
     },
     mounted() {
+        this.getVoteLimit();
         this.loadUser();
     },
     methods: {
@@ -165,6 +169,12 @@ export default {
         onBindWxMpUpdate() {
             this.loadUser();
         },
+        // 获取投票上限
+        getVoteLimit() {
+            getConfig({key: "rank_vote_limit"}).then((res) => {
+                this.voteLimit = ~~res.data.data.val;
+            });
+        }
     },
 };
 </script>
