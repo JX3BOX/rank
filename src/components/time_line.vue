@@ -123,7 +123,7 @@ export default {
                 const liElements = list.querySelectorAll("li");
                 for (let i = 0; i < liElements.length; i++) {
                     if (-this.listLeft >= liElements[i].offsetLeft && -this.listLeft <= liElements[i + 1].offsetLeft) {
-                        this.currentIndex = i;
+                        this.currentIndex = i + 1;
                         // 如果需要左侧保持不裁剪，增加下面代码
                         // this.listLeft = -liElements[i].offsetLeft;
                     }
