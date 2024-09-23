@@ -1,5 +1,6 @@
 <template>
     <div class="m-single">
+        <Header></Header>
         <div class="m-kv">
             <img src="../../assets/img/surprise/weal.svg" alt="" />
             <div class="u-img-bottom"></div>
@@ -108,6 +109,7 @@
                     </div> </el-col
             ></el-row>
         </div>
+        <Footer></Footer>
     </div>
 </template>
 <script>

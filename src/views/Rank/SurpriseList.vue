@@ -1,5 +1,6 @@
 <template>
     <div class="m-surprise">
+        <Header></Header>
         <div class="m-weal">
             <img src="../../assets/img/surprise/weal.svg" alt="" />
             <div class="u-img-bottom"></div>
@@ -24,6 +25,7 @@
                 </div>
             </div>
         </div>
+        <Footer></Footer>
     </div>
 </template>
 
@@ -50,7 +52,7 @@ export default {
         showTime: showDate,
         gotoApply({ id }) {
             let routeUrl = this.$router.resolve({
-                name: "single",
+                name: "surprise-single",
                 params: { id },
             });
             window.open(routeUrl.href, "_blank");

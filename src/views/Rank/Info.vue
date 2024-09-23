@@ -5,6 +5,7 @@
         <div class="m-rank-btns">
             <a class="u-btn u-btn-join" href="/rank/#/join" target="_blank" rel="noopener"></a>
             <!-- <a class="u-btn u-btn-lucky" href="/fb" target="_blank" rel="noopener">副本开荒攻略</a> -->
+            <a class="u-btn u-btn-weal" href="/rank/#/surprise" target="_blank" rel="noopener"></a>
         </div>
         <div class="m-rank-txt" v-html="desc"></div>
     </div>
@@ -59,5 +60,10 @@ export default {
 @import "~@/assets/css/race_info.less";
 .m-rank-info .w-time-line-box h2 {
     margin: 0;
+}
+.m-rank-btns {
+    .flex;
+    flex-direction: column;
+    .flex(o);
 }
 </style>

@@ -1,19 +1,25 @@
-.p-surprise {
-    min-height: 100vh;
-    background-image: url(../../img/surprise/kv.png);
+#m-rank-star {
+    display: none;
+}
+body {
+    background: none;
+}
+.m-surprise {
+    // min-height: 100vh;
+    // background-image: url(../../img/surprise/kv.png);
+    background-image: linear-gradient(to bottom, rgba(26, 34, 41, 0), rgba(26, 34, 41, 0.75)),
+        url(../../img/surprise/kv.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: top center;
-    overflow: auto;
-}
-.m-surprise {
-    min-height: 100vh;
-    padding-bottom: 40px;
-    background-color: rgba(26, 34, 41, 0.75);
+
+    // background: linear-gradient(to bottom, rgba(26, 34, 41, 0), rgba(26, 34, 41, 0.75));
+
     .m-weal {
         .w(1280px);
         margin: 0 auto;
         padding-top: 164px;
+        padding-bottom: 40px;
         box-sizing: border-box;
         .u-img-bottom {
             .h(4px);
@@ -23,12 +29,12 @@
         .u-content {
             .flex;
             // justify-content: space-between;
-            gap: 20px;
+            gap: 60px;
             flex-wrap: wrap;
         }
         .u-item {
             .mt(10px);
-            .size(304px,256px);
+            .size(360px,286px);
             padding: 12px 12px 24px 12px;
             box-sizing: border-box;
             background: linear-gradient(180deg, rgba(61, 81, 98, 0.75) 15.44%, rgba(26, 34, 41, 0.75) 100%);
@@ -53,7 +59,7 @@
                     .fz(12px,18px);
                     color: #62798b;
                     display: -webkit-box;
-                    -webkit-line-clamp: 3;
+                    -webkit-line-clamp: 4;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
                     text-overflow: ellipsis;
