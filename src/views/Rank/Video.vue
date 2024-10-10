@@ -60,7 +60,10 @@
                 >
                 </el-pagination>
             </template>
-            <el-alert v-else class="m-archive-null" title="没有找到相关条目" type="info" center show-icon> </el-alert>
+            <div class="m-rank-top100-null" v-else>
+                <img :src="`${imgPath}image/rank/common/null.png`" class="m-rank-null" />
+            </div>
+            <!-- <el-alert v-else class="m-archive-null" title="没有找到相22关条目" type="info" center show-icon> </el-alert> -->
         </div>
         <el-dialog
             class="m-rank-video-dialog"
@@ -137,6 +140,7 @@ export default {
                 title: "",
                 url: "",
             },
+            imgPath: __imgPath,
         };
     },
     computed: {

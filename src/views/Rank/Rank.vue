@@ -35,7 +35,9 @@
             </div>
 
             <!-- B.列表为空 -->
-            <div class="m-rank-top100-null" v-else><i class="el-icon-warning-outline"></i> 暂时还没有任何记录</div>
+            <div class="m-rank-top100-null" v-else>
+                <img :src="`${imgPath}image/rank/common/null.png`" class="m-rank-null" />
+            </div>
         </div>
     </div>
 </template>
@@ -64,6 +66,7 @@ export default {
 
             total: "",
             origin_data: [],
+            imgPath: __imgPath,
             // origin_data: [],
             // local_data: [], //指定区服数据
         };
@@ -117,9 +120,9 @@ export default {
                 achieve_id: ~~this.achieve_id,
             };
         },
-        defaultBossIcon:function (e){
-            return `this.src='${this.bossIcon('0')}';this.onerror=null`
-        }
+        defaultBossIcon: function (e) {
+            return `this.src='${this.bossIcon("0")}';this.onerror=null`;
+        },
     },
     methods: {
         changeBoss: function (val) {
@@ -142,8 +145,8 @@ export default {
             getTop100(this.params, this.id)
                 .then((res) => {
                     this.origin_data = res.data.data || [];
-                    if (this.server == '跨服') {
-                        this.origin_data = this.origin_data.filter((item) => item.leader?.includes('·'));
+                    if (this.server == "跨服") {
+                        this.origin_data = this.origin_data.filter((item) => item.leader?.includes("·"));
                     } else {
                         this.origin_data = Object.freeze(this.origin_data);
                     }
@@ -170,7 +173,7 @@ export default {
             //     return "isFull";
             // }
         },
-        bossIcon: function(val) {
+        bossIcon: function (val) {
             return PICS.bossIcon(val);
         },
     },

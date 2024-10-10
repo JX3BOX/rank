@@ -1,5 +1,5 @@
 <template>
-    <div class="m-rank-container" ref="appRef" :class="[id_cls, win_env, 'm-rank-bg-' + id]">
+    <div class="m-rank-container" ref="appRef" :class="[id_cls, win_env, 'm-rank-bg-' + id]" :style="Bg">
         <Header></Header>
 
         <!-- <race-bg :class="'m-rank-bg-' + id"></race-bg> -->
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-// import race_bg from "@/components/race_bg.vue";
+import PICS from "@/assets/js/pics.js";
 import race_header from "@/components/race_header.vue";
 import { getEvent } from "@/service/event.js";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
@@ -66,6 +66,9 @@ export default {
         id_cls: function () {
             return "m-rank-event-" + this.id;
         },
+        Bg(){ 
+            return `background-image: url(${PICS.bg(this.id)})`;
+        }
     },
     methods: {
         init: function () {

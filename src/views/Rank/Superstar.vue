@@ -99,7 +99,9 @@
                 </div>
 
                 <!-- B.列表为空 -->
-                <div class="m-rank-top100-null" v-else><i class="el-icon-warning-outline"></i> 暂时还没有任何记录</div>
+                <div class="m-rank-top100-null" v-else>
+                    <img :src="`${imgPath}image/rank/common/null.png`" class="m-rank-null" />
+                </div>
             </div>
         </div>
     </div>
@@ -120,6 +122,7 @@ export default {
             superstar_title_img: __imgPath + "image/rank/common/superstar.png",
             loading: false,
             origin_data: [],
+            imgPath: __imgPath,
         };
     },
     computed: {

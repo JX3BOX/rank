@@ -29,7 +29,7 @@
             </ul>
         </div>
         <!-- 数据列表 -->
-        <div class="m-rank-dps-list">
+        <div class="m-rank-dps-list" v-if="list.length">
             <el-row class="u-item u-head" :gutter="20">
                 <el-col :span="1"><div class="u-ranking">排名</div></el-col>
                 <el-col :span="2">
@@ -189,6 +189,9 @@
                 </el-row>
             </template>
         </div>
+        <div class="m-rank-top100-null" v-else>
+            <img :src="`${imgPath}image/rank/common/null.png`" class="m-rank-null" />
+        </div>
         <el-popover
             v-if="showPop"
             ref="pop"
@@ -242,6 +245,7 @@ export default {
             showPop: false,
             reference: {},
             popItem: {},
+            imgPath: __imgPath,
         };
     },
     computed: {
