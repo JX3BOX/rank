@@ -73,6 +73,7 @@ export default {
     methods: {
         init: function () {
             getEvent(this.id).then((res) => {
+                console.log(res)
                 this.data = res.data.data;
                 this.$store.state.achieves = res.data.data.boss_map;
                 this.$store.state.race = res.data.data;

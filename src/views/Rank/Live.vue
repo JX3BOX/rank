@@ -2,7 +2,7 @@
     <!-- 视频直播 -->
     <div class="m-rank-video" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.3)">
         <div class="m-rank-video-title">
-            <img :src="video_title_img" />
+            <img :src="video_title_img" class="u-title-img" />
             <div class="u-extend">
                 <el-select class="u-server" v-model="server" placeholder="请选择服务器" size="mini">
                     <el-option key="all" label="全部" value=""></el-option>
@@ -92,7 +92,7 @@ export default {
     props: [],
     data: function() {
         return {
-            video_title_img: __imgPath + "image/rank/common/lives.png",
+            video_title_img: __imgPath + "image/rank/common/lives.png?123",
             data: [],
             per: 24,
             page: 1,
