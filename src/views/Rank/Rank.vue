@@ -30,8 +30,8 @@
 
         <div class="m-rank-top100">
             <!-- A.列表不为空 -->
-            <div class="m-rank-top100-list" v-if="data && data.length">
-                <rank-item v-for="(item, i) in data" :key="i" :i="i" :item="item"></rank-item>
+            <div class="m-rank-top100-list" v-if="data && data.length" :class="{ 'not-last': !isLastBoss }">
+                <rank-item v-for="(item, i) in data" :key="i" :i="i" :item="item" :isLastBoss="isLastBoss"></rank-item>
             </div>
 
             <!-- B.列表为空 -->
@@ -47,7 +47,7 @@ import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 // import achieves from "@/assets/data/achieve.json";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import _ from "lodash";
-import { getTop100, getTopTotal } from "@/service/race.js";
+import { getTop100, getTopTotal, getEventNewbie } from "@/service/race.js";
 import PICS from "@/assets/js/pics.js";
 import rank_item from "@/components/rank_item.vue";
 
@@ -67,8 +67,11 @@ export default {
             total: "",
             origin_data: [],
             imgPath: __imgPath,
-            // origin_data: [],
-            // local_data: [], //指定区服数据
+
+            newbie: {
+                keep_10: [],
+                youngster_list: [],
+            },
         };
     },
     computed: {
@@ -123,6 +126,10 @@ export default {
         defaultBossIcon: function (e) {
             return `this.src='${this.bossIcon("0")}';this.onerror=null`;
         },
+        // 是否为关底boss
+        isLastBoss: function () {
+            return this.achieve_id == this.achieves[this.achieves.length - 1].achievement_id;
+        },
     },
     methods: {
         changeBoss: function (val) {
@@ -143,8 +150,26 @@ export default {
             }
             this.loading = true;
             getTop100(this.params, this.id)
-                .then((res) => {
+                .then(async (res) => {
                     this.origin_data = res.data.data || [];
+
+                    if (this.isLastBoss) {
+                        const newbieRes = await getEventNewbie(this.id, { _no_cache: 1 });
+                        const keep_10 = newbieRes.data.data.keep_10?.map((item) => item.ID) || [];
+                        const youngster_list = newbieRes.data.data.youngster_list?.map((item) => item.ID) || [];
+
+                        this.origin_data.forEach((item) => {
+                            this.$set(item, "is_newbie", false);
+                            this.$set(item, "is_youngster", false);
+                            if (keep_10.includes(item.team_id)) {
+                                item.is_newbie = true;
+                            }
+                            if (youngster_list.includes(item.team_id)) {
+                                item.is_youngster = true;
+                            }
+                        });
+                    }
+
                     if (this.server == "跨服") {
                         this.origin_data = this.origin_data.filter((item) => item.leader?.includes("·"));
                     } else {
@@ -175,6 +200,11 @@ export default {
         },
         bossIcon: function (val) {
             return PICS.bossIcon(val);
+        },
+        loadNewbie: function () {
+            getEventNewbie(this.id, { _no_cache: 1 }).then((res) => {
+                this.newbie = res.data.data;
+            });
         },
     },
     watch: {

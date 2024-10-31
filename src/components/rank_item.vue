@@ -26,13 +26,10 @@
             </a>
             <span class="u-teamname u-teamname-null" v-else>未知</span>
             <span class="u-server">{{ item.team_server }}</span>
-            <!-- <span
-                class="u-verified el-icon-success"
-                v-if="item.verified"
-            ></span>
-            <span class="u-not-verified el-icon-warning" v-else>
-                公示期</span
-            >-->
+            <div class="u-youngster" v-if="i > 2 && isLastBoss">
+                <img v-if="item.is_newbie" class="u-chanlian" src="../assets/img/rank/chanlian.webp" alt="">
+                <img v-if="item.is_youngster" class="u-heima" src="../assets/img/rank/heima.webp" alt="">
+            </div>
         </div>
         <!-- 时间 -->
         <div class="u-time" @click="copy(showTime(item.created))">
@@ -41,6 +38,10 @@
                 <b>{{ showTC(item.fight_time) }}</b>
             </span>
             <span class="u-time-finish">{{ showTime(item.created) }}</span>
+        </div>
+        <div class="u-youngster" v-if="i < 3 && isLastBoss">
+            <img v-if="item.is_newbie" class="u-chanlian" src="../assets/img/rank/chanlian.webp" alt="">
+            <img v-if="item.is_youngster" class="u-heima" src="../assets/img/rank/heima.webp" alt="">
         </div>
         <!-- 队长 -->
         <div class="u-leader" v-if="item.leaders">
@@ -84,6 +85,10 @@ export default {
         span: {
             type: Number,
             default: 4,
+        },
+        isLastBoss: {
+            type: Boolean,
+            default: false,
         },
     },
     data() {

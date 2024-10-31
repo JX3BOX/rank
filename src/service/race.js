@@ -30,9 +30,23 @@ function getMixRank(params){
     })
 }
 
+/**
+ * 获取百强团队新秀
+ * @param {number} event_id 活动id
+ * @param {*} params
+ * @param {*} params._no_cache 是否缓存
+ */
+function getEventNewbie(event_id, params) {
+    return $team().get(`/api/team/race/events/${event_id}/youngster`, {
+        params: params,
+    });
+}
+
+
 export {
     getTop100,
     getTopTotal,
     getMountDpsRace,
     getMixRank,
+    getEventNewbie
 };
