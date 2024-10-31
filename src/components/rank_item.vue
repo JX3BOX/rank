@@ -26,10 +26,10 @@
             </a>
             <span class="u-teamname u-teamname-null" v-else>未知</span>
             <span class="u-server">{{ item.team_server }}</span>
-            <div class="u-youngster" v-if="i > 2 && isLastBoss">
+            <span class="u-youngster" v-if="i > 2 && isLastBoss">
                 <img v-if="item.is_newbie" class="u-chanlian" src="../assets/img/rank/chanlian.webp" alt="">
                 <img v-if="item.is_youngster" class="u-heima" src="../assets/img/rank/heima.webp" alt="">
-            </div>
+            </span>
         </div>
         <!-- 时间 -->
         <div class="u-time" @click="copy(showTime(item.created))">
