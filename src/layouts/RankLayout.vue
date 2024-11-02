@@ -44,7 +44,7 @@ import race_header from "@/components/race_header.vue";
 import { getEvent } from "@/service/event.js";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
-    name: "App",
+    name: "RankLayout",
     props: [],
     data: function () {
         return {
@@ -66,14 +66,13 @@ export default {
         id_cls: function () {
             return "m-rank-event-" + this.id;
         },
-        Bg(){ 
+        Bg(){
             return `background-image: url(${PICS.bg(this.id)})`;
         }
     },
     methods: {
         init: function () {
             getEvent(this.id).then((res) => {
-                console.log(res)
                 this.data = res.data.data;
                 this.$store.state.achieves = res.data.data.boss_map;
                 this.$store.state.race = res.data.data;

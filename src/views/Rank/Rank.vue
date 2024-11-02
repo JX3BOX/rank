@@ -78,6 +78,9 @@ export default {
         id: function () {
             return this.$store.state.id;
         },
+        race: function () {
+            return this.$store.state.race;
+        },
         achieves: function () {
             return this.$store.state.achieves || [];
         },
@@ -208,6 +211,18 @@ export default {
         },
     },
     watch: {
+        race: {
+            deep: true,
+            immediate: true,
+            handler: function (val) {
+                if (val && !val?.status) {
+                    const aid = this.achieves[this.achieves.length - 1].achievement_id;
+                    this.$router.push({ query: {
+                        aid,
+                    } })
+                }
+            },
+        },
         // 修改赛事
         id: {
             handler: function (val) {
