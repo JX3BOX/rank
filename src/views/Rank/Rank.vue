@@ -157,7 +157,7 @@ export default {
                     this.origin_data = res.data.data || [];
 
                     if (this.isLastBoss) {
-                        const newbieRes = await getEventNewbie(this.id, { _no_cache: 1 });
+                        const newbieRes = await getEventNewbie(this.id);
                         const keep_10 = newbieRes.data.data.keep_10?.map((item) => item.ID) || [];
                         const youngster_list = newbieRes.data.data.youngster_list?.map((item) => item.ID) || [];
 
@@ -203,11 +203,6 @@ export default {
         },
         bossIcon: function (val) {
             return PICS.bossIcon(val);
-        },
-        loadNewbie: function () {
-            getEventNewbie(this.id, { _no_cache: 1 }).then((res) => {
-                this.newbie = res.data.data;
-            });
         },
     },
     watch: {
