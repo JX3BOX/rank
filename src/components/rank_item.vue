@@ -27,8 +27,8 @@
             <span class="u-teamname u-teamname-null" v-else>未知</span>
             <span class="u-server">{{ item.team_server }}</span>
             <span class="u-youngster" v-if="i > 2 && isLastBoss">
-                <img v-if="item.is_newbie" class="u-chanlian" src="../assets/img/rank/chanlian.webp" alt="">
-                <img v-if="item.is_youngster" class="u-heima" src="../assets/img/rank/heima.webp" alt="">
+                <img v-if="item.is_newbie" class="u-chanlian" :src="chanlian" alt="">
+                <img v-if="item.is_youngster" class="u-heima" :src="heima" alt="">
             </span>
         </div>
         <!-- 时间 -->
@@ -40,8 +40,8 @@
             <span class="u-time-finish">{{ showTime(item.created) }}</span>
         </div>
         <div class="u-youngster" v-if="i < 3 && isLastBoss">
-            <img v-if="item.is_newbie" class="u-chanlian" src="../assets/img/rank/chanlian.webp" alt="">
-            <img v-if="item.is_youngster" class="u-heima" src="../assets/img/rank/heima.webp" alt="">
+            <img v-if="item.is_newbie" class="u-chanlian" :src="chanlian" alt="">
+            <img v-if="item.is_youngster" class="u-heima" :src="heima" alt="">
         </div>
         <!-- 队长 -->
         <div class="u-leader" v-if="item.leaders">
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 export default {
@@ -92,7 +92,10 @@ export default {
         },
     },
     data() {
-        return {};
+        return {
+            chanlian: __cdn + "design/event/rank/chanlian.webp",
+            heima: __cdn + "design/event/rank/heima.webp",
+        };
     },
     methods: {
         getRankImg: function (num) {
