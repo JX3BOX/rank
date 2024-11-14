@@ -1,4 +1,4 @@
-import { $team } from "@jx3box/jx3box-common/js/https.js";
+import { $team, $cms } from "@jx3box/jx3box-common/js/https.js";
 function getTop100(params,event_id = 1) {
     return $team().get(`/api/team/race/achieve/${params.achieve_id}/top100`, {
         params: {
@@ -42,11 +42,22 @@ function getEventNewbie(event_id, params) {
     });
 }
 
+/**
+ * 获取成就绑定boss列表
+ * @param {*} params
+ */
+function getBossAid(params) {
+    return $cms().get(`/api/cms/team/boss_aid`, {
+        params: params,
+    });
+}
+
 
 export {
     getTop100,
     getTopTotal,
     getMountDpsRace,
     getMixRank,
-    getEventNewbie
+    getEventNewbie,
+    getBossAid
 };
