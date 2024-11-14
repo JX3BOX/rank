@@ -84,6 +84,35 @@
         }
     }
 
+    .u-pre {
+        color: #fff;
+        margin-right: 5px;
+        display: inline-flex;
+        align-items: center;
+        height: 30px !important;
+
+
+        .el-checkbox__input {
+            top: 1px;
+        }
+
+        &.is-checked {
+            .el-checkbox__inner {
+                background-color: #ffedc6;
+                border-color: #ffedc6;
+
+                &::after {
+                    border-color: #703100;
+                }
+            }
+            .el-checkbox__label {
+                color: #ffedc6;
+            }
+
+            border-color: #ffedc6;
+        }
+    }
+
     ul,
     div {
         list-style: none;

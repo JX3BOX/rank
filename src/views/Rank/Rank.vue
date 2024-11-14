@@ -21,7 +21,7 @@
 
         <div class="m-rank-server m-rank-filter">
             <ul>
-                <li :class="{ on: isPre }" @click="onPreChange" v-if="preBossData && preBossData.length">预赛</li>
+                <el-checkbox border class="u-pre" size="mini" :value="isPre" @change="onPreChange"  v-if="preBossData && preBossData.length">预赛</el-checkbox>
                 <li :class="{ on: !server }" @click="changeServer('')">全区全服</li>
                 <li v-for="item in servers" :key="item" @click="changeServer(item)" :class="{ on: server == item }">
                     {{ item }}
