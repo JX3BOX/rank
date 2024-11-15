@@ -77,6 +77,8 @@ export default {
                 keep_10: [],
                 youngster_list: [],
             },
+
+            isLastBoss: false,
         };
     },
     computed: {
@@ -146,10 +148,6 @@ export default {
         defaultBossIcon: function (e) {
             return `this.src='${this.bossIcon("0")}';this.onerror=null`;
         },
-        // 是否为关底boss
-        isLastBoss: function () {
-            return this.achieve_id == this.achieves[this.achieves.length - 1]?.achievement_id;
-        },
     },
     methods: {
         changeBoss: function (val) {
@@ -174,6 +172,8 @@ export default {
             getTop100(this.params, this.id)
                 .then(async (res) => {
                     this.origin_data = res.data.data || [];
+
+                    this.isLastBoss = this.achieve_id == this.achieves[this.achieves.length - 1]?.achievement_id;
 
                     if (this.isLastBoss) {
                         const newbieRes = await getEventNewbie(this.id);
