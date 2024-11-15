@@ -109,7 +109,6 @@ export default {
                 acc[cur.achievement_id] = cur.name;
                 return acc;
             }, {}) : this.bossList;
-            console.log(bossList);
             return Object.keys(bossList).join(",");
         },
         span: function () {
