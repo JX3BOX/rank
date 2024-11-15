@@ -27,12 +27,12 @@
             <span class="u-teamname u-teamname-null" v-else>未知</span>
             <span class="u-server">{{ item.team_server }}</span>
             <span class="u-youngster" v-if="i > 2 && isLastBoss">
-                <img v-if="item.is_newbie" class="u-chanlian" :src="chanlian" alt="">
-                <img v-if="item.is_youngster" class="u-heima" :src="heima" alt="">
+                <img v-if="isNewbie" class="u-chanlian" :src="chanlian" alt="">
+                <img v-if="isYoungster" class="u-heima" :src="heima" alt="">
             </span>
         </div>
         <!-- 时间 -->
-        <div class="u-time" @click="copy(showTime(item.created))">
+        <div class="u-time" @click="copy(showTime(item.created))" :class="{ 'u-youngster-time': isNewbie || isYoungster }">
             <span class="u-time-fight">
                 用时 :
                 <b>{{ showTC(item.fight_time) }}</b>
@@ -40,8 +40,8 @@
             <span class="u-time-finish">{{ showTime(item.created) }}</span>
         </div>
         <div class="u-youngster" v-if="i < 3 && isLastBoss">
-            <img v-if="item.is_newbie" class="u-chanlian" :src="chanlian" alt="">
-            <img v-if="item.is_youngster" class="u-heima" :src="heima" alt="">
+            <img v-if="isNewbie" class="u-chanlian" :src="chanlian" alt="">
+            <img v-if="isYoungster" class="u-heima" :src="heima" alt="">
         </div>
         <!-- 队长 -->
         <div class="u-leader" v-if="item.leaders">
@@ -90,12 +90,26 @@ export default {
             type: Boolean,
             default: false,
         },
+        newbie: {
+            type: Object,
+            default: () => {},
+        }
     },
     data() {
         return {
             chanlian: __cdn + "design/event/rank/chanlian.webp",
             heima: __cdn + "design/event/rank/heima.webp",
         };
+    },
+    computed: {
+        isNewbie() {
+            const keep_10 = this.newbie?.keep_10?.map(item => item.ID) || [];
+            return keep_10?.includes(this.item.team_id);
+        },
+        isYoungster() {
+            const youngster_list = this.newbie?.newbie_list?.map(item => item.ID) || [];
+            return youngster_list?.includes(this.item.team_id);
+        },
     },
     methods: {
         getRankImg: function (num) {

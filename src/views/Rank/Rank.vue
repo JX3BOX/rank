@@ -32,7 +32,7 @@
         <div class="m-rank-top100">
             <!-- A.列表不为空 -->
             <div class="m-rank-top100-list" v-if="data && data.length" :class="{ 'not-last': !isLastBoss }">
-                <rank-item v-for="(item, i) in data" :key="i" :i="i" :item="item" :isLastBoss="isLastBoss"></rank-item>
+                <rank-item v-for="(item, i) in data" :key="i" :i="i" :item="item" :newbie="newbie" :isLastBoss="isLastBoss"></rank-item>
             </div>
 
             <!-- B.列表为空 -->
@@ -77,8 +77,6 @@ export default {
                 keep_10: [],
                 youngster_list: [],
             },
-
-            isLastBoss: false,
         };
     },
     computed: {
@@ -148,6 +146,10 @@ export default {
         defaultBossIcon: function (e) {
             return `this.src='${this.bossIcon("0")}';this.onerror=null`;
         },
+        // 是否为关底boss
+        isLastBoss: function () {
+            return this.achieve_id == this.achieves[this.achieves.length - 1]?.achievement_id;
+        },
     },
     methods: {
         changeBoss: function (val) {
@@ -169,28 +171,27 @@ export default {
                 return;
             }
             this.loading = true;
+            this.loadNewbie();
             getTop100(this.params, this.id)
                 .then(async (res) => {
                     this.origin_data = res.data.data || [];
 
-                    this.isLastBoss = this.achieve_id == this.achieves[this.achieves.length - 1]?.achievement_id;
+                    // if (this.isLastBoss) {
+                    //     const newbieRes = await getEventNewbie(this.id);
+                    //     const keep_10 = newbieRes.data.data.keep_10?.map((item) => item.ID) || [];
+                    //     const youngster_list = newbieRes.data.data.youngster_list?.map((item) => item.ID) || [];
 
-                    if (this.isLastBoss) {
-                        const newbieRes = await getEventNewbie(this.id);
-                        const keep_10 = newbieRes.data.data.keep_10?.map((item) => item.ID) || [];
-                        const youngster_list = newbieRes.data.data.youngster_list?.map((item) => item.ID) || [];
-
-                        this.origin_data.forEach((item) => {
-                            this.$set(item, "is_newbie", false);
-                            this.$set(item, "is_youngster", false);
-                            if (keep_10.includes(item.team_id)) {
-                                item.is_newbie = true;
-                            }
-                            if (youngster_list.includes(item.team_id)) {
-                                item.is_youngster = true;
-                            }
-                        });
-                    }
+                    //     this.origin_data.forEach((item) => {
+                    //         this.$set(item, "is_newbie", false);
+                    //         this.$set(item, "is_youngster", false);
+                    //         if (keep_10.includes(item.team_id)) {
+                    //             item.is_newbie = true;
+                    //         }
+                    //         if (youngster_list.includes(item.team_id)) {
+                    //             item.is_youngster = true;
+                    //         }
+                    //     });
+                    // }
 
                     if (this.server == "跨服") {
                         this.origin_data = this.origin_data.filter((item) => item.leader?.includes("·"));
@@ -201,6 +202,11 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        loadNewbie: function () {
+            getEventNewbie(this.id).then((res) => {
+                this.newbie = res.data.data;
+            });
         },
         getProcessCls: function (count) {
             count = ~~count;
