@@ -148,7 +148,7 @@ export default {
         },
         // 是否为关底boss
         isLastBoss: function () {
-            return this.achieve_id == this.achieves[this.achieves.length - 1].achievement_id;
+            return this.achieve_id == this.achieves[this.achieves.length - 1]?.achievement_id;
         },
     },
     methods: {
