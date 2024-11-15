@@ -32,7 +32,7 @@
             </span>
         </div>
         <!-- 时间 -->
-        <div class="u-time" @click="copy(showTime(item.created))" :class="{ 'u-youngster-time': isNewbie || isYoungster }">
+        <div class="u-time" @click="copy(showTime(item.created))" :class="{ 'u-youngster-time': ((isNewbie || isYoungster) && isLastBoss) || !isLastBoss }">
             <span class="u-time-fight">
                 用时 :
                 <b>{{ showTC(item.fight_time) }}</b>
