@@ -10,9 +10,9 @@
     "update": "yarn add @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common@latest @jx3box/jx3box-data@latest"
   },
   "dependencies": {
-    "@jx3box/jx3box-common": "^8.4.1",
-    "@jx3box/jx3box-common-ui": "^8.9.29",
-    "@jx3box/jx3box-data": "^3.6.9",
+    "@jx3box/jx3box-common": "^8.5.2",
+    "@jx3box/jx3box-common-ui": "^9.0.12",
+    "@jx3box/jx3box-data": "^3.7.0",
     "animate.css": "^4.1.1",
     "axios": "^0.19.2",
     "core-js": "^3.4.3",

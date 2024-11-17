@@ -137,9 +137,8 @@ export default {
             return data;
         },
         params: function () {
-            const server = this.server === "跨服" ? "" : this.server;
             return {
-                server,
+                server: this.server,
                 achieve_id: ~~this.achieve_id,
             };
         },
@@ -175,29 +174,7 @@ export default {
             getTop100(this.params, this.id)
                 .then(async (res) => {
                     this.origin_data = res.data.data || [];
-
-                    // if (this.isLastBoss) {
-                    //     const newbieRes = await getEventNewbie(this.id);
-                    //     const keep_10 = newbieRes.data.data.keep_10?.map((item) => item.ID) || [];
-                    //     const youngster_list = newbieRes.data.data.youngster_list?.map((item) => item.ID) || [];
-
-                    //     this.origin_data.forEach((item) => {
-                    //         this.$set(item, "is_newbie", false);
-                    //         this.$set(item, "is_youngster", false);
-                    //         if (keep_10.includes(item.team_id)) {
-                    //             item.is_newbie = true;
-                    //         }
-                    //         if (youngster_list.includes(item.team_id)) {
-                    //             item.is_youngster = true;
-                    //         }
-                    //     });
-                    // }
-
-                    if (this.server == "跨服") {
-                        this.origin_data = this.origin_data.filter((item) => item.leader?.includes("·"));
-                    } else {
-                        this.origin_data = Object.freeze(this.origin_data);
-                    }
+                    this.origin_data = Object.freeze(this.origin_data);
                 })
                 .finally(() => {
                     this.loading = false;
