@@ -29,10 +29,11 @@
             <span class="u-youngster" v-if="i > 2 && isLastBoss">
                 <img v-if="isNewbie" class="u-chanlian" :src="chanlian" alt="">
                 <img v-if="isYoungster" class="u-heima" :src="heima" alt="">
+                <img v-if="isKingBack" class="u-wangzhe" :src="wangzhe" alt="">
             </span>
         </div>
         <!-- 时间 -->
-        <div class="u-time" @click="copy(showTime(item.created))" :class="{ 'u-youngster-time': ((isNewbie || isYoungster) && isLastBoss) || !isLastBoss }">
+        <div class="u-time" @click="copy(showTime(item.created))" :class="{ 'u-youngster-time': ((isNewbie || isYoungster || isKingBack) && isLastBoss) || !isLastBoss }">
             <span class="u-time-fight">
                 用时 :
                 <b>{{ showTC(item.fight_time) }}</b>
@@ -42,6 +43,7 @@
         <div class="u-youngster" v-if="i < 3 && isLastBoss">
             <img v-if="isNewbie" class="u-chanlian" :src="chanlian" alt="">
             <img v-if="isYoungster" class="u-heima" :src="heima" alt="">
+            <img v-if="isKingBack" class="u-wangzhe" :src="wangzhe" alt="">
         </div>
         <!-- 队长 -->
         <div class="u-leader" v-if="item.leaders">
@@ -99,6 +101,7 @@ export default {
         return {
             chanlian: __cdn + "design/event/rank/chanlian.webp",
             heima: __cdn + "design/event/rank/heima.webp",
+            wangzhe: __cdn + "design/event/rank/wangzhe.webp",
         };
     },
     computed: {
@@ -107,8 +110,12 @@ export default {
             return keep_10?.includes(this.item.team_id);
         },
         isYoungster() {
-            const youngster_list = this.newbie?.newbie_list?.map(item => item.ID) || [];
+            const youngster_list = this.newbie?.youngster_list?.map(item => item.ID) || [];
             return youngster_list?.includes(this.item.team_id);
+        },
+        isKingBack() {
+            const king_back = this.newbie?.king_back?.map(item => item.ID) || [];
+            return king_back?.includes(this.item.team_id);
         },
     },
     methods: {

@@ -76,6 +76,7 @@ export default {
             newbie: {
                 keep_10: [],
                 youngster_list: [],
+                king_back: []
             },
         };
     },
