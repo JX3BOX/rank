@@ -223,10 +223,15 @@ export default {
         onPreChange() {
             if (!this.preBossData?.length) return;
             this.isPre = !this.isPre;
+            const query = {
+                is_pre: this.isPre ? 1 : 0,
+            };
+
+            if (this.$route.query?.server) {
+                query.server = this.$route.query.server;
+            }
             this.$router.push({
-                query: {
-                    is_pre: this.isPre ? 1 : 0,
-                },
+                query
             });
         }
     },
