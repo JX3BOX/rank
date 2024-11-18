@@ -168,8 +168,8 @@ export default {
 
             this.$router.push({
                 query: {
-                    server: val,
                     ...this.$route.query,
+                    server: val,
                 },
             });
         },
