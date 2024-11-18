@@ -165,14 +165,21 @@ export default {
         },
         changeServer: function (val) {
             this.server = val;
+
+            this.$router.push({
+                query: {
+                    server: val,
+                    ...this.$route.query,
+                },
+            });
         },
-        loadData: function () {
+        loadData: async function () {
             if (!this.achieve_id) {
                 return;
             }
             this.loading = true;
-            this.loadNewbie();
-            getTop100(this.params, this.id)
+            await this.loadNewbie();
+            await getTop100(this.params, this.id)
                 .then(async (res) => {
                     this.origin_data = res.data.data || [];
                     this.origin_data = Object.freeze(this.origin_data);
@@ -193,16 +200,6 @@ export default {
             } else {
                 return "isDanger";
             }
-            // 原判断
-            // if (count < 30) {
-            //     return "isLess";
-            // } else if (count < 70) {
-            //     return "isMore";
-            // } else if (count < 100) {
-            //     return "isDanger";
-            // } else {
-            //     return "isFull";
-            // }
         },
         bossIcon: function (val) {
             return PICS.bossIcon(val);
@@ -220,12 +217,17 @@ export default {
         },
         getTotal(aid) {
             const bossName = this.bossList[aid];
-            const id = this.isPre ? this.preBossData.find(item => item.name == bossName).achievement_id : aid;
+            const id = this.isPre ? this.preBossData?.find(item => item.name == bossName)?.achievement_id : aid;
             return this.total[id] > 100 ? 100 : this.total[id];
         },
         onPreChange() {
             if (!this.preBossData?.length) return;
             this.isPre = !this.isPre;
+            this.$router.push({
+                query: {
+                    is_pre: this.isPre ? 1 : 0,
+                },
+            });
         }
     },
     watch: {
@@ -262,16 +264,23 @@ export default {
                 if (val.server) {
                     this.server = val.server;
                 }
+                if (val.is_pre) {
+                    this.isPre = !!~~val.is_pre;
+                }
+                if (val.server) {
+                    this.server = val.server;
+                }
             },
             immediate: true,
         },
         achieves: {
-            immediate: true,
+            // immediate: true,
             handler: function () {
                 if (!!~~this.$route.query.aid) {
                     this.achieve_id = this.$route.query.aid;
                 } else {
-                    this.achieve_id = _.first(Object.keys(this.bossList));
+                    this.achieve_id = this.isPre ? this.preBossData[0]?.achievement_id :
+                     _.first(Object.keys(this.bossList));
                 }
             },
         },
@@ -292,8 +301,10 @@ export default {
             }
         },
     },
-    mounted: function () {
-        this.loadPreBossAid();
+    beforeRouteEnter(to, from, next) {
+        next((vm) => {
+            vm.loadPreBossAid();
+        });
     },
 };
 </script>
