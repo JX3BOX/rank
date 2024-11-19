@@ -279,7 +279,7 @@ export default {
             immediate: true,
         },
         achieves: {
-            // immediate: true,
+            immediate: true,
             handler: function () {
                 if (!!~~this.$route.query.aid) {
                     this.achieve_id = this.$route.query.aid;
